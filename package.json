@@ -13,7 +13,7 @@
     "postinstall": "ngcc",
     "start:electron": "ng build --base-href ./ && electron .",
     "Deploy:App": "electron-packager APP Nexion --platform=win32 --arch=x64",
-    "electron-package-win": "ng build --prod && electron-packager . --no-prune --ignore=/node_modules --ignore=/e2e --ignore=/src --overwrite --icon=./favicon.icon" 
+    "electron-package-win": "ng build --prod && electron-packager . --no-prune --ignore=/node_modules --ignore=/e2e --ignore=/src --overwrite --icon=./favicon.icon"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
@@ -35,11 +35,14 @@
     "@angular/platform-browser": "13.2.0",
     "@angular/platform-browser-dynamic": "13.2.0",
     "@angular/router": "13.2.0",
+    "@apollo/client": "^3.6.4",
     "@ng-bootstrap/ng-bootstrap": "^11.0.0",
     "@ngrx/store": "13.0.2",
+    "apollo-angular": "^3.0.1",
     "bootstrap": "^4.6.0",
     "core-js": "3.8.0",
     "gatekeeper-client-sdk": "0.4.2",
+    "graphql": "^16.5.0",
     "luxon": "2.3.0",
     "ngx-toastr": "14.2.1",
     "process": "0.11.10",
@@ -47,6 +50,7 @@
     "tslib": "2.0.3",
     "uuid": "^8.3.2",
     "zone.js": "~0.11.4"
+    
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "13.2.0",

@@ -8,6 +8,8 @@ import {
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {AppService} from '@services/app.service';
+import { environment } from 'environments/environment.prod'; 
+import { Logins } from '@/Model/Utility/login';
 
 @Component({
     selector: 'app-login',
@@ -15,6 +17,7 @@ import {AppService} from '@services/app.service';
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+    apiUrl = environment.apiUrl;
     @HostBinding('class') class = 'login-box';
     public loginForm: FormGroup;
     public isAuthLoading = false;
@@ -24,7 +27,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     constructor(
         private renderer: Renderer2,
         private toastr: ToastrService,
-        private appService: AppService
+        private appService: AppService,
+        private login:Logins
     ) {}
 
     ngOnInit() {
@@ -41,7 +45,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     async loginByAuth() {
         if (this.loginForm.valid) {
             this.isAuthLoading = true;
-            await this.appService.loginByAuth(this.loginForm.value);
+            await this.login.GETBYID(this.loginForm.get('email').value,this.loginForm.get('password').value);
+            //await this.appService.loginByAuth(this.loginForm.value);
+          
             this.isAuthLoading = false;
         } else {
             this.toastr.error('Form is not valid!');

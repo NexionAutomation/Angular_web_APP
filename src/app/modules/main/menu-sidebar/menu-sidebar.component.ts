@@ -53,5 +53,20 @@ export const MENU = [
                 path: ['/sub-menu-2']
             }
         ]
+    },
+
+    {
+        name: 'Drawing',
+        children: [
+            {
+                name: 'Create Drawing',
+                path: ['/Create-Drawing']
+            },
+
+            {
+                name: 'Update Drawing',
+                path: ['/Read-Drawing']
+            }
+        ]
     }
 ];

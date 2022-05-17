@@ -13,6 +13,8 @@ import {RecoverPasswordComponent} from '@modules/recover-password/recover-passwo
 import {PrivacyPolicyComponent} from '@modules/privacy-policy/privacy-policy.component';
 import {MainMenuComponent} from '@pages/main-menu/main-menu.component';
 import {SubMenuComponent} from '@pages/main-menu/sub-menu/sub-menu.component';
+import { CreateDrawingQrcodeComponent } from '@pages/DrawingQrCode/create-drawing-qrcode/create-drawing-qrcode.component';
+import { ReadDrawingQrcodeComponent } from '@pages/DrawingQrCode/read-drawing-qrcode/read-drawing-qrcode.component';
 
 const routes: Routes = [
     {
@@ -36,6 +38,14 @@ const routes: Routes = [
             {
                 path: 'sub-menu-2',
                 component: BlankComponent
+            },
+            {
+                path: 'Create-Drawing',
+                component: CreateDrawingQrcodeComponent
+            },
+            {
+                path: 'Read-Drawing',
+                component: ReadDrawingQrcodeComponent
             },
             {
                 path: '',

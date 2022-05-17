@@ -40,10 +40,20 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SelectComponent } from './components/select/select.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 
+import { CreateDrawingQrcodeComponent } from './pages/DrawingQrCode/create-drawing-qrcode/create-drawing-qrcode.component';
+import { ReadDrawingQrcodeComponent } from './pages/DrawingQrCode/read-drawing-qrcode/read-drawing-qrcode.component';
+import { UpdateDrawingQrcodeComponent } from './pages/DrawingQrCode/update-drawing-qrcode/update-drawing-qrcode.component';
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+
+// import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+// import { createHttpLink, HttpLink, InMemoryCache } from '@apollo/client';
+
 registerLocaleData(localeEn, 'en-EN');
 
 @NgModule({
     declarations: [
+        
+        
         AppComponent,
         MainComponent,
         LoginComponent,
@@ -69,9 +79,16 @@ registerLocaleData(localeEn, 'en-EN');
         DropdownMenuComponent,
         ControlSidebarComponent,
         SelectComponent,
-        CheckboxComponent
+        CheckboxComponent,
+        
+        CreateDrawingQrcodeComponent,
+        ReadDrawingQrcodeComponent,
+        UpdateDrawingQrcodeComponent
     ],
     imports: [
+        // ApolloModule,
+       
+         ApolloModule, 
         BrowserModule,
         StoreModule.forRoot({auth: authReducer, ui: uiReducer}),
         HttpClientModule,
@@ -85,7 +102,22 @@ registerLocaleData(localeEn, 'en-EN');
         }),
         NgbModule
     ],
-    providers: [],
+    providers: [
+        
+      ],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
+
+// {
+//     provide: APOLLO_OPTIONS,
+//     useFactory: (httpLink: HttpLink) => {
+//       return {
+//         cache: new InMemoryCache(),
+//         link: new HttpLink({
+//           uri: `https://48p1r2roz4.sse.codesandbox.io`
+//         }),
+//       };
+//     },
+//     deps: [createHttpLink],
+//   },
