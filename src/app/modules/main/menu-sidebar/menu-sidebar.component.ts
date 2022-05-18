@@ -1,3 +1,4 @@
+import { Logins } from '@/Model/Utility/login';
 import {AppState} from '@/store/state';
 import {UiState} from '@/store/ui/state';
 import {Component, HostBinding, OnInit} from '@angular/core';
@@ -19,6 +20,7 @@ export class MenuSidebarComponent implements OnInit {
 
     constructor(
         public appService: AppService,
+        public login: Logins,
         private store: Store<AppState>
     ) {}
 
@@ -27,7 +29,7 @@ export class MenuSidebarComponent implements OnInit {
         this.ui.subscribe((state: UiState) => {
             this.classes = `${BASE_CLASSES} ${state.sidebarSkin}`;
         });
-        this.user = this.appService.user;
+        this.user = this.login.user;
     }
 }
 

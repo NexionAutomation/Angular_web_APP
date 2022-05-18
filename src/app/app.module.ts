@@ -84,10 +84,11 @@ registerLocaleData(localeEn, 'en-EN');
         CreateDrawingQrcodeComponent,
         ReadDrawingQrcodeComponent,
         UpdateDrawingQrcodeComponent
+        
     ],
     imports: [
         // ApolloModule,
-       
+        
          ApolloModule, 
         BrowserModule,
         StoreModule.forRoot({auth: authReducer, ui: uiReducer}),

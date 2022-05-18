@@ -1,7 +1,9 @@
+import { Logins } from '@/Model/Utility/login';
 import {AppState} from '@/store/state';
 import {ToggleSidebarMenu} from '@/store/ui/actions';
 import {UiState} from '@/store/ui/state';
 import {Component, HostBinding, OnInit, Renderer2} from '@angular/core';
+import { Router } from '@angular/router';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 
@@ -14,9 +16,16 @@ export class MainComponent implements OnInit {
     @HostBinding('class') class = 'wrapper';
     public ui: Observable<UiState>;
 
-    constructor(private renderer: Renderer2, private store: Store<AppState>) {}
+    constructor(private renderer: Renderer2, 
+        private store: Store<AppState>,
+        private login:Logins,private router: Router) {}
 
     ngOnInit() {
+            if(this.login.user==undefined)
+            {
+                this.router.navigate(['/login']);
+            }
+
         this.ui = this.store.select('ui');
         this.renderer.removeClass(
             document.querySelector('app-root'),

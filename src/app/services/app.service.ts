@@ -80,7 +80,7 @@ export  class AppService {
 
     async getProfile() {
         try {
-            this.user = await Gatekeeper.getProfile();
+            this.user = "Deepak baghel";//await Gatekeeper.getProfile();
         } catch (error) {
             this.logout();
             throw error;

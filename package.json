@@ -43,6 +43,8 @@
     "core-js": "3.8.0",
     "gatekeeper-client-sdk": "0.4.2",
     "graphql": "^16.5.0",
+    "linq": "^4.0.0",
+    "linq-to-typescript": "^10.0.0",
     "luxon": "2.3.0",
     "ngx-toastr": "14.2.1",
     "process": "0.11.10",
@@ -50,7 +52,6 @@
     "tslib": "2.0.3",
     "uuid": "^8.3.2",
     "zone.js": "~0.11.4"
-    
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "13.2.0",

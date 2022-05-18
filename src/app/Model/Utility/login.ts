@@ -1,46 +1,44 @@
-
 import { environment } from "environments/environment.prod";
-import {Injectable, OnDestroy, OnInit} from '@angular/core';
+import { Injectable, OnDestroy, OnInit, Component } from '@angular/core';
 import { Apollo } from "apollo-angular";
 import gql from "graphql-tag";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { Listener } from "selenium-webdriver";
-
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { from } from "linq-to-typescript"
 
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 
-export  class Logins implements OnInit  {
-    
-    rates: any[];
-  loading = true;
-  error: any;
-    // loading: boolean;
-    // posts: any;
-  
-    // private querySubscription: Subscription;
-  
-    constructor(private apollo: Apollo,private router: Router, private toastr: ToastrService) {}
-    ngOnInit(): void {
-     
-    }
-    
-    
-    apiUrl = environment.apiUrl;
-     GET(accountID: string): void {
+export class Logins implements OnInit {
+  public user: any = null;
+  // loading: boolean;
+  // posts: any;
 
-        throw new Error("Method not implemented.");
-    }
+  // private querySubscription: Subscription;
 
-  
-    async GETBYID(email: string, password: string): Promise<any> {
+  constructor(private apollo: Apollo, private router: Router, private toastr: ToastrService) { }
+  ngOnInit(): void {
+
+  }
 
 
-      let vat=` query MyQuery {
-        userMasterData{
+  apiUrl = environment.apiUrl;
+  GET(accountID: string): void {
+
+    throw new Error("Method not implemented.");
+  }
+
+
+  async GETBYID(User: string, Password: string): Promise<any> {
+
+    let data = '{User="' + User + '",Password="' + Password + '" }';
+    let query = `query MyQuery($User:String,$Password:String) {
+        userMasterData(where: {userId: {eq: $User}, upassword: {eq: $Password}}) {
           userName
           userId
           upassword
@@ -67,48 +65,49 @@ export  class Logins implements OnInit  {
         }
       }
       `
+    var datas = JSON.stringify({ query, variables: { User, Password } });
+    var ss = await this.GraphqlFetchdata("query", datas);
 
-       await this.GraphqlFetchdata("query",vat);
-       let dat =sessionStorage.get('Graphql')
-       sessionStorage.removeItem;
+    const myJSON = JSON.stringify(ss);
+    const obj = JSON.parse(myJSON);
 
-console.log(dat);
+    var da = obj["data"]["userMasterData"][0]
 
+    if (da != undefined) {
+      this.user = da;
       this.router.navigate(['/']);
-
-
-        //throw new Error("Method not implemented.");
-        //return querySubscription.;
     }
-    async UPDATEBYID(email: string, password: string): Promise<any> {
-        throw new Error("Method not implemented.");
-    }
-    async DELETEBYID(email: string, password: string): Promise<any> {
-        throw new Error("Method not implemented.");
-    }
-    async CREATE(any: any): Promise<string> {
-        throw new Error("Method not implemented.");
+    else {
+      this.router.navigate(['/login']);
+      this.toastr.error('Invalid User & Password Please Try Again..!');
     }
 
-    ngOnDestroy(): void {
-        //this.querySubscription.unsubscribe();
-    }
+  }
+  async UPDATEBYID(email: string, password: string): Promise<any> {
+    throw new Error("Method not implemented.");
+  }
+  async DELETEBYID(email: string, password: string): Promise<any> {
+    throw new Error("Method not implemented.");
+  }
+  async CREATE(any: any): Promise<string> {
+    throw new Error("Method not implemented.");
+  }
 
+  ngOnDestroy(): void {
+    //this.querySubscription.unsubscribe();
+  }
 
-     async GraphqlFetchdata(query: string,Query :string )
-    {
-      
-      let  data1;
-      let response = await fetch(environment.apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        }, body: JSON.stringify({query:Query })})
-        .then(r => r.json()) 
-        .then(data => data );
-        
-          var a= await response.json();
-          sessionStorage.setItem('Graphql',a);
-    }
+  async GraphqlFetchdata(query: string, Query: string) {
+
+    return await fetch(environment.apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }, body: Query
+    })
+      .then(r => r.json())
+      .then(data => data)
+
+  }
 }
