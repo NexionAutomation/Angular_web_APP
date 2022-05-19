@@ -44,6 +44,7 @@ import { CreateDrawingQrcodeComponent } from './pages/DrawingQrCode/create-drawi
 import { ReadDrawingQrcodeComponent } from './pages/DrawingQrCode/read-drawing-qrcode/read-drawing-qrcode.component';
 import { UpdateDrawingQrcodeComponent } from './pages/DrawingQrCode/update-drawing-qrcode/update-drawing-qrcode.component';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+import { DataTablesModule } from 'angular-datatables';
 
 // import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 // import { createHttpLink, HttpLink, InMemoryCache } from '@apollo/client';
@@ -88,7 +89,7 @@ registerLocaleData(localeEn, 'en-EN');
     ],
     imports: [
         // ApolloModule,
-        
+        DataTablesModule,
          ApolloModule, 
         BrowserModule,
         StoreModule.forRoot({auth: authReducer, ui: uiReducer}),

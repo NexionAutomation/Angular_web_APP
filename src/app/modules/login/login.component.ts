@@ -5,10 +5,10 @@ import {
     Renderer2,
     HostBinding
 } from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {ToastrService} from 'ngx-toastr';
-import {AppService} from '@services/app.service';
-import { environment } from 'environments/environment.prod'; 
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { AppService } from '@services/app.service';
+import { environment } from 'environments/environment.prod';
 import { Logins } from '@/Model/Utility/login';
 
 @Component({
@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         private renderer: Renderer2,
         private toastr: ToastrService,
         private appService: AppService,
-        private login:Logins
-    ) {}
+        private login: Logins
+    ) { }
 
     ngOnInit() {
         this.renderer.addClass(
@@ -45,9 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     async loginByAuth() {
         if (this.loginForm.valid) {
             this.isAuthLoading = true;
-            await this.login.GETBYID(this.loginForm.get('email').value,this.loginForm.get('password').value);
-            //await this.appService.loginByAuth(this.loginForm.value);
-          
+            await this.login.GETBYID(this.loginForm.get('email').value, this.loginForm.get('password').value);
             this.isAuthLoading = false;
         } else {
             this.toastr.error('Form is not valid!');
