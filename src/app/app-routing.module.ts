@@ -15,6 +15,12 @@ import {MainMenuComponent} from '@pages/main-menu/main-menu.component';
 import {SubMenuComponent} from '@pages/main-menu/sub-menu/sub-menu.component';
 import { CreateDrawingQrcodeComponent } from '@pages/DrawingQrCode/create-drawing-qrcode/create-drawing-qrcode.component';
 import { ReadDrawingQrcodeComponent } from '@pages/DrawingQrCode/read-drawing-qrcode/read-drawing-qrcode.component';
+import { UserGroupMasterComponent } from '@pages/user-module/user-group-master/user-group-master.component';
+import { CreateUserMasterComponent } from '@pages/user-module/create-user-master/create-user-master.component';
+import { CreateUserRightsComponent } from '@pages/user-module/create-user-rights/create-user-rights.component';
+
+import { CreateModulemasterComponent } from '@pages/user-module/create-modulemaster/create-modulemaster.component';
+import { CreateSubModulemasterComponent } from '@pages/user-module/create-sub-modulemaster/create-sub-modulemaster.component';
 
 const routes: Routes = [
     {
@@ -46,6 +52,26 @@ const routes: Routes = [
             {
                 path: 'Read-Drawing',
                 component: ReadDrawingQrcodeComponent
+            },
+            {
+                path: 'UserMaster',
+                component: UserGroupMasterComponent
+            },
+            {
+                path: 'CreateUser',
+                component: CreateUserMasterComponent
+            },
+            {
+                path: 'CreateUserRight',
+                component: CreateUserRightsComponent
+            },
+            {
+                path: 'CreateUserModule',
+                component: CreateModulemasterComponent
+            },
+            {
+                path: 'CreateUsersubmodule',
+                component: CreateSubModulemasterComponent
             },
             {
                 path: '',

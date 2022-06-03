@@ -45,6 +45,8 @@ import { ReadDrawingQrcodeComponent } from './pages/DrawingQrCode/read-drawing-q
 import { UpdateDrawingQrcodeComponent } from './pages/DrawingQrCode/update-drawing-qrcode/update-drawing-qrcode.component';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { DataTablesModule } from 'angular-datatables';
+import { UserModuleModule } from '@pages/user-module/user-module.module';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 // import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 // import { createHttpLink, HttpLink, InMemoryCache } from '@apollo/client';
@@ -89,10 +91,18 @@ registerLocaleData(localeEn, 'en-EN');
     ],
     imports: [
         // ApolloModule,
+        UserModuleModule,
         DataTablesModule,
          ApolloModule, 
         BrowserModule,
         StoreModule.forRoot({auth: authReducer, ui: uiReducer}),
+        SweetAlert2Module.forRoot(),
+
+    //=> In submodules only:
+    SweetAlert2Module,
+
+    //=> In submodules only, overriding options from your root module:
+    SweetAlert2Module.forChild({ /* options */ }),
         HttpClientModule,
         AppRoutingModule,
         ReactiveFormsModule,

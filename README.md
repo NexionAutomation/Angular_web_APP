@@ -58,7 +58,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 
 
-
+## -----------------------------Working-----------------------------------------------------
 
 ## Angular cmd
 1)npm install -g @angular/cli
@@ -69,3 +69,11 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 5)ng generate service letters
 6)ng generate interface letters
 6)ng generate class letters
+7)ng generate component --skip-tests=true component-name
+
+## Run Build Web window Application
+1)npm run  electron-package-win
+
+## wix-mix Installer
+1)node build_installer.js
+2)

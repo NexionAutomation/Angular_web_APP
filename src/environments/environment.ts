@@ -8,7 +8,8 @@ export const environment = {
   imgUrl: 'https://img.dev.com'
 
 };
-
+//https://localhost:44330/GraphQL
+//http://jyj79980-001-site1.etempurl.com/GraphQL
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

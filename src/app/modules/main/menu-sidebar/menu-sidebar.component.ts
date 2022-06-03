@@ -39,14 +39,17 @@ export class MenuSidebarComponent implements OnInit {
 export const MENU = [
     {
         name: 'Dashboard',
-        path: ['/']
+        path: ['/'],
+        children:[]
     },
     {
         name: 'Blank',
-        path: ['/blank']
+        path: ['/blank'],
+        children:[]
     },
     {
         name: 'Main Menu',
+        path: [],
         children: [
             {
                 name: 'Sub Menu',
@@ -59,19 +62,55 @@ export const MENU = [
             }
         ]
     },
-
     {
-        name: 'Drawing',
+        name: 'User Management',
+        path: [],
         children: [
             {
-                name: 'Create Drawing',
+                name: 'Create',
                 path: ['/Create-Drawing']
             },
 
             {
-                name: 'Update Drawing',
-                path: ['/Read-Drawing']
+                name: 'UserMaster',
+                path: ['/UserMaster']
+            },
+            {
+                name: 'CreateUser',
+                path: ['/CreateUser']
+            },
+            {
+                name: 'CreateUserRight',
+                path: ['/CreateUserRight']
+            },
+            {
+                name: 'CreateUserModule',
+                path: ['/CreateUserModule']
+            },
+            {
+                name: 'CreateUsersubmodule',
+                path: ['/CreateUsersubmodule']
             }
+
+            
         ]
-    }
+    },
+
+   
 ];
+
+
+// {
+//     name: 'Drawing',
+//     children: [
+//         {
+//             name: 'Create Drawing',
+//             path: ['/Create-Drawing']
+//         },
+
+//         {
+//             name: 'Update Drawing',
+//             path: ['/Read-Drawing']
+//         }
+//     ]
+// }

@@ -1,0 +1,503 @@
+<p>create-user-rights works!</p>
+<section class="content  ">
+    <!-- Default box -->
+
+    <div class="card card-outline card-info">
+        <div class="card-header">
+            <h3 class="card-title">Title</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-widget="collapse" data-toggle="tooltip"
+                    title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body   ">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="bder top-mrg20">
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="row">
+                                    <div class="col-sm-12">
+
+                                        <div class="log_form_head1" style="margin-top:7px;">
+                                            Select Modules
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="log_form1">
+                                    <div class="form-horizontal">
+
+                                        <label>Group
+
+                                        </label>
+                                        &nbsp;<span id="ContentPlaceHolder3_RequiredFieldValidator1"
+                                            style="color:#FF3300;font-weight:700;visibility:hidden;">Select Group</span>
+                                        <select name="ctl00$ContentPlaceHolder3$ddlGroup_Id"
+                                            onchange="javascript:setTimeout('__doPostBack(\'ctl00$ContentPlaceHolder3$ddlGroup_Id\',\'\')', 0)"
+                                            id="ContentPlaceHolder3_ddlGroup_Id" class="form-control">
+                                            <option value="1">Admin</option>
+                                            <option value="2">SubAdmin</option>
+                                            <option value="3">Employee</option>
+                                            <option selected="selected" value="4">Site Engineer</option>
+                                            <option value="5">Purchase</option>
+                                            <option value="6">Manager</option>
+                                            <option value="0">No</option>
+
+                                        </select>
+
+
+
+
+                                        <div class="form-group">
+
+                                            <div class="col-sm-12 ">
+                                                <label>Select Users&nbsp;&nbsp;
+
+                                                </label>
+
+                                                &nbsp;<select size="4" name="ctl00$ContentPlaceHolder3$lstUsers"
+                                                    onchange="javascript:setTimeout('__doPostBack(\'ctl00$ContentPlaceHolder3$lstUsers\',\'\')', 0)"
+                                                    id="ContentPlaceHolder3_lstUsers" class="form-control"
+                                                    style="font-size:12pt;font-weight:bold;height:290px;">
+                                                    <option value="10">gaurav.chamoli@nexionautomation.com</option>
+                                                    <option value="11">gaurav.guglani@nexionautomation.com</option>
+                                                    <option value="9">sunil.singh@nexionautomation.com</option>
+                                                    <option value="17">parveenkumar21695@gmail.com</option>
+                                                    <option value="21">Pkumarsharma01@gmail.com</option>
+                                                    <option value="22">shivyg357@gmail.com</option>
+                                                    <option value="23">Prashantgupta112233445@gmail.com</option>
+                                                    <option value="27">Ashishpathak222.ap@gmail.com</option>
+                                                    <option value="28">aniketnawal@gmail.com</option>
+                                                    <option value="29">sandeepkumarray09@gmail.com</option>
+                                                    <option value="30">nikhilchhabra4@gmail.com</option>
+                                                    <option value="31">anmoldeep31313@gmail.com</option>
+                                                    <option selected="selected" value="32">ParmishKumar01@gmail.com
+                                                    </option>
+                                                    <option value="33">amitkr1226@gmail.com</option>
+                                                    <option value="34">naumanjmi786@gmail.com</option>
+                                                    <option value="35">stephen.cool98@gmail.com</option>
+
+                                                </select>
+
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                        <div class="form-group">
+
+                                            <div class="col-sm-12 ">
+                                                <label>Select Module&nbsp;&nbsp;
+                                                    <span id="ContentPlaceHolder3_RequiredFieldValidator2"
+                                                        style="color:#FF3300;visibility:hidden;">Select Module</span>
+                                                </label>
+
+                                                &nbsp;<select size="4" name="ctl00$ContentPlaceHolder3$lstModules"
+                                                    onchange="javascript:setTimeout('__doPostBack(\'ctl00$ContentPlaceHolder3$lstModules\',\'\')', 0)"
+                                                    id="ContentPlaceHolder3_lstModules" class="form-control"
+                                                    style="font-size:12pt;font-weight:bold;height:290px;">
+                                                    <option value="1">DashBoard</option>
+                                                    <option value="2">Master</option>
+                                                    <option value="3">Email / SMS Management</option>
+                                                    <option value="5">User Management</option>
+                                                    <option value="6">Purchase Order</option>
+                                                    <option value="7">Expense Management</option>
+                                                    <option value="8">Approval Management</option>
+                                                    <option value="9">Accounting</option>
+                                                    <option value="10">Leaves Management</option>
+                                                    <option selected="selected" value="11">Indent Management</option>
+
+                                                </select>
+
+
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-9">
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="log_form_head1">
+                                            Apply User Rights
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="log_form1">
+
+                                    <div class="form-horizontal">
+
+
+
+                                        <div class="clearfix" style="margin-bottom:5px;"></div>
+
+
+
+                                        <div class="clearfix" style="margin-bottom:5px;"></div>
+                                        <div class="form-group">
+
+                                            <div class="col-sm-12">
+
+
+                                                <div class="table-responsive">
+                                                    <div>
+
+
+
+
+
+                                                        <div>
+                                                            <table class="table">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th scope="col">SrNo</th>
+                                                                        <th scope="col">SubModuleName</th>
+                                                                        <th scope="col">
+                                                                            <span
+                                                                                id="ContentPlaceHolder3_GridView1_dddf">View</span>
+                                                                            <input type="submit"
+                                                                                name="ctl00$ContentPlaceHolder3$GridView1$ctl01$frmselectAll"
+                                                                                value="ALL"
+                                                                                id="ContentPlaceHolder3_GridView1_frmselectAll"
+                                                                                class="btn btn-primary mar_top10"><br>
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            <span
+                                                                                id="ContentPlaceHolder3_GridView1_dddf1">Export</span>
+                                                                            <input type="submit"
+                                                                                name="ctl00$ContentPlaceHolder3$GridView1$ctl01$frmselectExportAll"
+                                                                                value="ALL"
+                                                                                id="ContentPlaceHolder3_GridView1_frmselectExportAll"
+                                                                                class="btn btn-primary mar_top10"><br>
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            <span
+                                                                                id="ContentPlaceHolder3_GridView1_dd1">Save</span>
+                                                                            <input type="submit"
+                                                                                name="ctl00$ContentPlaceHolder3$GridView1$ctl01$SaveAll"
+                                                                                value="ALL"
+                                                                                id="ContentPlaceHolder3_GridView1_SaveAll"
+                                                                                class="btn btn-primary mar_top10">
+
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            <span
+                                                                                id="ContentPlaceHolder3_GridView1_dd190">Search</span>
+                                                                            <input type="submit"
+                                                                                name="ctl00$ContentPlaceHolder3$GridView1$ctl01$SearchAll"
+                                                                                value="ALL"
+                                                                                id="ContentPlaceHolder3_GridView1_SearchAll"
+                                                                                class="btn btn-primary mar_top10"><br>
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            <span
+                                                                                id="ContentPlaceHolder3_GridView1_dd98">Update</span>
+                                                                            <input type="submit"
+                                                                                name="ctl00$ContentPlaceHolder3$GridView1$ctl01$UpdateAll"
+                                                                                value="ALL"
+                                                                                id="ContentPlaceHolder3_GridView1_UpdateAll"
+                                                                                class="btn btn-primary mar_top10"><br>
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            <span
+                                                                                id="ContentPlaceHolder3_GridView1_dde">Delete</span>
+                                                                            <input type="submit"
+                                                                                name="ctl00$ContentPlaceHolder3$GridView1$ctl01$DeleteAll"
+                                                                                value="ALL"
+                                                                                id="ContentPlaceHolder3_GridView1_DeleteAll"
+                                                                                class="btn btn-primary mar_top10"><br>
+                                                                        </th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>27</td>
+                                                                        <td>Create Indent</td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkSelect_0"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl02$chkSelect"></span>
+
+
+
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkExport_0"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl02$chkExport"></span>
+
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkSave_0"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl02$chkSave"></span>
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkSearch_0"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl02$chkSearch"></span>
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkUpdate_0"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl02$chkUpdate"></span>
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkDelete_0"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl02$chkDelete"></span>
+
+
+
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>28</td>
+                                                                        <td>Indent Admin</td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkSelect_1"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl03$chkSelect"></span>
+
+
+
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkExport_1"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl03$chkExport"></span>
+
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkSave_1"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl03$chkSave"></span>
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkSearch_1"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl03$chkSearch"></span>
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkUpdate_1"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl03$chkUpdate"></span>
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkDelete_1"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl03$chkDelete"></span>
+
+
+
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>29</td>
+                                                                        <td>Indent Po</td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkSelect_2"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl04$chkSelect"></span>
+
+
+
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkExport_2"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl04$chkExport"></span>
+
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkSave_2"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl04$chkSave"></span>
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkSearch_2"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl04$chkSearch"></span>
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkUpdate_2"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl04$chkUpdate"></span>
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <span class="mar_top10"
+                                                                                style="display:inline-block;width:70px;"><input
+                                                                                    id="ContentPlaceHolder3_GridView1_chkDelete_2"
+                                                                                    type="checkbox"
+                                                                                    name="ctl00$ContentPlaceHolder3$GridView1$ctl04$chkDelete"></span>
+
+
+
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-9">
+
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-4">
+                                                        </div>
+                                                        <div class="col-sm-8">
+                                                            <input type="submit"
+                                                                name="ctl00$ContentPlaceHolder3$btnSaveRights"
+                                                                value="Save" id="ContentPlaceHolder3_btnSaveRights"
+                                                                class="btn btn-primary mar_top10">&nbsp;
+                                                            <input type="submit"
+                                                                name="ctl00$ContentPlaceHolder3$btnReset" value="Reset"
+                                                                id="ContentPlaceHolder3_btnReset"
+                                                                class="btn btn-primary mar_top10">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+    <div class="form2 ">
+
+        <div class="card card-outline card-primary">
+            <div class="card-header "> Group Details ::</div>
+            <div class="card-body" style="overflow-x:auto;">
+
+
+
+                <!-- <table id="example" class="display" width="100%"></table> -->
+
+                <table class="table table-striped table-hover  table-responsive" id="example">
+
+                    <thead>
+                        <tr>
+                            <th>SrNo</th>
+                            <th>Name</th>
+                            <th>UserID</th>
+                            <th>Password</th>
+                            <th>EmailID</th>
+                            <th>MobileNo</th>
+                            <th>Manager</th>
+                            <th>AccountStatus</th>
+                            <th>RecordStatus</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr *ngFor="let person of persons">
+                            
+                          <td>  {{person.index}}</td>
+                          <td>{{ person.userName }}</td>
+                          <td>  {{person.userId}}</td>
+                          <td>{{ person.upassword }}</td>
+                          <td>  {{person.emailId}}</td>
+                          <td>{{ person.mobileNo }}</td>
+                          <td>  {{person.accountStatus}}</td>
+                          <td>{{ person.reportingManager }}</td>
+                          <td>  {{person.recordstatus}}</td>
+                         
+                         
+                        </tr> -->
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- /.card -->
+</section>

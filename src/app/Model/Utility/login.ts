@@ -110,4 +110,21 @@ export class Logins implements OnInit {
       .then(data => data)
 
   }
+
+  async GraphqlFetchQuery(query: string, Query: string) {
+
+    return await fetch(environment.apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }, body: JSON.stringify({
+        query: Query
+      })
+    })
+      .then(r => r.json())
+      .then(data => data)
+
+  }
+
 }
