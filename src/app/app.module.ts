@@ -48,6 +48,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { UserModuleModule } from '@pages/user-module/user-module.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
+
 // import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 // import { createHttpLink, HttpLink, InMemoryCache } from '@apollo/client';
 
@@ -87,7 +88,7 @@ registerLocaleData(localeEn, 'en-EN');
         CreateDrawingQrcodeComponent,
         ReadDrawingQrcodeComponent,
         UpdateDrawingQrcodeComponent
-        
+   
     ],
     imports: [
         // ApolloModule,

@@ -16,6 +16,8 @@ import { from } from "linq-to-typescript"
 
 export class Logins implements OnInit {
   public user: any = null;
+  public TMUserMaster:TMUserMaster
+
   // loading: boolean;
   // posts: any;
 
@@ -75,7 +77,11 @@ export class Logins implements OnInit {
 
     if (da != undefined) {
       this.user = da;
+      this.TMUserMaster=da;
       this.router.navigate(['/']);
+     
+     
+      
     }
     else {
       this.router.navigate(['/login']);
@@ -127,4 +133,28 @@ export class Logins implements OnInit {
 
   }
 
+}
+
+export class TMUserMaster
+{
+	public userName: string;
+	public userID: string;
+	public uPassword: string;
+	public emailID: string;
+	public mobileNo: string;
+	public groupId: number;
+	public accountStatus: string;
+	public fromTime: string;
+	public fromTimeAMPM: string;
+	public toTime: string;
+	public toTimeAMPM: string;
+	public userImage: string;
+	public cUserId: number;
+	public mUserId: number;
+	public recordstatus: string;
+	public reasonForDeletion: string;
+	public dUserCode: number;
+	public userCode: number;
+	public reportingManager: number;
+	public rID: number;
 }

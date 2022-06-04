@@ -8,17 +8,43 @@ import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { UserModuleServicesService } from '../user-module-services.service';
 
+
+export class CM_AdminModuleMaster {
+  public Module_Id: number;
+  public ModuleName: string;
+  public ModuleOrder: number;
+  public CUser_Id: number;
+  public MUser_Id: number;
+  public RID: number;
+
+  // constructor(Module_Id_: number, ModuleName_: string, ModuleOrder_: number, CUser_Id_: number, MUser_Id_: number, RID_: number) {
+  //   this.Module_Id = Module_Id_;
+  //   this.ModuleName = ModuleName_;
+  //   this.ModuleOrder = ModuleOrder_;
+  //   this.CUser_Id = CUser_Id_;
+  //   this.MUser_Id = MUser_Id_;
+  //   this.RID = RID_;
+  // }
+}
+
+
 @Component({
   selector: 'app-create-modulemaster',
   templateUrl: './create-modulemaster.component.html',
   styleUrls: ['./create-modulemaster.component.scss']
 })
-export class CreateModulemasterComponent implements OnInit {
+
+export class CreateModulemasterComponent extends CM_AdminModuleMaster  implements OnInit {
   dtOptions: DataTables.Settings = {};
   persons: any;
   persons1: any;
   dtTrigger: Subject<any> = new Subject<any>();
   headers: any;
+  CM_AdminModuleMaster: CM_AdminModuleMaster;
+
+
+
+
   public loginForm: FormGroup;
   constructor(
     private renderer: Renderer2,
@@ -28,60 +54,135 @@ export class CreateModulemasterComponent implements OnInit {
     private Logins1: Logins,
     private http: HttpClient,
     private fb: FormBuilder
+    
 
-  ) { }
+  ) {
+    super();
+  }
+
+
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      txtModuleName: new FormControl(null, Validators.required),
-      txtModuleOrder: new FormControl(null, Validators.required),
+      txtModuleName: new FormControl(null),
+      txtModuleOrder: new FormControl(null),
 
     });
 
     this.LodeDataTable();
 
-    this.persons
-      .array.forEach(data => {
-        this.persons = (data as any).data;
-        // Calling the DT trigger to manually render the table
-        this.dtTrigger.next();
-      });
-
   }
 
   async onSubmit() {
-
-    console.log('Email', this.loginForm.get('txtModuleName').value);
-    console.log('Message', this.loginForm.get('txtModuleOrder').value);
-   
-
-    const { value: showConfirmButton } = await Swal.fire({
-      title: 'Error!',
-      text: 'Do you want to continue',
-      icon: 'error',
-      showConfirmButton:true,
-      showCancelButton: true
-    })
     
-    if (showConfirmButton==true) {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      })
-      
-      
-      Toast.fire({
-        icon: 'success',
-        title: 'Signed in successfully'
-      })
+
+  var output= await this.INSERT(0,
+    this.loginForm.get('txtModuleName').value,
+   this.loginForm.get('txtModuleOrder').value,
+   this.Logins1.TMUserMaster.userCode
+   ,0,0);
+
+
+const myJSON = JSON.stringify(output);
+    const obj = JSON.parse(myJSON);
+
+    const status = obj["data"]["cMTmAdminModuleMasters"]
+    
+if(status[0].message=="Success")
+{
+  const { value: showConfirmButton } = await Swal.fire({
+    title: 'success',
+    icon: 'success',
+   html:'<div class="alert alert-success" role="alert">Data Create Successfully</div>',
+
+    showConfirmButton: true,
+    showCancelButton: true
+  })
+
+  
+if (showConfirmButton == true) {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
     }
+  })
+
+
+  Toast.fire({
+    icon: 'success',
+    title: 'Data Create Successfully'
+  })
+}
+
+}
+
+
+
+
+
+
+
+  }
+
+  async INSERT(
+     Module_Id: number,
+   ModuleName: string,
+   ModuleOrder: number,
+   CUser_Id: number,
+   MUser_Id: number,
+   RID: number,
+  )
+  {
+    
+     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
+     
+   
+   let query = `mutation MyMutation(
+        $Module_Id: Int!
+        $ModuleName: String
+        $ModuleOrder: Int!
+        $CUser_Id: Int!
+        $MUser_Id: Int!
+        $ RID: Int!
+     ) {
+                 __typename
+               cMTmAdminModuleMasters(triger: "INSERT", data: {
+                 
+                detail: {
+                  moduleId : $Module_Id,
+                  moduleOrder: $ModuleOrder,
+                  creationDate: "2019-10-10" ,
+                   cuserId: $CUser_Id, 
+                   modificationDate: "2019-10-10" ,
+                    muserId: $MUser_Id,
+                     rid: $RID,
+                   moduleName: $ModuleName}}) {
+                 iD
+                 code
+                 message
+                 status
+               }
+             }
+               
+       `
+
+   var datas = JSON.stringify({ query, variables: {
+    Module_Id,
+    ModuleName,
+    ModuleOrder,
+    CUser_Id,
+    MUser_Id,
+    RID,
+   } });
+   var ss = await this.Logins1.GraphqlFetchdata("query", datas);
+
+   return ss;
   }
   async GETData(User: string, Password: string): Promise<any> {
 
@@ -113,21 +214,6 @@ export class CreateModulemasterComponent implements OnInit {
 
     this.persons = obj["data"]["cMTmAdminModuleMasters"]
 
-
-    var result = [];
-
-
-    // for(let i in this.persons)
-    // {
-    //   console.log([i,this.persons[i]]);
-    //     result.push([i,this.persons[i]]);
-    //   }
-
-    //   for (var key in this.persons) {
-    //     console.log(key);
-    //     result.push(key);
-
-    // }
 
 
 
