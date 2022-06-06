@@ -16,7 +16,8 @@ import { from } from "linq-to-typescript"
 
 export class Logins implements OnInit {
   public user: any = null;
-  public TMUserMaster:TMUserMaster
+  public TMUserMaster:TMUserMaster;
+  public popupStatus: popup;
 
   // loading: boolean;
   // posts: any;
@@ -157,4 +158,11 @@ export class TMUserMaster
 	public userCode: number;
 	public reportingManager: number;
 	public rID: number;
+}
+export enum popup {
+  success='success',
+  error='error'	,
+  warning='warning',	
+  info='info'	,
+  question='question'
 }

@@ -16,6 +16,7 @@ import { Logins } from '@/Model/Utility/login';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
+
 export class LoginComponent implements OnInit, OnDestroy {
     apiUrl = environment.apiUrl;
     @HostBinding('class') class = 'login-box';
@@ -23,6 +24,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     public isAuthLoading = false;
     public isGoogleLoading = false;
     public isFacebookLoading = false;
+
+
 
     constructor(
         private renderer: Renderer2,
@@ -71,3 +74,5 @@ export class LoginComponent implements OnInit, OnDestroy {
         );
     }
 }
+
+

@@ -36,113 +36,128 @@
         <div class="card-body   ">
 
 
-         
 
-            <div class="log_form1">
 
-            	
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+
 
                 <div class="form-horizontal">
 
-                      <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">Select Module Name</label><div class="col-sm-8">
-                        <select name="ctl00$ContentPlaceHolder3$ddlModule"  id="ContentPlaceHolder3_ddlModule" class="form-control">
-<option selected="selected" value="0">---Select Module---</option>
-<option value="1">DashBoard</option>
-<option value="2">Master</option>
-<option value="3">Email / SMS Management</option>
-<option value="5">User Management</option>
-<option value="6">Purchase Order</option>
-<option value="7">Expense Management</option>
-<option value="8">Approval Management</option>
-<option value="9">Accounting</option>
-<option value="10">Leaves Management</option>
-<option value="11">Indent Management</option>
-<option value="0">--Select All--</option>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">Select Module Name</label>
+                        <div class="col-sm-8">
+                            <select name="ddlModule" id="ddlModule"
+                                class="form-control" formControlName="ddlModule">
+                                <option value="1">Dashboard</option>
+  <option value="2">User Master</option>
+  <!-- <option value="vw">VW</option>
+  <option value="audi" selected>Audi</option> -->
 
-</select>
+
+                            </select>
+                        </div>
                     </div>
-                  </div>
-                                    <div class="clearfix" style="margin-bottom:5px;"></div>
+                    <div class="clearfix" style="margin-bottom:5px;"></div>
 
-
-                  <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">Enter Sub Module Name</label>
-                    <div class="col-sm-8">
-                        <input name="ctl00$ContentPlaceHolder3$txtSubModuleName" type="text" id="ContentPlaceHolder3_txtSubModuleName" class="form-control">
-                     
-                    </div>
-                  </div>
-                                    <div class="clearfix" style="margin-bottom:5px;"></div>
-
-                  <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">Enter&nbsp; Sub Module Order</label>
-                    <div class="col-sm-8">
-                        <input name="ctl00$ContentPlaceHolder3$txtSubModuleOrder" type="text" id="ContentPlaceHolder3_txtSubModuleOrder" class="form-control">
-                     
-                        
-                     
-                    </div>
-                  </div>              
-                        
-                     <div class="clearfix" style="margin-bottom:5px;"></div>
 
                     <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-4 control-label">Enter&nbsp;Url</label>
-                    <div class="col-sm-8">
-                        <input name="ctl00$ContentPlaceHolder3$txtNavigationUrl" type="text" id="ContentPlaceHolder3_txtNavigationUrl" class="form-control">
+                        <label for="inputEmail3" class="col-sm-4 control-label">Enter Sub Module Name</label>
+                        <div class="col-sm-8">
+                            <input name="SubModuleName" type="text"
+                                id="ModuleName" class="form-control" formControlName="SubModuleName">
+
+                        </div>
                     </div>
-                  </div>        
+                    <div class="clearfix" style="margin-bottom:5px;"></div>
 
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">Enter Sub Target</label>
+                        <div class="col-sm-8">
+                            <input name="SubModuleName" type="text"
+                                id="ModuleName" class="form-control" formControlName="SubModuleTarget">
 
-
-
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-3 control-label"></label>
-                    <div class="col-sm-9">
-
-                        <span id="ContentPlaceHolder3_RequiredFieldValidator3" class="errorlabels" style="font-size:8pt;display:none;">Select Module</span>
-
-                        <span id="ContentPlaceHolder3_RequiredFieldValidator1" class="errorlabels" style="font-size:8pt;display:none;">Enter Sub Module Name</span>
-
-                        <span id="ContentPlaceHolder3_RequiredFieldValidator2" class="errorlabels" style="font-size:8pt;display:none;">Enter Sub Module Order</span>
-
-                        
-
-
-                        
-                        
-                      <span id="ContentPlaceHolder3_lblError"></span>  
-
-
-
-                        
-
-                        
-                          
+                        </div>
                     </div>
-                  </div>
+                    <div class="clearfix" style="margin-bottom:5px;"></div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">Enter&nbsp; Sub Module Order</label>
+                        <div class="col-sm-8">
+                            <input name="SubModuleOrder" type="number"
+                                id="ModuleOrder" class="form-control" formControlName="SubModuleOrder"  >
 
 
-               
-              <div class="form-group">
-                  <div class="col-sm-12">
-                <div class="col-sm-4">
-                </div> 
-                      <div class="col-sm-8">
-                       <input type="submit" name="ctl00$ContentPlaceHolder3$btnSave" value="Save"  id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10">&nbsp;  
-                            
-                      <input type="submit" name="ctl00$ContentPlaceHolder3$btnDelete" value="Delete" id="ContentPlaceHolder3_btnDelete" disabled="disabled" class="aspNetDisabled btn btn-primary mar_top10">&nbsp;
-                         <input type="submit" name="ctl00$ContentPlaceHolder3$btnClear" value="Reset" id="ContentPlaceHolder3_btnClear" class="btn btn-primary mar_top10">  
-                     
-                      </div> 
-                    
+
+                        </div>
+                    </div>
+
+                    <div class="clearfix" style="margin-bottom:5px;"></div>
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">Enter&nbsp;Url</label>
+                        <div class="col-sm-8">
+                            <input name="NavigationUrl" type="text"
+                                id="txtNavigationUrl" class="form-control" formControlName="NavigationUrl">
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+
+                            <span id="RequiredFieldValidator3" class="errorlabels"
+                                style="font-size:8pt;display:none;">Select Module</span>
+
+                            <span id="RequiredFieldValidator1" class="errorlabels"
+                                style="font-size:8pt;display:none;">Enter Sub Module Name</span>
+
+                            <span id="RequiredFieldValidator2" class="errorlabels"
+                                style="font-size:8pt;display:none;">Enter Sub Module Order</span>
+
+
+
+
+
+
+                            <span id="lblError"></span>
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="col-sm-4">
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="submit" name="btnSave" value="Save"
+                                    id="btnSave" class="btn btn-primary mar_top10">&nbsp;
+
+                                <input type="submit" name="btnDelete" value="Delete"
+                                    id="btnDelete" disabled="disabled"
+                                    class="aspNetDisabled btn btn-primary mar_top10">&nbsp;
+                                <input type="submit" name="btnClear" value="Reset"
+                                    id="btnClear" class="btn btn-primary mar_top10">
+
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
-              </div>
-              </div>
-              <div class="clearfix"></div>
-            
-        </div>
+                <div class="clearfix"></div>
+
+            </form>
 
         </div>
 
@@ -154,29 +169,29 @@
             <div class="card-header "> Group Details ::</div>
             <div class="card-body">
 
-                
+
 
                 <!-- <table id="example" class="display" width="100%"></table> -->
 
-                <table id="example"  class="row-border hover">
-                   
+                <table id="example" class="row-border hover">
+
                     <thead>
                         <tr>
-                          <th>ID</th>
-                          <th>Group Name</th>
-                         
+                            <th>ID</th>
+                            <th>Group Name</th>
+
                         </tr>
-                      </thead>
-                      <tbody>
+                    </thead>
+                    <tbody>
                         <!-- <tr *ngFor="let person of persons;">
                           <td>  {{person.index}}</td>
                           <td>{{ person.groupName }}</td>
                          
                         </tr> -->
-                      </tbody>
-                  </table>
-                  
-                  
+                    </tbody>
+                </table>
+
+
             </div>
         </div>
 
@@ -185,5 +200,3 @@
     <!-- /.card -->
 </section>
 <!-- /.content -->
-
-

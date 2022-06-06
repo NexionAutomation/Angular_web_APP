@@ -16,6 +16,8 @@ export class CM_AdminModuleMaster {
   public CUser_Id: number;
   public MUser_Id: number;
   public RID: number;
+  public status :any;
+  public CM_AdminModuleMaster:CM_AdminModuleMaster
 
   // constructor(Module_Id_: number, ModuleName_: string, ModuleOrder_: number, CUser_Id_: number, MUser_Id_: number, RID_: number) {
   //   this.Module_Id = Module_Id_;
@@ -86,9 +88,13 @@ export class CreateModulemasterComponent extends CM_AdminModuleMaster  implement
 const myJSON = JSON.stringify(output);
     const obj = JSON.parse(myJSON);
 
-    const status = obj["data"]["cMTmAdminModuleMasters"]
+    console.log(obj);
+    this.status=obj["data"]["cMTmAdminModuleMasters"];
+
     
-if(status[0].message=="Success")
+    
+    
+if(this.status[0].message=="Success")
 {
   const { value: showConfirmButton } = await Swal.fire({
     title: 'success',
@@ -111,17 +117,20 @@ if (showConfirmButton == true) {
       toast.addEventListener('mouseenter', Swal.stopTimer)
       toast.addEventListener('mouseleave', Swal.resumeTimer)
     }
+    
   })
 
-
+  this.Logins1.popupStatus
   Toast.fire({
     icon: 'success',
-    title: 'Data Create Successfully'
+    title: 'Data Create Successfully',
+    
+    
   })
+ this.LodeDataTable();
 }
 
 }
-
 
 
 
@@ -216,36 +225,30 @@ if (showConfirmButton == true) {
 
 
 
-
+    $('#example').DataTable().destroy();
     $(document).ready(function () {
-      var dt = $('#example').DataTable({
-        processing: true,
-
+    
+      this.dtOptions= $('#example').DataTable({
+    
         dom: 'Bfrtip',
-        paging: false,
-        lengthChange: true,
-        responsive: true,
+      paging:true
+        
 
 
       });
+      
+      
 
     });
 
+    
+
 
 
   }
 
 
-  async loginByAuth(FormGroup: FormGroup) {
-    if (this.loginForm.valid) {
-      this.loginForm;
-      //this.isAuthLoading = true;
-      // await this.login.GETBYID(this.loginForm.get('email').value, this.loginForm.get('password').value);
-      //this.isAuthLoading = false;
-    } else {
-      this.toastr.error('Form is not valid!');
-    }
-  }
+
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
