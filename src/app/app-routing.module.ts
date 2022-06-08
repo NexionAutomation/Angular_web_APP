@@ -53,8 +53,9 @@ const routes: Routes = [
                 path: 'Read-Drawing',
                 component: ReadDrawingQrcodeComponent
             },
+          
             {
-                path: 'UserMaster',
+                path: 'UserGroup',
                 component: UserGroupMasterComponent
             },
             {

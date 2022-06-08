@@ -50,6 +50,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 
+
 // import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 // import { createHttpLink, HttpLink, InMemoryCache } from '@apollo/client';
 
@@ -97,7 +98,7 @@ registerLocaleData(localeEn, 'en-EN');
         DataTablesModule,
          ApolloModule, 
         BrowserModule,
-        
+       
         StoreModule.forRoot({auth: authReducer, ui: uiReducer}),
         SweetAlert2Module.forRoot(),
 

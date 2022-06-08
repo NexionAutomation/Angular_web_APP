@@ -98,12 +98,12 @@ persons.forEach(element => {
 
 console.log(array2);
 //or the shortcut: = []
-for(var a=0;a<=10;a++)
+for(var a=0;a<=0;a++)
 {
 
   array.push (
     {
-        name: a.toString(),
+        name: 'User Master',
         path: ['/'],
         children:array2
     });

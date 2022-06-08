@@ -8,7 +8,9 @@ import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { CM_AdminModuleMaster } from '../create-modulemaster/create-modulemaster.component';
 import { UserModuleServicesService } from '../user-module-services.service';
-
+//import { initializeLinq, IEnumerable, from } from "linq-to-typescript"
+import { Enumerable, List } from 'sharp-collections';
+import { contains } from 'jquery';
 @Component({
   selector: 'app-create-sub-modulemaster',
   templateUrl: './create-sub-modulemaster.component.html',
@@ -51,12 +53,15 @@ export class CreateSubModulemasterComponent implements OnInit {
       NavigationUrl: new FormControl(null),
       SubModuleTarget: new FormControl(null),
     });
-
+   
+    
     this.LodeDataTable();
 
   }
 
   async onSubmit() {
+
+
     
 console.log(this.loginForm);
   var output= await this.INSERT(
@@ -67,8 +72,8 @@ console.log(this.loginForm);
    this.Logins1.TMUserMaster.userCode,
    this.loginForm.get('SubModuleOrder').value ,
      this.loginForm.get('NavigationUrl').value,
-     0//,
-   //this.loginForm.get('SubModuleTarget').value,
+     0,
+   this.loginForm.get('SubModuleTarget').value,
     );
 
 
@@ -81,8 +86,8 @@ const myJSON = JSON.stringify(output);
   const status=obj["data"]["cMTmAdminModuleMasters"];
 
     
-    
-    
+  
+
 if(status[0].message=="Success")
 {
   const { value: showConfirmButton } = await Swal.fire({
@@ -136,8 +141,8 @@ if (showConfirmButton == true) {
      mUser_Id: number,
      subModuleOrder: number,
      navigationUrl: string,
-     rID: number//,
-     //targetModule: string,
+     rID: number,
+     targetModule: string,
   )
   {
     
@@ -151,7 +156,8 @@ if (showConfirmButton == true) {
     $mUser_Id: Int!,
     $subModuleOrder: Int!,
     $navigationUrl: String, 
-    $rID: Int!) {
+    $rID: Int!
+    $targetModule:String) {
     __typename
     cMTmAdminSubModuleMasters(data: {detail: {moduleId: $module_Id, 
       subModuleId: $subModule_Id,
@@ -162,6 +168,7 @@ if (showConfirmButton == true) {
       subModuleOrder: $subModuleOrder,
       rid: $rID, 
       subModuleName: $subModuleName, 
+      targetModule:$targetModule,
       navigationUrl: $navigationUrl}}, triger: "INSERT") {
       iD
       code
@@ -184,8 +191,8 @@ if (showConfirmButton == true) {
      mUser_Id,
      subModuleOrder,
      navigationUrl,
-     rID//,
-    // targetModule,
+     rID,
+     targetModule,
    } });
    var ss = await this.Logins1.GraphqlFetchdata("query", datas);
 
@@ -194,18 +201,22 @@ if (showConfirmButton == true) {
   async GETData(User: string, Password: string): Promise<any> {
 
     let data = '{User="' + User + '",Password="' + Password + '" }';
-    let query = `{
-      cMTmAdminModuleMasters {
-        moduleName
-        creationDate
-        cuserId
-        modificationDate
-        moduleId
-        moduleOrder
-        muserId
+    let query = `query MyQuery {
+      cMTmAdminSubModuleMasters {
+        subModuleName
+        navigationUrl
+        targetModule
+        subModuleOrder
+        subModuleId
         rid
+        muserId
+        moduleId
+        modificationDate
+        cuserId
+        creationDate
       }
     }
+    
     
       `
     var datas = JSON.stringify({ query, variables: { User, Password } });
@@ -219,9 +230,14 @@ if (showConfirmButton == true) {
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-    this.persons = obj["data"]["cMTmAdminModuleMasters"]
+    this.persons = obj["data"]["cMTmAdminSubModuleMasters"]
+  
 
-
+    const enumerable = Enumerable.from(this.persons).asEnumerable(); // or List.from(data)
+    
+  //const adults = enumerable.take(1).toList();
+  //console.log(adults);
+    //console.log(enumerable);
 
     $('#example').DataTable().destroy();
     $(document).ready(function () {
