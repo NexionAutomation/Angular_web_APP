@@ -8,6 +8,8 @@ import { Listener } from "selenium-webdriver";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { from } from "linq-to-typescript"
+import { FormGroup } from "@angular/forms";
+import { HttpClient } from "@angular/common/http";
 
 
 @Injectable({
@@ -24,7 +26,7 @@ export class Logins implements OnInit {
 
   // private querySubscription: Subscription;
 
-  constructor(private apollo: Apollo, private router: Router, private toastr: ToastrService) { }
+  constructor(private apollo: Apollo, private router: Router, private toastr: ToastrService,private https:HttpClient) { }
   ngOnInit(): void {
 
   }
@@ -118,6 +120,60 @@ export class Logins implements OnInit {
 
   }
 
+
+  async Graphqlfile(query: string, Query: string,files:FormGroup) {
+
+   
+
+    var _map = {
+      file: ["variables.file"]
+    }
+    var file = files
+    var fd = new FormData()
+    fd.append('operations', JSON.stringify(Query))
+    fd.append('map', JSON.stringify(_map))
+    //fd.append('file', file, file.name)
+
+  var data=  this.https.post(environment.apiUrl, fd).subscribe()
+console.log(data);
+    return await fetch(environment.apiUrl, {
+      method: 'POST',
+       headers: {
+         //   'Access-Control-Allow-Origin':'*',
+//   'Access-Control-Allow-Methods': 'PUT, GET, POST',
+//   'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+//   'Accept': 'application/json',
+// "Content-Disposition": "attachment; name='file'; filename='xml2.txt'",
+// "Content-Type": " application/json;multipart/form-data; boundary=BbC04y ;multipart/mixed;boundary=gc0p4Jq0M2Yt08jU534c0p;multipart/form-data" 
+
+        'Content-Type': 'application/json;multipart/form-data',
+        'Accept': 'application/json',
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+          }, body: Query
+    })
+      .then(r => r.json())
+      .then(data => data)
+
+  }
+
+
+  async Graphqlfiledata(query: string, Query: FormData,files:File) {
+
+   
+
+  
+this.https.post(environment.apiUrl, Query).subscribe()
+console.log();
+  }
+
+//   'Access-Control-Allow-Origin':'*',
+//   'Access-Control-Allow-Methods': 'PUT, GET, POST',
+//   'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+//   'Accept': 'application/json',
+// "Content-Disposition": "attachment; name='file'; filename='xml2.txt'",
+// "Content-Type": " application/json;multipart/form-data; boundary=BbC04y ;multipart/mixed;boundary=gc0p4Jq0M2Yt08jU534c0p;multipart/form-data" 
+
+
   async GraphqlFetchQuery(query: string, Query: string) {
 
     return await fetch(environment.apiUrl, {
@@ -134,6 +190,8 @@ export class Logins implements OnInit {
 
   }
 
+
+  
 }
 
 export class TMUserMaster

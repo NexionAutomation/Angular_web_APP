@@ -56,3 +56,16 @@ export interface CMAdminModuleMasterUser {
     muserId: number;
     rid: number;
 }
+export interface RightsModule {
+    groupID: number;
+    moduleID: number;
+    userID: number;
+   
+
+    canCreate: number;
+    canUpdate: number;
+    canDelete: number;
+    canshow: number;
+    canImportExcel: number;
+    canExport: number;
+}

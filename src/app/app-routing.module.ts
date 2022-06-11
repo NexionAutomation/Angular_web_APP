@@ -21,6 +21,7 @@ import { CreateUserRightsComponent } from '@pages/user-module/create-user-rights
 
 import { CreateModulemasterComponent } from '@pages/user-module/create-modulemaster/create-modulemaster.component';
 import { CreateSubModulemasterComponent } from '@pages/user-module/create-sub-modulemaster/create-sub-modulemaster.component';
+import { UplodeFileComponent } from '@pages/uplode-file/uplode-file.component';
 
 const routes: Routes = [
     {
@@ -73,6 +74,10 @@ const routes: Routes = [
             {
                 path: 'CreateUsersubmodule',
                 component: CreateSubModulemasterComponent
+            },
+            {
+                path: 'Upode',
+                component: UplodeFileComponent
             },
             {
                 path: '',

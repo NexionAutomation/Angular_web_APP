@@ -83,6 +83,16 @@ export class MenuSidebarComponent implements OnInit {
 
 
 
+
+  //    var result = 
+  // // as Jon Skeet pointed out, OrderBy is useless here, I just leave it 
+  // // show how to use OrderBy in a LINQ query
+  // persons.OrderBy(mc => mc.SomePropToSortOn)
+  //                  .ToDictionary(mc => mc.mo.ToString(), 
+  //                                mc => mc.ValueProp.ToString(), 
+  //                                );
+
+
      var array2= new Array(); 
 
      var array = new Array();

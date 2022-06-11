@@ -2,22 +2,21 @@ import { Logins } from '@/Model/Utility/login';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { CMAdminModuleMasterUser, CMAdminSubModuleMaster } from '@modules/Module/PoModules';
+import { CM_AdminModuleMaster } from '@pages/user-module/create-modulemaster/create-modulemaster.component';
+import { UserModuleServicesService } from '@pages/user-module/user-module-services.service';
 import { AppService } from '@services/app.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
-import Swal from 'sweetalert2';
-import { CM_AdminModuleMaster } from '../create-modulemaster/create-modulemaster.component';
-import { UserModuleServicesService } from '../user-module-services.service';
-//import { initializeLinq, IEnumerable, from } from "linq-to-typescript"
 import { Enumerable, List } from 'sharp-collections';
-import { contains } from 'jquery';
-import { CMAdminModuleMasterUser, CMAdminSubModuleMaster } from '@modules/Module/PoModules';
+import Swal from 'sweetalert2';
+
 @Component({
-  selector: 'app-create-sub-modulemaster',
-  templateUrl: './create-sub-modulemaster.component.html',
-  styleUrls: ['./create-sub-modulemaster.component.scss']
+  selector: 'app-uplode-file',
+  templateUrl: './uplode-file.component.html',
+  styleUrls: ['./uplode-file.component.scss']
 })
-export class CreateSubModulemasterComponent implements OnInit {
+export class UplodeFileComponent implements OnInit {
 
   dtOptions: DataTables.Settings = {};
   persons: any;
@@ -50,11 +49,9 @@ ActionStatus:any;
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      ddlModule: new FormControl(null),
-      SubModuleName: new FormControl(null),
-      SubModuleOrder: new FormControl(null),
-      NavigationUrl: new FormControl(null),
-      SubModuleTarget: new FormControl(null),
+     
+      file1: new FormControl()
+     
     });
 
 
@@ -64,25 +61,18 @@ ActionStatus:any;
 
   async onSubmit() {
 
-
+  
 
     console.log(this.loginForm);
     this.ActionStatus="INSERT";
     var output = await this.INSERT(
-       parseInt( this.loginForm.get('ddlModule').value),
-      1,
-      this.loginForm.get('SubModuleName').value,
-      this.Logins1.TMUserMaster.userCode,
-      this.Logins1.TMUserMaster.userCode,
-      this.loginForm.get('SubModuleOrder').value,
-      this.loginForm.get('NavigationUrl').value,
-      0,
-      this.loginForm.get('SubModuleTarget').value,
+       this.loginForm.get('file1').value,
+      
     );
     this.ActionStatus="";
     const myJSON = JSON.stringify(output);
     const obj = JSON.parse(myJSON);
-    const status = obj["data"]["cMTmAdminModuleMasters"];
+    const status = null;//obj["data"]["uploadFile"];
 
     if (status[0].message == "Success") {
       const { value: showConfirmButton } = await Swal.fire({
@@ -124,48 +114,35 @@ ActionStatus:any;
   }
 
   async INSERT(
-    module_Id: number,
-    subModule_Id: number,
-    subModuleName: string,
-    cUser_Id: number,
-    mUser_Id: number,
-    subModuleOrder: number,
-    navigationUrl: string,
-    rID: number,
-    targetModule: string,
+    files: File,
+   
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
 
 
-    let query = `mutation MyMutation($module_Id: Int!,
-    $subModule_Id: Int!,
-    $subModuleName: String,
-    $cUser_Id: Int!,
-    $mUser_Id: Int!,
-    $subModuleOrder: Int!,
-    $navigationUrl: String, 
-    $rID: Int!
-    $targetModule:String) {
-    __typename
-    cMTmAdminSubModuleMasters(data: {detail: {moduleId: $module_Id, 
-      subModuleId: $subModule_Id,
-      creationDate: "2019-10-10",
-      cuserId: $cUser_Id,
-      modificationDate: "2019-10-10",
-      muserId: $mUser_Id, 
-      subModuleOrder: $subModuleOrder,
-      rid: $rID, 
-      subModuleName: $subModuleName, 
-      targetModule:$targetModule,
-      navigationUrl: $navigationUrl}}, triger: "INSERT") {
-      iD
-      code
-      message
-      status
-    }
+    // let formData = new FormData();           
+    // formData.append("file", files[0]);
+
+console.log(files)
+    let query = `
+    mutation MyMutation($file:Upload) {
+      __typename
+      uploadFile(files: $file) {
+        iD
+        code
+        message
+        status
+        detail
+      },
+      
+  variables: {
+    file: null
   }
-  
+    }
+    
+       
+    
        `
 
      switch (this.ActionStatus)
@@ -189,24 +166,23 @@ ActionStatus:any;
 
     var datas = JSON.stringify({
       query, variables: {
-        module_Id,
-        subModule_Id,
-        subModuleName,
-        cUser_Id,
-        mUser_Id,
-        subModuleOrder,
-        navigationUrl,
-        rID,
-        targetModule,
+        files,
+        
       }
     });
-    var ss = await this.Logins1.GraphqlFetchdata("query", datas);
 
-    return ss;
+    
+    //var ss = await this.Logins1.Graphqlfiledata("query", datas, files);
+
+    return null;
   }
   async GETData(User: string, Password: string): Promise<any> {
 
     let data = '{User="' + User + '",Password="' + Password + '" }';
+
+
+
+    
     let query = `query MyQuery {
       cMTmAdminSubModuleMasters {
         subModuleName
@@ -300,5 +276,55 @@ alert (event)
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
 
+  }
+
+
+  async upload($event) {
+    alert("call");
+
+
+
+
+   
+    var operations = {
+      query: `
+      mutation MyMutation($file: Upload) {
+        __typename
+        uploadFile(files: $file) {
+          code
+          detail
+          iD
+          message
+          status
+        }
+      }
+      `,
+      variables: {
+        file: null
+      }
+    }
+
+
+       var _map = {
+        file: ["variables.file"]
+      }
+
+
+      var file =  $event.target.files[0];
+var fd = new FormData()
+fd.append('operations', JSON.stringify(operations))
+fd.append('map', JSON.stringify(_map))
+fd.append('file', file, file.name)
+
+
+    var output = await this.INSERT(
+      this.loginForm.get('file1').value,
+     
+   );
+
+   var ss = await this.Logins1.Graphqlfiledata("query", fd, file);
+
+console.log(ss);
+   
   }
 }

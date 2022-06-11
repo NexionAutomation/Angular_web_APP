@@ -98,14 +98,16 @@
 
                                                                 </label>
 
-                                                                &nbsp;<select size="4" class="form-select"
+                                                               <select size="4" class="form-select"
                                                                     formControlName="lstModules"
                                                                     id="ContentPlaceHolder3_lstModules"
                                                                     class="aspNetDisabled form-control"
+                                                                    (ngModelChange)="onchangeModule($event)"
                                                                     style="font-size:12pt;font-weight:bold;height:290px;">
                                                                     <option
                                                                         *ngFor="let CMAdminModuleMasterUserc of CMAdminModuleMasterUser "
-                                                                        [value]="CMAdminModuleMasterUserc.moduleName">{{
+                                                                        
+                                                                        [value]="CMAdminModuleMasterUserc.rid">{{
                                                                         CMAdminModuleMasterUserc.moduleName}}</option>
                                                                 </select>
 
@@ -135,51 +137,73 @@
 
 
                                             <!-- <table id="example" class="display" width="100%"></table> -->
-
+                                        
+                                            <div *ngIf="submodule2; else elseBlock">
                                             <table id="example1" class="table table-striped table-hover  table-responsive" >
 
                                                 <thead>
                                                     <tr>
                                                         <th>ID</th>
-                                                        <th>Group Name</th>
-                                                        <th>Group Name</th>
-                                                        <th>Group Name</th>
-                                                        <th>Group Name</th>
-                                                        <th>Group Name</th>
-                                                        <th>Group Name</th>
-                                                        <th>Group Name</th>
-                                                        <th>Group Name</th>
-                                                        <th>Group Name</th>
-                                                        <th>Group Name</th>
-                                                        <th>Group Name</th>
-                                                        <th>Group Name</th>
+                                                        <th>Sub Module Name</th>
+                                                        <th>Select All</th>
+                                                        <th>Create</th>
+                                                        <th>Update</th>
+                                                        <th>Delete</th>
+                                                        <th>Show</th>
+                                                        <th>Import Excel</th>
+                                                        <th>Export Excel</th>
+                                                        <th>Save</th>
+                                                        
 
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr *ngFor="let person of submodule;">
-                                                        <td> {{person.subModuleName}}</td>
-                                                        <td>{{ person.subModuleName }}</td>
-                                                        <td> {{person.subModuleName}}</td>
-                                                        <td>{{ person.subModuleName }}</td>
-                                                        <td> {{person.subModuleName}}</td>
-                                                        <td>{{ person.subModuleName }}</td>
-                                                        <td> {{person.subModuleName}}</td>
-                                                        <td>{{ person.subModuleName }}</td>
-                                                        <td> {{person.subModuleName}}</td>
-                                                        <td>{{ person.subModuleName }}</td>
-                                                        <td> {{person.subModuleName}}</td>
-                                                        <td>{{ person.subModuleName }}</td>
-                                                        <td>{{ person.subModuleName }}</td>
+                                                    <!--  ng-model="entity.isChecked" ng-change="selectEntity()" [(ngModel)]="submodule2[i].checked" [checked]="isAllCheckBoxChecked()"-->
+                                                    <tr *ngFor="let person of submodule2; let i=index;">
+                                                        <td> {{i}}</td>
+                                                        <td>{{person.subModuleName}}
+                                                            
+                                                        </td>
+                                                        <td><input type="button" class="btn btn-info btn-sm" value="All"   /></td>
+                                                        
+                                                        
+                                                        <td><input type="checkbox" value="{{person.rid}}" id="Create,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
+                                                        <td> <input type="checkbox" value="{{person.rid}}" id="Update,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
+                                                        <td><input type="checkbox" value="{{person.rid}}" id="Delete,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
+                                                        <td> <input type="checkbox" value="{{person.rid}}" id="Show,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
+                                                        <td><input type="checkbox" value="{{person.rid}}" id="ImportExcel,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
+                                                        <td><input type="checkbox" value="{{person.rid}}" id="ExportExcel,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
+                                                        <td><input type="checkbox" value="{{person.rid}}" id="Save,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
+                                                        
 
                                                     </tr>
+                                                
+                                                
+                                               
                                                 </tbody>
                                             </table>
-
-
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        <input type="button" class="btn btn-info" value="Submit"/>
+    
+                                        
                                         </div>
-                                    </div>
+                                        <ng-template #elseBlock>
 
+
+                                            
+                                        </ng-template>
+                                        
+                                    </div>
+                                        
+                                    </div>
+                                    
                                 </div>
                             </div>
 
