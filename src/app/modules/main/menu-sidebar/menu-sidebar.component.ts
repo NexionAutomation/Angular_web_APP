@@ -2,9 +2,11 @@ import { Logins } from '@/Model/Utility/login';
 import {AppState} from '@/store/state';
 import {UiState} from '@/store/ui/state';
 import {Component, HostBinding, OnInit} from '@angular/core';
+import { CMAdminModuleMasterUser, CMAdminSubModuleMaster, CM_Web_UserRightsMaster, TmGroupMaster, TmUserMaster } from '@modules/Module/PoModules';
 import {Store} from '@ngrx/store';
 import {AppService} from '@services/app.service';
 import {concat, Observable} from 'rxjs';
+import { Enumerable, List } from 'sharp-collections';
 
 const BASE_CLASSES = 'main-sidebar elevation-4';
     var datas:any;
@@ -19,6 +21,13 @@ export class MenuSidebarComponent implements OnInit {
     public ui: Observable<UiState>;
     public user;
     public menu= new Array();
+
+    submodule2: any;
+  submodule: List<CMAdminSubModuleMaster>;
+  GroupMaster: List<TmGroupMaster>;
+  UserMaster: List<TmUserMaster>;
+  CMAdminModuleMasterUser: List<CMAdminModuleMasterUser>;
+  rightsModule2: List<CM_Web_UserRightsMaster>;
  
    // public menu = MENU;
 
@@ -40,23 +49,83 @@ export class MenuSidebarComponent implements OnInit {
     async GETData(User: string, Password: string): Promise<any> {
 
         let data = '{User="' + User + '",Password="' + Password + '" }';
-        let query = `
-        query MyQuery {
-          __typename
+        let query = `query MyQuery {
+          pOTmGroupMasters {
+            groupName
+            creationDate
+            cuserId
+            modificationDate
+            muserId
+            groupId
+            rid
+          }
+          pOTmUserMasters {
+            userName
+            userId
+            upassword
+            emailId
+            mobileNo
+            groupId
+            accountStatus
+            fromTime
+            fromTimeAmPm
+            toTime
+            toTimeAmPm
+            userImage
+            creationDate
+            cuserId
+            modificationDate
+            muserId
+            recordstatus
+            reasonForDeletion
+            deletedDate
+            duserCode
+            userCode
+            lastLoginDateTime
+            reportingManager
+            rid
+          }
           cMTmAdminSubModuleMasters {
             creationDate
             cuserId
             modificationDate
-            moduleId
             muserId
+            moduleId
             navigationUrl
             rid
             subModuleId
             subModuleName
             subModuleOrder
+            targetModule
+          }
+          cMTmAdminModuleMasters {
+            creationDate
+            modificationDate
+            cuserId
+            moduleId
+            moduleName
+            moduleOrder
+            muserId
+            rid
+          }
+          cMWebUserRightsMaster {
+            canDelete
+            canExport
+            canSave
+            canSearch
+            canUpdate
+            canView
+            creationDate
+            cuserId
+            groupId
+            modificationDate
+            moduleId
+            muserId
+            rid
+            subModuleId
+            userCode
           }
         }
-        
           `
         var datas = JSON.stringify({ query, variables: { User, Password } });
         var ss = await this.login.GraphqlFetchQuery("query", query);
@@ -72,14 +141,31 @@ export class MenuSidebarComponent implements OnInit {
         const myJSON = JSON.stringify(data);
         const obj = JSON.parse(myJSON);
     
-           var persons = obj["data"]["cMTmAdminSubModuleMasters"]
+        this.submodule = Enumerable.from(obj["data"]["cMTmAdminSubModuleMasters"]).cast<CMAdminSubModuleMaster>().toList();
+        this.GroupMaster = Enumerable.from(obj["data"]["pOTmGroupMasters"]).cast<TmGroupMaster>().toList();
+        this.UserMaster = Enumerable.from(obj["data"]["pOTmUserMasters"]).cast<TmUserMaster>().toList();
+        this.CMAdminModuleMasterUser = Enumerable.from(obj["data"]["cMTmAdminModuleMasters"]).cast<CMAdminModuleMasterUser>().toList();
+        this.rightsModule2 = Enumerable.from(obj["data"]["cMWebUserRightsMaster"]).cast<CM_Web_UserRightsMaster>().toList();
     
     
-     console.log(persons);
+     console.log(this.login.TMUserMaster);
    
     
-        
+       
+       // .join()
 
+
+        // var result = this.rightsModule2
+        //       .join(this.submodule, a => a.subModule_Id, b => b.rid)
+             
+        //       .toList();
+
+              var result = this.submodule
+              .join(this.rightsModule2, a => a.moduleId, b => b.subModule_Id)
+              .where(s => s.left.moduleId == s.right.subModule_Id && s.right.cUser_Id==this.login.TMUserMaster.userCode )
+              .toList();
+    //.where(s => s.left.moduleId == s.right.rid )
+     //this.persons=result;
 
 
 
@@ -92,12 +178,13 @@ export class MenuSidebarComponent implements OnInit {
   //                                mc => mc.ValueProp.ToString(), 
   //                                );
 
+  console.log(result);
 
      var array2= new Array(); 
 
      var array = new Array();
 
-persons.forEach(element => {
+     this.submodule.toArray().forEach(element => {
     
     array2.push({
         name:  element.subModuleName ,
@@ -106,7 +193,7 @@ persons.forEach(element => {
 });
 
 
-console.log(array2);
+//console.log(array2);
 //or the shortcut: = []
 for(var a=0;a<=0;a++)
 {

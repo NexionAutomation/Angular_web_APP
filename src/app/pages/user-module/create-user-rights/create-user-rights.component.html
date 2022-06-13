@@ -76,7 +76,7 @@
                                                                     class="aspNetDisabled form-control"
                                                                     style="font-size:12pt;font-weight:bold;height:290px;">
                                                                     <option *ngFor="let UserMasterc of UserMaster2 "
-                                                                        [value]="UserMasterc.userId">{{
+                                                                        [value]="UserMasterc.rid">{{
                                                                         UserMasterc.userId}}</option>
                                                                 </select>
 
@@ -167,13 +167,13 @@
                                                         <td><input type="button" class="btn btn-info btn-sm" value="All"   /></td>
                                                         
                                                         
-                                                        <td><input type="checkbox" value="{{person.rid}}" id="Create,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
-                                                        <td> <input type="checkbox" value="{{person.rid}}" id="Update,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
-                                                        <td><input type="checkbox" value="{{person.rid}}" id="Delete,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
-                                                        <td> <input type="checkbox" value="{{person.rid}}" id="Show,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
-                                                        <td><input type="checkbox" value="{{person.rid}}" id="ImportExcel,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
-                                                        <td><input type="checkbox" value="{{person.rid}}" id="ExportExcel,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
-                                                        <td><input type="checkbox" value="{{person.rid}}" id="Save,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
+                                                        <td><input type="checkbox" value="Create,{{person.rid}}" id="Create,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
+                                                        <td> <input type="checkbox" value="Update,{{person.rid}}" id="Update,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
+                                                        <td><input type="checkbox" value="Delete,{{person.rid}}" id="Delete,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
+                                                        <td> <input type="checkbox" value="Show,{{person.rid}}" id="Show,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
+                                                        <td><input type="checkbox" value="ImportExcel,{{person.rid}}" id="ImportExcel,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
+                                                        <td><input type="checkbox" value="ExportExcel,{{person.rid}}" id="ExportExcel,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
+                                                        <td><input type="checkbox" value="Save,{{person.rid}}" id="Save,{{person.rid}}" (change)="checkAllCheckBox($event)" ></td>
                                                         
 
                                                     </tr>
@@ -190,7 +190,7 @@
                                         
                                         
                                         
-                                        <input type="button" class="btn btn-info" value="Submit"/>
+                                        <input type="button" class="btn btn-info" value="Submit" (click)="submitData()"/>
     
                                         
                                         </div>

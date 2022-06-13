@@ -56,16 +56,19 @@ export interface CMAdminModuleMasterUser {
     muserId: number;
     rid: number;
 }
-export interface RightsModule {
-    groupID: number;
-    moduleID: number;
-    userID: number;
-   
-
-    canCreate: number;
-    canUpdate: number;
-    canDelete: number;
-    canshow: number;
-    canImportExcel: number;
-    canExport: number;
+export class CM_Web_UserRightsMaster
+{
+	public group_Id: number;
+	public module_Id: number;
+	public subModule_Id: number;
+	public canView: boolean;
+	public canSave: boolean;
+	public canSearch: boolean;
+	public canUpdate: boolean;
+	public canDelete: boolean;
+	public cUser_Id: number;
+	public mUser_Id: number;
+	public user_Code: number;
+	public canExport: boolean;
+	public rID: number;
 }
