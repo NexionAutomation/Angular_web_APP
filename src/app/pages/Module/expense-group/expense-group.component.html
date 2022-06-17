@@ -14,7 +14,7 @@
 
 
 
-    <div id="ContentPlaceHolder3_UpdatePanel1">
+    <div id="UpdatePanel1">
 
 
         <div class="col-md-12 col-md-offset-2">
@@ -37,15 +37,16 @@
                                 <div class="row">
                                     <div class="col-sm-12">
 
-                                        <div class="log_form1">
+                                        <form class="log_form1"  [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
                                             <div class="form-horizontal">
                                                 <div class="form-group">
                                                     <label for="inputEmail3" class="col-sm-3 control-label">Enter
                                                         Expense Group</label>
                                                     <div class="col-sm-9">
-                                                        <input name="ctl00$ContentPlaceHolder3$txtcountrymaster"
-                                                            type="text" id="ContentPlaceHolder3_txtcountrymaster"
+                                                        <input name="txtcountrymaster"
+                                                            type="text" id="txtcountrymaster"
+                                                            formControlName="txtcountrymaster"
                                                             class="form-control">
 
                                                     </div>
@@ -56,8 +57,8 @@
                                                     <label for="inputEmail3" class="col-sm-3 control-label"></label>
                                                     <div class="col-sm-9">
 
-                                                        <span id="ContentPlaceHolder3_lblError"></span>
-                                                        <span id="ContentPlaceHolder3_RequiredFieldValidator1"
+                                                        <span id="lblError"></span>
+                                                        <span id="RequiredFieldValidator1"
                                                             class="errorlabels" style="display:none;">Enter Country
                                                             Name</span>
 
@@ -75,18 +76,13 @@
                                                         </div>
                                                         <div class="col-sm-9">
                                                             <input type="submit"
-                                                                name="ctl00$ContentPlaceHolder3$btnSave" value="Save"
-                                                                id="ContentPlaceHolder3_btnSave"
+                                                                name="btnSave" value="Save"
+                                                                id="btnSave"
                                                                 class="btn btn-primary mar_top10">&nbsp;
 
-                                                            <input type="submit"
-                                                                name="ctl00$ContentPlaceHolder3$btnDelete"
-                                                                value="Delete" id="ContentPlaceHolder3_btnDelete"
-                                                                disabled="disabled"
-                                                                class="aspNetDisabled btn btn-primary mar_top10">&nbsp;
-                                                            <input type="submit"
-                                                                name="ctl00$ContentPlaceHolder3$btnClear" value="Reset"
-                                                                id="ContentPlaceHolder3_btnClear"
+                                                              <input type="submit"
+                                                                name="btnClear" value="Reset"
+                                                                id="btnClear"
                                                                 class="btn btn-primary mar_top10">
 
                                                         </div>
@@ -96,7 +92,7 @@
                                             </div>
                                             <div class="clearfix"></div>
 
-                                        </div>
+                                        </form>
 
 
                                     </div>
@@ -117,14 +113,14 @@
 
 
 
-        <input type="submit" name="ctl00$ContentPlaceHolder3$btnSavingModelpopUp" value="Button"
-            id="ContentPlaceHolder3_btnSavingModelpopUp" style="display: none;">
+        <input type="submit" name="btnSavingModelpopUp" value="Button"
+            id="btnSavingModelpopUp" style="display: none;">
 
-        <div id="ContentPlaceHolder3_pnlSavePopUp"
+        <div id="pnlSavePopUp"
             style="width: 350px; display: none; position: fixed; z-index: 10001;">
 
 
-            <div id="ContentPlaceHolder3_UpdateProgress1" style="display:none;" role="status" aria-hidden="true">
+            <div id="UpdateProgress1" style="display:none;" role="status" aria-hidden="true">
 
                 <div class="PopupWaiting">
 
@@ -153,7 +149,7 @@
                     </tr>
                     <tr>
                         <td align="center">
-                            <span id="ContentPlaceHolder3_lblSavingDialogcard"></span>
+                            <span id="lblSavingDialogcard"></span>
 
 
                         </td>
@@ -165,7 +161,7 @@
                     </tr>
                     <tr>
                         <td align="center">
-                            <span id="ContentPlaceHolder3_lblConfrmMsg"></span>
+                            <span id="lblConfrmMsg"></span>
 
 
                             &nbsp;
@@ -175,7 +171,7 @@
 
                     <tr>
                         <td align="center">
-                            <span id="ContentPlaceHolder3_lblpendingaproval"></span>
+                            <span id="lblpendingaproval"></span>
 
                             &nbsp;
                         </td>
@@ -185,11 +181,11 @@
                         <td align="center">
 
 
-                            <input type="submit" name="ctl00$ContentPlaceHolder3$btnsaveOk" value="Yes"
-                                id="ContentPlaceHolder3_btnsaveOk" class="btn btn-primary" style="width:80px;">
+                            <input type="submit" name="btnsaveOk" value="Yes"
+                                id="btnsaveOk" class="btn btn-primary" style="width:80px;">
                             &nbsp;&nbsp;&nbsp;
-                            <input type="submit" name="ctl00$ContentPlaceHolder3$BtnSaveCancel" value="No"
-                                id="ContentPlaceHolder3_BtnSaveCancel" class="btn btn-primary" style="width:80px;">
+                            <input type="submit" name="BtnSaveCancel" value="No"
+                                id="BtnSaveCancel" class="btn btn-primary" style="width:80px;">
                         </td>
                     </tr>
                     <tr>
@@ -201,10 +197,10 @@
         </div>
 
 
-        <input type="submit" name="ctl00$ContentPlaceHolder3$modalPopupButton" value="Button"
-            id="ContentPlaceHolder3_modalPopupButton" style="display: none;">
+        <input type="submit" name="modalPopupButton" value="Button"
+            id="modalPopupButton" style="display: none;">
 
-        <div id="ContentPlaceHolder3_DeletePopup" style="width: 350px; display: none; position: fixed; z-index: 10001;">
+        <div id="DeletePopup" style="width: 350px; display: none; position: fixed; z-index: 10001;">
 
 
             <table style="width: 100%; background-color: White; border: 1px solid gray;">
@@ -226,7 +222,7 @@
                     </tr>
                     <tr>
                         <td align="center">
-                            <span id="ContentPlaceHolder3_lblDialogMsg"></span>
+                            <span id="lblDialogMsg"></span>
                         </td>
                     </tr>
                     <tr>
@@ -234,11 +230,11 @@
                     </tr>
                     <tr>
                         <td align="center">
-                            <input type="submit" name="ctl00$ContentPlaceHolder3$btnDeleteOk" value="OK"
-                                id="ContentPlaceHolder3_btnDeleteOk" class="btn btn-primary" style="width:80px;">
+                            <input type="submit" name="btnDeleteOk" value="OK"
+                                id="btnDeleteOk" class="btn btn-primary" style="width:80px;">
                             &nbsp;&nbsp;&nbsp;
-                            <input type="submit" name="ctl00$ContentPlaceHolder3$btnCancel" value="Cancel"
-                                id="ContentPlaceHolder3_btnCancel" class="btn btn-primary" style="width:80px;">
+                            <input type="submit" name="btnCancel" value="Cancel"
+                                id="btnCancel" class="btn btn-primary" style="width:80px;">
                         </td>
                     </tr>
                     <tr>

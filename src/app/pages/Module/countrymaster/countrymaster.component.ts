@@ -2,7 +2,7 @@ import { Logins } from '@/Model/Utility/login';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { CMAdminModuleMasterUser, CMAdminSubModuleMaster, TM_CompanyMaster } from '@modules/Module/PoModules';
+import { CMAdminModuleMasterUser, CMAdminSubModuleMaster, TM_CompanyMaster, TM_CountryMaster } from '@modules/Module/PoModules';
 import { CM_AdminModuleMaster } from '@pages/user-module/create-modulemaster/create-modulemaster.component';
 import { UserModuleServicesService } from '@pages/user-module/user-module-services.service';
 import { AppService } from '@services/app.service';
@@ -10,10 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { Enumerable, List } from 'sharp-collections';
 import Swal from 'sweetalert2';
-import * as sear from '../../../../assets/select2/select2.min.js';
-import { Select2} from 'select2'
 
-import * as jquery from 'jquery';
 @Component({
   selector: 'app-countrymaster',
   templateUrl: './countrymaster.component.html',
@@ -28,14 +25,16 @@ export class CountrymasterComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   headers: any;
   CM_AdminModuleMaster: CM_AdminModuleMaster;
-
+FlagID=0;
+EditModel!:any;
 
 
 ActionStatus:any;
   public loginForm: FormGroup;
   CMAdminModuleMasterUser: List<CMAdminModuleMasterUser>;
   cMTmAdminSubModuleMasters: List<CMAdminSubModuleMaster>;
-  TM_CompanyMaster: List<TM_CompanyMaster>;
+  TM_CompanyMaster: List<TM_CountryMaster>;
+ 
   constructor(
     private renderer: Renderer2,
     private toastr: ToastrService,
@@ -55,11 +54,9 @@ ActionStatus:any;
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      ddlModule: new FormControl(null),
-      SubModuleName: new FormControl(null),
-      SubModuleOrder: new FormControl(null),
-      NavigationUrl: new FormControl(null),
-      SubModuleTarget: new FormControl(null),
+      txtcountrymaster: new FormControl(),
+      txtdisplayname: new FormControl(),
+    
     });
   
 
@@ -114,15 +111,17 @@ ActionStatus:any;
     console.log(this.loginForm);
     this.ActionStatus="INSERT";
     var output = await this.INSERT(
-       parseInt( this.loginForm.get('ddlModule').value),
-      1,
-      this.loginForm.get('SubModuleName').value,
-      this.Logins1.TMUserMaster.userCode,
-      this.Logins1.TMUserMaster.userCode,
-      this.loginForm.get('SubModuleOrder').value,
-      this.loginForm.get('NavigationUrl').value,
-      0,
-      this.loginForm.get('SubModuleTarget').value,
+      
+
+
+     1 ,
+       this.loginForm.get('txtcountrymaster').value,
+        this.loginForm.get('txtcountrymaster').value,
+      
+       1,
+     "No",
+     "No",
+       "INSERT",
     );
     this.ActionStatus="";
     const myJSON = JSON.stringify(output);
@@ -169,48 +168,49 @@ ActionStatus:any;
   }
 
   async INSERT(
-    module_Id: number,
-    subModule_Id: number,
-    subModuleName: string,
-    cUser_Id: number,
-    mUser_Id: number,
-    subModuleOrder: number,
-    navigationUrl: string,
-    rID: number,
-    targetModule: string,
+    countrycode: Number,
+    countryname: String,
+    displayAs: String,
+   
+    usercode: Number,
+    deleted: String,
+    editable: String,
+    ActionFlag: String,
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
 
 
-    let query = `mutation MyMutation($module_Id: Int!,
-    $subModule_Id: Int!,
-    $subModuleName: String,
-    $cUser_Id: Int!,
-    $mUser_Id: Int!,
-    $subModuleOrder: Int!,
-    $navigationUrl: String, 
-    $rID: Int!
-    $targetModule:String) {
-    __typename
-    cMTmAdminSubModuleMasters(data: {detail: {moduleId: $module_Id, 
-      subModuleId: $subModule_Id,
-      creationDate: "2019-10-10",
-      cuserId: $cUser_Id,
-      modificationDate: "2019-10-10",
-      muserId: $mUser_Id, 
-      subModuleOrder: $subModuleOrder,
-      rid: $rID, 
-      subModuleName: $subModuleName, 
-      targetModule:$targetModule,
-      navigationUrl: $navigationUrl}}, triger: "INSERT") {
-      iD
-      code
-      message
-      status
+    let query = `mutation MyMutation(
+      $countrycode: Int!,
+      $countryname: String,
+      $displayAs: String,
+   
+      $usercode: Int!,
+      $deleted: String,
+      $editable: String,
+    
+    ) {
+      __typename
+      cMCountryMaster(data: {detail: {
+        countrycode: $countrycode, 
+        countryname:  $countryname, 
+        creationdate: "2019-10-10",
+        deleted:  $deleted,
+        displayAs: $displayAs,
+        editable:  $editable,
+        modificationdate: "2019-10-10",
+        usercode: $usercode
+      }, iD:"${countrycode}"}, triger: "${ActionFlag}") {
+        code
+        detail
+        iD
+        message
+        status
+      }
     }
-  }
-  
+
+ 
        `
 
      switch (this.ActionStatus)
@@ -234,15 +234,15 @@ ActionStatus:any;
 
     var datas = JSON.stringify({
       query, variables: {
-        module_Id,
-        subModule_Id,
-        subModuleName,
-        cUser_Id,
-        mUser_Id,
-        subModuleOrder,
-        navigationUrl,
-        rID,
-        targetModule,
+      
+        countrycode,
+    countryname,
+    displayAs,
+   
+    usercode,
+    deleted,
+    editable,
+  
       }
     });
     var ss = await this.Logins1.GraphqlFetchdata("query", datas);
@@ -283,7 +283,7 @@ ActionStatus:any;
 
 
     const enumerable = Enumerable.from(this.persons).asEnumerable();
-    this.TM_CompanyMaster = Enumerable.from(obj["data"]["pOTmCountryMasters"]).cast<TM_CompanyMaster>().toList();
+    this.TM_CompanyMaster = Enumerable.from(obj["data"]["pOTmCountryMasters"]).cast<TM_CountryMaster>().toList();
  // or List.from(data)
     
 
@@ -324,15 +324,43 @@ ActionStatus:any;
  console.log(event);
   }
 
-  Edit(event :Event)
-  {
-alert (event)
-  }
+ 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
 
   }
 
+
+
+
+  async onEdit(string:string)
+  {
+    console.log(this.persons)
+    this.EditModel= this.persons.where(x=>x.countrycode==Number(string)).singleOrDefault()
+    
+  
+
+    this.loginForm.setValue({
+      txtcountrymaster: this.EditModel.countryname, 
+      txtdisplayname:  this.EditModel.displayAs
+    });
+
+    this.FlagID=1
+
+
+console.log(this.EditModel)
+  }
+  async onDel(string:any)
+  {
+    alert("Delete");
+  }
+
+ 
+async reset()
+{
+  this.loginForm.reset();
+  this.FlagID=0;
+}
 
 }

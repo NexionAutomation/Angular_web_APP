@@ -51,11 +51,8 @@ ActionStatus:any;
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      ddlModule: new FormControl(null),
-      SubModuleName: new FormControl(null),
-      SubModuleOrder: new FormControl(null),
-      NavigationUrl: new FormControl(null),
-      SubModuleTarget: new FormControl(null),
+      txtcountrymaster: new FormControl(),
+     
     });
 
 
@@ -70,15 +67,15 @@ ActionStatus:any;
     console.log(this.loginForm);
     this.ActionStatus="INSERT";
     var output = await this.INSERT(
-       parseInt( this.loginForm.get('ddlModule').value),
-      1,
-      this.loginForm.get('SubModuleName').value,
-      this.Logins1.TMUserMaster.userCode,
-      this.Logins1.TMUserMaster.userCode,
-      this.loginForm.get('SubModuleOrder').value,
-      this.loginForm.get('NavigationUrl').value,
-      0,
-      this.loginForm.get('SubModuleTarget').value,
+          1,
+         1,
+         "deep",
+         
+          1,
+         
+          1,
+      "1"
+      
     );
     this.ActionStatus="";
     const myJSON = JSON.stringify(output);
@@ -125,48 +122,46 @@ ActionStatus:any;
   }
 
   async INSERT(
-    module_Id: number,
-    subModule_Id: number,
-    subModuleName: string,
-    cUser_Id: number,
-    mUser_Id: number,
-    subModuleOrder: number,
-    navigationUrl: string,
-    rID: number,
+    rid: number,
+groupId: number,
+groupName: String,
+
+cuserId: number,
+
+muserId: number,
     targetModule: string,
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
 
 
-    let query = `mutation MyMutation($module_Id: Int!,
-    $subModule_Id: Int!,
-    $subModuleName: String,
-    $cUser_Id: Int!,
-    $mUser_Id: Int!,
-    $subModuleOrder: Int!,
-    $navigationUrl: String, 
-    $rID: Int!
-    $targetModule:String) {
-    __typename
-    cMTmAdminSubModuleMasters(data: {detail: {moduleId: $module_Id, 
-      subModuleId: $subModule_Id,
-      creationDate: "2019-10-10",
-      cuserId: $cUser_Id,
-      modificationDate: "2019-10-10",
-      muserId: $mUser_Id, 
-      subModuleOrder: $subModuleOrder,
-      rid: $rID, 
-      subModuleName: $subModuleName, 
-      targetModule:$targetModule,
-      navigationUrl: $navigationUrl}}, triger: "INSERT") {
-      iD
-      code
-      message
-      status
+    let query = `mutation MyMutation(
+      $rid: Int!
+      $groupId: Int!
+      $groupName: String
+    
+      $cuserId: Int
+      
+      $muserId: Int
+    ) {
+      __typename
+      cMExpenseGroupMaster(data: {detail: {
+        rid: $rid,
+        groupId: $groupId,
+        creationDate: "2019-10-10",
+        cuserId: $cuserId,
+        groupName: $groupName,
+        modificationDate: "2019-10-10",
+        muserId: $muserId
+      }, iD:  "${rid}"}, triger: "${targetModule}") {
+        code
+        detail
+        iD
+        message
+        status
+      }
     }
-  }
-  
+    
        `
 
      switch (this.ActionStatus)
@@ -190,15 +185,13 @@ ActionStatus:any;
 
     var datas = JSON.stringify({
       query, variables: {
-        module_Id,
-        subModule_Id,
-        subModuleName,
-        cUser_Id,
-        mUser_Id,
-        subModuleOrder,
-        navigationUrl,
-        rID,
-        targetModule,
+        rid,
+groupId,
+groupName,
+
+cuserId,
+
+muserId
       }
     });
     var ss = await this.Logins1.GraphqlFetchdata("query", datas);
