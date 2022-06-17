@@ -140,7 +140,10 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Group Name</th>
+                            <th>Module Name</th>
+                            <th>Module Order</th>
+                            <th>Action</th>
+                            
 
                         </tr>
                     </thead>
@@ -148,7 +151,12 @@
                         <tr *ngFor="let person of persons;let i=index;">
                             <td> {{i+1}}</td>
                             <td>{{ person.moduleName }}</td>
-
+                            <td>{{ person.moduleOrder }}</td>
+                            <td><button class="badge bg-success btn btn-sm  " name='{{ person.rid}}'>Edit</button>
+                                &nbsp;
+                                <button class="badge bg-danger btn btn-sm"  name='{{ person.rid}}'>Delete</button>
+                            </td>
+                             
                         </tr>
                     </tbody>
                 </table>

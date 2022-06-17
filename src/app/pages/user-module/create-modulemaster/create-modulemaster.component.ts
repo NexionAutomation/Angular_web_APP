@@ -16,8 +16,8 @@ export class CM_AdminModuleMaster {
   public CUser_Id: number;
   public MUser_Id: number;
   public RID: number;
-  public status :any;
-  public CM_AdminModuleMaster:CM_AdminModuleMaster
+  public status: any;
+  public CM_AdminModuleMaster: CM_AdminModuleMaster
 
   // constructor(Module_Id_: number, ModuleName_: string, ModuleOrder_: number, CUser_Id_: number, MUser_Id_: number, RID_: number) {
   //   this.Module_Id = Module_Id_;
@@ -36,15 +36,13 @@ export class CM_AdminModuleMaster {
   styleUrls: ['./create-modulemaster.component.scss']
 })
 
-export class CreateModulemasterComponent extends CM_AdminModuleMaster  implements OnInit {
+export class CreateModulemasterComponent extends CM_AdminModuleMaster implements OnInit {
   dtOptions: DataTables.Settings = {};
   persons: any;
   persons1: any;
   dtTrigger: Subject<any> = new Subject<any>();
   headers: any;
   CM_AdminModuleMaster: CM_AdminModuleMaster;
-
-
 
 
   public loginForm: FormGroup;
@@ -56,13 +54,11 @@ export class CreateModulemasterComponent extends CM_AdminModuleMaster  implement
     private Logins1: Logins,
     private http: HttpClient,
     private fb: FormBuilder
-    
+
 
   ) {
     super();
   }
-
-
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -76,83 +72,71 @@ export class CreateModulemasterComponent extends CM_AdminModuleMaster  implement
   }
 
   async onSubmit() {
-    
 
-  var output= await this.INSERT(0,
-    this.loginForm.get('txtModuleName').value,
-   this.loginForm.get('txtModuleOrder').value,
-   this.Logins1.TMUserMaster.userCode
-   ,0,0);
+    var output = await this.INSERT(0,
+      this.loginForm.get('txtModuleName').value,
+      this.loginForm.get('txtModuleOrder').value,
+      this.Logins1.TMUserMaster.userCode
+      , 0, 0);
 
 
-const myJSON = JSON.stringify(output);
+    const myJSON = JSON.stringify(output);
     const obj = JSON.parse(myJSON);
 
     console.log(obj);
-    this.status=obj["data"]["cMTmAdminModuleMasters"];
+    this.status = obj["data"]["cMTmAdminModuleMasters"];
 
-    
-    
-    
-if(this.status[0].message=="Success")
-{
-  const { value: showConfirmButton } = await Swal.fire({
-    title: 'success',
-    icon: 'success',
-   html:'<div class="alert alert-success" role="alert">Data Create Successfully</div>',
+    if (this.status[0].message == "Success") {
+      const { value: showConfirmButton } = await Swal.fire({
+        title: 'success',
+        icon: 'success',
+        html: '<div class="alert alert-success" role="alert">Data Create Successfully</div>',
 
-    showConfirmButton: true,
-    showCancelButton: true
-  })
+        showConfirmButton: true,
+        showCancelButton: true
+      })
 
-  
-if (showConfirmButton == true) {
-  const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
+      if (showConfirmButton == true) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+
+        })
+
+        this.Logins1.popupStatus
+        Toast.fire({
+          icon: 'success',
+          title: 'Data Create Successfully',
+
+
+        })
+        this.LodeDataTable();
+      }
+
     }
-    
-  })
 
-  this.Logins1.popupStatus
-  Toast.fire({
-    icon: 'success',
-    title: 'Data Create Successfully',
-    
-    
-  })
- this.LodeDataTable();
-}
-
-}
-
-
-
-
-
-
-  }
+ }
 
   async INSERT(
-     Module_Id: number,
-   ModuleName: string,
-   ModuleOrder: number,
-   CUser_Id: number,
-   MUser_Id: number,
-   RID: number,
-  )
-  {
-    
-     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
-     
-   
-   let query = `mutation MyMutation(
+    Module_Id: number,
+    ModuleName: string,
+    ModuleOrder: number,
+    CUser_Id: number,
+    MUser_Id: number,
+    RID: number,
+  ) {
+
+    //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
+
+
+    let query = `mutation MyMutation(
         $Module_Id: Int!
         $ModuleName: String
         $ModuleOrder: Int!
@@ -181,17 +165,19 @@ if (showConfirmButton == true) {
                
        `
 
-   var datas = JSON.stringify({ query, variables: {
-    Module_Id,
-    ModuleName,
-    ModuleOrder,
-    CUser_Id,
-    MUser_Id,
-    RID,
-   } });
-   var ss = await this.Logins1.GraphqlFetchdata("query", datas);
+    var datas = JSON.stringify({
+      query, variables: {
+        Module_Id,
+        ModuleName,
+        ModuleOrder,
+        CUser_Id,
+        MUser_Id,
+        RID,
+      }
+    });
+    var ss = await this.Logins1.GraphqlFetchdata("query", datas);
 
-   return ss;
+    return ss;
   }
   async GETData(User: string, Password: string): Promise<any> {
 
@@ -223,31 +209,20 @@ if (showConfirmButton == true) {
 
     this.persons = obj["data"]["cMTmAdminModuleMasters"]
 
-
-
+    
     $('#example').DataTable().destroy();
     $(document).ready(function () {
-    
-      this.dtOptions= $('#example').DataTable({
-    
-        dom: 'Bfrtip',
-      paging:true
-        
 
+      this.dtOptions = $('#example').DataTable({
+
+        dom: 'Bfrtip',
+        paging: true
 
       });
-      
-      
 
     });
 
-    
-
-
-
   }
-
-
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event

@@ -34,14 +34,14 @@ export class CreateUserRightsComponent implements OnInit {
   UserMaster: List<TmUserMaster>;
   CMAdminModuleMasterUser: List<CMAdminModuleMasterUser>;
   products: any;
-   finddata:any;
+  finddata: any;
   ActionStatus: any;
-   array2= new Array();
+  array2 = new Array();
 
-  rightsModule2:List<CM_Web_UserRightsMaster>
-  rightsModule5:[];
-   Rights= new Array();
-  array23= new Array();
+  rightsModule2: List<CM_Web_UserRightsMaster>
+  rightsModule5: [];
+  Rights = new Array();
+  array23 = new Array();
   constructor(private renderer: Renderer2,
     private toastr: ToastrService,
     private appService: AppService,
@@ -156,29 +156,46 @@ export class CreateUserRightsComponent implements OnInit {
 
   async INSERT(
     group_Id: number,
-	 module_Id: number,
-	 subModule_Id: number,
-	 canView: boolean,
-	 canSave: boolean,
-	 canSearch: boolean,
-	 canUpdate: boolean,
-	 canDelete: boolean,
-	 cUser_Id: number,
-	 mUser_Id: number,
-	 user_Code: number,
-	 canExport: boolean,
-	 rID: number,
+    module_Id: number,
+    subModule_Id: number,
+    canView: boolean,
+    canSave: boolean,
+    canSearch: boolean,
+    canUpdate: boolean,
+    canDelete: boolean,
+    cUser_Id: number,
+    mUser_Id: number,
+    user_Code: number,
+    canExport: boolean,
+    rID: number,
+    Action: string,
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
 
 
     let query = `
-
-    mutation MyMutation($group_Id: Int!, $module_Id: Int!, $subModule_Id: Int!, $canView: Boolean!, $canSave: Boolean!, $canSearch: Boolean!, $canUpdate: Boolean!, $canDelete: Boolean!, $cUser_Id: Int!, $mUser_Id: Int!, $user_Code: Int!, $canExport: Boolean!, $rID: Int!) {
+    mutation MyMutation(
+      
+        $group_Id: Int!,
+        $module_Id: Int!,
+        $subModule_Id: Int!,
+        $canView: Boolean!,
+        $canSave: Boolean!,
+        $canSearch: Boolean!,
+        $canUpdate: Boolean!,
+        $canDelete: Boolean!,
+        $cUser_Id: Int!,
+        $mUser_Id: Int!,
+        $user_Code: Int!,
+        $canExport: Boolean!,
+        $rID: Int!
+      
+    ) {
       __typename
-      cMWebUserRights(data: {detail: {
-        groupId: $group_Id,
+      cMWebUserRights(triger: "${Action}", data: 
+        {detail: {
+          groupId: $group_Id,
         moduleId: $module_Id,
         subModuleId: $subModule_Id,
         canView: $canView, 
@@ -193,32 +210,31 @@ export class CreateUserRightsComponent implements OnInit {
         canExport: $canExport,
         rid: $rID,
         modificationDate: "2019-10-10"
-      }}, triger: "UPDATE") {
-        iD
+        }, iD: "${rID}"}) {
         code
+        detail
+        iD
         message
         status
       }
     }
     
-
        `
+       this.ActionStatus=Action;
+    switch (this.ActionStatus) {
+      case this.ActionStatus: "INSERT"
+        query = query.replace("INSERT", "INSERT");
+        break;
+      case this.ActionStatus: "UPDATE"
+        query = query.replace("INSERT", "UPDATE");
+        break;
+      case this.ActionStatus: "DELETE"
+        query.replace("INSERT", "DELETE");
+        query = query.replace("INSERT", "DELETE");
+        break;
 
-     switch (this.ActionStatus)
-     {
-       case this.ActionStatus: "INSERT"
-       query=query.replace("INSERT","INSERT");
-       break;
-       case this.ActionStatus: "UPDATE"
-       query=query.replace("INSERT","UPDATE");
-       break;
-       case this.ActionStatus: "DELETE"
-       query.replace("INSERT","DELETE");
-       query=query.replace("INSERT","DELETE");
-       break;
 
-
-     }
+    }
     //query=  query.replace("INSERT","UPDATE");
 
 
@@ -226,21 +242,25 @@ export class CreateUserRightsComponent implements OnInit {
     var datas = JSON.stringify({
       query, variables: {
         group_Id,
-	 module_Id,
-	 subModule_Id,
-	 canView,
-	 canSave,
-	 canSearch,
-	 canUpdate,
-	 canDelete,
-	 cUser_Id,
-	 mUser_Id,
-	 user_Code,
-	 canExport,
-	 rID
+        module_Id,
+        subModule_Id,
+        canView,
+        canSave,
+        canSearch,
+        canUpdate,
+        canDelete,
+        cUser_Id,
+        mUser_Id,
+        user_Code,
+        canExport,
+        rID
       }
     });
-    var ss = await this.Logins1.GraphqlFetchdata("query", datas);
+
+    
+      var ss = await this.Logins1.GraphqlFetchdata("query", datas);
+    
+    
 
     return ss;
   }
@@ -262,7 +282,7 @@ export class CreateUserRightsComponent implements OnInit {
     this.CMAdminModuleMasterUser = Enumerable.from(obj["data"]["cMTmAdminModuleMasters"]).cast<CMAdminModuleMasterUser>().toList();
     this.rightsModule2 = Enumerable.from(obj["data"]["cMWebUserRightsMaster"]).cast<CM_Web_UserRightsMaster>().toList();
 
-console.log(this.rightsModule2);
+    console.log(this.rightsModule2);
 
 
 
@@ -274,8 +294,6 @@ console.log(this.rightsModule2);
       this.dtOptions = $('#example1').DataTable({
 
         dom: 'Bfrtip'
-
-
 
 
       });
@@ -294,9 +312,7 @@ console.log(this.rightsModule2);
 
   }
   onchangeModule(event: Event) {
-
-
-    this.submodule2=null;
+    this.submodule2 = null;
     this.ModuleMaster2 = Enumerable.from(this.submodule).where(x => x.moduleId == Number(event)).toList();
     this.submodule2 = this.ModuleMaster2;
 
@@ -307,7 +323,7 @@ console.log(this.rightsModule2);
 
 
 
-console.log( this.array23 );
+    //console.log(this.array23);
   }
 
 
@@ -315,193 +331,169 @@ console.log( this.array23 );
   checkAllCheckBox(ev: any) {
 
 
+    var rights = Enumerable.from(this.rightsModule2).where(x => x.userCode == Number(this.loginFormRights.get('lstUsers').value)).toList();
 
-    
-    var data ="#"+ev.srcElement.id
-    var ckbox = $(data);
-
-    var element = document.getElementById(ev.srcElement.id);
-    var datafetch=element.getAttribute('value');
-
-    var element2 = document.getElementById("Delete,4");
-    
+    // document.getElementById("Delete,4").setAttribute('checked', true);
+    document.getElementById("Create,1").setAttribute('checked', 'checked');
+    if (rights.any()) {
+      var data = rights.toArray()
+      console.log(rights);
+      for (var a = 0; a <= data.length; a++) {
 
 
+        // $(this).parent().find('input[type="checkbox"]').prop('checked', true);
 
-
-
-    var table = $('#example').DataTable();
-
-
-
-
-var splitted = datafetch.toString().split(",");
-
-
-
-
-var splitdata=splitted;
-
-
-// switch (splitdata[0])
-// {
-//   case splitdata[0]:"Create"
-//   this.array2.push({ canCreate:1})
-//   break;
-//   case splitdata[0]:"Update"
-//   this.array2.push({ canUpdate:1})
-//   break;
-//   case splitdata[0]:"Delete"
-//   this.array2.push({ canDelete:1})
-//   break;
-//   case splitdata[0]:"Show"
-//   this.array2.push({ canshow:1})
-//   break;
-//   case splitdata[0]:"ImportExcel"
-//   this.array2.push({ canExport:1})
-//   break;
-//   case splitdata[0]:"ImportExcel"
-//   this.array2.push({ canImportExcel:1})
-//   break;
-//   case splitdata[0]:"Save"
-//   this.array2.push({ canSave:1})
-//   break;
-
-// }
-
-
-
-        this.finddata=this.submodule2.where(a=>a.rid==datafetch);
-
-
-
-      // ...use `element`...
-
-
-
-    console.log(this.finddata.toList());
-     if ((ev.target || ev.srcElement).checked){
-
-      //document.getElementById("Delete,4").setAttribute('checked', 'checked');
-
-
-
-
-      this.Rights.push(
-        {
-          groupID: Number(this.loginFormRights.get('ddlGroup_Id').value),
-          moduleID:Number(this.loginFormRights.get('lstModules').value),
-          userID:Number(this.loginFormRights.get('lstUsers').value),
-          key:splitdata[1],
-          Status:splitdata,
+        //$(this).parent().find('input[type="checkbox"]').prop('checked', true);
+        if (data[a].canView == true) {
+          document.getElementById("Create," + data[a].subModuleId + "").setAttribute('checked', 'checked')
+        } if (data[a].canUpdate == true) {
+          document.getElementById("Update," + data[a].subModuleId + "").setAttribute('checked', 'checked')
+        } if (data[a].canDelete == true) {
+          document.getElementById("Delete," + data[a].subModuleId + "").setAttribute('checked', 'checked')
 
         }
-      );
+        if (data[a].canSave == true) {
+          document.getElementById("Save," + data[a].subModuleId + "").setAttribute('checked', 'checked')
+        }
+        //data[a].canView==true?document.getElementById("Create,1").setAttribute('checkbox', 'checked'):document.getElementById("Create,1").removeAttribute('checked');
+        // data[a].canUpdate==true?document.getElementById("Update,"+data[a].subModuleId+"").setAttribute('checked', 'checked'):'';
+        // data[a].canDelete==true?document.getElementById("Delete,"+data[a].subModuleId+"").setAttribute('checked', 'checked'):"";
+        //  //rights[a].canshow==true?document.getElementById("Show,"+rights[a].subModuleId+"").setAttribute('checked', 'checked'):"";
+        // //   // rights[a].canImportExcel==true?document.getElementById("ImportExcel,"+rights[a].subModuleId+"").setAttribute('checked', 'checked'):"";
+        //    data[a].canSave==true?document.getElementById("Save,"+data[a].subModuleId+"").setAttribute('checked', 'checked'):"";
 
-     alert("Yes")
+
+
+
+
+      }
+
+      this.submodule2 = this.submodule2;
+      console.log(data);
+
 
     }
-     else   {
-
-      alert("No")
-     }
-        // $('input').on('click',function () {
-        //     if (element.ariaChecked) {
-        //         alert('You have Checked it');
-        //     } else {
-        //         alert('You Un-Checked it');
-        //     }
-        // });
-	//	this.submodule2.forEach(x => x.checked = ev.target.checked)
-	}
-
-	isAllCheckBoxChecked() {
-		return this.submodule2.every(p => p.checked);
-	}
-  submitData(){
-   
-  var Finddata= Enumerable.from( this.rightsModule2).where(x=>x.group_Id== Number(this.loginFormRights.get('ddlGroup_Id').value) 
-  && x.user_Code==Number(this.loginFormRights.get('lstUsers').value) && x.module_Id==Number(this.loginFormRights.get('lstModules').value) );
-  if(Finddata.any())
-  {
-
-
-
-
-alert("hello");
-
-
-  }
-  else{
-
-    console.log(Dataf);
-
-    var  Dataf=new Array();
-    Dataf.push( this.Rights);
-   var co=0;
-   console.log(Dataf);
-
-   Dataf.forEach(element => {
-  //alert("a");
-});
-
-var df=Enumerable.from(Dataf).toList();
-
-for(var t=0;t<=this.Rights.length;t++)
-{
-
-  this.INSERT(
-    this.Rights[t].groupID,
-    this.Rights[t].moduleID,
-    Number(this.Rights[t].key),
-    this.Rights[t].Status[0]=="Create"?true:false,
-    this.Rights[t].Status[0]=="Save"?true:false,
-    this.Rights[t].Status[0]=="Search"?true:false,
-    this.Rights[t].Status[0]=="Update"?true:false,
-    this.Rights[t].Status[0]=="Delete"?true:false,
-    this.Logins1.TMUserMaster.userCode,
-    this.Logins1.TMUserMaster.userCode,
-    this.Rights[t].userID,
-    this.Rights[t].Status[0]=="ExportExcel"?true:false,
-    0
-
-
-  )
-
-
-}
-
-  //  Dataf.forEach(element=>{
-
-
-
-  //     this.INSERT(
-  //       element[co].groupID,
-  //       element[co].moduleID,
-  //       Number(element[co].key),
-  //       element[co].Status[0]=="Create"?true:false,
-  //       element[co].Status[0]=="Save"?true:false,
-  //       element[co].Status[0]=="Search"?true:false,
-  //       element[co].Status[0]=="Update"?true:false,
-  //       element[co].Status[0]=="Delete"?true:false,
-  //       this.Logins1.TMUserMaster.userCode,
-  //       this.Logins1.TMUserMaster.userCode,
-  //       element[co].userID,
-  //       element[co].Status[0]=="ExportExcel"?true:false,
-  //       0
-
-
-  //     )
-
-
-
-
-  //    // co+1
-  //     });
-    //---- create data
+    //	this.submodule2.forEach(x => x.checked = ev.target.checked)
   }
 
+  isAllCheckBoxChecked() {
+    return this.submodule2.every(p => p.checked);
+  }
+  async submitData() {
+    var rit = new Array();
+    var groupID = Number(this.loginFormRights.get('ddlGroup_Id').value);
+    var moduleID = Number(this.loginFormRights.get('lstModules').value);
+    var userID = Number(this.loginFormRights.get('lstUsers').value);
+    var someObj = new Array();
+    //this.submodule2 = null;
+    var splitted = null;
+    var splitdata = null;
+    var datafetch = null;
+
+    this.finddata = this.submodule2.where(a => a.rid == datafetch);
+    $("input:checkbox").each(function () {
+      if ($(this).is(":checked")) {
+        var data = "#" + $(this).attr("id")
+        var element = document.getElementById($(this).attr("id"));
+        datafetch = element.getAttribute('value');
+        var element2 = document.getElementById("Delete,4");
+        var table = $('#example').DataTable();
+        splitted = datafetch.toString().split(",");
+        var splitdata = splitted;
+
+        rit.push(
+          {
+            groupID: groupID,
+            moduleID: moduleID,
+            userID: userID,
+            key: splitdata[1],
+            Status: splitdata,
+
+          });
+
+        //someObj.push($(this).attr("id"));
+      }
+    });
+
+    this.Rights = rit;
+    console.log(someObj);
+
+    var Finddata = Enumerable.from(this.rightsModule2).where(x => x.groupId == Number(this.loginFormRights.get('ddlGroup_Id').value)
+      && x.userCode == Number(this.loginFormRights.get('lstUsers').value) && x.moduleId == Number(this.loginFormRights.get('lstModules').value));
+
+    var Dataf = new Array();
+    Dataf.push(this.Rights);
+    var co = 0;
+
+
+    Dataf.forEach(element => {
+      //alert("a");
+    });
+
+    var df = Enumerable.from(Dataf).toList();
+
+    for (var t = 0; t <= 1; t++) {
+      if(t==0)
+      {
+
+        
+          this.INSERT(
+            this.Rights[t].groupID,
+            this.Rights[t].moduleID,
+            Number(this.Rights[t].key),
+            this.Rights[t].Status[0] == "Create" ? true : false,
+            this.Rights[t].Status[0] == "Save" ? true : false,
+            this.Rights[t].Status[0] == "Search" ? true : false,
+            this.Rights[t].Status[0] == "Update" ? true : false,
+            this.Rights[t].Status[0] == "Delete" ? true : false,
+            this.Logins1.TMUserMaster.userCode,
+            this.Logins1.TMUserMaster.userCode,
+            this.Rights[t].userID,
+            this.Rights[t].Status[0] == "ExportExcel" ? true : false,
+            Number(this.loginFormRights.get('lstModules').value),
+      "DELETE"
+          )
+          
+     
+     
+    }
+    }
    
+
+    for (var t = 0; t <= this.Rights.length; t++) {
+
+        //------------------------delete----------------
+       
+        //-------------------end delete------------------------
+
+        
+          await this.INSERT(
+            this.Rights[t].groupID,
+            this.Rights[t].moduleID,
+            Number(this.Rights[t].key),
+            this.Rights[t].Status[0] == "Create" ? true : false,
+            this.Rights[t].Status[0] == "Save" ? true : false,
+            this.Rights[t].Status[0] == "Search" ? true : false,
+            this.Rights[t].Status[0] == "Update" ? true : false,
+            this.Rights[t].Status[0] == "Delete" ? true : false,
+            this.Logins1.TMUserMaster.userCode,
+            this.Logins1.TMUserMaster.userCode,
+            this.Rights[t].userID,
+            this.Rights[t].Status[0] == "ExportExcel" ? true : false,
+            0,
+            "INSERT"
+    
+          )
+      
+       
+        
+        
+
+     
+
+    }
+
+
   }
 
   ngOnDestroy(): void {

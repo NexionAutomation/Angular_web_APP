@@ -18,6 +18,7 @@ import { HttpClient } from "@angular/common/http";
 
 export class Logins implements OnInit {
   public user: any = null;
+  public ActiveUserId: any = null;
   public TMUserMaster:TMUserMaster;
   public popupStatus: popup;
 

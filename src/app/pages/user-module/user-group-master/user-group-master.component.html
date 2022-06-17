@@ -65,15 +65,19 @@
                         <div class="col-sm-12">
                             <div class="col-sm-3">
                             </div>
-                            <div class="col-sm-9">
-                                <input type="submit" name="btnSave" value="Save" id="btnSave"
-                                    class="btn btn-primary mar_top10">&nbsp;
-
-                                <input type="submit" name="btnDelete" value="Delete" id="btnDelete" disabled="disabled"
-                                    class="aspNetDisabled btn btn-primary mar_top10">&nbsp;
-                                <input type="submit" name="btnClear" value="Reset" id="btnClear"
+                            <div class="col-sm-9" >
+                                
+                                <input type="submit" name="btnSave"  *ngIf="ActionFlag==0" value="Save" id="btnSave"
                                     class="btn btn-primary mar_top10">
+                               
+                                
 
+                                    <input type="submit" name="btnSave" *ngIf="ActionFlag==1" value="Update" id="btnSave"
+                                    class="btn btn-primary mar_top10">
+                                    &nbsp;
+                                <input type="submit" name="btnClear" value="Reset"  id="btnClear"
+                                    class="btn btn-primary mar_top10">
+                                
                             </div>
 
                         </div>
@@ -96,19 +100,23 @@
 
                 <!-- <table id="example" class="display" width="100%"></table> -->
 
-                <table id="example"  class="row-border hover">
+                <table id="example"  class="row-border hover table table-striped" >
                    
                     <thead>
                         <tr>
                           <th>ID</th>
                           <th>Group Name</th>
+                          <th>Action</th>
                          
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let person of persons;">
-                          <td>  {{person.index}}</td>
+                        <tr *ngFor="let person of persons;let a=index;">
+                          <td>  {{a+1}}</td>
                           <td>{{ person.groupName }}</td>
+                          <td><button class="badge bg-success btn btn-sm  " name='{{ a}}'>Edit</button>
+                            &nbsp;
+                            <button class="badge bg-danger btn btn-sm"  name='{{ a}}'>Delete</button></td>
                          
                         </tr>
                       </tbody>

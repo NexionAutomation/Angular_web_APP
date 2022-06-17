@@ -282,23 +282,36 @@
                           <th>MobileNo</th>
                           <th>Manager</th>
                           <th>AccountStatus</th>
-                          <th>RecordStatus</th>
+                          <!-- <th>RecordStatus</th> -->
+                          <th>Action</th>
 
                           								
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let person of persons">
+                        <tr *ngFor="let person of persons;let a=index">
                             
-                          <td>  {{person.index}}</td>
+                          <td>  {{a+1}}</td>
                           <td>{{ person.userName }}</td>
                           <td>  {{person.userId}}</td>
                           <td>{{ person.upassword }}</td>
                           <td>  {{person.emailId}}</td>
                           <td>{{ person.mobileNo }}</td>
-                          <td>  {{person.accountStatus}}</td>
-                          <td>{{ person.reportingManager }}</td>
-                          <td>  {{person.recordstatus}}</td>
+                          <td>  {{ person.reportingManager }}</td>
+                          <td>
+                           
+                            <i class="badge bg-warning" *ngIf='person.accountStatus=="Active"' >{{person.accountStatus}}</i> 
+                            <i class="badge bg-danger" *ngIf='person.accountStatus=="Inactive"' >{{person.accountStatus}}</i>  
+                          
+                          </td>
+                          
+                          <!-- <td>
+                    
+                            <i  >{{person.recordstatus}}</i>  </td> -->
+                          
+                          <td><button class="badge bg-success btn btn-sm  " name='{{ person.rid}}'>Edit</button>
+                            &nbsp;
+                            <button class="badge bg-danger btn btn-sm"  name='{{ person.rid}}'>Delete</button></td>
                          
                          
                         </tr>

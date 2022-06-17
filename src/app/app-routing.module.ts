@@ -22,6 +22,22 @@ import { CreateUserRightsComponent } from '@pages/user-module/create-user-rights
 import { CreateModulemasterComponent } from '@pages/user-module/create-modulemaster/create-modulemaster.component';
 import { CreateSubModulemasterComponent } from '@pages/user-module/create-sub-modulemaster/create-sub-modulemaster.component';
 import { UplodeFileComponent } from '@pages/uplode-file/uplode-file.component';
+import { ExpenseEmpComponent } from '@pages/Expense/expense-emp/expense-emp.component';
+import { ExpenseManagerComponent } from '@pages/Expense/expense-manager/expense-manager.component';
+import { ExpenseAccountComponent } from '@pages/Expense/expense-account/expense-account.component';
+import { CreatePOComponent } from '@pages/PO/create-po/create-po.component';
+import { SearchPoComponent } from '@pages/PO/search-po/search-po.component';
+import { CityMasterComponent } from '@pages/Module/city-master/city-master.component';
+import { CompanymasterComponent } from '@pages/Module/companymaster/companymaster.component';
+import { CountrymasterComponent } from '@pages/Module/countrymaster/countrymaster.component';
+import { ExpenseTypeComponent } from '@pages/Module/expense-type/expense-type.component';
+import { ExpenseGroupComponent } from '@pages/Module/expense-group/expense-group.component';
+import { ExpenseStatusTypeComponent } from '@pages/Module/expense-status-type/expense-status-type.component';
+import { FinanceYearComponent } from '@pages/Module/finance-year/finance-year.component';
+import { LeaveTypeComponent } from '@pages/Module/leave-type/leave-type.component';
+import { LeaveSettingComponent } from '@pages/Module/leave-setting/leave-setting.component';
+import { StateMasterComponent } from '@pages/Module/state-master/state-master.component';
+import { SupplierMasterComponent } from '@pages/Module/supplier-master/supplier-master.component';
 
 const routes: Routes = [
     {
@@ -75,9 +91,74 @@ const routes: Routes = [
                 path: 'CreateUsersubmodule',
                 component: CreateSubModulemasterComponent
             },
+
+            {
+                path: 'CreateExpense',
+                component: ExpenseEmpComponent
+            },
+            {
+                path: 'ApprovedExpense',
+                component: ExpenseManagerComponent
+            },
+            {
+                path: 'AccountExpense',
+                component: ExpenseAccountComponent
+            },
             {
                 path: 'Upode',
                 component: UplodeFileComponent
+            },
+            {
+                path: 'CreatePo',
+                component: CreatePOComponent
+            },
+            {
+                path: 'SearchPo',
+                component: SearchPoComponent
+            },
+            {
+                path: 'CreateCity',
+                component: CityMasterComponent
+            },
+            {
+                path: 'CreateCompany',
+                component: CompanymasterComponent
+            },
+            {
+                path: 'CreateCountryMaster',
+                component: CountrymasterComponent
+            },
+            {
+                path: 'CreateExpenseGroup',
+                component: ExpenseGroupComponent
+            },
+            {
+                path: 'CreateExpenseStatus',
+                component: ExpenseStatusTypeComponent
+            },
+            {
+                path: 'CreateExpenseType',
+                component: ExpenseTypeComponent
+            },
+            {
+                path: 'CreateFinanceYear',
+                component: FinanceYearComponent
+            },
+            {
+                path: 'CreateLeaveType',
+                component: LeaveTypeComponent
+            },
+            {
+                path: 'CreateLeaveSetting',
+                component: LeaveSettingComponent
+            },
+            {
+                path: 'CreateStateMaster',
+                component: StateMasterComponent
+            },
+            {
+                path: 'CreateSupplier',
+                component: SupplierMasterComponent
             },
             {
                 path: '',

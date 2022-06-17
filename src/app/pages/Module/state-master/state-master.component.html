@@ -1,0 +1,387 @@
+<section class="col-lg-12">
+
+
+    <div id="UpdateProgress1" style="display:none;" role="status" aria-hidden="true">
+
+        <div class="divWaiting" style="z-index: 15000;">
+            <img id="imgWait" src="images/loading3.gif" align="middle" style="height:150px;width:210px;">
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="card card-primary">
+
+
+            <!--Start Form Heading -->
+            <div class="card-header with-border">
+                <h3 class="card-title"><strong>State Master </strong></h3>
+            </div>
+            <!--Start Form Heading -->
+
+            <!--Start Form Body -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="bder top-mrg20">
+
+                            <div class="row">
+                                <div class="col-sm-12">
+
+                                    <div class="log_form1">
+
+
+
+                                        <div class="form-horizontal">
+
+                                            <div class="form-group">
+                                                <label for="inputEmail3" class="col-sm-4 control-label">Select Country
+                                                    Name</label>
+                                                <div class="col-sm-8">
+                                                    <select name="ctl00$ContentPlaceHolder3$ddlcountry"
+                                                        onchange="javascript:setTimeout('__doPostBack(\'ctl00$ContentPlaceHolder3$ddlcountry\',\'\')', 0)"
+                                                        id="ContentPlaceHolder3_ddlcountry" class="form-control">
+                                                        <option selected="selected" value="0">---Select Module---
+                                                        </option>
+                                                        <option value="12">Australia</option>
+                                                        <option value="22">Belgium</option>
+                                                        <option value="26">Bhutan</option>
+                                                        <option value="39">Canada</option>
+                                                        <option value="44">China</option>
+                                                        <option value="57">Denmark</option>
+                                                        <option value="62">Egypt</option>
+                                                        <option value="71">France</option>
+                                                        <option value="77">Germany</option>
+                                                        <option value="88">Hong Kong</option>
+                                                        <option value="95">India</option>
+                                                        <option value="99">Ireland</option>
+                                                        <option value="101">Italy</option>
+                                                        <option value="103">Japan</option>
+                                                        <option value="123">Malaysia</option>
+                                                        <option value="144">New Zealand</option>
+                                                        <option value="147">Nepal</option>
+                                                        <option value="158">Pakistan</option>
+                                                        <option value="166">Portugal</option>
+                                                        <option value="172">Russia</option>
+                                                        <option value="176">South Africa</option>
+                                                        <option value="178">South Korea</option>
+                                                        <option value="179">Sri Lanka</option>
+                                                        <option value="190">Spain</option>
+                                                        <option value="198">Sweden</option>
+                                                        <option value="199">Switzerland</option>
+                                                        <option value="213">U.K</option>
+                                                        <option value="218">U.S.A</option>
+                                                        <option value="222">Vatican City</option>
+                                                        <option value="254">Afganistan</option>
+                                                        <option value="255">test</option>
+                                                        <option value="0">--Select All--</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix" style="margin-bottom: 5px;"></div>
+
+
+                                            <div class="form-group">
+                                                <label for="inputEmail3" class="col-sm-4 control-label">Enter State
+                                                    Name</label>
+                                                <div class="col-sm-8">
+                                                    <input name="ctl00$ContentPlaceHolder3$txtstatename" type="text"
+                                                        id="ContentPlaceHolder3_txtstatename" class="form-control">
+
+                                                </div>
+                                            </div>
+                                            <div class="clearfix" style="margin-bottom: 5px;"></div>
+
+                                            <div class="form-group">
+                                                <label for="inputEmail3" class="col-sm-4 control-label">Enter&nbsp;
+                                                    Display Name</label>
+                                                <div class="col-sm-8">
+                                                    <input name="ctl00$ContentPlaceHolder3$txtdisplayas" type="text"
+                                                        id="ContentPlaceHolder3_txtdisplayas" class="form-control">
+
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="inputEmail3" class="col-sm-3 control-label"></label>
+                                                <div class="col-sm-9">
+
+                                                    <span id="ContentPlaceHolder3_RequiredFieldValidator3"
+                                                        class="errorlabels" style="font-size:8pt;display:none;">Select
+                                                        Country</span>
+
+                                                    <span id="ContentPlaceHolder3_RequiredFieldValidator1"
+                                                        class="errorlabels" style="font-size:8pt;display:none;">Enter
+                                                        State Name</span>
+
+                                                    <span id="ContentPlaceHolder3_RequiredFieldValidator2"
+                                                        class="errorlabels" style="font-size:8pt;display:none;">Enter
+                                                        Display Name</span>
+
+
+
+
+                                                    <span id="ContentPlaceHolder3_lblError"></span>
+
+
+
+
+
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <div class="col-sm-4">
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <input type="submit" name="ctl00$ContentPlaceHolder3$btnSave"
+                                                            value="Save" id="ContentPlaceHolder3_btnSave"
+                                                            class="btn btn-primary mar_top10">&nbsp;
+
+                                                        <input type="submit" name="ctl00$ContentPlaceHolder3$btnDelete"
+                                                            value="Delete" id="ContentPlaceHolder3_btnDelete"
+                                                            disabled="disabled"
+                                                            class="aspNetDisabled btn btn-primary mar_top10">&nbsp;
+                                                        <input type="submit" name="ctl00$ContentPlaceHolder3$btnClear"
+                                                            value="Reset" id="ContentPlaceHolder3_btnClear"
+                                                            class="btn btn-primary mar_top10">
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <!--End Form Body -->
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <input type="submit" name="ctl00$ContentPlaceHolder3$btnSavingModelpopUp" value="Button"
+        id="ContentPlaceHolder3_btnSavingModelpopUp" style="display: none;">
+
+    <div id="ContentPlaceHolder3_pnlSavePopUp" style="width: 350px; display: none; position: fixed; z-index: 10001;">
+
+
+
+
+        <table style="width: 100%; background-color: White; border: 1px solid gray;">
+            <tbody>
+                <tr>
+                    <td align="center" bgcolor="Silver">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="center" bgcolor="Silver">
+                        <strong>Confirmation Dialog</strong>
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" bgcolor="Silver">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="center">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <span id="ContentPlaceHolder3_lblSavingDialogcard"></span>
+
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="center">&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <span id="ContentPlaceHolder3_lblConfrmMsg"></span>
+
+
+                        &nbsp;
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td align="center">
+                        <span id="ContentPlaceHolder3_lblpendingaproval"></span>
+
+                        &nbsp;
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="center">
+
+
+                        <input type="submit" name="ctl00$ContentPlaceHolder3$btnsaveOk" value="Yes"
+                            id="ContentPlaceHolder3_btnsaveOk" class="btn btn-primary" style="width:80px;">
+                        &nbsp;&nbsp;&nbsp;
+                        <input type="submit" name="ctl00$ContentPlaceHolder3$BtnSaveCancel" value="No"
+                            id="ContentPlaceHolder3_BtnSaveCancel" class="btn btn-primary" style="width:80px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <input type="submit" name="ctl00$ContentPlaceHolder3$modalPopupButton" value="Button"
+        id="ContentPlaceHolder3_modalPopupButton" style="display: none;">
+
+    <div id="ContentPlaceHolder3_DeletePopup" style="width: 350px; display: none; position: fixed; z-index: 10001;">
+
+        <table style="width: 100%; background-color: White; border: 1px solid gray;">
+            <tbody>
+                <tr>
+                    <td align="center" bgcolor="Silver">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="center" bgcolor="Silver">
+                        <strong>Confirmation Dialog</strong>
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" bgcolor="Silver">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="center">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <span id="ContentPlaceHolder3_lblDialogMsg"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <input type="submit" name="ctl00$ContentPlaceHolder3$btnDeleteOk" value="OK"
+                            id="ContentPlaceHolder3_btnDeleteOk" class="btn btn-primary" style="width:80px;">
+                        &nbsp;&nbsp;&nbsp;
+                        <input type="submit" name="ctl00$ContentPlaceHolder3$btnCancel" value="Cancel"
+                            id="ContentPlaceHolder3_btnCancel" class="btn btn-primary" style="width:80px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+    <div class="form2">
+
+        <div class="card card-outline card-primary">
+            <div class="card-header "> Group Details ::</div>
+            <div class="card-body">
+
+
+
+                <!-- <table id="example" class="display" width="100%"></table> -->
+
+                <table id="example" class="row-border hover" class="table table-striped table-hover  ">
+
+                    <thead>
+                        <tr>
+                            <th scope="col">Action</th>
+                            <th scope="col">SrNo</th>
+                            <th scope="col">Country Name</th>
+                            <th scope="col">State Name</th>
+                            <th scope="col">Display Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let person of persons;let a=index">
+                            <td>
+                                <button class="badge bg-success btn btn-sm  " name='{{ person.rid}}'>Edit</button>
+                                &nbsp;
+                                <button class="badge bg-danger btn btn-sm" name='{{ person.rid}}'>Delete</button>
+                            </td>
+
+                            <td> {{a+1}}</td>
+                            <td> {{person.right.countryname}}</td>
+                            <td>{{ person.left.statename }}</td>
+                            <td> {{person.left.displayAs}}</td>
+                           
+
+                          
+
+
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</section>

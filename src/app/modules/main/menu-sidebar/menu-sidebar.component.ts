@@ -147,150 +147,128 @@ export class MenuSidebarComponent implements OnInit {
         this.CMAdminModuleMasterUser = Enumerable.from(obj["data"]["cMTmAdminModuleMasters"]).cast<CMAdminModuleMasterUser>().toList();
         this.rightsModule2 = Enumerable.from(obj["data"]["cMWebUserRightsMaster"]).cast<CM_Web_UserRightsMaster>().toList();
     
+var result = this.submodule
+.join(this.rightsModule2, a => a.rid, b => b.subModuleId)
+.where(s => s.left.rid == s.right.subModuleId ) //&& s.right.userCode==this.login.TMUserMaster.userCode
+.toList();
+
+    var da= result 
+     .join(this.CMAdminModuleMasterUser, a => a.right.moduleId, b => b.rid)
+.where(s => s.left.right.moduleId == s.right.rid   )// &&  s.left.right.userCode==this.login.TMUserMaster.userCode
+.toList();
+      
     
-     console.log(this.login.TMUserMaster);
-   
-    
-       
-       // .join()
-
-
-        // var result = this.rightsModule2
-        //       .join(this.submodule, a => a.subModule_Id, b => b.rid)
-             
-        //       .toList();
-
-              var result = this.submodule
-              .join(this.rightsModule2, a => a.moduleId, b => b.subModule_Id)
-              .where(s => s.left.moduleId == s.right.subModule_Id && s.right.cUser_Id==this.login.TMUserMaster.userCode )
-              .toList();
-    //.where(s => s.left.moduleId == s.right.rid )
-     //this.persons=result;
-
-
-
-
-  //    var result = 
-  // // as Jon Skeet pointed out, OrderBy is useless here, I just leave it 
-  // // show how to use OrderBy in a LINQ query
-  // persons.OrderBy(mc => mc.SomePropToSortOn)
-  //                  .ToDictionary(mc => mc.mo.ToString(), 
-  //                                mc => mc.ValueProp.ToString(), 
-  //                                );
-
-  console.log(result);
-
      var array2= new Array(); 
 
      var array = new Array();
+     var array2 = new Array();
 
-     this.submodule.toArray().forEach(element => {
+  
+var mainmodule=da.groupBy(x=>x.right.moduleName).select(x=>x.first()).toArray();
+var submodule1=da.groupBy(x=>x.left.left.subModuleName).select(x=>x.first()).toArray();
+
+console.log(mainmodule);
+console.log(submodule1);
+submodule1.forEach(element => {
     
-    array2.push({
-        name:  element.subModuleName ,
-        path: element.navigationUrl
-    });
+  
 });
 
+// this.submodule.toArray().forEach(element => {
+    
+//   array2.push({
+//       name:  element.subModuleName ,
+//       path: element.navigationUrl
+//   });
+// });
 
-//console.log(array2);
-//or the shortcut: = []
-for(var a=0;a<=0;a++)
-{
+// for(var a=0;a<=mainmodule.length-1;a++)
+// {
+//   submodule1.forEach(element => {
+    
+//       if(element.right.moduleName==mainmodule[a].right.moduleName)
+//       {
+        
+//         array2.push({
+//           name:  element.left.left.subModuleName ,
+//           path: element.left.left.navigationUrl
+//       });
 
+       
+
+        
+
+  
+// }
+
+
+//   });
+ 
   array.push (
     {
-        name: 'User Master',
+        name:'Dashboard' ,
         path: ['/'],
-        children:array2
+        children:[ {
+          path: 'SearchPo',
+          name:'SearchPoComponent'
+      },
+      {
+          path: 'CreateCity',
+          name:'CityMasterComponent'
+      },
+      {
+          path: 'CreateCompany',
+          name:'CompanymasterComponent'
+      },
+      {
+          path: 'CreateCountryMaster',
+          name:'CountrymasterComponent'
+      },
+      {
+          path: 'CreateExpenseGroup',
+          name:'ExpenseGroupComponent'
+      },
+      {
+          path: 'CreateExpenseStatus',
+          name:'ExpenseStatusTypeComponent'
+      },
+      {
+          path: 'CreateExpenseType',
+          name:'ExpenseTypeComponent'
+      },
+      {
+          path: 'CreateFinanceYear',
+          name:'FinanceYearComponent'
+      },
+      {
+          path: 'CreateLeaveType',
+          name:'LeaveTypeComponent'
+      },
+      {
+          path: 'CreateLeaveSetting',
+          name:'LeaveSettingComponent'
+      },
+      {
+          path: 'CreateStateMaster',
+          name:'StateMasterComponent'
+      },
+      {
+          path: 'CreateSupplier',
+          name:'SupplierMasterComponent'
+      },]//array2
     });
+
+//   // array.push (
+//   //   {
+//   //       name:mainmodule[a].right.moduleName ,
+//   //       path: ['/'],
+//   //       children:array2
+//   //   });
     
-    
-}
+// }
 
 this.menu=array;
 
       }
 }
 
-//export const MENU =  datas
-//const menu=
-
-// export const MENU = [
-//     {
-//         name: 'Dashboard',
-//         path: ['/'],
-//         children:[]
-//     },
-//     {
-//         name: 'Blank',
-//         path: ['/blank'],
-//         children:[]
-//     },
-//     {
-//         name: 'Main Menu',
-//         path: [],
-//         children: [
-//             {
-//                 name: 'Sub Menu',
-//                 path: ['/sub-menu-1']
-//             },
-
-//             {
-//                 name: 'Blank',
-//                 path: ['/sub-menu-2']
-//             }
-//         ]
-//     },
-//     {
-//         name: 'User Management',
-//         path: [],
-//         children: [
-//             {
-//                 name: 'Create',
-//                 path: ['/Create-Drawing']
-//             },
-
-//             {
-//                 name: 'UserMaster',
-//                 path: ['/UserMaster']
-//             },
-//             {
-//                 name: 'CreateUser',
-//                 path: ['/CreateUser']
-//             },
-//             {
-//                 name: 'CreateUserRight',
-//                 path: ['/CreateUserRight']
-//             },
-//             {
-//                 name: 'CreateUserModule',
-//                 path: ['/CreateUserModule']
-//             },
-//             {
-//                 name: 'CreateUsersubmodule',
-//                 path: ['/CreateUsersubmodule']
-//             }
-
-            
-//         ]
-//     },
-
-   
-// ];
-
-
-// {
-//     name: 'Drawing',
-//     children: [
-//         {
-//             name: 'Create Drawing',
-//             path: ['/Create-Drawing']
-//         },
-
-//         {
-//             name: 'Update Drawing',
-//             path: ['/Read-Drawing']
-//         }
-//     ]
-// }

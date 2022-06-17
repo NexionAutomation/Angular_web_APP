@@ -1,0 +1,709 @@
+<section class="col-lg-12">
+
+
+    <div id="UpdateProgress1" style="display:none;" role="status" aria-hidden="true">
+
+        <div class="divWaiting" style="z-index: 15000;">
+            <img id="imgWait" src="images/loading3.gif" align="middle" style="height:150px;width:210px;">
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <div id="ContentPlaceHolder3_UpdatePanel1">
+
+
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+
+
+                <!--Start Form Heading -->
+                <div class="card-header with-border">
+                    <h3 class="card-title"><strong>Out Station Expense</strong></h3>
+                </div>
+                <!--Start Form Heading -->
+
+                <!--Start Form Body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="bder top-mrg20">
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-horizontal">
+
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label pull-left">Customer
+                                                        Name</label>
+                                                    <input name="ctl00$ContentPlaceHolder3$txttitle" type="text"
+                                                        id="txttitle" class="form-control inputtext" autocomplete="off">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label pull-left">Work
+                                                        Order</label>&nbsp;<span
+                                                        id="ContentPlaceHolder3_lblloginIdError"
+                                                        class="col-sm-3"></span>
+                                                    <input name="ctl00$ContentPlaceHolder3$txtworkorderno" type="text"
+                                                        id="txtworkorderno" class="form-control inputtext"
+                                                        autocomplete="off">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label pull-left">Site
+                                                        Location</label>&nbsp;
+                                                    <input name="ctl00$ContentPlaceHolder3$txtlocation" type="text"
+                                                        id="txtlocation" class="form-control inputtext"
+                                                        autocomplete="off">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="clearfix" style="margin-bottom: 5px;"></div>
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label">From Date</label>
+                                                    <input name="ctl00$ContentPlaceHolder3$txtfromdate" type="text"
+                                                        id="txtfromdate" class="form-control inputtext"
+                                                        autocomplete="off">
+
+                                                    <span id="ContentPlaceHolder3_RegularExpressionValidator1"
+                                                        style="color:Red;visibility:hidden;">From Date should be
+                                                        dd-mmm-yyyy</span>
+
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label">To Date</label>
+                                                    <input name="ctl00$ContentPlaceHolder3$txttodate" type="text"
+                                                        id="txttodate" class="form-control inputtext"
+                                                        autocomplete="off">
+
+                                                    <span id="ContentPlaceHolder3_RegularExpressionValidator2"
+                                                        style="color:Red;visibility:hidden;">From Date should be
+                                                        dd-mmm-yyyy</span>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="clearfix" style="margin-bottom: 5px;">
+                                                <span id="ContentPlaceHolder3_RequiredFieldValidator4"
+                                                    class="errorlabels" style="font-size:8pt;display:none;">Enter Work
+                                                    Order No</span>
+
+                                                <span id="ContentPlaceHolder3_RequiredFieldValidator5"
+                                                    class="errorlabels" style="font-size:8pt;display:none;">Enter
+                                                    Location</span>
+
+                                                <span id="ContentPlaceHolder3_RequiredFieldValidator2"
+                                                    class="errorlabels" style="font-size:8pt;display:none;">Enter From
+                                                    Date</span>
+
+                                                <span id="ContentPlaceHolder3_RequiredFieldValidator7"
+                                                    class="errorlabels" style="font-size:8pt;display:none;">Enter To
+                                                    Date</span>
+
+
+
+                                            </div>
+
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <!--End Form Body -->
+
+            </div>
+
+            <div class="card card-group">
+                <div class="card-header with-border">
+                    <h3 class="card-title"><strong>Add Expense Items</strong></h3>
+                </div>
+                <!--Start Form Heading -->
+
+                <!--Start Form Body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="bder top-mrg20">
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-horizontal">
+                                            <div id="ContentPlaceHolder3_div_manual" class="row">
+                                                <div class="col-sm-2">
+                                                    <label for="inputEmail3"
+                                                        class="control-label pull-left">Date</label>&nbsp;
+                                                    <input name="ctl00$ContentPlaceHolder3$txtdate" type="text"
+                                                        id="txtdate" class="form-control inputtext" autocomplete="off">
+
+                                                    <span id="ContentPlaceHolder3_RegularExpressionValidator3"
+                                                        style="color:Red;visibility:hidden;">From Date should be
+                                                        dd-mmm-yyyy</span>
+
+                                                </div>
+
+                                                <div class="col-sm-3">
+                                                    <label for="inputEmail3"
+                                                        class="control-label pull-left">Description</label>&nbsp;
+                                                    <input name="ctl00$ContentPlaceHolder3$txtdescription" type="text"
+                                                        id="txtdescription" class="form-control inputtext"
+                                                        autocomplete="off">
+
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label for="inputEmail3" class="control-label pull-left">Paid
+                                                        By</label>&nbsp;
+                                                    <select name="ctl00$ContentPlaceHolder3$ddlPaidby"
+                                                        onchange="javascript:setTimeout('__doPostBack(\'ctl00$ContentPlaceHolder3$ddlPaidby\',\'\')', 0)"
+                                                        id="ContentPlaceHolder3_ddlPaidby" class="form-control">
+                                                        <option selected="selected" value="NAPL">NAPL</option>
+                                                        <option value="Customer">Customer</option>
+
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-sm-2">
+                                                    <label for="inputEmail3"
+                                                        class="control-label pull-left">Type</label>&nbsp;
+                                                    <select name="ctl00$ContentPlaceHolder3$ddlExpenseType"
+                                                        onchange="javascript:setTimeout('__doPostBack(\'ctl00$ContentPlaceHolder3$ddlExpenseType\',\'\')', 0)"
+                                                        id="ContentPlaceHolder3_ddlExpenseType" class="form-control">
+                                                        <option selected="selected" value="0">---Select Type---</option>
+                                                        <option value="1">Breakfast</option>
+                                                        <option value="4">Local Transport</option>
+                                                        <option value="7">Daily Allowance</option>
+                                                        <option value="8">Grocery</option>
+                                                        <option value="9">Refreshment</option>
+                                                        <option value="10">Miscellaneous</option>
+                                                        <option value="11">Lunch</option>
+                                                        <option value="12">Taxi/Cab</option>
+                                                        <option value="13">Auto/E-rikshaw</option>
+                                                        <option value="14">Bus</option>
+                                                        <option value="15">Train</option>
+                                                        <option value="16">Metro Train</option>
+                                                        <option value="17">Airfare</option>
+                                                        <option value="18">Bike</option>
+                                                        <option value="19">Car</option>
+                                                        <option value="20">Hotel</option>
+                                                        <option value="21">Guest house</option>
+                                                        <option value="22">Self Accommodation</option>
+                                                        <option value="23">Dinner</option>
+                                                        <option value="0">--Select All--</option>
+
+                                                    </select>
+                                                    <span id="ContentPlaceHolder3_lblrate" style="color:Red;"></span>
+                                                </div>
+
+
+                                                <div class="col-sm-1">
+                                                    <label for="inputEmail3"
+                                                        class="control-label pull-left">Km</label>&nbsp;
+                                                    <input name="ctl00$ContentPlaceHolder3$txtDistance" type="text"
+                                                        onchange="javascript:setTimeout('__doPostBack(\'ctl00$ContentPlaceHolder3$txtDistance\',\'\')', 0)"
+                                                        onkeypress="if (WebForm_TextcardKeyHandler(event) == false) return false;"
+                                                        id="txtDistance" class="form-control inputtext">
+
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label for="inputEmail3"
+                                                        class="control-label pull-left">Amount</label>&nbsp;
+                                                    <input name="ctl00$ContentPlaceHolder3$txtamount" type="text"
+                                                        id="txtamount" class="form-control inputtext">
+
+                                                </div>
+
+                                                <div class="col-sm-1">
+                                                    <label for="inputEmail3"
+                                                        class="control-label ">Park/Toll</label>&nbsp;
+                                                    <input name="ctl00$ContentPlaceHolder3$txtParkingAmt" type="text"
+                                                        id="txtParkingAmt" class="form-control inputtext">
+
+                                                </div>
+
+                                                <div class="col-sm-1">
+                                                    <div class="clearfix" style="margin-top: 30px;"></div>
+                                                    <label for="inputEmail3" class="control-label pull-left"></label>
+                                                    &nbsp;
+                                                    <input type="submit" name="ctl00$ContentPlaceHolder3$btn_add"
+                                                        value="ADD" id="ContentPlaceHolder3_btn_add"
+                                                        class="btn btn-primary">
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <span id="ContentPlaceHolder3_RequiredFieldValidator1"
+                                                    class="errorlabels" style="display:none;">Enter Date</span>
+
+                                                <span id="ContentPlaceHolder3_RequiredFieldValidator6" class="
+                            " style="font-size:8pt;display:none;">Select Expense Type</span>
+
+                                                <span id="ContentPlaceHolder3_RequiredFieldValidator3"
+                                                    class="errorlabels" style="font-size:8pt;display:none;">Enter
+                                                    Amount</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix" style="margin-top: 15px;"></div>
+            <div class="card card-default">
+                <div class="card-header with-border">
+                    <h3 class="card-title"><strong>Expense Details</strong></h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="bder top-mrg20">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="table-responsive">
+                                            <div class="table_wid">
+
+                                                <div>
+                                                    <table cellspacing="0" rules="all" border="1"
+                                                        id="ContentPlaceHolder3_GridView1"
+                                                        style="border-style:None;border-collapse:collapse;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th scope="col">&nbsp;</th>
+                                                                <th scope="col">SrNo</th>
+                                                                <th scope="col">Date</th>
+                                                                <th scope="col">Description</th>
+                                                                <th scope="col">Type ID</th>
+                                                                <th scope="col">Type Name</th>
+                                                                <th scope="col">Distance</th>
+                                                                <th scope="col">Amt (A)</th>
+                                                                <th scope="col">Park/Toll (B)</th>
+                                                                <th scope="col">Total(A + B) </th>
+                                                                <th scope="col">Approved Amount</th>
+                                                                <th scope="col">Paid By</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="submit"
+                                                                        name="ctl00$ContentPlaceHolder3$GridView1$ctl02$btnDelete_Row"
+                                                                        value="Delete"
+                                                                        id="ContentPlaceHolder3_GridView1_btnDelete_Row_0"
+                                                                        class="btn btn-sm btn-danger">
+                                                                    <a id="ContentPlaceHolder3_GridView1_btn_edit_0"
+                                                                        class="btn btn-sm btn-dange fa fa-eye"
+                                                                        href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$GridView1$ctl02$btn_edit','')"></a>
+
+
+
+
+                                                                </td>
+                                                                <td style="width:100px;">
+                                                                    <span
+                                                                        id="ContentPlaceHolder3_GridView1_lblRowNumber_0">1</span>
+                                                                </td>
+                                                                <td>&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="card card-group">
+                <div class="card-header with-border">
+                    <h3 class="card-title"><strong>Add Attachment Items</strong></h3>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="bder top-mrg20">
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <input name="ctl00$ContentPlaceHolder3$txtdescription1" type="text"
+                                            id="txtdescription1" class="form-control inputtext" autocomplete="off">
+
+
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="file" name="ctl00$ContentPlaceHolder3$FileUpload1"
+                                            id="ContentPlaceHolder3_FileUpload1">
+                                        <input type="submit" name="ctl00$ContentPlaceHolder3$btnUpload" value="Upload"
+                                            id="ContentPlaceHolder3_btnUpload">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card card-default">
+                <div class="card-header with-border">
+                    <h3 class="card-title"><strong>View Attachment </strong></h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="bder top-mrg20">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="table-responsive">
+                                            <div class="table_wid">
+
+                                                <div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div id="dialog" style="display: none">
+            </div>
+
+            <div class="card card-default">
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="bder top-mrg20">
+                                <div class="row">
+
+                                    <div class="col-sm-12">
+                                        <label for="inputEmail3" class="control-label pull-left">Status</label>&nbsp;
+                                        <select name="ctl00$ContentPlaceHolder3$ddlstatus"
+                                            id="ContentPlaceHolder3_ddlstatus" class="form-control">
+                                            <option value="1">Draft</option>
+                                            <option value="2">Submit</option>
+                                            <option value="6">Delete</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label for="inputEmail3" class="control-label pull-left">Comments</label>&nbsp;
+                                        <textarea name="ctl00$ContentPlaceHolder3$txtcomments" rows="2" cols="20"
+                                            id="ContentPlaceHolder3_txtcomments" class="form-control "></textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card card-primary">
+
+                                <div class="card-header with-border">
+                                    <h3 class="card-title"><strong>Comments</strong></h3>
+                                </div>
+
+                                <div class="card-body">
+                                    <section class="comments">
+
+                                    </section>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="ContentPlaceHolder3_divfooter" class="card card-footer">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-6">
+
+                            <span id="lblError"></span>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+
+                            <div class="col-sm-7 col-sm-offset-5">
+                                <input type="submit" name="ctl00$ContentPlaceHolder3$btnSave" value="Save"
+                                    id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10">
+
+
+
+                                &nbsp;<input type="submit" name="ctl00$ContentPlaceHolder3$btnClear" value="Reset"
+                                    id="ContentPlaceHolder3_btnClear" class="btn btn-warning mar_top10">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <input type="submit" name="ctl00$ContentPlaceHolder3$btnSavePopup" value="Button"
+            id="ContentPlaceHolder3_btnSavePopup" style="display: none;">
+        <div id="ContentPlaceHolder3_pnlSavePopUp"
+            style="width: 350px; display: none; position: fixed; z-index: 10001;">
+
+            <div id="ContentPlaceHolder3_UpdateProgress1" style="display:none;" role="status" aria-hidden="true">
+
+                <div class="PopupWaiting">
+
+
+                </div>
+
+
+            </div>
+
+            <table style="width: 100%; background-color: White; border: 1px solid gray;">
+                <tbody>
+                    <tr>
+                        <td align="center" bgcolor="Silver">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center" bgcolor="Silver">
+                            <strong>Confirmation Dialog</strong>
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" bgcolor="Silver">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <span id="ContentPlaceHolder3_lblSavingDialogcard"></span>
+
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td align="center">&nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <span id="ContentPlaceHolder3_lblConfrmMsg"></span>
+
+
+                            &nbsp;
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td align="center">
+                            <span id="ContentPlaceHolder3_lblpendingaproval"></span>
+
+                            &nbsp;
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td align="center">
+
+
+                            <input type="submit" name="ctl00$ContentPlaceHolder3$btnsaveOk" value="Yes"
+                                id="ContentPlaceHolder3_btnsaveOk" class="btn btn-primary" style="width:80px;">
+                            &nbsp;&nbsp;&nbsp;
+                            <input type="submit" name="ctl00$ContentPlaceHolder3$BtnSaveCancel" value="No"
+                                id="ContentPlaceHolder3_BtnSaveCancel" class="btn btn-primary" style="width:80px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+
+
+
+
+        <input type="submit" name="ctl00$ContentPlaceHolder3$modalPopupButton" value="Button"
+            id="ContentPlaceHolder3_modalPopupButton" style="display: none;">
+
+        <div id="ContentPlaceHolder3_DeletePopup" style="width: 350px; display: none; position: fixed; z-index: 10001;">
+
+
+            <table style="width: 100%; background-color: White; border: 1px solid gray;">
+                <tbody>
+                    <tr>
+                        <td align="center" bgcolor="Silver">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center" bgcolor="Silver">
+                            <strong>Confirmation Dialog</strong>
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" bgcolor="Silver">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <span id="ContentPlaceHolder3_lblDialogMsg"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <input type="submit" name="ctl00$ContentPlaceHolder3$btnDeleteOk" value="OK"
+                                id="ContentPlaceHolder3_btnDeleteOk" class="btn btn-primary" style="width:80px;">
+                            &nbsp;&nbsp;&nbsp;
+                            <input type="submit" name="ctl00$ContentPlaceHolder3$btnCancel" value="Cancel"
+                                id="ContentPlaceHolder3_btnCancel" class="btn btn-primary" style="width:80px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+
+
+
+        <input type="submit" name="ctl00$ContentPlaceHolder3$Button1" value="Button" id="ContentPlaceHolder3_Button1"
+            style="display: none;">
+
+        <div id="ContentPlaceHolder3_Panel1" style="width: 650px; display: none; position: fixed; z-index: 10001;">
+
+
+            <table style="width: 100%; background-color: White; border: 1px solid gray;">
+                <tbody>
+                    <tr>
+                        <td align="center" bgcolor="Silver">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center" bgcolor="Silver">
+                            <strong>Attachment</strong>
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" bgcolor="Silver">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center">&nbsp;
+                            <img id="ContentPlaceHolder3_image11" src="" style="height: 600px; width: 600px">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <span id="ContentPlaceHolder3_Label1"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <input type="submit" name="ctl00$ContentPlaceHolder3$Button3" value="Close"
+                                id="ContentPlaceHolder3_Button3" class="btn btn-primary" style="width:80px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <div data-act-control-type="modalPopupBackground"
+            id="ContentPlaceHolder3_btnSave_ModalPopupExtender_backgroundElement" class="modalBackground"
+            style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;"></div>
+        <div data-act-control-type="modalPopupBackground" id="ContentPlaceHolder3_ModalPopupExtender1_backgroundElement"
+            class="modalBackground" style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;"></div>
+        <div data-act-control-type="modalPopupBackground" id="ContentPlaceHolder3_ModalPopupExtender2_backgroundElement"
+            class="modalBackground" style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;"></div>
+    </div>
+
+
+
+
+
+
+
+</section>

@@ -48,9 +48,24 @@ import { DataTablesModule } from 'angular-datatables';
 import { UserModuleModule } from '@pages/user-module/user-module.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { UplodeFileComponent } from './pages/uplode-file/uplode-file.component';
+import { ExpenseEmpComponent } from './pages/Expense/expense-emp/expense-emp.component';
+import { ExpenseManagerComponent } from './pages/Expense/expense-manager/expense-manager.component';
+import { ExpenseAccountComponent } from './pages/Expense/expense-account/expense-account.component';
+import { CreatePOComponent } from './pages/PO/create-po/create-po.component';
+import { SearchPoComponent } from './pages/PO/search-po/search-po.component';
+import { CityMasterComponent } from './pages/Module/city-master/city-master.component';
+import { CompanymasterComponent } from './pages/Module/companymaster/companymaster.component';
+import { CountrymasterComponent } from './pages/Module/countrymaster/countrymaster.component';
+import { ExpenseGroupComponent } from './pages/Module/expense-group/expense-group.component';
+import { ExpenseStatusTypeComponent } from './pages/Module/expense-status-type/expense-status-type.component';
+import { ExpenseTypeComponent } from './pages/Module/expense-type/expense-type.component';
+import { FinanceYearComponent } from './pages/Module/finance-year/finance-year.component';
+import { StateMasterComponent } from './pages/Module/state-master/state-master.component';
+import { SupplierMasterComponent } from './pages/Module/supplier-master/supplier-master.component';
+import { LeaveTypeComponent } from './pages/Module/leave-type/leave-type.component';
+import { LeaveSettingComponent } from './pages/Module/leave-setting/leave-setting.component';
 
-
-
+import * as Select from '../assets/select2/select2.min.js';
 
 // import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 // import { createHttpLink, HttpLink, InMemoryCache } from '@apollo/client';
@@ -91,7 +106,23 @@ registerLocaleData(localeEn, 'en-EN');
         CreateDrawingQrcodeComponent,
         ReadDrawingQrcodeComponent,
         UpdateDrawingQrcodeComponent,
-        UplodeFileComponent
+        UplodeFileComponent,
+        ExpenseEmpComponent,
+        ExpenseManagerComponent,
+        ExpenseAccountComponent,
+        CreatePOComponent,
+        SearchPoComponent,
+        CityMasterComponent,
+        CompanymasterComponent,
+        CountrymasterComponent,
+        ExpenseGroupComponent,
+        ExpenseStatusTypeComponent,
+        ExpenseTypeComponent,
+        FinanceYearComponent,
+        StateMasterComponent,
+        SupplierMasterComponent,
+        LeaveTypeComponent,
+        LeaveSettingComponent
    
     ],
     imports: [

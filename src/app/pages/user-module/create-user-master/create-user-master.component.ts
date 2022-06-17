@@ -12,53 +12,31 @@ import { UserModuleServicesService } from '../user-module-services.service';
   styleUrls: ['./create-user-master.component.scss']
 })
 export class CreateUserMasterComponent implements OnInit {
-  
 
-  dtOptions:DataTables.Settings = {};
-  persons: any ;
-  persons1: any ;
+
+  dtOptions: DataTables.Settings = {};
+  persons: any;
+  persons1: any;
   dtTrigger: Subject<any> = new Subject<any>();
   headers: any;
   constructor(private renderer: Renderer2,
     private toastr: ToastrService,
     private appService: AppService,
-    private UserModule_:UserModuleServicesService,
-    private Logins1:Logins,
-    private http:HttpClient,) { 
-    
+    private UserModule_: UserModuleServicesService,
+    private Logins1: Logins,
+    private http: HttpClient,) {
+
   }
 
   ngOnInit(): void {
     this.LodeDataTable()
-    // this.dtOptions1 = {
-    //   ajax: 'http://l-lin.github.io/angular-datatables/data/data.json',
-    //   columns: [{
-    //     title: 'ID',
-    //     data: 'id'
-    //   }, {
-    //     title: 'First name',
-    //     data: 'firstName'
-    //   }, {
-    //     title: 'Last name',
-    //     data: 'lastName'
-    //   }],
-    //   // Declare the use of the extension in the dom parameter
-    //   dom: 'Bfrtip',
-    //   buttons:[{
-    //     extend: 'excel',
-    //     text: 'hello',
-    //     exportOptions: {
-    //       columns: ':visible'
-    //     }}],
-    //   // Configure the buttons
-    //   responsive: true
-    // };
+
   }
 
   async GETData(User: string, Password: string): Promise<any> {
 
     let data = '{User="' + User + '",Password="' + Password + '" }';
-     let query = `{
+    let query = `{
       userMasterData {
         userName
         userId
@@ -88,59 +66,49 @@ export class CreateUserMasterComponent implements OnInit {
       `
     var datas = JSON.stringify({ query, variables: { User, Password } });
     var ss = await this.Logins1.GraphqlFetchQuery("query", query);
-return ss;
+    return ss;
 
   }
-  
-  async LodeDataTable()
-  {
-    var data= await this.GETData("","");
+  async LodeDataTable() {
+    var data = await this.GETData("", "");
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-    this.persons= obj["data"]["userMasterData"]
-
+    this.persons = obj["data"]["userMasterData"]
 
     var result = [];
 
+    for (let i in this.persons) {
 
-    for(let i in this.persons)
-    {
-      console.log([i,this.persons[i]]);
-        result.push([i,this.persons[i]]);
-      }
+      result.push([i, this.persons[i]]);
+    }
 
-      for (var key in this.persons) {
-        console.log(key);
-        result.push(key);
+    for (var key in this.persons) {
+
+      result.push(key);
 
     }
-    
+
     this.headers = Object.keys(this.persons[1]);
-   
-  
 
-        this.persons1=result;
-        console.log(this.persons1);
+    this.persons1 = result;
+    
+    $(document).ready(function () {
+      var dt = $('#example').DataTable({
+        processing: true,
 
-        $(document).ready( function () {
-         var dt= $('#example').DataTable({
-          processing: true,
-         
-          dom: 'Bfrtip'
-         
-         
-         
-        });
-         
-      } );
-      
+        dom: 'Bfrtip'
+
+      });
+
+    });
+
   }
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
-    
+
   }
 
 }
