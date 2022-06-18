@@ -135,17 +135,19 @@
                                                     <div class="col-sm-4">
                                                     </div>
                                                     <div class="col-sm-8">
-                                                        <input type="submit" name="ctl00$ContentPlaceHolder3$btnSave"
-                                                            value="Save" id="ContentPlaceHolder3_btnSave"
-                                                            class="btn btn-primary mar_top10">&nbsp;
+                                                        <input [type]="'submit'" name="btnSave" value="Save" 
+                                    id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10" *ngIf="ActionFlag==0">&nbsp;
+                                
+                               
+                                    <input [type]="'submit'" name="btnSave" value="Update" *ngIf="ActionFlag==1"
+                                    id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10">&nbsp;
+                                
+                                
+                                <input type="button" name="btnClear" value="Reset"
+                                    id="ContentPlaceHolder3_btnClear" class="btn btn-primary mar_top10" (click)="onReset()">
 
-                                                        <input type="submit" name="ctl00$ContentPlaceHolder3$btnDelete"
-                                                            value="Delete" id="ContentPlaceHolder3_btnDelete"
-                                                            disabled="disabled"
-                                                            class="aspNetDisabled btn btn-primary mar_top10">&nbsp;
-                                                        <input type="submit" name="ctl00$ContentPlaceHolder3$btnClear"
-                                                            value="Reset" id="ContentPlaceHolder3_btnClear"
-                                                            class="btn btn-primary mar_top10">
+
+
 
                                                     </div>
 
@@ -344,11 +346,12 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let person of persons;let a=index">
-                            <td>
-                                <button class="badge bg-success btn btn-sm  " name='{{ person.rid}}'>Edit</button>
-                                &nbsp;
-                                <button class="badge bg-danger btn btn-sm" name='{{ person.rid}}'>Delete</button>
-                            </td>
+                           
+ <td><button class="badge bg-success  btn btn-sm  " name='{{ person.rid}}' > <a class="fa fa-edit" (click)="onedit(person.rid)"></a></button>
+    &nbsp;
+    <button class="badge bg-danger  btn btn-sm"  name='{{ person.rid}}' (click)="onDel(person.rid)"><a class="fa fa-trash"></a></button>
+</td>
+
 
                             <td> {{a+1}}</td>
                             <td> {{person.typeName }}</td>

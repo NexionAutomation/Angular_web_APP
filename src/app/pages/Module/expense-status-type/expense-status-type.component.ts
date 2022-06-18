@@ -33,6 +33,8 @@ ActionStatus:any;
   CMAdminModuleMasterUser: List<CMAdminModuleMasterUser>;
   cMTmAdminSubModuleMasters: List<CMAdminSubModuleMaster>;
   ExpenseStatusMaster: List<ExpenseStatusMaster>;
+  ActionFlag: number;
+  editData: CMAdminModuleMasterUser;
   constructor(
     private renderer: Renderer2,
     private toastr: ToastrService,
@@ -63,66 +65,7 @@ ActionStatus:any;
 
   }
 
-  async onSubmit() {
-
-
-
-    console.log(this.loginForm);
-    this.ActionStatus="INSERT";
-    var output = await this.INSERT(
-       parseInt( this.loginForm.get('ddlModule').value),
-      1,
-      this.loginForm.get('SubModuleName').value,
-      this.Logins1.TMUserMaster.userCode,
-      this.Logins1.TMUserMaster.userCode,
-      this.loginForm.get('SubModuleOrder').value,
-      this.loginForm.get('NavigationUrl').value,
-      0,
-      this.loginForm.get('SubModuleTarget').value,
-    );
-    this.ActionStatus="";
-    const myJSON = JSON.stringify(output);
-    const obj = JSON.parse(myJSON);
-    const status = obj["data"]["cMTmAdminModuleMasters"];
-
-    if (status[0].message == "Success") {
-      const { value: showConfirmButton } = await Swal.fire({
-        title: 'success',
-        icon: 'success',
-        html: '<div class="alert alert-success" role="alert">Data Create Successfully</div>',
-
-        showConfirmButton: true,
-        showCancelButton: true
-      })
-
-
-      if (showConfirmButton == true) {
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-
-        })
-
-        this.Logins1.popupStatus
-        Toast.fire({
-          icon: 'success',
-          title: 'Data Create Successfully',
-
-
-        })
-        this.LodeDataTable();
-      }
-
-    }
-
-  }
+  
 
   async INSERT(
     module_Id: number,
@@ -284,6 +227,265 @@ alert (event)
     this.dtTrigger.unsubscribe();
 
   }
+
+
+  //----------------------------------CURD OPERATIONS-------------------------------------------------------------
+
+  async onSubmit() {
+    try{
+
+    
+
+    if(this.ActionFlag==0)
+    {
+
+
+      if (this.ActionFlag == 0) {
+        const { value: showConfirmButton } = await Swal.fire({
+          title: "Do You Want To Save",
+          icon: 'question',
+          //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+    
+          showConfirmButton: true,
+          showCancelButton: true
+        })
+    
+        if (showConfirmButton == true) {
+
+
+          var output = null;
+          // await this.INSERT(0,
+          //   this.loginForm.get('txtModuleName').value,
+          //   this.loginForm.get('txtModuleOrder').value,
+          //   this.Logins1.TMUserMaster.userCode
+          //   , 0, 0,"INSERT");
+
+
+            const myJSON = JSON.stringify(output);
+            const obj = JSON.parse(myJSON);
+        
+            var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+      
+
+
+            if(outputFinal[0].message=="Success")
+            {
+              const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+
+              })
+
+              this.Logins1.popupStatus
+              Toast.fire({
+                icon: 'success',
+                title: 'Data Create Successfully',
+
+
+              })
+              this.LodeDataTable();
+
+            }else{
+
+              Swal.fire(
+                'Failed',
+                '',
+                'error'
+              )
+
+            }
+
+         
+        }
+    
+      }
+     
+    
+  }
+  if(this.ActionFlag==1)
+  {
+    if (this.ActionFlag == 1) {
+      const { value: showConfirmButton } = await Swal.fire({
+        title: "Do You Want To Update",
+        icon: 'question',
+        //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+  
+        showConfirmButton: true,
+        showCancelButton: true
+      })
+  
+      if (showConfirmButton == true) {
+
+
+        var output = null;
+        // await this.INSERT(0,
+        //   this.loginForm.get('txtModuleName').value,
+        //   this.loginForm.get('txtModuleOrder').value,
+        //   this.Logins1.TMUserMaster.userCode
+        //   , 0, this.editData.rid,"UPDATE");
+
+
+          const myJSON = JSON.stringify(output);
+          const obj = JSON.parse(myJSON);
+      
+          var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+    
+
+
+          if(outputFinal[0].message=="Success")
+          {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+
+            })
+
+            this.Logins1.popupStatus
+            Toast.fire({
+              icon: 'success',
+              title: 'Data Update Successfully',
+
+
+            })
+            this.LodeDataTable();
+          this.ActionFlag=0;
+          this.onReset();
+          }else{
+
+            Swal.fire(
+              'Failed',
+              '',
+              'error'
+            )
+
+          }
+
+       
+      }
+  
+    }
+  }
+}catch(error )
+{
+  Swal.fire(
+    'Failed',
+    error,
+    'error')
+}
+
+ }
+async onDel(string :string)
+{
+  try{
+  var state="Delete"
+  if(state==state)
+  {
+
+
+    
+      const { value: showConfirmButton } = await Swal.fire({
+        title: "Are You Sure Want To Delete",
+        icon: 'question',
+        //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+  
+        showConfirmButton: true,
+        showCancelButton: true
+      })
+  
+      if (showConfirmButton == true) {
+
+
+        var output = null;//await this.INSERT( 0,"0",0,0,0,Number(string),"DELETE");
+    
+        const myJSON = JSON.stringify(output);
+        const obj = JSON.parse(myJSON);
+    
+        var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+
+       
+          if(outputFinal[0].message=="Success")
+          {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+
+            })
+
+            this.Logins1.popupStatus
+            Toast.fire({
+              icon: 'success',
+              title: 'Data Delete Successfully',
+
+
+            })
+            this.LodeDataTable();
+
+          }else{
+
+            Swal.fire(
+              'Failed ',
+              '',
+              'error'
+            )
+
+          }
+
+       
+      }
+  
+}
+
+
+}
+catch(error)
+{
+  Swal.fire(
+    'Failed',
+    error,
+    'error')
+}
+}
+
+async onReset()
+{
+  this.loginForm.reset();
+  this.ActionFlag=0;
+}
+
+async onedit(string:string)
+{
+  this.editData=Enumerable.from( this.persons).cast<CMAdminModuleMasterUser>().where(x=>x.rid==Number(string)).singleOrDefault();
+  
+  this.loginForm.setValue({
+    txtModuleName: this.editData.moduleName,
+    txtModuleOrder:this.editData.moduleOrder,
+
+  });
+  this.ActionFlag=1;
+}
+
+//----------------------------------CURD OPERATIONS-------------------------------------------------------------
 
 
 }

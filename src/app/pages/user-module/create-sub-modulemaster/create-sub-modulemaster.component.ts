@@ -12,6 +12,7 @@ import { UserModuleServicesService } from '../user-module-services.service';
 import { Enumerable, List } from 'sharp-collections';
 import { contains } from 'jquery';
 import { CMAdminModuleMasterUser, CMAdminSubModuleMaster } from '@modules/Module/PoModules';
+import { Console } from 'console';
 @Component({
   selector: 'app-create-sub-modulemaster',
   templateUrl: './create-sub-modulemaster.component.html',
@@ -28,10 +29,12 @@ export class CreateSubModulemasterComponent implements OnInit {
 
 
 
-ActionStatus:any;
+  ActionStatus:any;
   public loginForm: FormGroup;
   CMAdminModuleMasterUser: List<CMAdminModuleMasterUser>;
   cMTmAdminSubModuleMasters: List<CMAdminSubModuleMaster>;
+  ActionFlag=0;
+  editData: CMAdminModuleMasterUser;
   constructor(
     private renderer: Renderer2,
     private toastr: ToastrService,
@@ -62,110 +65,59 @@ ActionStatus:any;
 
   }
 
-  async onSubmit() {
-
-
-
-    console.log(this.loginForm);
-    this.ActionStatus="INSERT";
-    var output = await this.INSERT(
-       parseInt( this.loginForm.get('ddlModule').value),
-      1,
-      this.loginForm.get('SubModuleName').value,
-      this.Logins1.TMUserMaster.userCode,
-      this.Logins1.TMUserMaster.userCode,
-      this.loginForm.get('SubModuleOrder').value,
-      this.loginForm.get('NavigationUrl').value,
-      0,
-      this.loginForm.get('SubModuleTarget').value,
-    );
-    this.ActionStatus="";
-    const myJSON = JSON.stringify(output);
-    const obj = JSON.parse(myJSON);
-    const status = obj["data"]["cMTmAdminModuleMasters"];
-
-    if (status[0].message == "Success") {
-      const { value: showConfirmButton } = await Swal.fire({
-        title: 'success',
-        icon: 'success',
-        html: '<div class="alert alert-success" role="alert">Data Create Successfully</div>',
-
-        showConfirmButton: true,
-        showCancelButton: true
-      })
-
-
-      if (showConfirmButton == true) {
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-
-        })
-
-        this.Logins1.popupStatus
-        Toast.fire({
-          icon: 'success',
-          title: 'Data Create Successfully',
-
-
-        })
-        this.LodeDataTable();
-      }
-
-    }
-
-  }
 
   async INSERT(
-    module_Id: number,
-    subModule_Id: number,
-    subModuleName: string,
-    cUser_Id: number,
-    mUser_Id: number,
+    moduleId: number,
+    subModuleId: number,
+    subModuleName: String,
+  
+    cuserId: number,
+    
+    muserId: number,
     subModuleOrder: number,
-    navigationUrl: string,
-    rID: number,
-    targetModule: string,
+    navigationUrl: String,
+    targetModule: String,
+    rid: number,
+    actionStatus:string
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
 
 
-    let query = `mutation MyMutation($module_Id: Int!,
-    $subModule_Id: Int!,
-    $subModuleName: String,
-    $cUser_Id: Int!,
-    $mUser_Id: Int!,
-    $subModuleOrder: Int!,
-    $navigationUrl: String, 
-    $rID: Int!
-    $targetModule:String) {
-    __typename
-    cMTmAdminSubModuleMasters(data: {detail: {moduleId: $module_Id, 
-      subModuleId: $subModule_Id,
-      creationDate: "2019-10-10",
-      cuserId: $cUser_Id,
-      modificationDate: "2019-10-10",
-      muserId: $mUser_Id, 
-      subModuleOrder: $subModuleOrder,
-      rid: $rID, 
-      subModuleName: $subModuleName, 
-      targetModule:$targetModule,
-      navigationUrl: $navigationUrl}}, triger: "INSERT") {
-      iD
-      code
-      message
-      status
+    let query = `mutation MyMutation($moduleId: Int!
+      $subModuleId: Int!
+      $subModuleName: String
+     
+      $cuserId: Int!
+     
+      $muserId: Int!
+      $subModuleOrder: Int!
+      $navigationUrl: String
+      $targetModule: String
+      $rid: Int!
+      ) {
+      __typename
+      cMTmAdminSubModuleMasters(data: {detail: {
+        moduleId: $moduleId,
+        subModuleId: $subModuleId,
+        creationDate: "2019-10-10",
+        cuserId: $cuserId,
+        modificationDate: "2019-10-10",
+        muserId: $muserId, 
+        subModuleOrder: $subModuleOrder, 
+        rid: $rid,
+        navigationUrl: $navigationUrl, 
+        subModuleName: $subModuleName,
+        targetModule: $targetModule
+      }, iD: "${rid}"}, triger: "${actionStatus}") {
+        code
+        detail
+        iD
+        message
+        status
+      }
     }
-  }
-  
+    
        `
 
      switch (this.ActionStatus)
@@ -189,15 +141,17 @@ ActionStatus:any;
 
     var datas = JSON.stringify({
       query, variables: {
-        module_Id,
-        subModule_Id,
+        moduleId,
+        subModuleId,
         subModuleName,
-        cUser_Id,
-        mUser_Id,
+       
+        cuserId,
+        
+        muserId,
         subModuleOrder,
         navigationUrl,
-        rID,
         targetModule,
+        rid
       }
     });
     var ss = await this.Logins1.GraphqlFetchdata("query", datas);
@@ -301,4 +255,297 @@ alert (event)
     this.dtTrigger.unsubscribe();
 
   }
+
+
+
+
+
+
+  //----------------------------------CURD OPERATIONS-------------------------------------------------------------
+
+  async onSubmit() {
+    try{
+
+    
+
+    if(this.ActionFlag==0)
+    {
+
+
+      if (this.ActionFlag == 0) {
+        const { value: showConfirmButton } = await Swal.fire({
+          title: "Do You Want To Save",
+          icon: 'question',
+          //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+    
+          showConfirmButton: true,
+          showCancelButton: true
+        })
+    
+        if (showConfirmButton == true) {
+
+
+          var output =   await this.INSERT(
+            parseInt( this.loginForm.get('ddlModule').value),
+           1,
+           this.loginForm.get('SubModuleName').value,
+           this.Logins1.TMUserMaster.userCode,
+           this.Logins1.TMUserMaster.userCode,
+           this.loginForm.get('SubModuleOrder').value,
+           this.loginForm.get('NavigationUrl').value,
+           
+           this.loginForm.get('SubModuleTarget').value,
+           0,
+           "INSERT"
+         );
+
+
+            const myJSON = JSON.stringify(output);
+            const obj = JSON.parse(myJSON);
+        
+            var outputFinal = obj["data"]["cMTmAdminSubModuleMasters"];
+   
+      
+
+
+            if(outputFinal[0].message=="Success")
+            {
+              const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+
+              })
+
+              this.Logins1.popupStatus
+              Toast.fire({
+                icon: 'success',
+                title: 'Data Create Successfully',
+
+
+              })
+              this.LodeDataTable();
+
+            }else{
+
+              Swal.fire(
+                'Failed',
+                '',
+                'error'
+              )
+
+            }
+
+         
+        }
+    
+      }
+     
+    
+  }
+  if(this.ActionFlag==1)
+  {
+    if (this.ActionFlag == 1) {
+      const { value: showConfirmButton } = await Swal.fire({
+        title: "Do You Want To Update",
+        icon: 'question',
+        //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+  
+        showConfirmButton: true,
+        showCancelButton: true
+      })
+  
+      if (showConfirmButton == true) {
+
+
+        var output =  await this.INSERT(
+          parseInt( this.loginForm.get('ddlModule').value),
+         1,
+         this.loginForm.get('SubModuleName').value,
+         this.Logins1.TMUserMaster.userCode,
+         this.Logins1.TMUserMaster.userCode,
+         this.loginForm.get('SubModuleOrder').value,
+         this.loginForm.get('NavigationUrl').value,
+         
+         this.loginForm.get('SubModuleTarget').value,
+         0,
+         "UPDATE"
+       );
+
+          const myJSON = JSON.stringify(output);
+          const obj = JSON.parse(myJSON);
+      
+          var outputFinal =obj["data"]["cMTmAdminSubModuleMasters"];
+    
+
+
+          if(outputFinal[0].message=="Success")
+          {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+
+            })
+
+            this.Logins1.popupStatus
+            Toast.fire({
+              icon: 'success',
+              title: 'Data Update Successfully',
+
+
+            })
+            this.LodeDataTable();
+          this.ActionFlag=0;
+          this.onReset();
+          }else{
+
+            Swal.fire(
+              'Failed',
+              '',
+              'error'
+            )
+
+          }
+
+       
+      }
+  
+    }
+  }
+}catch(error )
+{
+  Swal.fire(
+    'Failed',
+    error,
+    'error')
 }
+
+ }
+async onDel(string :string)
+{
+  try{
+  var state="Delete"
+  if(state==state)
+  {
+
+
+    
+      const { value: showConfirmButton } = await Swal.fire({
+        title: "Are You Sure Want To Delete",
+        icon: 'question',
+        //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+  
+        showConfirmButton: true,
+        showCancelButton: true
+      })
+  
+      if (showConfirmButton == true) {
+
+
+        var output =  await this.INSERT(
+          parseInt( this.loginForm.get('ddlModule').value),
+         1,
+         this.loginForm.get('SubModuleName').value,
+         this.Logins1.TMUserMaster.userCode,
+         this.Logins1.TMUserMaster.userCode,
+         this.loginForm.get('SubModuleOrder').value,
+         this.loginForm.get('NavigationUrl').value,
+         
+         this.loginForm.get('SubModuleTarget').value,
+         0,
+         "DELETE"
+       );
+    
+        const myJSON = JSON.stringify(output);
+        const obj = JSON.parse(myJSON);
+    
+        var outputFinal =obj["data"]["cMTmAdminSubModuleMasters"];
+
+       
+          if(outputFinal[0].message=="Success")
+          {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+
+            })
+
+            this.Logins1.popupStatus
+            Toast.fire({
+              icon: 'success',
+              title: 'Data Delete Successfully',
+
+
+            })
+            this.LodeDataTable();
+
+          }else{
+
+            Swal.fire(
+              'Failed ',
+              '',
+              'error'
+            )
+
+          }
+
+       
+      }
+  
+}
+
+
+}
+catch(error)
+{
+  Swal.fire(
+    'Failed',
+    error,
+    'error')
+}
+}
+
+async onReset()
+{
+  this.loginForm.reset();
+  this.ActionFlag=0;
+}
+
+async onedit(string:string)
+{
+  this.editData=Enumerable.from( this.persons).cast<CMAdminModuleMasterUser>().where(x=>x.rid==Number(string)).singleOrDefault();
+  
+  this.loginForm.setValue({
+    txtModuleName: this.editData.moduleName,
+    txtModuleOrder:this.editData.moduleOrder,
+
+  });
+  this.ActionFlag=1;
+}
+
+//----------------------------------CURD OPERATIONS-------------------------------------------------------------
+
+}
+
+
+

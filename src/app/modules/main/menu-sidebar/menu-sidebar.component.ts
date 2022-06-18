@@ -208,54 +208,124 @@ submodule1.forEach(element => {
     {
         name:'Dashboard' ,
         path: ['/'],
-        children:[ {
+        children:[  {
+          path: 'profile',
+          name: " Profile"
+      },
+      {
+          path: 'blank',
+          name: " Blank"
+      },
+      {
+          path: 'sub-menu-1',
+          name: " SubMenu"
+      },
+      {
+          path: 'sub-menu-2',
+          name: " Blank"
+      },
+      {
+          path: 'Create-Drawing',
+          name: " CreateDrawingQrcode"
+      },
+      {
+          path: 'Read-Drawing',
+          name: " ReadDrawingQrcode"
+      },
+    
+      {
+          path: 'UserGroup',
+          name: " UserGroupMaster"
+      },
+      {
+          path: 'CreateUser',
+          name: " CreateUserMaster"
+      },
+      {
+          path: 'CreateUserRight',
+          name: " CreateUserRights"
+      },
+      {
+          path: 'CreateUserModule',
+          name: " CreateModulemaster"
+      },
+      {
+          path: 'CreateUsersubmodule',
+          name: " CreateSubModulemaster"
+      },
+
+      {
+          path: 'CreateExpense',
+          name: " ExpenseEmp"
+      },
+      {
+          path: 'ApprovedExpense',
+          name: " ExpenseManager"
+      },
+      {
+          path: 'AccountExpense',
+          name: " ExpenseAccount"
+      },
+      {
+          path: 'Upode',
+          name: " UplodeFile"
+      },
+      {
+          path: 'CreatePo',
+          name: " CreatePO"
+      },
+      {
           path: 'SearchPo',
-          name:'SearchPoComponent'
+          name: " SearchPo"
       },
       {
           path: 'CreateCity',
-          name:'CityMasterComponent'
+          name: " CityMaster"
       },
       {
           path: 'CreateCompany',
-          name:'CompanymasterComponent'
+          name: " Companymaster"
       },
       {
           path: 'CreateCountryMaster',
-          name:'CountrymasterComponent'
+          name: " Countrymaster"
       },
       {
           path: 'CreateExpenseGroup',
-          name:'ExpenseGroupComponent'
+          name: " ExpenseGroup"
       },
       {
           path: 'CreateExpenseStatus',
-          name:'ExpenseStatusTypeComponent'
+          name: " ExpenseStatusType"
       },
       {
           path: 'CreateExpenseType',
-          name:'ExpenseTypeComponent'
+          name: " ExpenseType"
       },
       {
           path: 'CreateFinanceYear',
-          name:'FinanceYearComponent'
+          name: " FinanceYear"
       },
       {
           path: 'CreateLeaveType',
-          name:'LeaveTypeComponent'
+          name: " LeaveType"
       },
       {
           path: 'CreateLeaveSetting',
-          name:'LeaveSettingComponent'
+          name: " LeaveSetting"
       },
       {
           path: 'CreateStateMaster',
-          name:'StateMasterComponent'
+          name: " StateMaster"
       },
       {
           path: 'CreateSupplier',
-          name:'SupplierMasterComponent'
-      },]//array2
+          name: " SupplierMaster"
+      },
+      {
+          path: '',
+          name: " Dashboard"
+      }]//array2
     });
 
 //   // array.push (

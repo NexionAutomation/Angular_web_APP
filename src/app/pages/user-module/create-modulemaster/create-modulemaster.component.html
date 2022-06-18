@@ -103,14 +103,17 @@
                             <div class="col-sm-3">
                             </div>
                             <div class="col-sm-9">
-                                <input [type]="'submit'" name="btnSave" value="Save"
+                                
+                                <input [type]="'submit'" name="btnSave" value="Save" 
+                                    id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10" *ngIf="ActionFlag==0">&nbsp;
+                                
+                               
+                                    <input [type]="'submit'" name="btnSave" value="Update" *ngIf="ActionFlag==1"
                                     id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10">&nbsp;
-
-                                <input [type]="'submit'" name="btnDelete" value="Delete"
-                                    id="ContentPlaceHolder3_btnDelete" disabled="disabled"
-                                    class="aspNetDisabled btn btn-primary mar_top10">&nbsp;
-                                <input [type]="'submit'" name="btnClear" value="Reset"
-                                    id="ContentPlaceHolder3_btnClear" class="btn btn-primary mar_top10">
+                                
+                                
+                                <input type="button" name="btnClear" value="Reset"
+                                    id="ContentPlaceHolder3_btnClear" class="btn btn-primary mar_top10" (click)="onReset()">
 
                             </div>
 
@@ -139,23 +142,25 @@
 
                     <thead>
                         <tr>
+                            <th>Action</th>
                             <th>ID</th>
                             <th>Module Name</th>
                             <th>Module Order</th>
-                            <th>Action</th>
+                            
                             
 
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let person of persons;let i=index;">
+                            <td><button class="badge bg-success  btn btn-sm  " name='{{ person.rid}}' > <a class="fa fa-edit" (click)="onedit(person.rid)"></a></button>
+                                &nbsp;
+                                <button class="badge bg-danger  btn btn-sm"  name='{{ person.rid}}' (click)="onDel(person.rid)"><a class="fa fa-trash"></a></button>
+                            </td>
                             <td> {{i+1}}</td>
                             <td>{{ person.moduleName }}</td>
                             <td>{{ person.moduleOrder }}</td>
-                            <td><button class="badge bg-success btn btn-sm  " name='{{ person.rid}}'>Edit</button>
-                                &nbsp;
-                                <button class="badge bg-danger btn btn-sm"  name='{{ person.rid}}'>Delete</button>
-                            </td>
+                           
                              
                         </tr>
                     </tbody>

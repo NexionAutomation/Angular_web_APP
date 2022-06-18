@@ -94,24 +94,20 @@
                                                         <div class="col-sm-3">
                                                         </div>
                                                         <div class="col-sm-9">
-                                                            <input type="submit"
-                                                                name="btnSave" value="Save"
-                                                                id="btnSave"
-                                                                class="btn btn-primary mar_top10"
-                                                                *ngIf="FlagID==0"
-                                                                >&nbsp;
-                                                                <input type="submit"
-                                                                name="btnSave" value="Update"
-                                                                id="btnSave1"
-                                                                class="btn btn-primary mar_top10"
-                                                                *ngIf="FlagID==1"
-                                                                >&nbsp;
+                                                            <input [type]="'submit'" name="btnSave" value="Save" 
+                                    id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10" *ngIf="ActionFlag==0">&nbsp;
+                                
+                               
+                                    <input [type]="'submit'" name="btnSave" value="Update" *ngIf="ActionFlag==1"
+                                    id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10">&nbsp;
+                                
+                                
+                                <input type="button" name="btnClear" value="Reset"
+                                    id="ContentPlaceHolder3_btnClear" class="btn btn-primary mar_top10" (click)="onReset()">
 
-                                                               <input type="submit"
-                                                                name="btnClear" value="Reset" 
-                                                                id="btnClear"
-                                                                class="btn btn-primary mar_top10"
-                                                                (click)="reset()">
+
+
+
 
                                                         </div>
 
@@ -313,11 +309,11 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let person of persons;let a=index">
-                                <td>
-                                    <button type="button" class="badge bg-success btn btn-sm " name='{{ person.countrycode}}'  (click)="onEdit(person.countrycode)">Edit</button>
+                                <td><button class="badge bg-success  btn btn-sm  " name='{{ person.rid}}' > <a class="fa fa-edit" (click)="onedit(person.rid)"></a></button>
                                     &nbsp;
-                                    <button   type="button"  class="badge bg-danger btn btn-sm" name='{{ person.countrycode}}'  (click)="onDel(person.countrycode)">Delete</button>
+                                    <button class="badge bg-danger  btn btn-sm"  name='{{ person.rid}}' (click)="onDel(person.rid)"><a class="fa fa-trash"></a></button>
                                 </td>
+    
                                 <td> {{a+1}}</td>
                                 <td> {{person.countryname}}</td>
                                 <td>{{ person.displayAs }}</td>

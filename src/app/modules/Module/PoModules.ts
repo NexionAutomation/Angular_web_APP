@@ -201,3 +201,12 @@ export class LEmp_Leavemaster
 	public alloted: number;
 	public color: string;
 }
+
+export class ResponseStatus
+{
+	public code: string;
+	public detail: string;
+	public iD: string;
+	public message:string;
+	public status: string;
+}

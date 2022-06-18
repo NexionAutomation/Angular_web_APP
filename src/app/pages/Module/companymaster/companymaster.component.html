@@ -43,11 +43,11 @@
                                     <div class="bder top-mrg20">
 
                                         <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="form-horizontal">
+                                            <div class="col-sm-12 ">
+                                                <div class="form-horizontal  ">
 
                                                     
-                                                    <div class="card-header card-primary" >Company Details
+                                                    <div class="card-header card card-primary bg-light" ><b>Company Details</b>
                                                     </div>
 
                                                     <div class="row">
@@ -195,8 +195,8 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="form-horizontal">
-                                                    <div class="log_form_head1" style="margin-top: 7px;">
-                                                        Invoice Details
+                                                    <div class="log_form_head1 card-header card card-primary bg-light" style="margin-top: 7px;">
+                                                        <b>Invoice Details</b>
                                                     </div>
 
                                                     <div class="row">
@@ -307,8 +307,8 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="form-horizontal">
-                                                    <div class="log_form_head1" style="margin-top: 7px;">
-                                                        Shipping Details
+                                                    <div class="log_form_head1  card-header card card-primary bg-light" style="margin-top: 7px;">
+                                                        <b>Shipping Details</b>
                                                     </div>
 
                                                     <div class="row">
@@ -435,15 +435,18 @@
                                                         <div class="col-sm-12">
 
                                                             <div class="col-sm-7 col-sm-offset-5">
-                                                                <input type="submit"
-                                                                    name="ctl00$ContentPlaceHolder3$btnSave"
-                                                                    value="Save" id="ContentPlaceHolder3_btnSave"
-                                                                    class="btn btn-primary mar_top10">
+                                                                <input [type]="'submit'" name="btnSave" value="Save" 
+                                    id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10" *ngIf="ActionFlag==0">&nbsp;
+                                
+                               
+                                    <input [type]="'submit'" name="btnSave" value="Update" *ngIf="ActionFlag==1"
+                                    id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10">&nbsp;
+                                
+                                
+                                <input type="button" name="btnClear" value="Reset"
+                                    id="ContentPlaceHolder3_btnClear" class="btn btn-primary mar_top10" (click)="onReset()">
 
-                                                                &nbsp;<input type="submit"
-                                                                    name="ctl00$ContentPlaceHolder3$btnClear"
-                                                                    value="Reset" id="ContentPlaceHolder3_btnClear"
-                                                                    class="btn btn-primary mar_top10">
+
 
                                                             </div>
 
@@ -665,13 +668,11 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let person of persons;let a=index">
-                                    <td>
-                                        <button class="badge bg-success btn btn-sm  " name='{{ person.rid}}'>Edit</button>
-                                            &nbsp;
-                                            <button class="badge bg-danger btn btn-sm"  name='{{ person.rid}}'>Delete</button></td>
-                                            
-                                   
-                                     
+                                    <td><button class="badge bg-success  btn btn-sm  " name='{{ person.rid}}' > <a class="fa fa-edit" (click)="onedit(person.rid)"></a></button>
+                                        &nbsp;
+                                        <button class="badge bg-danger  btn btn-sm"  name='{{ person.rid}}' (click)="onDel(person.rid)"><a class="fa fa-trash"></a></button>
+                                    </td>
+        
                                     
                                   <td>  {{a+1}}</td>
                                   <td>  {{person.companyName}}</td>
