@@ -76,6 +76,123 @@ export class CreateModulemasterComponent extends CM_AdminModuleMaster implements
 
   }
 
+ 
+
+  async INSERT(
+    moduleId: number,
+moduleName: String,
+moduleOrder: number,
+
+cuserId: number,
+
+muserId: number,
+rid: number,
+    ActionStatus:string
+  ) {
+
+    //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
+
+
+    let query = `mutation MyMutation($moduleId: Int!
+      $moduleName: String
+      $moduleOrder: Int!
+      
+      $cuserId: Int!
+      
+      $muserId: Int!
+      $rid: Int!) {
+      __typename
+      cMTmAdminModuleMasters(triger: "${ActionStatus}",
+        data: {detail: {
+          moduleId: $moduleId,
+          moduleOrder: $moduleOrder,
+          creationDate: "2019-10-10",
+          cuserId: $cuserId,
+          modificationDate: "2019-10-10",
+          muserId: $muserId,
+          rid: $rid,
+          moduleName: $moduleName
+        }, iD: "${rid}"}) {
+        code
+        detail
+        iD
+        message
+        status
+      }
+    }
+    
+               
+       `
+
+    var datas = JSON.stringify({
+      query, variables: {
+        moduleId,
+moduleName,
+moduleOrder,
+
+cuserId,
+
+muserId,
+rid,
+      }
+    });
+    var ss = await this.Logins1.GraphqlFetchdata("query", datas);
+
+    return ss;
+  }
+  async GETData(User: string, Password: string): Promise<any> {
+
+    let data = '{User="' + User + '",Password="' + Password + '" }';
+    let query = `{
+      cMTmAdminModuleMasters {
+        moduleName
+        creationDate
+        cuserId
+        modificationDate
+        moduleId
+        moduleOrder
+        muserId
+        rid
+      }
+    }
+    
+      `
+    var datas = JSON.stringify({ query, variables: { User, Password } });
+    var ss = await this.Logins1.GraphqlFetchQuery("query", query);
+    return ss;
+
+  }
+
+  async LodeDataTable() {
+    var data = await this.GETData("", "");
+    const myJSON = JSON.stringify(data);
+    const obj = JSON.parse(myJSON);
+
+    this.persons = obj["data"]["cMTmAdminModuleMasters"]
+
+    
+    $('#example').DataTable().destroy();
+    $(document).ready(function () {
+
+      this.dtOptions = $('#example').DataTable({
+
+        dom: 'Bfrtip',
+        paging: true
+
+      });
+
+    });
+
+  }
+
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+
+  }
+
+//----------------------------------CURD OPERATIONS-------------------------------------------------------------
+
   async onSubmit() {
     try{
 
@@ -231,120 +348,6 @@ export class CreateModulemasterComponent extends CM_AdminModuleMaster implements
 }
 
  }
-
-  async INSERT(
-    moduleId: number,
-moduleName: String,
-moduleOrder: number,
-
-cuserId: number,
-
-muserId: number,
-rid: number,
-    ActionStatus:string
-  ) {
-
-    //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
-
-
-    let query = `mutation MyMutation($moduleId: Int!
-      $moduleName: String
-      $moduleOrder: Int!
-      
-      $cuserId: Int!
-      
-      $muserId: Int!
-      $rid: Int!) {
-      __typename
-      cMTmAdminModuleMasters(triger: "${ActionStatus}",
-        data: {detail: {
-          moduleId: $moduleId,
-          moduleOrder: $moduleOrder,
-          creationDate: "2019-10-10",
-          cuserId: $cuserId,
-          modificationDate: "2019-10-10",
-          muserId: $muserId,
-          rid: $rid,
-          moduleName: $moduleName
-        }, iD: "${rid}"}) {
-        code
-        detail
-        iD
-        message
-        status
-      }
-    }
-    
-               
-       `
-
-    var datas = JSON.stringify({
-      query, variables: {
-        moduleId,
-moduleName,
-moduleOrder,
-
-cuserId,
-
-muserId,
-rid,
-      }
-    });
-    var ss = await this.Logins1.GraphqlFetchdata("query", datas);
-
-    return ss;
-  }
-  async GETData(User: string, Password: string): Promise<any> {
-
-    let data = '{User="' + User + '",Password="' + Password + '" }';
-    let query = `{
-      cMTmAdminModuleMasters {
-        moduleName
-        creationDate
-        cuserId
-        modificationDate
-        moduleId
-        moduleOrder
-        muserId
-        rid
-      }
-    }
-    
-      `
-    var datas = JSON.stringify({ query, variables: { User, Password } });
-    var ss = await this.Logins1.GraphqlFetchQuery("query", query);
-    return ss;
-
-  }
-
-  async LodeDataTable() {
-    var data = await this.GETData("", "");
-    const myJSON = JSON.stringify(data);
-    const obj = JSON.parse(myJSON);
-
-    this.persons = obj["data"]["cMTmAdminModuleMasters"]
-
-    
-    $('#example').DataTable().destroy();
-    $(document).ready(function () {
-
-      this.dtOptions = $('#example').DataTable({
-
-        dom: 'Bfrtip',
-        paging: true
-
-      });
-
-    });
-
-  }
-
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
-
-  }
-
 async onDel(string :string)
 {
   try{
@@ -441,4 +444,7 @@ async onedit(string:string)
   });
   this.ActionFlag=1;
 }
+
+//----------------------------------CURD OPERATIONS-------------------------------------------------------------
+
 }

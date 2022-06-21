@@ -210,3 +210,20 @@ export class ResponseStatus
 	public message:string;
 	public status: string;
 }
+
+export class ExpenseItems
+{
+	public expenseId: number;
+	public expenseTypeId: number;
+	public amount: number;
+	public approvedAmount: number;
+	public createdBy: number;
+	public updateBy: number;
+	public description: string;
+	public paidBy: string;
+	public distance: number;
+	public parkingAmt: number;
+	public aMt: number;
+	public expenseItemsId: number;
+	public Date: Date;
+}
