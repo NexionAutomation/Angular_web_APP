@@ -50,7 +50,7 @@
                 <!--Start Form Body -->
 
 
-                <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="card-body">
+                <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()" name="myform" class="card-body">
                     <div class="row">
 
 
@@ -271,7 +271,7 @@
                                                     <input formControlName="txtdescription" type="text"
                                                         id="txtdescription" class="form-control inputtext ">
 
-
+                                                    
 
                                                 </div>
 
@@ -333,7 +333,7 @@
                                                     <div class="clearfix" style="margin-top: 10px;"></div>
                                                     <button type="button" formControlName="btn_add"
                                                         value="ADD" id="btn_add"
-                                                        class="btn btn-primary">ADD</button>
+                                                        class="btn btn-primary" (click)="Add_items()">ADD</button>
                                                 </div>
 
                                             </div>
@@ -387,7 +387,7 @@
                                                                     style="border-style:None;border-collapse:collapse;">
                                                                     <tbody>
                                                                         <tr>
-                                                                            <th scope="col">&nbsp;</th>
+                                                                            <th scope="col">Action</th>
                                                                             <th scope="col">SrNo</th>
                                                                             <th scope="col">Description</th>
                                                                             <th scope="col">Cat No</th>
@@ -398,28 +398,28 @@
                                                                             <th scope="col">Unit Price</th>
                                                                             <th scope="col">Net Price</th>
                                                                         </tr>
-                                                                        <tr style="background-color:0;">
+                                                                        <tr style="background-color:0;" *ngFor="let person of arr2;let a=index" >
                                                                             <td>
-                                                                                <input type="submit"
+                                                                                <button type="button"
                                                                                     formControlName="GridView1$ctl02$btnDelete_Row"
                                                                                     value="Delete"
                                                                                     id="GridView1_btnDelete_Row_0"
-                                                                                    class="btn btn-sm btn-danger">
+                                                                                    class="btn btn-sm btn-danger" (click)="onDel(a)">Delete</button>
 
 
                                                                             </td>
                                                                             <td style="width:100px;">
                                                                                 <span
-                                                                                    id="GridView1_lblRowNumber_0">1</span>
+                                                                                    id="GridView1_lblRowNumber_0">{{a}}</span>
                                                                             </td>
-                                                                            <td>&nbsp;</td>
-                                                                            <td>&nbsp;</td>
-                                                                            <td>&nbsp;</td>
-                                                                            <td>&nbsp;</td>
-                                                                            <td>&nbsp;</td>
-                                                                            <td>&nbsp;</td>
-                                                                            <td>&nbsp;</td>
-                                                                            <td>&nbsp;</td>
+                                                                            <td>{{person.txtdescription}}</td>
+                                                                            <td>{{person.txtcat}}</td>
+                                                                            <td>{{person.ddluom}}</td>
+                                                                            <td>{{person.txtqty}}</td>
+                                                                            <td>{{person.txtlistprice}}</td>
+                                                                            <td>{{person.txtdiscount}}</td>
+                                                                            <td>{{person.txtdiscount}}</td>
+                                                                            <td>{{person.txtdiscount}}</td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -493,9 +493,13 @@
                                             <div class="form-group">
                                                 <div class="col-sm-12">
                                                     <div class="col-sm-7 col-sm-offset-5">
-                                                        <input type="submit" formControlName="btnSave"
+                                                        <button type="button" formControlName="btnSave"
                                                             value="Save" id="btnSave"
-                                                            class="btn btn-primary mar_top10">
+                                                            class="btn btn-primary mar_top10" *ngIf="ActionFlag==0">Save</button>
+
+                                                            <button type="button" formControlName="btnSave"
+                                                            value="Update" id="btnSave"
+                                                            class="btn btn-primary mar_top10" *ngIf="ActionFlag==1">Update</button>
                                                         &nbsp;
                                                         <input type="submit"
                                                             formControlName="btnsaveprint"
@@ -542,154 +546,11 @@
 
 
 
-        <input type="submit" formControlName="btnSavePopup" value="Button"
-            id="btnSavePopup" style="display: none;">
-        <div id="pnlSavePopUp"
-            style="width: 350px; display: none; position: fixed; z-index: 10001; left: 674.5px; top: 317.5px;">
-
-            <div id="UpdateProgress1" style="display:none;" role="status" aria-hidden="true">
-
-                <div class="PopupWaiting">
-
-
-                </div>
-
-
-            </div>
-
-            <table style="width: 100%; background-color: White; border: 1px solid gray;">
-                <tbody>
-                    <tr>
-                        <td align="center" bgcolor="Silver">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td align="center" bgcolor="Silver">
-                            <strong>Confirmation Dialog</strong>
-                            <br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" bgcolor="Silver">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td align="center">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td align="center">
-                            <span id="lblSavingDialogBox"></span>
-
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td align="center">&nbsp;
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center">
-                            <span id="lblConfrmMsg"></span>
-
-
-                            &nbsp;
-                        </td>
-
-                    </tr>
-
-                    <tr>
-                        <td align="center">
-                            <span id="lblpendingaproval"></span>
-
-                            &nbsp;
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td align="center">
-
-
-                            <input type="submit" formControlName="btnsaveOk" value="Yes"
-                                id="btnsaveOk" class="btn btn-primary" style="width:80px;">
-                            &nbsp;&nbsp;&nbsp;
-                            <input type="submit" formControlName="BtnSaveCancel" value="No"
-                                id="BtnSaveCancel" class="btn btn-primary" style="width:80px;">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center">&nbsp;</td>
-                    </tr>
-                </tbody>
-            </table>
-
-        </div>
+      
 
 
 
-
-
-        <input type="submit" formControlName="modalPopupButton" value="Button"
-            id="modalPopupButton" style="display: none;">
-
-        <div id="DeletePopup"
-            style="width: 350px; display: none; position: fixed; z-index: 10001; left: 674.5px; top: 317.5px;">
-
-
-            <table style="width: 100%; background-color: White; border: 1px solid gray;">
-                <tbody>
-                    <tr>
-                        <td align="center" bgcolor="Silver">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td align="center" bgcolor="Silver">
-                            <strong>Confirmation Dialog</strong>
-                            <br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" bgcolor="Silver">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td align="center">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td align="center">
-                            <span id="lblDialogMsg"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td align="center">
-                            <input type="submit" formControlName="btnDeleteOk" value="OK"
-                                id="btnDeleteOk" class="btn btn-primary" style="width:80px;">
-                            &nbsp;&nbsp;&nbsp;
-                            <input type="submit" formControlName="btnCancel" value="Cancel"
-                                id="btnCancel" class="btn btn-primary" style="width:80px;">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center">&nbsp;</td>
-                    </tr>
-                </tbody>
-            </table>
-
-
-        </div>
-
-
-
-
-
-
-        <div data-act-control-type="modalPopupBackground"
-            id="btnSave_ModalPopupExtender_backgroundElement" class="modalBackground"
-            style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000; width: 1349px; height: 1881px;">
-        </div>
-        <div data-act-control-type="modalPopupBackground" id="ModalPopupExtender1_backgroundElement"
-            class="modalBackground"
-            style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000; width: 1349px; height: 1881px;">
-        </div>
+  
     </div>
 
 

@@ -34,8 +34,8 @@ ActionStatus:any;
   cMTmAdminSubModuleMasters: List<CMAdminSubModuleMaster>;
   TM_StateMaster: List<TM_StateMaster>;
   TM_CountryMaster: List<TM_CountryMaster>;
-  ActionFlag: number;
-  editData: CMAdminModuleMasterUser;
+  ActionFlag=0;
+  editData: any;
   constructor(
     private renderer: Renderer2,
     private toastr: ToastrService,
@@ -54,11 +54,10 @@ ActionStatus:any;
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      ddlModule: new FormControl(null),
-      SubModuleName: new FormControl(null),
-      SubModuleOrder: new FormControl(null),
-      NavigationUrl: new FormControl(null),
-      SubModuleTarget: new FormControl(null),
+      ddlcountry: new FormControl(null),
+      txtstatename: new FormControl(null),
+      txtdisplayas: new FormControl(null),
+      
     });
 
 
@@ -198,7 +197,7 @@ ActionStatus:any;
     this.TM_CountryMaster = Enumerable.from(obj["data"]["pOTmCountryMasters"]).cast<TM_CountryMaster>().toList();
 
 
-
+console.log(this.TM_CountryMaster);
 
     var result = this.TM_StateMaster
     .join(this.TM_CountryMaster, a => a.cOUNTRYCODE, b => b.cOUNTRYCODE)
@@ -493,12 +492,23 @@ async onReset()
 
 async onedit(string:string)
 {
-  this.editData=Enumerable.from( this.persons).cast<CMAdminModuleMasterUser>().where(x=>x.rid==Number(string)).singleOrDefault();
+  alert(string);
+  console.log(this.persons)
+  this.editData= this.persons.where(x=>x.left.statecode==Number(string)).singleOrDefault();
   
-  this.loginForm.setValue({
-    txtModuleName: this.editData.moduleName,
-    txtModuleOrder:this.editData.moduleOrder,
+  console.log(this.editData)
+  // this.loginForm.setValue({
+  //   txtModuleName: this.editData.moduleName,
+  //   txtModuleOrder:this.editData.moduleOrder,
 
+  // });
+  this.loginForm = new FormGroup({
+    ddlcountry: this.editData.right.countryname,
+    txtstatename: this.editData.left.statename,
+    txtdisplayas: this.editData.left.displayAs,
+
+   
+    
   });
   this.ActionFlag=1;
 }

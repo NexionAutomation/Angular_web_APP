@@ -34,7 +34,8 @@ export class CreateSubModulemasterComponent implements OnInit {
   CMAdminModuleMasterUser: List<CMAdminModuleMasterUser>;
   cMTmAdminSubModuleMasters: List<CMAdminSubModuleMaster>;
   ActionFlag=0;
-  editData: CMAdminModuleMasterUser;
+  editData: any;
+  editDataID: any;
   constructor(
     private renderer: Renderer2,
     private toastr: ToastrService,
@@ -374,7 +375,7 @@ alert (event)
          this.loginForm.get('NavigationUrl').value,
          
          this.loginForm.get('SubModuleTarget').value,
-         0,
+         Number(this.editDataID),
          "UPDATE"
        );
 
@@ -456,16 +457,16 @@ async onDel(string :string)
 
 
         var output =  await this.INSERT(
-          parseInt( this.loginForm.get('ddlModule').value),
+         0,
          1,
          this.loginForm.get('SubModuleName').value,
          this.Logins1.TMUserMaster.userCode,
          this.Logins1.TMUserMaster.userCode,
-         this.loginForm.get('SubModuleOrder').value,
+         0,
          this.loginForm.get('NavigationUrl').value,
          
          this.loginForm.get('SubModuleTarget').value,
-         0,
+         Number(string),
          "DELETE"
        );
     
@@ -533,14 +534,22 @@ async onReset()
 
 async onedit(string:string)
 {
-  this.editData=Enumerable.from( this.persons).cast<CMAdminModuleMasterUser>().where(x=>x.rid==Number(string)).singleOrDefault();
   
-  this.loginForm.setValue({
-    txtModuleName: this.editData.moduleName,
-    txtModuleOrder:this.editData.moduleOrder,
+  this.editDataID=string;
+  var result = this.persons
+  .where(s => s.left.rid == Number(string) )
+  .singleOrDefault();
 
+  this.editData=result;
+  this.loginForm .setValue({
+    ddlModule:this.editData.right.rid ,
+    SubModuleName: this.editData.left.subModuleName,
+    SubModuleOrder:  this.editData.left.subModuleOrder,
+    NavigationUrl:  this.editData.left.navigationUrl,
+    SubModuleTarget:  this.editData.left.targetModule,
   });
   this.ActionFlag=1;
+
 }
 
 //----------------------------------CURD OPERATIONS-------------------------------------------------------------

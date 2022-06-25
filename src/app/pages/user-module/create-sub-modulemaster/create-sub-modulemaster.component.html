@@ -51,7 +51,7 @@
 
                             <select name="ddlModule" id="ddlModule" class="form-control js-example-basic-single"
                                 formControlName="ddlModule"
-                                (ngModelChange)="ddlModule($event)"
+                               
                                                                    
                                 >
 
@@ -204,13 +204,13 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let person of persons;let a=index">
-                            <td><button class="badge bg-success  btn btn-sm  " name='{{ person.rid}}' > <a class="fa fa-edit" (click)="onedit(person.rid)"></a></button>
+                            <td><button class="badge bg-success  btn btn-sm  " name='{{ person.left.rid}}' > <a class="fa fa-edit" (click)="onedit(person.left.rid)"></a></button>
                                 &nbsp;
-                                <button class="badge bg-danger  btn btn-sm"  name='{{ person.rid}}' (click)="onDel(person.rid)"><a class="fa fa-trash"></a></button>
+                                <button class="badge bg-danger  btn btn-sm"  name='{{ person.left.rid}}' (click)="onDel(person.left.rid)"><a class="fa fa-trash"></a></button>
                             </td>
     
                            
-                          <td>  {{a+1}}</td>
+                          <td>  {{person.left.rid}}</td>
                           <td>  {{person.right.moduleName}}</td>
                           <td>{{ person.left.subModuleName }}</td>
                           <td>  {{person.left.targetModule}}</td>

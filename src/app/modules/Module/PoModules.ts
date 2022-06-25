@@ -227,3 +227,26 @@ export class ExpenseItems
 	public expenseItemsId: number;
 	public Date: Date;
 }
+
+export class TM_PurchaseHead
+{
+	public pOId: number;
+	public companyID: number;
+	public supplierID: number;
+	public orderDate: Date;
+	public paymentTerms: string;
+	public indentNo: string;
+	public freightTerms: string;
+	public workOrderNo: string;
+	public gst: string;
+	public deliveryDate: Date;
+	public remarks: string;
+	public total: number;
+	public enduser: string;
+	public creationDate: Date;
+	public cUserId: number;
+	public modificationDate: Date;
+	public mUserId: number;
+	public deliveryMode: string;
+	public iD: number;
+}

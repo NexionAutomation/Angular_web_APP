@@ -29,7 +29,7 @@
                 <!--Start Form Heading -->
 
                 <!--Start Form Body -->
-                <div class="card-body">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="card-body">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="bder top-mrg20">
@@ -43,21 +43,19 @@
                                                 <div class="col-sm-4">
                                                     <label for="inputEmail3" class="control-label pull-left">Supplier
                                                         Name</label>
-                                                    <input name="ctl00$ContentPlaceHolder3$txtsuppliername" type="text"
-                                                        onchange="javascript:setTimeout('__doPostBack(\'ctl00$ContentPlaceHolder3$txtsuppliername\',\'\')', 0)"
-                                                        onkeypress="if (WebForm_TextcardKeyHandler(event) == false) return false;"
+                                                    <input  formControlName="txtsuppliername" type="text"
                                                         id="txtsuppliername" class="form-control inputtext">
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <label for="inputEmail3" class="control-label pull-left">Address
                                                         1</label>&nbsp;<span id="ContentPlaceHolder3_lblloginIdError"
                                                         class="col-sm-3"></span>
-                                                    <input name="ctl00$ContentPlaceHolder3$txtCaddress1" type="text"
+                                                    <input  formControlName="txtCaddress1" type="text"
                                                         id="txtCaddress1" class="form-control inputtext">
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <label for="inputEmail3" class="control-label">Address 2</label>
-                                                    <input name="ctl00$ContentPlaceHolder3$txtCaddress2" type="text"
+                                                    <input  formControlName="txtCaddress2" type="text"
                                                         id="txtCaddress2" class="form-control inputtext">
                                                 </div>
                                             </div>
@@ -68,20 +66,20 @@
                                                     <label for="inputEmail3" class="control-label pull-left">Address
                                                         3</label>&nbsp;<span id="ContentPlaceHolder3_Label1"
                                                         class="col-sm-3"></span>
-                                                    <input name="ctl00$ContentPlaceHolder3$txtCaddress3" type="text"
+                                                    <input  formControlName="txtCaddress3" type="text"
                                                         id="txtCaddress3" class="form-control inputtext">
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <label for="inputEmail3" class="control-label pull-left">Contact
                                                         person</label>
-                                                    <input name="ctl00$ContentPlaceHolder3$txtcontactperson" type="text"
+                                                    <input  formControlName="txtcontactperson" type="text"
                                                         id="txtcontactperson" class="form-control inputtext">
 
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <label for="inputEmail3" class="control-label pull-left">Mobile
                                                         NO</label>
-                                                    <input name="ctl00$ContentPlaceHolder3$txtMobileNo" type="text"
+                                                    <input  formControlName="MobileNo" type="text"
                                                         maxlength="10" id="txtMobileNo" class="form-control inputtext">
 
                                                 </div>
@@ -94,7 +92,7 @@
                                                     <label for="inputEmail3" class="control-label pull-left">GST
                                                         No</label>&nbsp;<span id="ContentPlaceHolder3_Label2"
                                                         class="col-sm-3"></span>
-                                                    <input name="ctl00$ContentPlaceHolder3$txtgst" type="text"
+                                                    <input  formControlName="gst" type="text"
                                                         id="txtgst" class="form-control inputtext">
                                                 </div>
 
@@ -103,34 +101,7 @@
                                             </div>
 
 
-                                            <div class="clearfix" style="margin-bottom: 5px;">
-                                                <span id="ContentPlaceHolder3_RequiredFieldValidator1"
-                                                    class="errorlabels" style="display:none;">Supplier Name
-                                                    Required</span>
-                                                &nbsp;
-                                                <span id="ContentPlaceHolder3_RequiredFieldValidator2"
-                                                    class="errorlabels" style="display:none;">Address1 Required</span>
-                                                &nbsp;
-                                                &nbsp;
-                                                <span id="ContentPlaceHolder3_RequiredFieldValidator10"
-                                                    class="errorlabels" style="display:none;">Address2 Required</span>
-                                                &nbsp;
-                                                <span id="ContentPlaceHolder3_RequiredFieldValidator11"
-                                                    class="errorlabels" style="display:none;">Address3 Required</span>
-                                                &nbsp;
-                                                <span id="ContentPlaceHolder3_RequiredFieldValidator3"
-                                                    class="errorlabels" style="display:none;">Contact Person
-                                                    Required</span>
-                                                &nbsp;
-                                                <span id="ContentPlaceHolder3_RequiredFieldValidator12"
-                                                    class="errorlabels" style="display:none;">Mobile No Required</span>
-                                                &nbsp;
-                                                <span id="ContentPlaceHolder3_RequiredFieldValidator13"
-                                                    class="errorlabels" style="display:none;">GST Required</span>
-                                                &nbsp;
-
-                                            </div>
-
+                                          
 
 
 
@@ -182,7 +153,7 @@
 
                         </div>
                     </div>
-                </div>
+                </form>
                 <!--End Form Body -->
 
             </div>
@@ -365,9 +336,9 @@
                         <tbody>
                             <tr *ngFor="let person of persons;let a=index">
                                 
-                                <td><button class="badge bg-success  btn btn-sm  " name='{{ person.rid}}' > <a class="fa fa-edit" (click)="onedit(person.rid)"></a></button>
+                                <td><button class="badge bg-success  btn btn-sm  " name='{{ person.id}}' > <a class="fa fa-edit" (click)="onedit(person.id)"></a></button>
                                     &nbsp;
-                                    <button class="badge bg-danger  btn btn-sm"  name='{{ person.rid}}' (click)="onDel(person.rid)"><a class="fa fa-trash"></a></button>
+                                    <button class="badge bg-danger  btn btn-sm"  name='{{ person.id}}' (click)="onDel(person.id)"><a class="fa fa-trash"></a></button>
                                 </td>
     
                                 <td> {{a+1}}</td>

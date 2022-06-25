@@ -108,8 +108,13 @@ const routes: Routes = [
                 path: 'Upode',
                 component: UplodeFileComponent
             },
+           
             {
                 path: 'CreatePo',
+                component: CreatePOComponent
+            },
+            {
+                path: 'CreatePo/:id',
                 component: CreatePOComponent
             },
             {

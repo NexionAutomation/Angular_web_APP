@@ -33,8 +33,9 @@ ActionStatus:any;
   CMAdminModuleMasterUser: List<CMAdminModuleMasterUser>;
   cMTmAdminSubModuleMasters: List<CMAdminSubModuleMaster>;
   Tm_supplierMaster: List<Tm_supplierMaster>;
-  ActionFlag: number;
-  editData: CMAdminModuleMasterUser;
+  ActionFlag= 0;
+  editData: any;
+  editDataID: any;
   constructor(
     private renderer: Renderer2,
     private toastr: ToastrService,
@@ -53,11 +54,13 @@ ActionStatus:any;
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      ddlModule: new FormControl(null),
-      SubModuleName: new FormControl(null),
-      SubModuleOrder: new FormControl(null),
-      NavigationUrl: new FormControl(null),
-      SubModuleTarget: new FormControl(null),
+      txtsuppliername: new FormControl(null),
+      txtCaddress1: new FormControl(null),
+      txtCaddress2: new FormControl(null),
+      txtCaddress3: new FormControl(null),
+      txtcontactperson: new FormControl(null),
+      MobileNo: new FormControl(null),
+      gst: new FormControl(null),
     });
 
 
@@ -68,47 +71,62 @@ ActionStatus:any;
   
 
   async INSERT(
-    module_Id: number,
-    subModule_Id: number,
-    subModuleName: string,
-    cUser_Id: number,
-    mUser_Id: number,
-    subModuleOrder: number,
-    navigationUrl: string,
-    rID: number,
+   
+supplierName: String,
+address1: String,
+address2: String,
+address3: String,
+contactPerson: String,
+cmobileNo: String,
+gst: String,
+recordStatus: String,
+
+cuserId: number,
+
+muserId: number,
+id: number,
     targetModule: string,
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
 
 
-    let query = `mutation MyMutation($module_Id: Int!,
-    $subModule_Id: Int!,
-    $subModuleName: String,
-    $cUser_Id: Int!,
-    $mUser_Id: Int!,
-    $subModuleOrder: Int!,
-    $navigationUrl: String, 
-    $rID: Int!
-    $targetModule:String) {
-    __typename
-    cMTmAdminSubModuleMasters(data: {detail: {moduleId: $module_Id, 
-      subModuleId: $subModule_Id,
-      creationDate: "2019-10-10",
-      cuserId: $cUser_Id,
-      modificationDate: "2019-10-10",
-      muserId: $mUser_Id, 
-      subModuleOrder: $subModuleOrder,
-      rid: $rID, 
-      subModuleName: $subModuleName, 
-      targetModule:$targetModule,
-      navigationUrl: $navigationUrl}}, triger: "INSERT") {
-      iD
-      code
-      message
-      status
+    let query = `mutation MyMutation($id: Int
+      $supplierName: String
+      $address1: String
+      $address2: String
+      $address3: String
+      $contactPerson: String
+      $cmobileNo: String
+      $gst: String
+      $recordStatus: String
+      
+      $cuserId: Int
+      
+      $muserId: Int) {
+      __typename
+      cMSupplierMaster(triger: "${targetModule}", data: {detail: 
+        {address1: $address1,
+          address2: $address2,
+          address3: $address3, 
+          cmobileNo: $cmobileNo, 
+          contactPerson: $contactPerson,
+          creationDate: "2019-10-10",
+          cuserId: $cuserId,
+          gst: $gst, 
+          id: $id,
+          modificationDate: "2019-10-10",
+          muserId: $muserId,
+          recordStatus: $recordStatus, 
+          supplierName:$supplierName}, iD: "${id}"}) {
+        code
+        detail
+        iD
+        message
+        status
+      }
     }
-  }
+    
   
        `
 
@@ -133,15 +151,20 @@ ActionStatus:any;
 
     var datas = JSON.stringify({
       query, variables: {
-        module_Id,
-        subModule_Id,
-        subModuleName,
-        cUser_Id,
-        mUser_Id,
-        subModuleOrder,
-        navigationUrl,
-        rID,
-        targetModule,
+        supplierName,
+        address1,
+        address2,
+        address3,
+        contactPerson,
+        cmobileNo,
+        gst,
+        recordStatus,
+        
+        cuserId,
+        
+        muserId,
+        id
+        
       }
     });
     var ss = await this.Logins1.GraphqlFetchdata("query", datas);
@@ -183,21 +206,12 @@ ActionStatus:any;
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-    this.persons = obj["data"]["cMTmAdminSubModuleMasters"]
+    //this.persons = obj["data"]["cMTmAdminSubModuleMasters"]
 
 
-    const enumerable = Enumerable.from(this.persons).asEnumerable();
+
     this.Tm_supplierMaster = Enumerable.from(obj["data"]["pOTmSupplierMasters"]).cast<Tm_supplierMaster>().toList();
- // or List.from(data)
-   // this.CMAdminModuleMasterUser = Enumerable.from(obj["data"]["cMTmAdminModuleMasters"]).cast<CMAdminModuleMasterUser>().toList();
 
-
-
-
-   // var result = this.cMTmAdminSubModuleMasters
-    // .join(this.CMAdminModuleMasterUser, a => a.moduleId, b => b.rid)
-    // .where(s => s.left.moduleId == s.right.rid )
-    // .toList();
      this.persons=this.Tm_supplierMaster;
     
    
@@ -263,18 +277,31 @@ async onSubmit() {
       if (showConfirmButton == true) {
 
 
-        var output = null;
-        // await this.INSERT(0,
-        //   this.loginForm.get('txtModuleName').value,
-        //   this.loginForm.get('txtModuleOrder').value,
-        //   this.Logins1.TMUserMaster.userCode
-        //   , 0, 0,"INSERT");
+        var output = 
+        await this.INSERT(
+          "supplierName",
+"address1",
+"address2",
+"address3",
+"contactPerson",
+"cmobileNo",
+"gst",
+"recordStatus",
+
+1,
+
+1,
+0,
+ "INSERT");
+
+             
+
 
 
           const myJSON = JSON.stringify(output);
           const obj = JSON.parse(myJSON);
       
-          var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+          var outputFinal = obj["data"]["cMSupplierMaster"];
     
 
 
@@ -334,18 +361,26 @@ if(this.ActionFlag==1)
     if (showConfirmButton == true) {
 
 
-      var output = null;
-      // await this.INSERT(0,
-      //   this.loginForm.get('txtModuleName').value,
-      //   this.loginForm.get('txtModuleOrder').value,
-      //   this.Logins1.TMUserMaster.userCode
-      //   , 0, this.editData.rid,"UPDATE");
+      var output = await this.INSERT(
+        "supplierName",
+"address1",
+"address2",
+"address3",
+"contactPerson",
+"cmobileNo",
+"gst",
+"recordStatus",
 
+1,
+
+1,
+Number(this.editDataID),
+"UPDATE");
 
         const myJSON = JSON.stringify(output);
         const obj = JSON.parse(myJSON);
     
-        var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+        var outputFinal = obj["data"]["cMSupplierMaster"];
   
 
 
@@ -419,12 +454,26 @@ if(state==state)
     if (showConfirmButton == true) {
 
 
-      var output = null;//await this.INSERT( 0,"0",0,0,0,Number(string),"DELETE");
-  
+      var output = 
+      await this.INSERT(
+        "supplierName",
+"address1",
+"address2",
+"address3",
+"contactPerson",
+"cmobileNo",
+"gst",
+"recordStatus",
+
+1,
+
+1,
+Number(string),
+"DELETE");
       const myJSON = JSON.stringify(output);
       const obj = JSON.parse(myJSON);
   
-      var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+      var outputFinal = obj["data"]["cMSupplierMaster"];
 
      
         if(outputFinal[0].message=="Success")
@@ -485,14 +534,25 @@ this.ActionFlag=0;
 
 async onedit(string:string)
 {
-this.editData=Enumerable.from( this.persons).cast<CMAdminModuleMasterUser>().where(x=>x.rid==Number(string)).singleOrDefault();
 
-this.loginForm.setValue({
-  txtModuleName: this.editData.moduleName,
-  txtModuleOrder:this.editData.moduleOrder,
+  this.editDataID=string;
+this.editData= this.persons.where(x=>x.id==Number(string)).singleOrDefault();
 
+this.loginForm .setValue({
+  txtsuppliername: this.editData.supplierName,
+  txtCaddress1: this.editData.address1,
+  txtCaddress2: this.editData.address2,
+  txtCaddress3: this.editData.address3,
+  txtcontactperson: this.editData.contactPerson,
+  MobileNo:this.editData.cmobileNo,
+  gst: this.editData.gst,
 });
 this.ActionFlag=1;
+
+
+
+
+
 }
 
 //----------------------------------CURD OPERATIONS-------------------------------------------------------------

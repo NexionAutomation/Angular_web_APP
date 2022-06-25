@@ -65,7 +65,8 @@ import { SupplierMasterComponent } from './pages/Module/supplier-master/supplier
 import { LeaveTypeComponent } from './pages/Module/leave-type/leave-type.component';
 import { LeaveSettingComponent } from './pages/Module/leave-setting/leave-setting.component';
 
-import * as Select from '../assets/select2/select2.min.js';
+import '../assets/select2/select2.min.js';
+//import "file-viewer";
 
 // import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 // import { createHttpLink, HttpLink, InMemoryCache } from '@apollo/client';
@@ -131,6 +132,7 @@ registerLocaleData(localeEn, 'en-EN');
         DataTablesModule,
          ApolloModule, 
         BrowserModule,
+        
        
         StoreModule.forRoot({auth: authReducer, ui: uiReducer}),
         SweetAlert2Module.forRoot(),

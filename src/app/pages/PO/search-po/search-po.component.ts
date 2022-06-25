@@ -2,7 +2,8 @@ import { Logins } from '@/Model/Utility/login';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { CMAdminModuleMasterUser, TM_CountryMaster, TM_PurchaseHead, Tm_supplierMaster } from '@modules/Module/PoModules';
+import { Router } from '@angular/router';
+import { CMAdminModuleMasterUser, TM_CompanyMaster, TM_CountryMaster, TM_PurchaseHead, Tm_supplierMaster } from '@modules/Module/PoModules';
 import { CM_AdminModuleMaster } from '@pages/user-module/create-modulemaster/create-modulemaster.component';
 import { UserModuleServicesService } from '@pages/user-module/user-module-services.service';
 import { AppService } from '@services/app.service';
@@ -19,7 +20,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./search-po.component.scss']
 })
 
-export class SearchPoComponent extends CM_AdminModuleMaster implements OnInit {
+export class SearchPoComponent  implements OnInit {
 
 
     public Module_Id: number;
@@ -31,7 +32,7 @@ export class SearchPoComponent extends CM_AdminModuleMaster implements OnInit {
   public status: any;
   public CM_AdminModuleMaster: CM_AdminModuleMaster
    ActionFlag= 0;
-   editData:CMAdminModuleMasterUser;
+
   dtOptions: DataTables.Settings = {};
   persons: any;
   persons1: any;
@@ -44,6 +45,9 @@ export class SearchPoComponent extends CM_AdminModuleMaster implements OnInit {
   POTmSupplierMasters: Enumerable<Tm_supplierMaster>;
   POTmCompanyMasters: Enumerable<TM_CountryMaster>;
   pOTmPurchaseHeads: Enumerable<TM_PurchaseHead>;
+  POTmCompanyMasters1: Enumerable<TM_CompanyMaster>;
+  public PurchaseHead: TM_PurchaseHead;
+  editData: any;
  
   constructor(
     private renderer: Renderer2,
@@ -52,11 +56,12 @@ export class SearchPoComponent extends CM_AdminModuleMaster implements OnInit {
     private UserModule_: UserModuleServicesService,
     private Logins1: Logins,
     private http: HttpClient,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    // private _router:Router
 
 
   ) {
-    super();
+    //super();
   }
 
   ngOnInit(): void {
@@ -70,7 +75,113 @@ export class SearchPoComponent extends CM_AdminModuleMaster implements OnInit {
 
   }
 
- 
+  async INSERTHeader(
+    poId: number,
+    companyId: number,
+    supplierId: number,
+    orderDate: Date,
+    paymentTerms: String,
+    indentNo: String,
+    freightTerms: String,
+    workOrderNo: String,
+    gst: String,
+    deliveryDate: Date,
+    remarks: String,
+    total: number,
+    enduser: String,
+    creationDate: Date,
+    cuserId: number,
+    modificationDate: Date,
+    muserId: number,
+    deliveryMode: String,
+    id: number,
+    ActionStatus:string,
+  ) {
+
+    //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
+
+
+    let query = `mutation MyMutation(
+      $poId: Int
+      $companyId: Int
+      $supplierId: Int
+      $orderDate: DateTime
+      $paymentTerms: String
+      $indentNo: String
+      $freightTerms: String
+      $workOrderNo: String
+      $gst: String
+      $deliveryDate: DateTime
+      $remarks: String
+      $total: Float
+      $enduser: String
+      $creationDate: DateTime
+      $cuserId: Int
+      $modificationDate: DateTime
+      $muserId: Int
+      $deliveryMode: String
+      $id: Int) {
+      __typename
+      cMTmPurchaseHead(data: {detail:
+        {
+          companyId: $companyId,
+          creationDate: $creationDate,
+          cuserId: $cuserId, 
+          deliveryDate: $deliveryDate, 
+          deliveryMode: $deliveryMode,
+          enduser: $enduser,
+          freightTerms:$freightTerms,
+          gst: $gst, 
+          id: $id,
+          indentNo: $indentNo,
+          modificationDate: $modificationDate,
+          muserId: $muserId,
+          orderDate: $orderDate,
+          paymentTerms: $paymentTerms, 
+          poId: $poId,
+          remarks: $remarks, 
+          supplierId: $supplierId,
+          total:$total,
+          workOrderNo: $workOrderNo
+        }, iD: "${poId}"}, triger: "${ActionStatus}")
+        { 
+          iD
+          code
+          message
+          status
+          detail
+        }
+    }
+    
+       `
+
+    var datas = JSON.stringify({
+      query, variables: {
+        poId,
+        companyId,
+        supplierId,
+        orderDate,
+        paymentTerms,
+        indentNo,
+        freightTerms,
+        workOrderNo,
+        gst,
+        deliveryDate,
+        remarks,
+        total,
+        enduser,
+        creationDate,
+        cuserId,
+        modificationDate,
+        muserId,
+        deliveryMode,
+        id,
+      }
+    });
+    var ss = await this.Logins1.GraphqlFetchdata("query", datas);
+
+    return ss;
+  }
 
   async INSERT(
     moduleId: number,
@@ -138,76 +249,32 @@ rid,
 
     let data = '{User="' + User + '",Password="' + Password + '" }';
     let query = `query MyQuery {
-      pOTmPurchaseHeads {
+      __typename
+      cMPOFetchdata {
         id
-        companyId
-        creationDate
-        cuserId
-        deliveryDate
-        deliveryMode
-        enduser
-        freightTerms
-        gst
-        indentNo
-        modificationDate
-        muserId
-        orderDate
-        paymentTerms
-        poId
-        remarks
-        supplierId
-        total
         workOrderNo
-      }
-      pOTmCompanyMasters {
-        id
-        caddress1
-        caddress3
-        caddress2
-        cemailId
-        companyName
-        cmobileNo
-        creationDate
-        cphoto
-        cuserId
-        cwebsite
-        deletedDate
-        duserCode
-        iaddress1
-        iaddress2
-        iaddress3
-        igst
-        imobileNo
-        iname
-        ipanNo
-        modificationDate
-        muserId
-        reasonForDeletion
-        recordstatus
-        saddress1
-        saddress2
-        saddress3
-        sattendentName
-        smobileNo
-        sname
-        spanNo
-      }
-      pOTmSupplierMasters {
-        id
-        address1
-        address2
-        address3
-        cmobileNo
-        contactPerson
-        creationDate
-        cuserId
-        gst
-        modificationDate
-        muserId
-        recordStatus
+        total
         supplierName
+        supplierId
+        remarks
+        poId
+        paymentTerms
+        orderDate
+        muserId
+        modificationDate
+        indentNo
+        gst
+        freightTerms
+        enduser
+        deliveryMode
+        deliveryDate
+        cuserId
+        creationDate
+        companyName
+        companyId
       }
     }
+    
     
       `
     var datas = JSON.stringify({ query, variables: { User, Password } });
@@ -222,16 +289,25 @@ rid,
     const obj = JSON.parse(myJSON);
 
     this.POTmSupplierMasters = Enumerable.from( obj["data"]["pOTmSupplierMasters"]).cast<Tm_supplierMaster>();
-    this.POTmCompanyMasters =  Enumerable.from(obj["data"]["pOTmCompanyMasters"]).cast<TM_CountryMaster>()
-    this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["pOTmPurchaseHeads"]).cast<TM_PurchaseHead>();
+    this.POTmCompanyMasters1 =  Enumerable.from(obj["data"]["pOTmCompanyMasters"]).cast<TM_CompanyMaster>()
+    this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["cMPOFetchdata"]).cast<TM_PurchaseHead>();
     
     
 
-      var result = this.pOTmPurchaseHeads
-    .join(this.POTmSupplierMasters, a => a.supplierID, b => b.iD)
-    .where(s => s.left.supplierID == s.right.iD )
-    .toList();
+    //   var result = this.pOTmPurchaseHeads
+    // .join(this.POTmSupplierMasters, a => a.supplierID, b => b.iD)
+    // .where(s => s.left.supplierID == s.right.iD )
+    // .toList();
+
+    
+    // var result2 = result
+    // .join(this.POTmCompanyMasters1, a => a.left.companyID, b => b.iD)
+    // .where(s => s.left.left.companyID== s.right.iD)
+    // .toList();
    
+    
+this.persons= this.pOTmPurchaseHeads.take(200);
+    //console.log(da.take(10));
     $('#example').DataTable().destroy();
     $(document).ready(function () {
 
@@ -413,6 +489,9 @@ async onDel(string :string)
 {
   try{
   var state="Delete"
+
+
+ 
   if(state==state)
   {
 
@@ -429,13 +508,34 @@ async onDel(string :string)
   
       if (showConfirmButton == true) {
 
-
-        var output = await this.INSERT( 0,"0",0,0,0,Number(string),"DELETE");
-    
+        
+        var output = await  this.INSERTHeader(
+          Number(string),
+         1,
+          1,
+          new Date("2019-10-10"),
+         "paymentTerms",
+         "indentNo",
+         "freightTerms",
+         "workOrderNo",
+         "gst",
+         new Date("2019-10-10"),
+         "remarks",
+          1.0,
+         "enduser",
+         new Date("2019-10-10"),
+         1
+       ,
+         new Date("2019-10-10"),
+         1,
+         "deliveryMode" ,
+         Number(string),
+         "DELETE"
+       );
         const myJSON = JSON.stringify(output);
         const obj = JSON.parse(myJSON);
     
-        var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+        var outputFinal = obj["data"]["cMTmPurchaseHead"];
 
        
           if(outputFinal[0].message=="Success")
@@ -453,14 +553,14 @@ async onDel(string :string)
 
             })
 
-            this.Logins1.popupStatus
+            await this.Logins1.popupStatus
             Toast.fire({
               icon: 'success',
               title: 'Data Delete Successfully',
 
 
             })
-            this.LodeDataTable();
+            await this.LodeDataTable();
 
           }else{
 
@@ -487,7 +587,11 @@ catch(error)
     'error')
 }
 }
-
+async onreport()
+{
+  const url = 'https://www.google.com';
+    window.open(url, '_blank');
+}
 async onReset()
 {
   this.loginForm.reset();
@@ -496,7 +600,7 @@ async onReset()
 
 async onedit(string:string)
 {
-  this.editData=Enumerable.from( this.persons).cast<CMAdminModuleMasterUser>().where(x=>x.rid==Number(string)).singleOrDefault();
+  this.PurchaseHead=Enumerable.from( this.persons).cast<TM_PurchaseHead>().where(x=>x.pOId==Number(string)).singleOrDefault();
   
   this.loginForm.setValue({
     txtModuleName: this.editData.moduleName,
@@ -504,6 +608,8 @@ async onedit(string:string)
 
   });
   this.ActionFlag=1;
+  
+  //this.router.navigate(['CreatePo',string]);
 }
 
 //----------------------------------CURD OPERATIONS-------------------------------------------------------------
