@@ -33,8 +33,9 @@ ActionStatus:any;
   CMAdminModuleMasterUser: List<CMAdminModuleMasterUser>;
   cMTmAdminSubModuleMasters: List<CMAdminSubModuleMaster>;
   ExpenseGroup: List<ExpenseGroup>;
-  ActionFlag: number;
-  editData: CMAdminModuleMasterUser;
+  ActionFlag=0;
+  editData: any;
+  editDataId: any;
   constructor(
     private renderer: Renderer2,
     private toastr: ToastrService,
@@ -65,46 +66,39 @@ ActionStatus:any;
  
 
   async INSERT(
-    rid: number,
-groupId: number,
-groupName: String,
-
-cuserId: number,
-
-muserId: number,
+    
+    egroupName: String,
+      
+    createdBy: number,
+  
+    updateBy: number,
+    egroupId: number,
     targetModule: string,
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
 
 
-    let query = `mutation MyMutation(
-      $rid: Int!
-      $groupId: Int!
-      $groupName: String
-    
-      $cuserId: Int
+    let query = `mutation MyMutation ($egroupName: String
       
-      $muserId: Int
-    ) {
+      $createdBy: Int
+    
+      $updateBy: Int
+      $egroupId: Long!){
       __typename
-      cMExpenseGroupMaster(data: {detail: {
-        rid: $rid,
-        groupId: $groupId,
-        creationDate: "2019-10-10",
-        cuserId: $cuserId,
-        groupName: $groupName,
-        modificationDate: "2019-10-10",
-        muserId: $muserId
-      }, iD:  "${rid}"}, triger: "${targetModule}") {
-        code
-        detail
+      cMExpenseGroupMaster(data: {detail:
+        {createdBy: $createdBy, 
+          createdOn: "2019-10-10",
+          egroupId: $egroupId,
+          egroupName: $egroupName,
+          updateBy: $updateBy,
+          updateOn: "2019-10-10"}, iD: "${egroupId}"}, triger: "${targetModule}") {
         iD
+        code
         message
         status
       }
     }
-    
        `
 
      switch (this.ActionStatus)
@@ -128,13 +122,12 @@ muserId: number,
 
     var datas = JSON.stringify({
       query, variables: {
-        rid,
-groupId,
-groupName,
-
-cuserId,
-
-muserId
+        egroupName,
+      
+    createdBy,
+  
+    updateBy,
+    egroupId,
       }
     });
     var ss = await this.Logins1.GraphqlFetchdata("query", datas);
@@ -245,18 +238,21 @@ alert (event)
         if (showConfirmButton == true) {
 
 
-          var output = null;
-          // await this.INSERT(0,
-          //   this.loginForm.get('txtModuleName').value,
-          //   this.loginForm.get('txtModuleOrder').value,
-          //   this.Logins1.TMUserMaster.userCode
-          //   , 0, 0,"INSERT");
+          var output =
+          await this.INSERT(
+           
+            this.loginForm.get('txtcountrymaster').value,
+            this.Logins1.TMUserMaster.userCode,
+            this.Logins1.TMUserMaster.userCode
+            , 0,"INSERT");
+
+            
 
 
             const myJSON = JSON.stringify(output);
             const obj = JSON.parse(myJSON);
         
-            var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+            var outputFinal = obj["data"]["cMExpenseGroupMaster"];
       
 
 
@@ -316,18 +312,18 @@ alert (event)
       if (showConfirmButton == true) {
 
 
-        var output = null;
-        // await this.INSERT(0,
-        //   this.loginForm.get('txtModuleName').value,
-        //   this.loginForm.get('txtModuleOrder').value,
-        //   this.Logins1.TMUserMaster.userCode
-        //   , 0, this.editData.rid,"UPDATE");
+        var output = await this.INSERT(
+          
+          this.loginForm.get('txtcountrymaster').value,
+          this.Logins1.TMUserMaster.userCode,
+          this.Logins1.TMUserMaster.userCode
+          , this.editDataId,"UPDATE");
 
 
           const myJSON = JSON.stringify(output);
           const obj = JSON.parse(myJSON);
       
-          var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+          var outputFinal = obj["data"]["cMExpenseGroupMaster"];
     
 
 
@@ -401,12 +397,17 @@ async onDel(string :string)
       if (showConfirmButton == true) {
 
 
-        var output = null;//await this.INSERT( 0,"0",0,0,0,Number(string),"DELETE");
-    
+        var output = await this.INSERT(
+      
+          this.loginForm.get('txtcountrymaster').value,
+          this.Logins1.TMUserMaster.userCode,
+          this.Logins1.TMUserMaster.userCode
+          , Number(string),"DELETE");
+
         const myJSON = JSON.stringify(output);
         const obj = JSON.parse(myJSON);
     
-        var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+        var outputFinal = obj["data"]["cMExpenseGroupMaster"];
 
        
           if(outputFinal[0].message=="Success")
@@ -467,11 +468,12 @@ async onReset()
 
 async onedit(string:string)
 {
-  this.editData=Enumerable.from( this.persons).cast<CMAdminModuleMasterUser>().where(x=>x.rid==Number(string)).singleOrDefault();
+  this.editDataId=Number(string);
+  this.editData=this.persons.where(x=>x.egroupId==Number(string)).singleOrDefault();
   
   this.loginForm.setValue({
-    txtModuleName: this.editData.moduleName,
-    txtModuleOrder:this.editData.moduleOrder,
+    txtcountrymaster: this.editData.egroupName,
+    
 
   });
   this.ActionFlag=1;

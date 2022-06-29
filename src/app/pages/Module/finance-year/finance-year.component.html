@@ -37,7 +37,7 @@
                         <!--Start Form Heading -->
 
                         <!--Start Form Body -->
-                        <div class="card-body">
+                        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="bder top-mrg20">
@@ -52,8 +52,8 @@
                                                             <label for="inputEmail3"
                                                                 class="col-sm-3 control-label">Enter FY Name</label>
                                                             <div class="col-sm-9">
-                                                                <input name="ctl00$ContentPlaceHolder3$txtFYname"
-                                                                    type="text" id="ContentPlaceHolder3_txtFYname"
+                                                                <input formControlName="txtFYname" type="text"
+                                                                    id="ContentPlaceHolder3_txtFYname"
                                                                     class="form-control">
 
                                                             </div>
@@ -63,8 +63,8 @@
                                                             <label for="inputEmail3"
                                                                 class="col-sm-3 control-label">Enter Start Date</label>
                                                             <div class="col-sm-9">
-                                                                <input name="ctl00$ContentPlaceHolder3$txtstartdate"
-                                                                    type="text" id="ContentPlaceHolder3_txtstartdate"
+                                                                <input formControlName="txtstartdate" type="date"
+                                                                    id="ContentPlaceHolder3_txtstartdate"
                                                                     class="form-control">
 
                                                             </div>
@@ -73,8 +73,8 @@
                                                             <label for="inputEmail3"
                                                                 class="col-sm-3 control-label">Enter End Date</label>
                                                             <div class="col-sm-9">
-                                                                <input name="ctl00$ContentPlaceHolder3$txtenddate"
-                                                                    type="text" id="ContentPlaceHolder3_txtenddate"
+                                                                <input formControlName="txtenddate" type="date"
+                                                                    id="ContentPlaceHolder3_txtenddate"
                                                                     class="form-control">
 
                                                             </div>
@@ -83,34 +83,9 @@
                                                             <label for="inputEmail3"
                                                                 class="col-sm-3 control-label">Enter PO Number</label>
                                                             <div class="col-sm-9">
-                                                                <input name="ctl00$ContentPlaceHolder3$txtponumber"
-                                                                    type="text" id="ContentPlaceHolder3_txtponumber"
+                                                                <input formControlName="txtponumber" type="number"
+                                                                    id="ContentPlaceHolder3_txtponumber"
                                                                     class="form-control">
-
-
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="inputEmail3"
-                                                                class="col-sm-3 control-label"></label>
-                                                            <div class="col-sm-9">
-
-                                                                <span id="ContentPlaceHolder3_lblError"></span>
-
-                                                                <span id="ContentPlaceHolder3_RequiredFieldValidator1"
-                                                                    class="errorlabels" style="display:none;">Enter FY
-                                                                    Name</span>
-
-                                                                <span id="ContentPlaceHolder3_RequiredFieldValidator2"
-                                                                    class="errorlabels" style="display:none;">Enter
-                                                                    Start Date</span>
-
-
-                                                                <span id="ContentPlaceHolder3_RequiredFieldValidator4"
-                                                                    class="errorlabels" style="display:none;">Enter PO
-                                                                    Number</span>
-
 
 
                                                             </div>
@@ -123,6 +98,7 @@
                                                                 <div class="col-sm-3">
                                                                 </div>
                                                                 <div class="col-sm-9">
+
                                                                     <input [type]="'submit'" name="btnSave" value="Save" 
                                                                     id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10" *ngIf="ActionFlag==0">&nbsp;
                                                                 
@@ -134,8 +110,9 @@
                                                                 <input type="button" name="btnClear" value="Reset"
                                                                     id="ContentPlaceHolder3_btnClear" class="btn btn-primary mar_top10" (click)="onReset()">
                                 
-                                
-                                
+
+
+
                                                                 </div>
 
                                                             </div>
@@ -158,13 +135,13 @@
                             </div>
                             <!--End Form Body -->
 
-                        </div>
+                        </form>
                     </div>
                 </div>
 
 
 
-                <input type="submit" name="ctl00$ContentPlaceHolder3$btnSavingModelpopUp" value="Button"
+                <input type="submit" name="btnSavingModelpopUp" value="Button"
                     id="ContentPlaceHolder3_btnSavingModelpopUp" style="display: none;">
 
                 <div id="ContentPlaceHolder3_pnlSavePopUp"
@@ -233,10 +210,10 @@
                                 <td align="center">
 
 
-                                    <input type="submit" name="ctl00$ContentPlaceHolder3$btnsaveOk" value="Yes"
-                                        id="ContentPlaceHolder3_btnsaveOk" class="btn btn-primary" style="width:80px;">
+                                    <input type="submit" name="btnsaveOk" value="Yes" id="ContentPlaceHolder3_btnsaveOk"
+                                        class="btn btn-primary" style="width:80px;">
                                     &nbsp;&nbsp;&nbsp;
-                                    <input type="submit" name="ctl00$ContentPlaceHolder3$BtnSaveCancel" value="No"
+                                    <input type="submit" name="BtnSaveCancel" value="No"
                                         id="ContentPlaceHolder3_BtnSaveCancel" class="btn btn-primary"
                                         style="width:80px;">
                                 </td>
@@ -250,8 +227,8 @@
                 </div>
 
 
-                <input type="submit" name="ctl00$ContentPlaceHolder3$modalPopupButton" value="Button"
-                    id="ContentPlaceHolder3_modalPopupButton" style="display: none;">
+                <input type="submit" name="modalPopupButton" value="Button" id="ContentPlaceHolder3_modalPopupButton"
+                    style="display: none;">
 
                 <div id="ContentPlaceHolder3_DeletePopup"
                     style="width: 350px; display: none; position: fixed; z-index: 10001;">
@@ -284,11 +261,11 @@
                             </tr>
                             <tr>
                                 <td align="center">
-                                    <input type="submit" name="ctl00$ContentPlaceHolder3$btnDeleteOk" value="OK"
+                                    <input type="submit" name="btnDeleteOk" value="OK"
                                         id="ContentPlaceHolder3_btnDeleteOk" class="btn btn-primary"
                                         style="width:80px;">
                                     &nbsp;&nbsp;&nbsp;
-                                    <input type="submit" name="ctl00$ContentPlaceHolder3$btnCancel" value="Cancel"
+                                    <input type="submit" name="btnCancel" value="Cancel"
                                         id="ContentPlaceHolder3_btnCancel" class="btn btn-primary" style="width:80px;">
                                 </td>
                             </tr>
@@ -335,18 +312,20 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let person of persons;let a=index">
-                                    
-                                    <td><button class="badge bg-success  btn btn-sm  " name='{{ person.rid}}' > <a class="fa fa-edit" (click)="onedit(person.rid)"></a></button>
+
+                                    <td><button class="badge bg-success  btn btn-sm  " name='{{ person.id}}'> <a
+                                                class="fa fa-edit" (click)="onedit(person.id)"></a></button>
                                         &nbsp;
-                                        <button class="badge bg-danger  btn btn-sm"  name='{{ person.rid}}' (click)="onDel(person.rid)"><a class="fa fa-trash"></a></button>
+                                        <button class="badge bg-danger  btn btn-sm" name='{{ person.id}}'
+                                            (click)="onDel(person.id)"><a class="fa fa-trash"></a></button>
                                     </td>
-        
+
                                     <td> {{a+1}}</td>
                                     <td> {{person.fyname}}</td>
                                     <td>{{ person.startDate | date:'dd-LLL-YYYY' }}</td>
                                     <td> {{person.enddate | date:'dd-LLL-YYYY'}}</td>
                                     <td>{{ person.poNumber }}</td>
-                                    
+
 
 
 

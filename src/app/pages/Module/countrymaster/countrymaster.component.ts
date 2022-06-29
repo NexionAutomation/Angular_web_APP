@@ -34,8 +34,9 @@ ActionStatus:any;
   CMAdminModuleMasterUser: List<CMAdminModuleMasterUser>;
   cMTmAdminSubModuleMasters: List<CMAdminSubModuleMaster>;
   TM_CompanyMaster: List<TM_CountryMaster>;
-  ActionFlag: number;
-  editData: CMAdminModuleMasterUser;
+  ActionFlag=0;
+  editData: any;
+  editDataID: any;
  
   constructor(
     private renderer: Renderer2,
@@ -324,18 +325,21 @@ async onSubmit() {
       if (showConfirmButton == true) {
 
 
-        var output =null;
-        //  await this.INSERT(0,
-        //   this.loginForm.get('txtModuleName').value,
-        //   this.loginForm.get('txtModuleOrder').value,
-        //   this.Logins1.TMUserMaster.userCode
-        //   , 0, 0,"INSERT");
+        var output =
+         await this.INSERT(0,
+          this.loginForm.get('txtcountrymaster').value,
+          this.loginForm.get('txtdisplayname').value,
+          this.Logins1.TMUserMaster.userCode
+          , "0", "0","INSERT");
+
+
+          
 
 
           const myJSON = JSON.stringify(output);
           const obj = JSON.parse(myJSON);
       
-          var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+          var outputFinal = obj["data"]["cMCountryMaster"];
     
 
 
@@ -395,18 +399,18 @@ if(this.ActionFlag==1)
     if (showConfirmButton == true) {
 
 
-      var output = null;
-      // await this.INSERT(0,
-      //   this.loginForm.get('txtModuleName').value,
-      //   this.loginForm.get('txtModuleOrder').value,
-      //   this.Logins1.TMUserMaster.userCode
-      //   , 0, this.editData.rid,"UPDATE");
+      var output = 
+      await this.INSERT(this.editDataID,
+        this.loginForm.get('txtcountrymaster').value,
+        this.loginForm.get('txtdisplayname').value,
+        this.Logins1.TMUserMaster.userCode
+        , "0", "0","UPDATE");
 
 
         const myJSON = JSON.stringify(output);
         const obj = JSON.parse(myJSON);
     
-        var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+        var outputFinal = obj["data"]["cMCountryMaster"];
   
 
 
@@ -480,12 +484,16 @@ if(state==state)
     if (showConfirmButton == true) {
 
 
-      var output = null;//await this.INSERT( 0,"0",0,0,0,Number(string),"DELETE");
+      var output = await this.INSERT(Number(string),
+        this.loginForm.get('txtcountrymaster').value,
+        this.loginForm.get('txtdisplayname').value,
+        this.Logins1.TMUserMaster.userCode
+        , "0", "0","DELETE");
   
       const myJSON = JSON.stringify(output);
       const obj = JSON.parse(myJSON);
   
-      var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+      var outputFinal = obj["data"]["cMCountryMaster"];
 
      
         if(outputFinal[0].message=="Success")
@@ -546,15 +554,20 @@ this.ActionFlag=0;
 
 async onedit(string:string)
 {
-this.editData=Enumerable.from( this.persons).cast<CMAdminModuleMasterUser>().where(x=>x.rid==Number(string)).singleOrDefault();
 
-this.loginForm.setValue({
-  txtModuleName: this.editData.moduleName,
-  txtModuleOrder:this.editData.moduleOrder,
+  console.log(this.persons);
+  this.editDataID=Number(string)
+this.editData=this.persons.where(x=>x.countrycode==Number(string)).singleOrDefault();
+
+
+this.loginForm .setValue({
+  txtcountrymaster: this.editData.countryname,
+  txtdisplayname: this.editData.displayAs,
 
 });
 this.ActionFlag=1;
 }
+
 
 //----------------------------------CURD OPERATIONS-------------------------------------------------------------
 

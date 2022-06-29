@@ -309,9 +309,9 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let person of persons;let a=index">
-                                <td><button class="badge bg-success  btn btn-sm  " name='{{ person.rid}}' > <a class="fa fa-edit" (click)="onedit(person.rid)"></a></button>
+                                <td><button class="badge bg-success  btn btn-sm  " name='{{ person.countrycode}}' > <a class="fa fa-edit" (click)="onedit(person.countrycode)"></a></button>
                                     &nbsp;
-                                    <button class="badge bg-danger  btn btn-sm"  name='{{ person.rid}}' (click)="onDel(person.rid)"><a class="fa fa-trash"></a></button>
+                                    <button class="badge bg-danger  btn btn-sm"  name='{{ person.countrycode}}' (click)="onDel(person.countrycode)"><a class="fa fa-trash"></a></button>
                                 </td>
     
                                 <td> {{a+1}}</td>

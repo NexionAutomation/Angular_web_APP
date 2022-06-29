@@ -50,7 +50,7 @@
                 <!--Start Form Body -->
 
 
-                <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()" name="myform" class="card-body">
+                <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="card-body">
                     <div class="row">
 
 
@@ -98,7 +98,7 @@
                                                     <label for="inputEmail3" class="control-label">Order Date</label>
                                                     <input formControlName="txtorderdate" type="date"
                                                         value="20-Jun-2022" id="txtorderdate"
-                                                        class="form-control inputtext" autocomplete="off">
+                                                        class="form-control inputtext" >
 
                                                 </div>
                                             </div>
@@ -151,7 +151,7 @@
                                                 <div class="col-sm-4">
                                                     <label for="inputEmail3"
                                                         class="control-label pull-left">Delivery</label>&nbsp;
-                                                    <input formControlName="txtdelivery" type="text"
+                                                    <input formControlName="txtdelivery" type="date"
                                                         id="txtdelivery" class="form-control inputtext"
                                                         autocomplete="off">
 
@@ -175,10 +175,10 @@
 
                                             <div class="row">
                                                 <div class="col-sm-4">
-                                                    <input id="chkuplaod" type="checkbox"
+                                                    <!-- <input id="chkuplaod" type="checkbox"
                                                         formControlName="chkuplaod"
-                                                        onclick="javascript:setTimeout('__doPostBack(\'chkuplaod\',\'\')', 0)"><label
-                                                        for="chkuplaod">Upload To Excel</label>
+                                                     ><label
+                                                        for="chkuplaod">Upload To Excel</label> -->
                                                 </div>
                                                 <div class="col-sm-4">
                                                 </div>
@@ -206,7 +206,7 @@
                                                     <label for="inputEmail3" class="control-label pull-left">GST
                                                         Types</label>&nbsp;
                                                     <select formControlName="Drop_gst"
-                                                        onchange="javascript:setTimeout('__doPostBack(\'Drop_gst\',\'\')', 0)"
+                                                       
                                                         id="Drop_gst" class="form-control">
                                                         <option selected="selected" value="--Select--">--Select--
                                                         </option>
@@ -258,16 +258,16 @@
 
 
 
-
-
-
+                                            <div class="card">
+                                                <div class="card-body bg-warning">
+                                                 
                                             <div id="div_manual" class="row">
                                                 <div class="col-sm-4 inline">
                                                     <label for="inputEmail3"
                                                         class="control-label pull-left">Description</label>
-                                                    <button type="button" formControlName="btnsearch"
+                                                    <!-- <button type="button" formControlName="btnsearch"
                                                         value="Search" id="btnsearch" class=" "
-                                                        style="float:right">Search</button>
+                                                        style="float:right">Search</button> -->
                                                     <input formControlName="txtdescription" type="text"
                                                         id="txtdescription" class="form-control inputtext ">
 
@@ -311,21 +311,21 @@
                                                 <div class="col-sm-1">
                                                     <label for="inputEmail3"
                                                         class="control-label pull-left">Qty</label>&nbsp;
-                                                    <input formControlName="txtqty" type="text"
+                                                    <input formControlName="txtqty" type="number"
                                                         id="txtqty" class="form-control inputtext">
 
                                                 </div>
                                                 <div class="col-sm-2">
                                                     <label for="inputEmail3" class="control-label pull-left">List
                                                         price</label>&nbsp;
-                                                    <input formControlName="txtlistprice" type="text"
+                                                    <input formControlName="txtlistprice" type="number"
                                                         id="txtlistprice" class="form-control inputtext">
 
                                                 </div>
                                                 <div class="col-sm-2">
                                                     <label for="inputEmail3"
                                                         class="control-label pull-left">Discount</label>&nbsp;
-                                                    <input formControlName="txtdiscount" type="text"
+                                                    <input formControlName="txtdiscount" type="number"
                                                         id="txtdiscount" class="form-control inputtext">
 
                                                 </div>
@@ -333,7 +333,7 @@
                                                     <div class="clearfix" style="margin-top: 10px;"></div>
                                                     <button type="button" formControlName="btn_add"
                                                         value="ADD" id="btn_add"
-                                                        class="btn btn-primary" (click)="Add_items()">ADD</button>
+                                                        class="btn btn-primary pull-Right" (click)="Add_items()">ADD</button>
                                                 </div>
 
                                             </div>
@@ -349,6 +349,10 @@
                                                 <span id="RequiredFieldValidator6"
                                                     class="errorlabels" style="display:none;">Enter List Price</span>
                                             </div>
+
+
+                                                </div>
+                                              </div>
 
 
 
@@ -382,8 +386,8 @@
                                                     <div class="table-responsive">
                                                         <div class="table_wid">
                                                             <div>
-                                                                <table class="table table-striped " border="1"
-                                                                    id="GridView1"
+                                                                <table id="example"  class="table table-striped " border="1"
+                                                                   
                                                                     style="border-style:None;border-collapse:collapse;">
                                                                     <tbody>
                                                                         <tr>
@@ -398,29 +402,32 @@
                                                                             <th scope="col">Unit Price</th>
                                                                             <th scope="col">Net Price</th>
                                                                         </tr>
-                                                                        <tr style="background-color:0;" *ngFor="let person of arr2;let a=index" >
+                                                                        <tr style="background-color:0;" *ngFor="let person of pOExpenseItems;let a=index" >
                                                                             <td>
                                                                                 <button type="button"
-                                                                                    formControlName="GridView1$ctl02$btnDelete_Row"
+                                                                                   
                                                                                     value="Delete"
                                                                                     id="GridView1_btnDelete_Row_0"
-                                                                                    class="btn btn-sm btn-danger" (click)="onDel(a)">Delete</button>
-
+                                                                                    class="btn btn-sm btn-danger" (click)="onDel(person.id)">Delete</button>
+                                                                                    <!-- poId -->
 
                                                                             </td>
                                                                             <td style="width:100px;">
                                                                                 <span
                                                                                     id="GridView1_lblRowNumber_0">{{a}}</span>
                                                                             </td>
-                                                                            <td>{{person.txtdescription}}</td>
-                                                                            <td>{{person.txtcat}}</td>
-                                                                            <td>{{person.ddluom}}</td>
-                                                                            <td>{{person.txtqty}}</td>
-                                                                            <td>{{person.txtlistprice}}</td>
-                                                                            <td>{{person.txtdiscount}}</td>
-                                                                            <td>{{person.txtdiscount}}</td>
-                                                                            <td>{{person.txtdiscount}}</td>
-                                                                        </tr>
+                                                                            <td>{{person.description}}</td>
+                                                                            <td>{{person.catname}}</td>
+                                                                            <td>{{person.uom}}</td>
+                                                                            <td>{{person.qty}}</td>
+                                                                            <td>{{person.listPrice}}</td>
+                                                                            <td>{{person.dis}}</td>
+                                                                            <td>{{person.unitPrice}}</td>
+                                                                            <td>{{person.netPrice}}</td>
+
+
+                                                                           
+                                                            </tr>
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -429,6 +436,7 @@
                                                 </div>
                                             </div>
                                             <div class="clearfix">
+                                                <div class="clearfix"></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-10">
@@ -493,16 +501,16 @@
                                             <div class="form-group">
                                                 <div class="col-sm-12">
                                                     <div class="col-sm-7 col-sm-offset-5">
-                                                        <button type="button" formControlName="btnSave"
+                                                        <button type="submit" 
                                                             value="Save" id="btnSave"
                                                             class="btn btn-primary mar_top10" *ngIf="ActionFlag==0">Save</button>
 
-                                                            <button type="button" formControlName="btnSave"
+                                                            <button type="button" 
                                                             value="Update" id="btnSave"
                                                             class="btn btn-primary mar_top10" *ngIf="ActionFlag==1">Update</button>
                                                         &nbsp;
                                                         <input type="submit"
-                                                            formControlName="btnsaveprint"
+                                                           
                                                             value="Save &amp; Print"
                                                             id="btnsaveprint"
                                                             class="btn btn-info mar_top10">

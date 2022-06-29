@@ -170,7 +170,6 @@
                                                     <label for="inputEmail3" class="control-label pull-left">Paid
                                                         By</label>&nbsp;
                                                     <select formControlName="ddlPaidby"
-                                                        onchange="javascript:setTimeout('__doPostBack(\'ddlPaidby\',\'\')', 0)"
                                                         id="ddlPaidby" class="form-control">
                                                         <option selected="selected" value="NAPL">NAPL</option>
                                                         <option value="Customer">Customer</option>
@@ -214,16 +213,14 @@
                                                 <div class="col-sm-1">
                                                     <label for="inputEmail3"
                                                         class="control-label pull-left">Km</label>&nbsp;
-                                                    <input formControlName="txtDistance" type="text"
-                                                        onchange="javascript:setTimeout('__doPostBack(\'txtDistance\',\'\')', 0)"
-                                                        onkeypress="if (WebForm_TextcardKeyHandler(event) == false) return false;"
+                                                    <input formControlName="txtDistance" type="number"
                                                         id="txtDistance" class="form-control inputtext">
 
                                                 </div>
                                                 <div class="col-sm-1">
                                                     <label for="inputEmail3"
                                                         class="control-label pull-left">Amount</label>&nbsp;
-                                                    <input formControlName="txtamount" type="text" id="txtamount"
+                                                    <input formControlName="txtamount" type="number" id="txtamount"
                                                         class="form-control inputtext">
 
                                                 </div>
@@ -231,7 +228,7 @@
                                                 <div class="col-sm-1">
                                                     <label for="inputEmail3"
                                                         class="control-label ">Park/Toll</label>&nbsp;
-                                                    <input formControlName="txtParkingAmt" type="text"
+                                                    <input formControlName="txtParkingAmt" type="number"
                                                         id="txtParkingAmt" class="form-control inputtext">
 
                                                 </div>
@@ -296,7 +293,7 @@
                                                                 <th scope="col">Approved Amount</th>
                                                                 <th scope="col">Paid By</th>
                                                             </tr>
-                                                            <tr *ngFor="let  value  of arr;let a=index">
+                                                            <tr *ngFor="let  value  of pOExpenseItems;let a=index">
                                                                 <td>
                                                                     <input type="button"
                                                                          value="Delete" id="GridView1_btnDelete_Row_0"

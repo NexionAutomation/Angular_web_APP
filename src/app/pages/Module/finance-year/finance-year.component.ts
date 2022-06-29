@@ -1,4 +1,5 @@
 import { Logins } from '@/Model/Utility/login';
+import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -33,8 +34,9 @@ ActionStatus:any;
   CMAdminModuleMasterUser: List<CMAdminModuleMasterUser>;
   cMTmAdminSubModuleMasters: List<CMAdminSubModuleMaster>;
   TM_FinaicalYear: List<TM_FinaicalYear>;
-  ActionFlag: number;
+  ActionFlag=0;
   editData: any;
+  editDataID: any;
   constructor(
     private renderer: Renderer2,
     private toastr: ToastrService,
@@ -53,11 +55,11 @@ ActionStatus:any;
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      ddlModule: new FormControl(null),
-      SubModuleName: new FormControl(null),
-      SubModuleOrder: new FormControl(null),
-      NavigationUrl: new FormControl(null),
-      SubModuleTarget: new FormControl(null),
+      txtFYname: new FormControl(null),
+      txtstartdate: new FormControl(null),
+      txtenddate: new FormControl(null),
+      txtponumber: new FormControl(null),
+     
     });
 
 
@@ -67,48 +69,51 @@ ActionStatus:any;
 
   
   async INSERT(
-    module_Id: number,
-    subModule_Id: number,
-    subModuleName: string,
-    cUser_Id: number,
-    mUser_Id: number,
-    subModuleOrder: number,
-    navigationUrl: string,
-    rID: number,
+    
+    fyname: String,
+    startDate: Date,
+    enddate: Date,
+    poNumber: number,
+    //creationDate: Date,
+    cuserId: number,
+    //modificationDate: Date,
+    muserId: number,
+    expenseid: number,
+    id: number,
     targetModule: string,
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
 
 
-    let query = `mutation MyMutation($module_Id: Int!,
-    $subModule_Id: Int!,
-    $subModuleName: String,
-    $cUser_Id: Int!,
-    $mUser_Id: Int!,
-    $subModuleOrder: Int!,
-    $navigationUrl: String, 
-    $rID: Int!
-    $targetModule:String) {
-    __typename
-    cMTmAdminSubModuleMasters(data: {detail: {moduleId: $module_Id, 
-      subModuleId: $subModule_Id,
-      creationDate: "2019-10-10",
-      cuserId: $cUser_Id,
-      modificationDate: "2019-10-10",
-      muserId: $mUser_Id, 
-      subModuleOrder: $subModuleOrder,
-      rid: $rID, 
-      subModuleName: $subModuleName, 
-      targetModule:$targetModule,
-      navigationUrl: $navigationUrl}}, triger: "INSERT") {
-      iD
-      code
-      message
-      status
+    let query = `mutation MyMutation($id: Int
+      $fyname: String
+      $startDate: DateTime
+      $enddate: DateTime
+      $poNumber: Int
+      
+      $cuserId: Int
+     
+      $muserId: Int
+      $expenseid: Int) {
+      __typename
+      cMFinanceYearMaster(data: {detail: 
+        {creationDate: "2019-10-10", 
+          cuserId: $cuserId,
+          enddate: $enddate, 
+          expenseid: $expenseid,
+          fyname: $fyname, 
+          id: $id,
+          modificationDate: "2019-10-10",
+          muserId: $muserId,
+          poNumber: $poNumber,
+          startDate: $startDate}, iD: "${id}"}, triger: "${targetModule}") {
+        iD
+        code
+        message
+        status
+      }
     }
-  }
-  
        `
 
      switch (this.ActionStatus)
@@ -132,15 +137,17 @@ ActionStatus:any;
 
     var datas = JSON.stringify({
       query, variables: {
-        module_Id,
-        subModule_Id,
-        subModuleName,
-        cUser_Id,
-        mUser_Id,
-        subModuleOrder,
-        navigationUrl,
-        rID,
-        targetModule,
+        fyname,
+    startDate,
+    enddate,
+    poNumber,
+    //creationDate: Date,
+    cuserId,
+    //modificationDate: Date,
+    muserId,
+    expenseid,
+    id,
+   
       }
     });
     var ss = await this.Logins1.GraphqlFetchdata("query", datas);
@@ -179,7 +186,7 @@ ActionStatus:any;
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-    this.persons = obj["data"]["cMTmAdminSubModuleMasters"]
+    //this.persons = obj["data"]["cMFinanceYearMaster"]
 
 
     const enumerable = Enumerable.from(this.persons).asEnumerable();
@@ -258,18 +265,21 @@ alert (event)
         if (showConfirmButton == true) {
 
 
-          var output = null;
-          // await this.INSERT(0,
-          //   this.loginForm.get('txtModuleName').value,
-          //   this.loginForm.get('txtModuleOrder').value,
-          //   this.Logins1.TMUserMaster.userCode
-          //   , 0, 0,"INSERT");
+          var output =
+          await this.INSERT(
+            this.loginForm.get('txtFYname').value,
+            this.loginForm.get('txtstartdate').value,
+            this.loginForm.get('txtenddate').value,
+            this.loginForm.get('txtponumber').value,
+            this.Logins1.TMUserMaster.userCode
+            , 0, 0,0,"INSERT");
+           
 
 
             const myJSON = JSON.stringify(output);
             const obj = JSON.parse(myJSON);
         
-            var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+            var outputFinal = obj["data"]["cMFinanceYearMaster"];
       
 
 
@@ -329,18 +339,19 @@ alert (event)
       if (showConfirmButton == true) {
 
 
-        var output = null;
-        // await this.INSERT(0,
-        //   this.loginForm.get('txtModuleName').value,
-        //   this.loginForm.get('txtModuleOrder').value,
-        //   this.Logins1.TMUserMaster.userCode
-        //   , 0, this.editData.rid,"UPDATE");
+        var output = await this.INSERT(
+          this.loginForm.get('txtFYname').value,
+          this.loginForm.get('txtstartdate').value,
+          this.loginForm.get('txtenddate').value,
+          this.loginForm.get('txtponumber').value,
+          this.Logins1.TMUserMaster.userCode
+          , 0, 0,this.editDataID,"UPDATE");
 
 
           const myJSON = JSON.stringify(output);
           const obj = JSON.parse(myJSON);
       
-          var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+          var outputFinal = obj["data"]["cMFinanceYearMaster"];
     
 
 
@@ -414,12 +425,18 @@ async onDel(string :string)
       if (showConfirmButton == true) {
 
 
-        var output = null;//await this.INSERT( 0,"0",0,0,0,Number(string),"DELETE");
-    
+        var output =  await this.INSERT(
+          this.loginForm.get('txtFYname').value,
+          this.loginForm.get('txtstartdate').value,
+          this.loginForm.get('txtenddate').value,
+          this.loginForm.get('txtponumber').value,
+          this.Logins1.TMUserMaster.userCode
+          , 0, 0,this.editDataID,"DELETE");
+
         const myJSON = JSON.stringify(output);
         const obj = JSON.parse(myJSON);
     
-        var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+        var outputFinal = obj["data"]["cMFinanceYearMaster"];
 
        
           if(outputFinal[0].message=="Success")
@@ -480,13 +497,22 @@ async onReset()
 
 async onedit(string:string)
 {
-  this.editData=Enumerable.from( this.persons).cast<CMAdminModuleMasterUser>().where(x=>x.rid==Number(string)).singleOrDefault();
-  
-  this.loginForm.setValue({
-    txtModuleName: this.editData.moduleName,
-    txtModuleOrder:this.editData.moduleOrder,
 
+  this.editDataID=Number(string)
+  
+  this.editData= this.persons.where(x=>x.id==Number(string)).singleOrDefault();
+  
+
+  this.loginForm .setValue({
+    txtFYname:  this.editData.fyname,
+    txtstartdate: formatDate(this.editData.startDate,'yyyy-MM-dd','en'),
+    txtenddate: formatDate(this.editData.enddate,'yyyy-MM-dd','en'),
+    txtponumber:  this.editData.poNumber,
+   
   });
+
+
+
   this.ActionFlag=1;
 }
 

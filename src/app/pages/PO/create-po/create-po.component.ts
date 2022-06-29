@@ -1,9 +1,10 @@
 import { Logins } from '@/Model/Utility/login';
+import { NumberSymbol } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { CMAdminModuleMasterUser, ExpenseItems, TM_CompanyMaster, TM_CountryMaster, Tm_supplierMaster } from '@modules/Module/PoModules';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CMAdminModuleMasterUser, ExpenseItems, pOTmPurchaseBodies, TM_CompanyMaster, TM_CountryMaster, TM_PurchaseHead, Tm_supplierMaster } from '@modules/Module/PoModules';
 import { CM_AdminModuleMaster } from '@pages/user-module/create-modulemaster/create-modulemaster.component';
 //import { UserModuleServicesService } from '@pages/user-module/user-module-services.service';
 import { AppService } from '@services/app.service';
@@ -39,6 +40,9 @@ export class CreatePOComponent implements OnInit {
   POTmCompanyMasters: Enumerable<TM_CountryMaster>;
   chatRoomUid$: any;
   URLid: number;
+  pOExpenseItems: any;
+  pOTmPurchaseHeads: any;
+  pOTmPurchaseBodiess: Enumerable<pOTmPurchaseBodies>;
 
   constructor(
     private renderer: Renderer2,
@@ -49,30 +53,19 @@ export class CreatePOComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    //private _router:Router
+    private _router:Router
 
   ) {
 
   }
 
-  ngOnInit(): void {
+   ngOnInit(): void {
 
 
-    var id;
-    this.chatRoomUid$ = this.route.params.pipe(
-      map(params => params['id'])
-    );
 
-    if (this.chatRoomUid$.destination._value.id != undefined) {
-      this.URLid = this.chatRoomUid$.destination._value.id;
-      this.ActionFlag = 1;
-      //console.log(this.URLid);
-    }
-    else {
-      //this._router.navigate(['/SearchPo']);
-      this.ActionFlag = 0;
-    }
 
+
+   
 
     this.loginForm = new FormGroup({
 
@@ -109,6 +102,25 @@ export class CreatePOComponent implements OnInit {
 
 
     this.LodeDataTable();
+
+
+    
+    var id;
+    this.chatRoomUid$ = this.route.params.pipe(
+      map(params => params['id'])
+    );
+
+    if (this.chatRoomUid$.destination._value.id != undefined) {
+      this.URLid = this.chatRoomUid$.destination._value.id;
+      this.ActionFlag = 1;
+       this.urlload( this.URLid);
+      //console.log(this.URLid);
+    }
+    else {
+      //this._router.navigate(['/SearchPo']);
+      this.ActionFlag = 0;
+    }
+    
 
 
 
@@ -226,61 +238,84 @@ export class CreatePOComponent implements OnInit {
     return ss;
   }
   async INSERTITEMS(
-    moduleId: number,
-    moduleName: String,
-    moduleOrder: number,
+    
+    poId: number,
+description: String,
+uom: String,
+qty: number,
+listPrice: number,
+dis: number,
+unitPrice: number,
+netPrice: number,
+// creationDate: Date,
+cuserId: number,
+// modificationDate: Date,
+muserId: number,
 
-    cuserId: number,
-
-    muserId: number,
-    rid: number,
+catname: String,
+id: number,
     ActionStatus: string
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
 
 
-    let query = `mutation MyMutation($moduleId: Int!
-      $moduleName: String
-      $moduleOrder: Int!
+    let query = `mutation MyMutation($poId: Int
+      $description: String
+      $uom: String
+      $qty: Int
+      $listPrice: Float
+      $dis: Float
+      $unitPrice: Float
+      $netPrice: Float
+     
+      $cuserId: Int
       
-      $cuserId: Int!
-      
-      $muserId: Int!
-      $rid: Int!) {
+      $muserId: Int
+      $id: Decimal!
+      $catname: String) {
       __typename
-      cMTmAdminModuleMasters(triger: "${ActionStatus}",
-        data: {detail: {
-          moduleId: $moduleId,
-          moduleOrder: $moduleOrder,
+      cMTmPurchaseBody(data: {detail:
+        {id: $id,
+          catname: $catname,
           creationDate: "2019-10-10",
           cuserId: $cuserId,
+          description: $description,
+          dis: $dis,
+          listPrice: $listPrice,
           modificationDate: "2019-10-10",
           muserId: $muserId,
-          rid: $rid,
-          moduleName: $moduleName
-        }, iD: "${rid}"}) {
-        code
-        detail
+          netPrice: $netPrice,
+          poId: $poId,
+          qty: $qty,
+          unitPrice: $unitPrice, 
+          uom: $uom}, iD: "${id}"}, triger: "${ActionStatus}") {
         iD
+        code
         message
         status
       }
     }
-    
-               
+         
        `
 
     var datas = JSON.stringify({
       query, variables: {
-        moduleId,
-        moduleName,
-        moduleOrder,
-
+        poId,
+        description,
+        uom,
+        qty,
+        listPrice,
+        dis,
+        unitPrice,
+        netPrice,
+        // creationDate,
         cuserId,
-
+        // modificationDate,
         muserId,
-        rid,
+        
+        catname,
+        id,
       }
     });
     var ss = await this.Logins1.GraphqlFetchdata("query", datas);
@@ -463,6 +498,43 @@ export class CreatePOComponent implements OnInit {
         sname
         spanNo
       }
+      pOTmPurchaseHeads {
+        id
+        companyId
+        creationDate
+        cuserId
+        deliveryDate
+        deliveryMode
+        enduser
+        freightTerms
+        gst
+        indentNo
+        modificationDate
+        muserId
+        orderDate
+        paymentTerms
+        poId
+        remarks
+        supplierId
+        total
+        workOrderNo
+      }
+      pOTmPurchaseBodies {
+        id
+        catname
+        creationDate
+        cuserId
+        description
+        dis
+        listPrice
+        modificationDate
+        muserId
+        netPrice
+        poId
+        qty
+        unitPrice
+        uom
+      }
       
     }
     
@@ -479,11 +551,12 @@ export class CreatePOComponent implements OnInit {
     const obj = JSON.parse(myJSON);
 
     this.POTmSupplierMasters = Enumerable.from(obj["data"]["pOTmSupplierMasters"]).cast<Tm_supplierMaster>();
-    this.POTmCompanyMasters = Enumerable.from(obj["data"]["pOTmCompanyMasters"]).cast<TM_CountryMaster>()
+    this.POTmCompanyMasters = Enumerable.from(obj["data"]["pOTmCompanyMasters"]).cast<TM_CountryMaster>();
+    this.pOTmPurchaseHeads = Enumerable.from(obj["data"]["pOTmPurchaseHeads"]).cast<TM_PurchaseHead>();;
+    this.pOTmPurchaseBodiess = Enumerable.from(obj["data"]["pOTmPurchaseBodies"]);
 
 
-    console.log(this.POTmSupplierMasters);
-    console.log(this.POTmCompanyMasters)
+    
     $('#example').DataTable().destroy();
     $(document).ready(function () {
 
@@ -556,29 +629,7 @@ export class CreatePOComponent implements OnInit {
             const obj = JSON.parse(myJSON);
 
             var outputFinal = obj["data"]["cMTmPurchaseHead"];
-            //localStorage.setItem("EXPOID",outputFinal[0].detail)
-
-
-
-
-
-            // var output2 =await  this.INSERTITEMS(
-            //   1,
-            //  "fdf",
-            // new Date("2019-10-10"),
-            // new Date("2019-10-10"),
-            //  " workOrderId: String,",
-            //  " location: String,",
-
-            //    1,
-
-            //   1,
-            //   "INSERT"
-            // );
-
-
-
-
+            
 
             if (outputFinal[0].message == "Success") {
               const Toast = Swal.mixin({
@@ -601,7 +652,7 @@ export class CreatePOComponent implements OnInit {
 
 
               })
-              //this.LodeDataTable();
+              this._router.navigate(['/SearchPo'])
 
             } else {
 
@@ -705,22 +756,115 @@ export class CreatePOComponent implements OnInit {
     });
     
 }
-  async onDel(string: string) {
-    try {
-       
-
-      await this.RemoveElementFromStringArray(string)
+async onDel(string :string)
+{
+  try{
     
+  var state="Delete"
+  if(state==state)
+  {
 
 
-    }
-    catch (error) {
-      Swal.fire(
-        'Failed',
-        error,
-        'error')
-    }
-  }
+    
+      const { value: showConfirmButton } = await Swal.fire({
+        title: "Are You Sure Want To Delete",
+        icon: 'question',
+        //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+  
+        showConfirmButton: true,
+        showCancelButton: true
+      })
+  
+      if (showConfirmButton == true) {
+
+
+        var output = 
+        await this.INSERTITEMS(  Number(this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1),
+        this.loginForm.get('txtdescription').value,
+        this.loginForm.get('ddluom').value ,
+        this.loginForm.get('txtqty').value,
+        this.loginForm.get('txtlistprice').value,
+        this.loginForm.get('txtdiscount').value,
+       //createdOn: Date,
+       0,
+       //updateOn: Date,
+       0,//(this.loginForm.get('txtlistprice').value)/(this.loginForm.get('txtqty').value/this.loginForm.get('txtdiscount').value/100),
+      
+       this.Logins1.TMUserMaster.userCode,
+       this.Logins1.TMUserMaster.userCode,
+       this.loginForm.get('txtcat').value,
+       Number(string),
+       "DELETE");
+   
+    
+        const myJSON = JSON.stringify(output);
+        const obj = JSON.parse(myJSON);
+    
+        var outputFinal = obj["data"]["cMTmPurchaseBody"];
+
+       
+          if(outputFinal[0].message=="Success")
+          {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+
+            })
+
+            this.Logins1.popupStatus
+            Toast.fire({
+              icon: 'success',
+              title: 'Data Delete Successfully',
+
+
+            })
+            
+            var data = await this.GETData2("", "");
+            const myJSON = JSON.stringify(data);
+            const obj = JSON.parse(myJSON);
+        
+            var pOTmPurchaseBodies= Enumerable.from( obj["data"]["pOTmPurchaseBodies"]).cast<pOTmPurchaseBodies>();
+            console.log(pOTmPurchaseBodies);
+            var datas=  pOTmPurchaseBodies.where(x=>x.poId==Number(this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1)).toList();
+        
+            console.log(datas);
+            this.pOExpenseItems=datas;
+
+           
+
+          }else{
+
+            Swal.fire(
+              'Failed ',
+              '',
+              'error'
+            )
+
+          }
+
+       
+      }
+  
+}
+
+
+}
+catch(error)
+{
+  Swal.fire(
+    'Failed',
+    error,
+    'error')
+}
+}
+
 
   async onReset() {
     this.loginForm.reset();
@@ -741,39 +885,300 @@ export class CreatePOComponent implements OnInit {
   //----------------------------------CURD OPERATIONS-------------------------------------------------------------
 
 
-  async Add_items() {
-    try {
+//   async Add_items() {
+//     try {
 
 
    
-// console.log();
-var  datain=
+// // console.log();
+// var  datain=
+//   {
+    
+
+//         txtdescription: this.loginForm.get('txtdescription').value,
+//         txtcat:this.loginForm.get('txtcat').value,
+//         ddluom: this.loginForm.get('ddluom').value,
+//         txtqty: this.loginForm.get('txtqty').value,
+//          txtlistprice: this.loginForm.get('txtlistprice').value,
+//          txtdiscount: this.loginForm.get('txtdiscount').value,
+    
+
+// } ;
+
+// console.log(datain);
+// this.arr2.push(datain);
+
+
+
+
+//     } catch (error) {
+//       Swal.fire(
+//         'Failed',
+//         error,
+//         'error')
+//     }
+
+//   }
+
+
+
+
+
+
+  
+async Add_items()
+{try
   {
+      var output = null;
+
+     console.log(this.loginForm.get('txtlistprice').value);
     
+     var unitdata= this.loginForm.get('txtlistprice').value - (this.loginForm.get('txtlistprice').value * this.loginForm.get('txtdiscount').value) / 100;
+     var netdata= this.loginForm.get('txtqty').value  * Number(unitdata);
 
-        txtdescription: this.loginForm.get('txtdescription').value,
-        txtcat:this.loginForm.get('txtcat').value,
-        ddluom: this.loginForm.get('ddluom').value,
-        txtqty: this.loginForm.get('txtqty').value,
-         txtlistprice: this.loginForm.get('txtlistprice').value,
-         txtdiscount: this.loginForm.get('txtdiscount').value,
+    var output= this.pOTmPurchaseHeads;
+    this.pOTmPurchaseHeads= Enumerable.from(this.pOTmPurchaseHeads).toArray();
+     
+     
+     
+     var output=
+      await this.INSERTITEMS(  Number(this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1),
+     this.loginForm.get('txtdescription').value,
+     this.loginForm.get('ddluom').value ,
+     this.loginForm.get('txtqty').value,
+     this.loginForm.get('txtlistprice').value,
+     this.loginForm.get('txtdiscount').value,
+    //createdOn: Date,
+    unitdata,
+    //updateOn: Date,
+    netdata,//(this.loginForm.get('txtlistprice').value)/(this.loginForm.get('txtqty').value/this.loginForm.get('txtdiscount').value/100),
+   
+    this.Logins1.TMUserMaster.userCode,
+    this.Logins1.TMUserMaster.userCode,
+    this.loginForm.get('txtcat').value,
+    0,
+    "INSERT");
+
+
     
+      
 
-} ;
+       
 
-console.log(datain);
-this.arr2.push(datain);
-
-
+         
 
 
-    } catch (error) {
-      Swal.fire(
-        'Failed',
-        error,
-        'error')
+
+
+        const myJSON = JSON.stringify(output);
+        const obj = JSON.parse(myJSON);
+    
+        var outputFinal = obj["data"]["cMTmPurchaseBody"];
+
+       
+          if(outputFinal[0].message=="Success")
+          {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+
+            })
+
+            this.Logins1.popupStatus
+            Toast.fire({
+              icon: 'success',
+              title: 'Data ADD Successfully',
+
+
+            })
+
+
+            var data = await this.GETData2("", "");
+            const myJSON = JSON.stringify(data);
+            const obj = JSON.parse(myJSON);
+        
+            var pOTmPurchaseBodies= Enumerable.from( obj["data"]["pOTmPurchaseBodies"]).cast<pOTmPurchaseBodies>();
+            console.log(pOTmPurchaseBodies);
+            var datas=  pOTmPurchaseBodies.where(x=>x.poId==Number(this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1)).toList();
+        
+            console.log(datas);
+            this.pOExpenseItems=datas;
+
+          }
+    
+       
+
+   //---------------------------important code---------------------
+// // console.log();
+// const  datain=[{key:
+//       {
+        
+      
+//          expenseId: 0,
+// 	 expenseTypeId: Number(this.loginForm.get('ddlExpenseType').value),
+// 	 amount:  Number(this.loginForm.get('txtamount').value),
+// 	 approvedAmount: 1,
+// 	 createdBy: 1,
+// 	 updateBy: 1,
+// 	 description: this.loginForm.get('txtdescription').value,
+// 	 paidBy: this.loginForm.get('ddlPaidby').value,
+// 	 distance: Number(this.loginForm.get('txtDistance').value),
+// 	 parkingAmt: Number(this.loginForm.get('txtParkingAmt').value),
+// 	 aMt: Number(this.loginForm.get('ddlExpenseType').value),
+// 	 expenseItemsId: Number(uniqId()) ,
+//     Date:new Date(this.loginForm.get('txtdate').value)
+//   }}] as unknown as ExpenseItems;
+
+//    this.arr.push(datain);
+
+
+// const sorted = this.arr.sort((a, b) => a.expenseItemsId - b.expenseItemsId);
+
+ //---------------------------important code---------------------
+
+
+
+}catch(error)
+{
+  Swal.fire(
+    'Failed',
+    error,
+    'error')
+}
+
+}
+
+async GETData2(User: string, Password: string): Promise<any> {
+
+  let data = '{User="' + User + '",Password="' + Password + '" }';
+  let query = `query MyQuery {
+    __typename
+    pOTmPurchaseHeads {
+      id
+      companyId
+      creationDate
+      cuserId
+      deliveryDate
+      deliveryMode
+      enduser
+      freightTerms
+      gst
+      indentNo
+      modificationDate
+      muserId
+      orderDate
+      paymentTerms
+      poId
+      remarks
+      supplierId
+      total
+      workOrderNo
     }
-
+    pOTmPurchaseBodies {
+      id
+      catname
+      creationDate
+      cuserId
+      description
+      dis
+      listPrice
+      modificationDate
+      muserId
+      netPrice
+      poId
+      qty
+      unitPrice
+      uom
+    }
   }
+  
+    `
+  var datas = JSON.stringify({ query, variables: { User, Password } });
+  var ss = await this.Logins1.GraphqlFetchQuery("query", query);
+  return ss;
+
+}
+
+
+async urlload(STRING)
+{
+  var data = await this.GETData2("", "");
+  const myJSON = JSON.stringify(data);
+  const obj = JSON.parse(myJSON);
+
+  var pOTmPurchaseBodies= Enumerable.from( obj["data"]["pOTmPurchaseBodies"]).cast<pOTmPurchaseBodies>();
+  var pOTmPurchaseHeads1= Enumerable.from( obj["data"]["pOTmPurchaseHeads"]).cast<any>().where(x=>x.poId==Number(STRING)).singleOrDefault();
+  console.log(pOTmPurchaseBodies);
+  var datas=  pOTmPurchaseBodies.where(x=>x.poId==Number(STRING)).toList();
+
+  console.log(datas);
+  this.pOExpenseItems=datas;
+
+  var da=pOTmPurchaseHeads1.toArray();
+  
+    
+console.log(da)
+console.log(da.companyId);
+  this.loginForm.setValue({
+
+    ddlcompanyname: da.companyId,
+    ddlsuppliername: da.supplierId,
+    txtorderdate: da.orderDate,
+    txtpaymentterms: da.paymentTerms,
+    txtindentno: da.indentNo,
+    txtfreightterms:da.freightTerms,
+    txtorderno: da.workOrderNo,
+    // txtgst: da.gst,
+    // txtdelivery: da.deliveryDate
+   // chkuplaod: new FormControl(),
+    // chklot: true,
+    // Drop_gst: data.gst,
+    // DropDownList1: ,
+    // gst_rdo: new FormControl(),
+    // btnsearch: new FormControl(),
+    // txtdescription: new FormControl(),
+    // txtcat: new FormControl(),
+    // ddluom: new FormControl(),
+    // txtqty: new FormControl(),
+    // txtlistprice: new FormControl(),
+    // txtdiscount: new FormControl(),
+    // btn_add: new FormControl(),
+    // txtremarks: new FormControl(),
+    // txttotal: new FormControl(),
+    // txtenduser: new FormControl(),
+
+
+
+
+//     : 1
+// creationDate: "2022-05-03T05:20:00.000+05:30"
+// cuserId: 26
+// : "2022-05-04T00:00:00.000+05:30"
+// deliveryMode: "Lot"
+// enduser: ""
+// : "NIL"
+// : "EXTRA@18%"
+// id: 860
+// : ""
+// modificationDate: "2022-05-03T05:20:00.000+05:30"
+// muserId: 26
+// : "2022-05-03T00:00:00.000+05:30"
+// : "30 DAYS CREDIT"
+// poId: 1981
+// remarks: ""
+// : 43
+// total: 341400
+// : "1925"
+   });
+
+
+}
 
 }

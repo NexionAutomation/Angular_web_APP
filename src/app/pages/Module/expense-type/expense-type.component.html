@@ -30,7 +30,7 @@
             <!--Start Form Heading -->
 
             <!--Start Form Body -->
-            <div class="card-body">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="card-body">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="bder top-mrg20">
@@ -48,7 +48,7 @@
                                                 <label for="inputEmail3" class="col-sm-4 control-label">Select Group
                                                     Name</label>
                                                 <div class="col-sm-8">
-                                                    <select name="ctl00$ContentPlaceHolder3$ddlcountry"
+                                                    <select formControlName="ddlcountry"
                                                         id="ContentPlaceHolder3_ddlcountry" class="form-control">
                                                         <option selected="selected" value="0">---Select Group ---
                                                         </option>
@@ -69,7 +69,7 @@
                                                 <label for="inputEmail3" class="col-sm-4 control-label">Enter Type
                                                     Name</label>
                                                 <div class="col-sm-8">
-                                                    <input name="ctl00$ContentPlaceHolder3$txtTypeName" type="text"
+                                                    <input formControlName="txtTypeName" type="text"
                                                         id="ContentPlaceHolder3_txtTypeName" class="form-control">
 
                                                 </div>
@@ -79,7 +79,7 @@
                                             <div class="form-group">
                                                 <label for="inputEmail3" class="col-sm-4 control-label">Rate</label>
                                                 <div class="col-sm-8">
-                                                    <input name="ctl00$ContentPlaceHolder3$txtprice" type="text"
+                                                    <input formControlName="txtprice" type="text"
                                                         id="ContentPlaceHolder3_txtprice" class="form-control">
 
                                                 </div>
@@ -90,14 +90,14 @@
                                             <div class="form-group">
                                                 <label for="inputEmail3" class="col-sm-4 control-label"></label>
                                                 <div class="col-sm-8">
-                                                    <input id="ContentPlaceHolder3_chkamt" type="checkcard"
-                                                        name="ctl00$ContentPlaceHolder3$chkamt"><label
+                                                    <input id="ContentPlaceHolder3_chkamt" type="checkbox"
+                                                        formControlName="chkamt"><label
                                                         for="ContentPlaceHolder3_chkamt">Amount</label>
-                                                    <input id="ContentPlaceHolder3_chkKm" type="checkcard"
-                                                        name="ctl00$ContentPlaceHolder3$chkKm"><label
+                                                    <input id="ContentPlaceHolder3_chkKm" type="checkbox"
+                                                        formControlName="chkKm"><label
                                                         for="ContentPlaceHolder3_chkKm">KM</label>
-                                                    <input id="ContentPlaceHolder3_chkparking" type="checkcard"
-                                                        name="ctl00$ContentPlaceHolder3$chkparking"><label
+                                                    <input id="ContentPlaceHolder3_chkparking" type="checkbox"
+                                                        formControlName="chkparking"><label
                                                         for="ContentPlaceHolder3_chkparking">Park/Toll</label>
 
                                                 </div>
@@ -135,16 +135,24 @@
                                                     <div class="col-sm-4">
                                                     </div>
                                                     <div class="col-sm-8">
-                                                        <input [type]="'submit'" name="btnSave" value="Save" 
-                                    id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10" *ngIf="ActionFlag==0">&nbsp;
-                                
-                               
-                                    <input [type]="'submit'" name="btnSave" value="Update" *ngIf="ActionFlag==1"
-                                    id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10">&nbsp;
-                                
-                                
-                                <input type="button" name="btnClear" value="Reset"
-                                    id="ContentPlaceHolder3_btnClear" class="btn btn-primary mar_top10" (click)="onReset()">
+
+
+
+                                                        <input [type]="'submit'" name="btnSave" value="Save"
+                                                            id="ContentPlaceHolder3_btnSave"
+                                                            class="btn btn-primary mar_top10"
+                                                            *ngIf="ActionFlag==0">&nbsp;
+
+
+                                                        <input [type]="'submit'" name="btnSave" value="Update"
+                                                            *ngIf="ActionFlag==1" id="ContentPlaceHolder3_btnSave"
+                                                            class="btn btn-primary mar_top10">&nbsp;
+
+
+                                                        <input type="button" name="btnClear" value="Reset"
+                                                            id="ContentPlaceHolder3_btnClear"
+                                                            class="btn btn-primary mar_top10" (click)="onReset()">
+
 
 
 
@@ -171,7 +179,7 @@
                 </div>
                 <!--End Form Body -->
 
-            </div>
+            </form>
         </div>
     </div>
 
@@ -189,8 +197,8 @@
 
 
 
-    <input type="submit" name="ctl00$ContentPlaceHolder3$btnSavingModelpopUp" value="Button"
-        id="ContentPlaceHolder3_btnSavingModelpopUp" style="display: none;">
+    <input type="submit" name="btnSavingModelpopUp" value="Button" id="ContentPlaceHolder3_btnSavingModelpopUp"
+        style="display: none;">
 
     <div id="ContentPlaceHolder3_pnlSavePopUp" style="width: 350px; display: none; position: fixed; z-index: 10001;">
 
@@ -248,11 +256,11 @@
                     <td align="center">
 
 
-                        <input type="submit" name="ctl00$ContentPlaceHolder3$btnsaveOk" value="Yes"
-                            id="ContentPlaceHolder3_btnsaveOk" class="btn btn-primary" style="width:80px;">
+                        <input type="submit" name="btnsaveOk" value="Yes" id="ContentPlaceHolder3_btnsaveOk"
+                            class="btn btn-primary" style="width:80px;">
                         &nbsp;&nbsp;&nbsp;
-                        <input type="submit" name="ctl00$ContentPlaceHolder3$BtnSaveCancel" value="No"
-                            id="ContentPlaceHolder3_BtnSaveCancel" class="btn btn-primary" style="width:80px;">
+                        <input type="submit" name="BtnSaveCancel" value="No" id="ContentPlaceHolder3_BtnSaveCancel"
+                            class="btn btn-primary" style="width:80px;">
                     </td>
                 </tr>
                 <tr>
@@ -274,8 +282,8 @@
 
 
 
-    <input type="submit" name="ctl00$ContentPlaceHolder3$modalPopupButton" value="Button"
-        id="ContentPlaceHolder3_modalPopupButton" style="display: none;">
+    <input type="submit" name="modalPopupButton" value="Button" id="ContentPlaceHolder3_modalPopupButton"
+        style="display: none;">
 
     <div id="ContentPlaceHolder3_DeletePopup" style="width: 350px; display: none; position: fixed; z-index: 10001;">
 
@@ -306,11 +314,11 @@
                 </tr>
                 <tr>
                     <td align="center">
-                        <input type="submit" name="ctl00$ContentPlaceHolder3$btnDeleteOk" value="OK"
-                            id="ContentPlaceHolder3_btnDeleteOk" class="btn btn-primary" style="width:80px;">
+                        <input type="submit" name="btnDeleteOk" value="OK" id="ContentPlaceHolder3_btnDeleteOk"
+                            class="btn btn-primary" style="width:80px;">
                         &nbsp;&nbsp;&nbsp;
-                        <input type="submit" name="ctl00$ContentPlaceHolder3$btnCancel" value="Cancel"
-                            id="ContentPlaceHolder3_btnCancel" class="btn btn-primary" style="width:80px;">
+                        <input type="submit" name="btnCancel" value="Cancel" id="ContentPlaceHolder3_btnCancel"
+                            class="btn btn-primary" style="width:80px;">
                     </td>
                 </tr>
                 <tr>
@@ -340,25 +348,47 @@
                     <thead>
                         <tr>
                             <th scope="col">Action</th>
-                            <th scope="col">SrNo</th>
-                            <th scope="col">Status Name</th>
+                            <th scope="col">Sr No</th>
+                            <th scope="col">Group Name</th>
+                            <th scope="col">Type Name</th>
+                            <th scope="col">Rate</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Km</th>
+                            <th scope="col">Park/Toll</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let person of persons;let a=index">
-                           
- <td><button class="badge bg-success  btn btn-sm  " name='{{ person.rid}}' > <a class="fa fa-edit" (click)="onedit(person.rid)"></a></button>
-    &nbsp;
-    <button class="badge bg-danger  btn btn-sm"  name='{{ person.rid}}' (click)="onDel(person.rid)"><a class="fa fa-trash"></a></button>
-</td>
 
+                            <td><button class="badge bg-success  btn btn-sm  " name='{{ person.id}}'> <a
+                                        class="fa fa-edit" (click)="onedit(person.id)"></a></button>
+                                &nbsp;
+                                <button class="badge bg-danger  btn btn-sm" name='{{ person.id}}'
+                                    (click)="onDel(person.id)"><a class="fa fa-trash"></a></button>
+                            </td>
 
                             <td> {{a+1}}</td>
-                            <td> {{person.typeName }}</td>
-                            
-                            
+                            <td> {{person.supplierName}}</td>
+                            <td>{{ person.address1 }}</td>
+                            <td> {{person.address2}}</td>
+                            <td>{{ person.address3 }}</td>
+                            <td>{{ person.contactPerson }}</td>
+                            <td> {{person.cmobileNo}}</td>
+    
 
-                        
+
+                            amt: false
+                            createdBy: 1
+                            createdOn: "2020-04-22T13:28:09.910+05:30"
+                            egroupId: 1
+                            expenseTypeId: 1
+                            km: true
+                            park: true
+                            rate: 0
+                            typeName: "Breakfast"
+                            updateBy: 1
+                            updateOn: "2020-05-09T21:56:34.103+05:30"
+
 
 
                         </tr>

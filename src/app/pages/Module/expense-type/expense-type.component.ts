@@ -2,7 +2,7 @@ import { Logins } from '@/Model/Utility/login';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { CMAdminModuleMasterUser, CMAdminSubModuleMaster, ExpenseTypes } from '@modules/Module/PoModules';
+import { CMAdminModuleMasterUser, CMAdminSubModuleMaster, ExpenseTypes, Tm_supplierMaster } from '@modules/Module/PoModules';
 import { CM_AdminModuleMaster } from '@pages/user-module/create-modulemaster/create-modulemaster.component';
 import { UserModuleServicesService } from '@pages/user-module/user-module-services.service';
 import { AppService } from '@services/app.service';
@@ -34,9 +34,10 @@ ActionStatus:any;
   public loginForm: FormGroup;
   CMAdminModuleMasterUser: List<CMAdminModuleMasterUser>;
   cMTmAdminSubModuleMasters: List<CMAdminSubModuleMaster>;
-  ExpenseTypes: List<ExpenseTypes>;
-  ActionFlag: number;
+  Tm_supplierMaster: List<ExpenseTypes>;
+  ActionFlag= 0;
   editData: any;
+  editDataID: any;
   constructor(
     private renderer: Renderer2,
     private toastr: ToastrService,
@@ -55,11 +56,13 @@ ActionStatus:any;
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      ddlModule: new FormControl(null),
-      SubModuleName: new FormControl(null),
-      SubModuleOrder: new FormControl(null),
-      NavigationUrl: new FormControl(null),
-      SubModuleTarget: new FormControl(null),
+      txtsuppliername: new FormControl(null),
+      txtCaddress1: new FormControl(null),
+      txtCaddress2: new FormControl(null),
+      txtCaddress3: new FormControl(null),
+      txtcontactperson: new FormControl(null),
+      MobileNo: new FormControl(null),
+      gst: new FormControl(null),
     });
 
 
@@ -68,48 +71,64 @@ ActionStatus:any;
   }
 
   
+
   async INSERT(
-    module_Id: number,
-    subModule_Id: number,
-    subModuleName: string,
-    cUser_Id: number,
-    mUser_Id: number,
-    subModuleOrder: number,
-    navigationUrl: string,
-    rID: number,
+   
+supplierName: String,
+address1: String,
+address2: String,
+address3: String,
+contactPerson: String,
+cmobileNo: String,
+gst: String,
+recordStatus: String,
+
+cuserId: number,
+
+muserId: number,
+id: number,
     targetModule: string,
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
 
 
-    let query = `mutation MyMutation($module_Id: Int!,
-    $subModule_Id: Int!,
-    $subModuleName: String,
-    $cUser_Id: Int!,
-    $mUser_Id: Int!,
-    $subModuleOrder: Int!,
-    $navigationUrl: String, 
-    $rID: Int!
-    $targetModule:String) {
-    __typename
-    cMTmAdminSubModuleMasters(data: {detail: {moduleId: $module_Id, 
-      subModuleId: $subModule_Id,
-      creationDate: "2019-10-10",
-      cuserId: $cUser_Id,
-      modificationDate: "2019-10-10",
-      muserId: $mUser_Id, 
-      subModuleOrder: $subModuleOrder,
-      rid: $rID, 
-      subModuleName: $subModuleName, 
-      targetModule:$targetModule,
-      navigationUrl: $navigationUrl}}, triger: "INSERT") {
-      iD
-      code
-      message
-      status
+    let query = `mutation MyMutation($id: Int
+      $supplierName: String
+      $address1: String
+      $address2: String
+      $address3: String
+      $contactPerson: String
+      $cmobileNo: String
+      $gst: String
+      $recordStatus: String
+      
+      $cuserId: Int
+      
+      $muserId: Int) {
+      __typename
+      cMSupplierMaster(triger: "${targetModule}", data: {detail: 
+        {address1: $address1,
+          address2: $address2,
+          address3: $address3, 
+          cmobileNo: $cmobileNo, 
+          contactPerson: $contactPerson,
+          creationDate: "2019-10-10",
+          cuserId: $cuserId,
+          gst: $gst, 
+          id: $id,
+          modificationDate: "2019-10-10",
+          muserId: $muserId,
+          recordStatus: $recordStatus, 
+          supplierName:$supplierName}, iD: "${id}"}) {
+        code
+        detail
+        iD
+        message
+        status
+      }
     }
-  }
+    
   
        `
 
@@ -134,15 +153,20 @@ ActionStatus:any;
 
     var datas = JSON.stringify({
       query, variables: {
-        module_Id,
-        subModule_Id,
-        subModuleName,
-        cUser_Id,
-        mUser_Id,
-        subModuleOrder,
-        navigationUrl,
-        rID,
-        targetModule,
+        supplierName,
+        address1,
+        address2,
+        address3,
+        contactPerson,
+        cmobileNo,
+        gst,
+        recordStatus,
+        
+        cuserId,
+        
+        muserId,
+        id
+        
       }
     });
     var ss = await this.Logins1.GraphqlFetchdata("query", datas);
@@ -170,6 +194,7 @@ ActionStatus:any;
     }
     
     
+    
       `
     var datas = JSON.stringify({ query, variables: { User, Password } });
     var ss = await this.Logins1.GraphqlFetchQuery("query", query);
@@ -182,21 +207,15 @@ ActionStatus:any;
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-    this.persons = obj["data"]["cMTmAdminSubModuleMasters"]
-
-
-    const enumerable = Enumerable.from(this.persons).asEnumerable();
-    this.ExpenseTypes = Enumerable.from(obj["data"]["pOExpenseTypes"]).cast<ExpenseTypes>().toList();
- // or List.from(data)
-    
+    //this.persons = obj["data"]["cMTmAdminSubModuleMasters"]
 
 
 
-    // var result = this.cMTmAdminSubModuleMasters
-    // .join(this.CMAdminModuleMasterUser, a => a.moduleId, b => b.rid)
-    // .where(s => s.left.moduleId == s.right.rid )
-    // .toList();
-    this.persons= this.ExpenseTypes;
+    this.Tm_supplierMaster = Enumerable.from(obj["data"]["pOExpenseTypes"]).cast<ExpenseTypes>().toList();
+
+     this.persons=this.Tm_supplierMaster;
+
+     console.log( this.persons);
     
    
     $('#example').DataTable().destroy();
@@ -237,91 +256,20 @@ alert (event)
 
   }
 
-  //----------------------------------CURD OPERATIONS-------------------------------------------------------------
+//----------------------------------CURD OPERATIONS-------------------------------------------------------------
 
-  async onSubmit() {
-    try{
+async onSubmit() {
+  try{
 
-    
+  
 
-    if(this.ActionFlag==0)
-    {
-
-
-      if (this.ActionFlag == 0) {
-        const { value: showConfirmButton } = await Swal.fire({
-          title: "Do You Want To Save",
-          icon: 'question',
-          //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
-    
-          showConfirmButton: true,
-          showCancelButton: true
-        })
-    
-        if (showConfirmButton == true) {
-
-
-          var output = null;
-          // await this.INSERT(0,
-          //   this.loginForm.get('txtModuleName').value,
-          //   this.loginForm.get('txtModuleOrder').value,
-          //   this.Logins1.TMUserMaster.userCode
-          //   , 0, 0,"INSERT");
-
-
-            const myJSON = JSON.stringify(output);
-            const obj = JSON.parse(myJSON);
-        
-            var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
-      
-
-
-            if(outputFinal[0].message=="Success")
-            {
-              const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener('mouseenter', Swal.stopTimer)
-                  toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-
-              })
-
-              this.Logins1.popupStatus
-              Toast.fire({
-                icon: 'success',
-                title: 'Data Create Successfully',
-
-
-              })
-              this.LodeDataTable();
-
-            }else{
-
-              Swal.fire(
-                'Failed',
-                '',
-                'error'
-              )
-
-            }
-
-         
-        }
-    
-      }
-     
-    
-  }
-  if(this.ActionFlag==1)
+  if(this.ActionFlag==0)
   {
-    if (this.ActionFlag == 1) {
+
+
+    if (this.ActionFlag == 0) {
       const { value: showConfirmButton } = await Swal.fire({
-        title: "Do You Want To Update",
+        title: "Do You Want To Save",
         icon: 'question',
         //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
   
@@ -332,17 +280,31 @@ alert (event)
       if (showConfirmButton == true) {
 
 
-        var output = null;//await this.INSERT(0,
-          // this.loginForm.get('txtModuleName').value,
-          // this.loginForm.get('txtModuleOrder').value,
-          // this.Logins1.TMUserMaster.userCode
-          // , 0, this.editData.rid,"UPDATE");
+        var output = 
+        await this.INSERT(
+          "supplierName",
+"address1",
+"address2",
+"address3",
+"contactPerson",
+"cmobileNo",
+"gst",
+"recordStatus",
+
+1,
+
+1,
+0,
+ "INSERT");
+
+             
+
 
 
           const myJSON = JSON.stringify(output);
           const obj = JSON.parse(myJSON);
       
-          var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+          var outputFinal = obj["data"]["cMSupplierMaster"];
     
 
 
@@ -364,13 +326,12 @@ alert (event)
             this.Logins1.popupStatus
             Toast.fire({
               icon: 'success',
-              title: 'Data Update Successfully',
+              title: 'Data Create Successfully',
 
 
             })
             this.LodeDataTable();
-          this.ActionFlag=0;
-          this.onReset();
+
           }else{
 
             Swal.fire(
@@ -385,115 +346,218 @@ alert (event)
       }
   
     }
-  }
-}catch(error )
-{
-  Swal.fire(
-    'Failed',
-    error,
-    'error')
+   
+  
 }
-
- }
-async onDel(string :string)
+if(this.ActionFlag==1)
 {
-  try{
-  var state="Delete"
-  if(state==state)
-  {
+  if (this.ActionFlag == 1) {
+    const { value: showConfirmButton } = await Swal.fire({
+      title: "Do You Want To Update",
+      icon: 'question',
+      //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+
+      showConfirmButton: true,
+      showCancelButton: true
+    })
+
+    if (showConfirmButton == true) {
 
 
-    
-      const { value: showConfirmButton } = await Swal.fire({
-        title: "Are You Sure Want To Delete",
-        icon: 'question',
-        //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
-  
-        showConfirmButton: true,
-        showCancelButton: true
-      })
-  
-      if (showConfirmButton == true) {
+      var output = await this.INSERT(
+        "supplierName",
+"address1",
+"address2",
+"address3",
+"contactPerson",
+"cmobileNo",
+"gst",
+"recordStatus",
 
+1,
 
-        var output = null;//await this.INSERT( 0,"0",0,0,0,Number(string),"DELETE");
-    
+1,
+Number(this.editDataID),
+"UPDATE");
+
         const myJSON = JSON.stringify(output);
         const obj = JSON.parse(myJSON);
     
-        var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
-
-       
-          if(outputFinal[0].message=="Success")
-          {
-            const Toast = Swal.mixin({
-              toast: true,
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 3000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-              }
-
-            })
-
-            this.Logins1.popupStatus
-            Toast.fire({
-              icon: 'success',
-              title: 'Data Delete Successfully',
-
-
-            })
-            this.LodeDataTable();
-
-          }else{
-
-            Swal.fire(
-              'Failed ',
-              '',
-              'error'
-            )
-
-          }
-
-       
-      }
+        var outputFinal = obj["data"]["cMSupplierMaster"];
   
+
+
+        if(outputFinal[0].message=="Success")
+        {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+
+          })
+
+          this.Logins1.popupStatus
+          Toast.fire({
+            icon: 'success',
+            title: 'Data Update Successfully',
+
+
+          })
+          this.LodeDataTable();
+        this.ActionFlag=0;
+        this.onReset();
+        }else{
+
+          Swal.fire(
+            'Failed',
+            '',
+            'error'
+          )
+
+        }
+
+     
+    }
+
+  }
+}
+}catch(error )
+{
+Swal.fire(
+  'Failed',
+  error,
+  'error')
+}
+
+}
+async onDel(string :string)
+{
+try{
+var state="Delete"
+if(state==state)
+{
+
+
+  
+    const { value: showConfirmButton } = await Swal.fire({
+      title: "Are You Sure Want To Delete",
+      icon: 'question',
+      //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+
+      showConfirmButton: true,
+      showCancelButton: true
+    })
+
+    if (showConfirmButton == true) {
+
+
+      var output = 
+      await this.INSERT(
+        "supplierName",
+"address1",
+"address2",
+"address3",
+"contactPerson",
+"cmobileNo",
+"gst",
+"recordStatus",
+
+1,
+
+1,
+Number(string),
+"DELETE");
+      const myJSON = JSON.stringify(output);
+      const obj = JSON.parse(myJSON);
+  
+      var outputFinal = obj["data"]["cMSupplierMaster"];
+
+     
+        if(outputFinal[0].message=="Success")
+        {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+
+          })
+
+          this.Logins1.popupStatus
+          Toast.fire({
+            icon: 'success',
+            title: 'Data Delete Successfully',
+
+
+          })
+          this.LodeDataTable();
+
+        }else{
+
+          Swal.fire(
+            'Failed ',
+            '',
+            'error'
+          )
+
+        }
+
+     
+    }
+
 }
 
 
 }
 catch(error)
 {
-  Swal.fire(
-    'Failed',
-    error,
-    'error')
+Swal.fire(
+  'Failed',
+  error,
+  'error')
 }
 }
 
 async onReset()
 {
-  this.loginForm.reset();
-  this.ActionFlag=0;
+this.loginForm.reset();
+this.ActionFlag=0;
 }
 
 async onedit(string:string)
 {
-  this.editData=Enumerable.from( this.persons).cast<CMAdminModuleMasterUser>().where(x=>x.rid==Number(string)).singleOrDefault();
-  
-  this.loginForm.setValue({
-    txtModuleName: this.editData.moduleName,
-    txtModuleOrder:this.editData.moduleOrder,
 
-  });
-  this.ActionFlag=1;
+  this.editDataID=string;
+this.editData= this.persons.where(x=>x.id==Number(string)).singleOrDefault();
+
+this.loginForm .setValue({
+  txtsuppliername: this.editData.supplierName,
+  txtCaddress1: this.editData.address1,
+  txtCaddress2: this.editData.address2,
+  txtCaddress3: this.editData.address3,
+  txtcontactperson: this.editData.contactPerson,
+  MobileNo:this.editData.cmobileNo,
+  gst: this.editData.gst,
+});
+this.ActionFlag=1;
+
+
+
+
+
 }
 
 //----------------------------------CURD OPERATIONS-------------------------------------------------------------
-
-
 
 }

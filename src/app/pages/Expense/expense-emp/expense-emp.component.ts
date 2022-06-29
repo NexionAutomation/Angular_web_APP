@@ -29,6 +29,8 @@ export class ExpenseEmpComponent implements OnInit {
   ActionFlag=0;
   editData: CMAdminModuleMasterUser;
    arr: ExpenseItems[] = [];
+  Expheaders: any;
+  pOExpenseItems: any;
   constructor(
     private renderer: Renderer2,
     private toastr: ToastrService,
@@ -143,40 +145,61 @@ export class ExpenseEmpComponent implements OnInit {
     return ss;
   }
   async INSERTITEMS(
-    moduleId: number,
-moduleName: String,
-moduleOrder: number,
-
-cuserId: number,
-
-muserId: number,
-rid: number,
+    expenseId: number,
+    date: Date,
+    expenseTypeId: number,
+    amount: number,
+    approvedAmount: number,
+    //createdOn: Date,
+    createdBy: number,
+    //updateOn: Date,
+    updateBy: number,
+    description: String,
+    paidBy: String,
+    distance: number,
+    parkingAmt: number,
+    amt: number,
+    expenseItemsId: number,
     ActionStatus:string
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
 
 
-    let query = `mutation MyMutation($moduleId: Int!
-      $moduleName: String
-      $moduleOrder: Int!
-      
-      $cuserId: Int!
-      
-      $muserId: Int!
-      $rid: Int!) {
+    let query = `mutation MyMutation(
+      $expenseId: Int
+      $date: DateTime
+      $expenseTypeId: Int
+      $amount: Float
+      $approvedAmount: Float
+      $createdOn: DateTime
+      $createdBy: Int
+     
+      $updateBy: Int
+      $description: String
+      $paidBy: String
+      $distance: Float
+      $parkingAmt: Float
+      $amt: Float
+      $expenseItemsId: Long!) {
       __typename
-      cMTmAdminModuleMasters(triger: "${ActionStatus}",
-        data: {detail: {
-          moduleId: $moduleId,
-          moduleOrder: $moduleOrder,
-          creationDate: "2019-10-10",
-          cuserId: $cuserId,
-          modificationDate: "2019-10-10",
-          muserId: $muserId,
-          rid: $rid,
-          moduleName: $moduleName
-        }, iD: "${rid}"}) {
+      cMExpenseItem(data: {detail: 
+        {expenseItemsId: $expenseItemsId,
+          approvedAmount: $approvedAmount,
+          amount: $amount,
+          amt: $amt,
+          date: $date,
+          description:$description,
+          distance: $distance,
+          expenseId: $expenseId,
+          expenseTypeId: $expenseTypeId,
+          paidBy: $paidBy,
+          parkingAmt: $parkingAmt,
+          updateBy: $updateBy,
+          updateOn: "2019-10-10",
+          createdOn: $createdOn,
+          createdBy: $createdBy
+        }, iD: "${expenseItemsId}"}, triger: "${ActionStatus}") {
         code
         detail
         iD
@@ -190,14 +213,21 @@ rid: number,
 
     var datas = JSON.stringify({
       query, variables: {
-        moduleId,
-moduleName,
-moduleOrder,
-
-cuserId,
-
-muserId,
-rid,
+        expenseId,
+    date,
+    expenseTypeId,
+    amount,
+    approvedAmount,
+    //createdOn: Date,
+    createdBy,
+    //updateOn: Date,
+    updateBy,
+    description,
+    paidBy,
+    distance,
+    parkingAmt,
+    amt,
+    expenseItemsId,
       }
     });
     var ss = await this.Logins1.GraphqlFetchdata("query", datas);
@@ -382,12 +412,68 @@ rid,
 
   }
 
+
+  async GETData2(User: string, Password: string): Promise<any> {
+
+    let data = '{User="' + User + '",Password="' + Password + '" }';
+    let query = `query MyQuery {
+      __typename
+      pOExpenseHeads {
+        title
+        periodForm
+        periodTo
+        workOrderId
+        location
+        createdOn
+        createdBy
+        updateOn
+        updateBy
+        expenseId
+      }
+      pOExpenseItems {
+        expenseId
+        date
+        expenseTypeId
+        amount
+        approvedAmount
+        createdOn
+        createdBy
+        updateOn
+        updateBy
+        description
+        paidBy
+        distance
+        parkingAmt
+        amt
+        expenseItemsId
+      }
+      pOExpenseStatusStates {
+        expenseId
+        statusId
+        createdOn
+        createdBy
+        updateOn
+        updateBy
+        comments
+        rid
+      }
+    }
+    
+    
+      `
+    var datas = JSON.stringify({ query, variables: { User, Password } });
+    var ss = await this.Logins1.GraphqlFetchQuery("query", query);
+    return ss;
+
+  }
+
+
   async LodeDataTable() {
     var data = await this.GETData("", "");
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-    this.persons = obj["data"]["cMTmAdminModuleMasters"]
+    this.persons = obj["data"]["pOExpenseHeads"]
 
     
     $('#example').DataTable().destroy();
@@ -402,6 +488,17 @@ rid,
 
     });
 
+  }
+
+
+  async LodeDataheader() {
+    var data = await this.GETData("", "");
+    const myJSON = JSON.stringify(data);
+    const obj = JSON.parse(myJSON);
+
+    this.Expheaders = obj["data"]["pOExpenseHeads"]
+
+   
   }
 
   ngOnDestroy(): void {
@@ -703,42 +800,107 @@ async onedit(string:string)
 async Add_items()
 {try
   {
+      var output = null;
+
+     
+      var output= await this.INSERTITEMS(  
+          Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0)+1),
+          this.loginForm.get('txtdate').value ,
+          Number(this.loginForm.get('ddlExpenseType').value),
+          this.loginForm.get('txtamount').value,
+    0,
+    //createdOn: Date,
+    this.Logins1.TMUserMaster.userCode,
+    //updateOn: Date,
+    this.Logins1.TMUserMaster.userCode,
+    this.loginForm.get('txtdescription').value,
+    this.loginForm.get('ddlPaidby').value,
+    this.loginForm.get('txtDistance').value,
+    this.loginForm.get('txtParkingAmt').value,
+    0,
+    0,
+    "INSERT");
+    
+
+       
+
+         
 
 
-   
-// console.log();
-const  datain=[{key:
-      {
+
+
+        const myJSON = JSON.stringify(output);
+        const obj = JSON.parse(myJSON);
+    
+        var outputFinal = obj["data"]["cMExpenseItem"];
+
+       
+          if(outputFinal[0].message=="Success")
+          {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+
+            })
+
+            this.Logins1.popupStatus
+            Toast.fire({
+              icon: 'success',
+              title: 'Data ADD Successfully',
+
+
+            })
+
+
+            var data = await this.GETData2("", "");
+            const myJSON = JSON.stringify(data);
+            const obj = JSON.parse(myJSON);
+        
+            var datafe= obj["data"]["pOExpenseItems"];
+
+            var datas= Enumerable.from( datafe).cast<ExpenseItems>().where(x=>x.expenseId==Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0)+1)).toList();
+        
+            this.pOExpenseItems=datas;
+
+          }
+    
+       
+
+   //---------------------------important code---------------------
+// // console.log();
+// const  datain=[{key:
+//       {
         
       
-         expenseId: 0,
-	 expenseTypeId: Number(this.loginForm.get('ddlExpenseType').value),
-	 amount:  Number(this.loginForm.get('txtamount').value),
-	 approvedAmount: 1,
-	 createdBy: 1,
-	 updateBy: 1,
-	 description: this.loginForm.get('txtdescription').value,
-	 paidBy: this.loginForm.get('ddlPaidby').value,
-	 distance: Number(this.loginForm.get('txtDistance').value),
-	 parkingAmt: Number(this.loginForm.get('txtParkingAmt').value),
-	 aMt: Number(this.loginForm.get('ddlExpenseType').value),
-	 expenseItemsId: Number(uniqId()) ,
-    Date:new Date(this.loginForm.get('txtdate').value)
-  }}] as unknown as ExpenseItems;
+//          expenseId: 0,
+// 	 expenseTypeId: Number(this.loginForm.get('ddlExpenseType').value),
+// 	 amount:  Number(this.loginForm.get('txtamount').value),
+// 	 approvedAmount: 1,
+// 	 createdBy: 1,
+// 	 updateBy: 1,
+// 	 description: this.loginForm.get('txtdescription').value,
+// 	 paidBy: this.loginForm.get('ddlPaidby').value,
+// 	 distance: Number(this.loginForm.get('txtDistance').value),
+// 	 parkingAmt: Number(this.loginForm.get('txtParkingAmt').value),
+// 	 aMt: Number(this.loginForm.get('ddlExpenseType').value),
+// 	 expenseItemsId: Number(uniqId()) ,
+//     Date:new Date(this.loginForm.get('txtdate').value)
+//   }}] as unknown as ExpenseItems;
 
-   this.arr.push(datain);
-
-
-   const test = [
-    { nation: { name: "Germany", iso: "DE", rankingPoints: 293949 } },
-    { nation: { name: "Hungary", iso: "HU", rankingPoints: 564161 } },
-    { nation: { name: "Serbia", iso: "SR", rankingPoints: 231651 } }
-];    
-
-const sorted = this.arr.sort((a, b) => a.expenseItemsId - b.expenseItemsId);
+//    this.arr.push(datain);
 
 
-console.log(sorted);
+// const sorted = this.arr.sort((a, b) => a.expenseItemsId - b.expenseItemsId);
+
+ //---------------------------important code---------------------
+
 
 
 }catch(error)

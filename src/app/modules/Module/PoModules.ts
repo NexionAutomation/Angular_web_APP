@@ -250,3 +250,24 @@ export class TM_PurchaseHead
 	public deliveryMode: string;
 	public iD: number;
 }
+
+
+export class pOTmPurchaseBodies
+{
+	public poId: number;
+	public description: string;
+	public uom: string;
+	public qty: number;
+	public listPrice: number;
+	public dis: number;
+	public unitPrice: number;
+	public netPrice: number;
+	public cuserId: number;
+	public muserId: number;
+	public catname: string;
+	public id: number;
+
+
+
+
+}
