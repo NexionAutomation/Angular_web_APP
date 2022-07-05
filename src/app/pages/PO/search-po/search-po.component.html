@@ -60,8 +60,8 @@
                                 <button class="badge bg-danger  btn btn-sm" name='{{ person.poId}}'
                                     (click)="onDel(person.poId)"  ><a class="fa fa-trash"></a></button>
                                     <br>
-                                    <button class="badge bg-info  btn btn-sm" target="_blank" name='{{ person.poId}}'
-                                    ><a class="fa fa-file" [routerLink]="['/dashboard']" target="_blank"></a></button>
+                                    <button class="badge bg-info  btn btn-sm"  name='{{ person.poId}}'
+                                    ><a class="fa fa-file" target="_self" [routerLink]="['/viewPo',person.poId]" ></a></button>
                             
                             </td>
 

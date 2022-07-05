@@ -11,6 +11,7 @@ import { Dictionary, Enumerable, List, ReadOnlyList } from 'sharp-collections';
 import { UserModuleServicesService } from '../user-module-services.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { element } from 'protractor';
+import { join } from 'path';
 @Component({
   selector: 'app-create-user-rights',
   templateUrl: './create-user-rights.component.html',
@@ -316,6 +317,25 @@ export class CreateUserRightsComponent implements OnInit {
     this.ModuleMaster2 = Enumerable.from(this.submodule).where(x => x.moduleId == Number(event)).toList();
     this.submodule2 = this.ModuleMaster2;
 
+    // var rights = Enumerable.from(this.rightsModule2).where(x => x.userCode == Number(this.loginFormRights.get('lstUsers').value)).toList();
+
+
+    // var result =  this.submodule2
+    // .join(rights, a => a.user_Code, b => b.user_Code)
+    // .where(s => s.left.userCode == s.right.userCode && s.left.moduleId == s.right.moduleId 
+    // &&    s.left.groupId== s.right.groupId)
+    // .toList();
+    //  this.persons=result;
+
+
+    
+
+
+
+
+    // console.log(result);
+
+    // console.log( this.submodule2);
 
 
 
@@ -333,8 +353,9 @@ export class CreateUserRightsComponent implements OnInit {
 
     var rights = Enumerable.from(this.rightsModule2).where(x => x.userCode == Number(this.loginFormRights.get('lstUsers').value)).toList();
 
+    console.log();
     // document.getElementById("Delete,4").setAttribute('checked', true);
-    document.getElementById("Create,1").setAttribute('checked', 'checked');
+    //document.getElementById("Create,1").setAttribute('checked', 'checked');
     if (rights.any()) {
       var data = rights.toArray()
       console.log(rights);

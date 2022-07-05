@@ -110,14 +110,14 @@
                                                         Terms</label>&nbsp;
                                                     <input formControlName="txtpaymentterms" type="text"
                                                         id="txtpaymentterms" class="form-control inputtext"
-                                                        autocomplete="off">
+                                                        >
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <label for="inputEmail3" class="control-label pull-left">Indent
                                                         No</label>
                                                     <input formControlName="txtindentno" type="text"
                                                         id="txtindentno" class="form-control inputtext"
-                                                        autocomplete="off">
+                                                        >
 
                                                 </div>
                                                 <div class="col-sm-4">
@@ -125,7 +125,7 @@
                                                         Terms</label>
                                                     <input formControlName="txtfreightterms" type="text"
                                                         id="txtfreightterms" class="form-control inputtext"
-                                                        autocomplete="off">
+                                                        >
 
                                                 </div>
 
@@ -138,14 +138,14 @@
                                                         No</label>
                                                     <input formControlName="txtorderno" type="text"
                                                         id="txtorderno" class="form-control inputtext"
-                                                        autocomplete="off">
+                                                        >
                                                 </div>
 
                                                 <div class="col-sm-4">
                                                     <label for="inputEmail3"
                                                         class="control-label pull-left">GST</label>&nbsp;
                                                     <input formControlName="txtgst" type="text"
-                                                        id="txtgst" class="form-control inputtext" autocomplete="off">
+                                                        id="txtgst" class="form-control inputtext" >
                                                 </div>
 
                                                 <div class="col-sm-4">
@@ -153,7 +153,7 @@
                                                         class="control-label pull-left">Delivery</label>&nbsp;
                                                     <input formControlName="txtdelivery" type="date"
                                                         id="txtdelivery" class="form-control inputtext"
-                                                        autocomplete="off">
+                                                        >
 
                                                 </div>
 
@@ -310,6 +310,21 @@
 
                                                 <div class="col-sm-1">
                                                     <label for="inputEmail3"
+                                                        class="control-label pull-left">Make</label>&nbsp;
+                                                    <select formControlName="ddluom"
+                                                        id="ddluom" class="form-control">
+                                                        <option selected="selected" value=" ">--Select--</option>
+                                                        <option value="Pcs">Schindler</option>
+                                                        <option value="Lot">Rockwell</option>
+                                                        <option value="KG">Other</option>
+                                                        
+
+                                                    </select>
+                                                </div>
+
+
+                                                <div class="col-sm-1">
+                                                    <label for="inputEmail3"
                                                         class="control-label pull-left">Qty</label>&nbsp;
                                                     <input formControlName="txtqty" type="number"
                                                         id="txtqty" class="form-control inputtext">
@@ -322,7 +337,7 @@
                                                         id="txtlistprice" class="form-control inputtext">
 
                                                 </div>
-                                                <div class="col-sm-2">
+                                                <div class="col-sm-1">
                                                     <label for="inputEmail3"
                                                         class="control-label pull-left">Discount</label>&nbsp;
                                                     <input formControlName="txtdiscount" type="number"
@@ -331,7 +346,7 @@
                                                 </div>
                                                 <div class="col-sm-2 " style="float:right">
                                                     <div class="clearfix" style="margin-top: 10px;"></div>
-                                                    <button type="button" formControlName="btn_add"
+                                                    <button type="button" 
                                                         value="ADD" id="btn_add"
                                                         class="btn btn-primary pull-Right" (click)="Add_items()">ADD</button>
                                                 </div>
@@ -396,6 +411,7 @@
                                                                             <th scope="col">Description</th>
                                                                             <th scope="col">Cat No</th>
                                                                             <th scope="col">UOM</th>
+                                                                            <th scope="col">Make</th>
                                                                             <th scope="col">QTY</th>
                                                                             <th scope="col">List Price</th>
                                                                             <th scope="col">Discount</th>
@@ -405,10 +421,11 @@
                                                                         <tr style="background-color:0;" *ngFor="let person of pOExpenseItems;let a=index" >
                                                                             <td>
                                                                                 <button type="button"
+                                                                               
+                                                                                    
+                                                                                class="badge bg-danger btn btn-sm" (click)="onDel(person.id)"><a class="fa fa-trash"></a></button>
+
                                                                                    
-                                                                                    value="Delete"
-                                                                                    id="GridView1_btnDelete_Row_0"
-                                                                                    class="btn btn-sm btn-danger" (click)="onDel(person.id)">Delete</button>
                                                                                     <!-- poId -->
 
                                                                             </td>
@@ -418,6 +435,7 @@
                                                                             </td>
                                                                             <td>{{person.description}}</td>
                                                                             <td>{{person.catname}}</td>
+                                                                            <td>{{person.uom}}</td>
                                                                             <td>{{person.uom}}</td>
                                                                             <td>{{person.qty}}</td>
                                                                             <td>{{person.listPrice}}</td>
@@ -505,7 +523,7 @@
                                                             value="Save" id="btnSave"
                                                             class="btn btn-primary mar_top10" *ngIf="ActionFlag==0">Save</button>
 
-                                                            <button type="button" 
+                                                            <button type="submit" 
                                                             value="Update" id="btnSave"
                                                             class="btn btn-primary mar_top10" *ngIf="ActionFlag==1">Update</button>
                                                         &nbsp;

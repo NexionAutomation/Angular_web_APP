@@ -31,6 +31,9 @@ export class ExpenseEmpComponent implements OnInit {
    arr: ExpenseItems[] = [];
   Expheaders: any;
   pOExpenseItems: any;
+   file :any
+  pOExpenseItemAttachmentss: any;
+  displayStyle = "none";
   constructor(
     private renderer: Renderer2,
     private toastr: ToastrService,
@@ -66,15 +69,30 @@ export class ExpenseEmpComponent implements OnInit {
       ddlstatus: new FormControl(),
       txtcomments: new FormControl(),
 
+      txtdescription1:new FormControl(),
+
     });
 
 
 
     this.LodeDataTable();
 
-  }
 
- 
+
+  
+   
+
+  }
+  openPopup(event) {
+    this.displayStyle = "block";
+    console.log(event);
+    // $('#imagemodel').attr('src',event.srcElement );
+    
+    // console.log(event);
+  }
+  closePopup() {
+    this.displayStyle = "none";
+  }
 
   async INSERTHeader(
     expenseId: number,
@@ -402,6 +420,15 @@ rid,
         comments
         rid
       }
+      pOExpenseItemAttachments {
+        expenseId
+        name
+        contentType
+        imagDescription
+        createdBy
+        createdOn
+        attchmentId
+      }
     }
     
     
@@ -474,6 +501,8 @@ rid,
     const obj = JSON.parse(myJSON);
 
     this.persons = obj["data"]["pOExpenseHeads"]
+    this.pOExpenseItemAttachmentss = obj["data"]["pOExpenseItemAttachments"]
+    
 
     
     $('#example').DataTable().destroy();
@@ -796,6 +825,147 @@ async onedit(string:string)
 
 //----------------------------------CURD OPERATIONS-------------------------------------------------------------
 
+
+
+
+
+
+async Add_ImageUplode($event)
+{
+  try
+  {
+
+
+     this.uploadI(
+      0,
+"test",
+" test",
+this.loginForm.get('txtdescription1').value ,
+1,
+new Date(Date.now()),
+0,
+this.file
+
+    );
+
+
+    await this.LodeDataheader();
+
+
+
+    
+
+          
+            
+           
+
+
+  }
+  catch(error)
+  {
+    Swal.fire(
+      'Failed',
+      error,
+      'error')
+  }
+
+}
+
+async uploadI(
+  expenseId: number,
+name: String,
+contentType: String,
+imagDescription: String,
+createdBy: number,
+createdOn: Date,
+attchmentId: number,
+files:File
+
+) {
+  alert("call");
+
+
+
+
+  // (
+  //   $expenseId: Int,
+  //   $name: String,
+  //   $contentType: String,
+  //   $imagDescription: String,
+  //   $createdBy: Int,
+  //   $createdOn: DateTime,
+  //   $attchmentId: Int!,
+  //   $files: Upload
+  //   )
+
+
+  var operations = {
+    query: `
+
+
+    mutation MyMutation($file: Upload) {
+      __typename
+      cMExpenseItemAttachment07(data: 
+        {detail:
+          {attchmentId: ${attchmentId},
+            contentType: "${contentType}",
+            createdBy: ${createdBy},
+            createdOn: "2019-10-10",
+            expenseId: ${expenseId},
+            imagDescription:"${imagDescription}",
+            name: " ${name}"
+          }}, file: $file, triger: "INSERT") {
+        code
+        detail
+        iD
+        message
+        status
+      }
+    }
+    
+    `,
+    variables: {
+      file:null
+     
+
+    }
+  }
+ 
+ 
+
+
+     var _map = {
+      file: ["variables.file"]
+    }
+
+
+    var file =  files;
+var fd = new FormData()
+fd.append('operations', JSON.stringify(operations))
+fd.append('map', JSON.stringify(_map))
+fd.append('file', file, file.name)
+
+
+//   //var output = await this.INSERT(
+//     this.loginForm.get('file1').value,
+   
+//  );
+
+ var ss = await this.Logins1.Graphqlfiledata("query", fd, file);
+
+console.log(ss);
+ 
+}
+
+
+async upload($event) {
+  
+   this.file =  $event.target.files[0];
+
+
+ 
+ 
+}
 
 async Add_items()
 {try

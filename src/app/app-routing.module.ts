@@ -38,6 +38,7 @@ import { LeaveTypeComponent } from '@pages/Module/leave-type/leave-type.componen
 import { LeaveSettingComponent } from '@pages/Module/leave-setting/leave-setting.component';
 import { StateMasterComponent } from '@pages/Module/state-master/state-master.component';
 import { SupplierMasterComponent } from '@pages/Module/supplier-master/supplier-master.component';
+import { ViewPOComponent } from '@pages/PO/view-po/view-po.component';
 
 const routes: Routes = [
     {
@@ -165,11 +166,21 @@ const routes: Routes = [
                 path: 'CreateSupplier',
                 component: SupplierMasterComponent
             },
+            
+           
             {
                 path: '',
-                component: DashboardComponent
+                component: DashboardComponent,
+
             }
         ]
+    },
+    {
+        path: 'viewPo/:id',
+        component: ViewPOComponent,
+        canActivate: [NonAuthGuard],
+        
+        
     },
     {
         path: 'login',
@@ -196,6 +207,7 @@ const routes: Routes = [
         component: PrivacyPolicyComponent,
         canActivate: [NonAuthGuard]
     },
+    
     {path: '**', redirectTo: ''}
 ];
 

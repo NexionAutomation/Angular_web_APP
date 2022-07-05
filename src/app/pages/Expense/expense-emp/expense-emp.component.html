@@ -169,8 +169,8 @@
                                                 <div class="col-sm-1">
                                                     <label for="inputEmail3" class="control-label pull-left">Paid
                                                         By</label>&nbsp;
-                                                    <select formControlName="ddlPaidby"
-                                                        id="ddlPaidby" class="form-control">
+                                                    <select formControlName="ddlPaidby" id="ddlPaidby"
+                                                        class="form-control">
                                                         <option selected="selected" value="NAPL">NAPL</option>
                                                         <option value="Customer">Customer</option>
 
@@ -213,8 +213,8 @@
                                                 <div class="col-sm-1">
                                                     <label for="inputEmail3"
                                                         class="control-label pull-left">Km</label>&nbsp;
-                                                    <input formControlName="txtDistance" type="number"
-                                                        id="txtDistance" class="form-control inputtext">
+                                                    <input formControlName="txtDistance" type="number" id="txtDistance"
+                                                        class="form-control inputtext">
 
                                                 </div>
                                                 <div class="col-sm-1">
@@ -237,8 +237,8 @@
                                                     <div class="clearfix" style="margin-top: 30px;"></div>
                                                     <label for="inputEmail3" class="control-label pull-left"></label>
                                                     &nbsp;
-                                                    <button type="button"  
-                                                        id="btn_add" class="btn btn-primary" (click)="Add_items()">ADD</button>
+                                                    <button type="button" id="btn_add" class="btn btn-primary"
+                                                        (click)="Add_items()">ADD</button>
                                                 </div>
 
                                             </div>
@@ -295,12 +295,11 @@
                                                             </tr>
                                                             <tr *ngFor="let  value  of pOExpenseItems;let a=index">
                                                                 <td>
-                                                                    <input type="button"
-                                                                         value="Delete" id="GridView1_btnDelete_Row_0"
+                                                                    <input type="button" value="Delete"
+                                                                        id="GridView1_btnDelete_Row_0"
                                                                         class="btn btn-sm btn-danger" (click)="onDel">
                                                                     <a id="GridView1_btn_edit_0"
-                                                                        class="btn btn-sm btn-dange fa fa-eye"
-                                                                       ></a>
+                                                                        class="btn btn-sm btn-dange fa fa-eye"></a>
 
 
 
@@ -319,11 +318,11 @@
                                                                 <td>{{value.expenseTypeId}}</td>
                                                                 <td>{{value.expenseTypeId}}</td>
                                                                 <td>{{value.expenseItemsId}}</td>
-                                                                </tr>
+                                                            </tr>
 
 
-                                                                
-         
+
+
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -353,13 +352,14 @@
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <input formControlName="txtdescription1" type="text"
-                                            class="form-control inputtext" >
+                                            class="form-control inputtext">
 
 
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="file" formControlName="FileUpload1" id="FileUpload1">
-                                        <button type="submit" formControlName="btnUpload" class="btn btn-primary" value="" id="btnUpload">Upload</button>
+                                        <input #fileInput type="file" formControlName="FileUpload1" id="FileUpload1"  (change)="upload($event)">
+                                        <button type="button" formControlName="btnUpload" class="btn btn-primary"
+                                            value="" id="btnUpload" (click)="Add_ImageUplode($event)">File Upload</button>
 
                                     </div>
                                 </div>
@@ -381,10 +381,44 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="table-responsive">
-                                            <div class="table_wid">
+                                            <div class="table_wid table table-responsive ">
 
                                                 <div>
+                                                    <table  rules="all" border="1"
+                                                        id="ContentPlaceHolder3_gvImages"
+                                                        style="border-collapse:collapse;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th scope="col">Action</th>
+                                                                <th scope="col">Image Id</th>
+                                                                <th scope="col">Name</th>
+                                                                <th scope="col">Description</th>
+                                                                <th scope="col">Image</th>
+                                                            </tr>
+                                                            <tr *ngFor="let person of pOExpenseItemAttachmentss;">
+                                                                <td  >
+                                                                    <input type="submit"
+                                                                        name="ctl00$ContentPlaceHolder3$gvImages$ctl02$btndeleteImage"
+                                                                        value="Delete"
+                                                                        id="ContentPlaceHolder3_gvImages_btndeleteImage_0"
+                                                                        class="btn btn-sm btn-danger" tabindex="0">
 
+
+                                                                </td>
+                                                                <td>{{person.attchmentId}}</td>
+                                                                <td>{{person.name}}</td>
+                                                                <td>{{person.imagDescription}}</td>
+                                                                <td>
+                                                                    <a 
+                                                                        tabindex="0"><img
+                                                                             [src]="http://app.nexionautomation.com/FileData/{{person.name}}"
+                                                                            style="height:100px;width:100px;" class="img-thumbnail" (click)="openPopup($event)"></a>
+
+                                                                </td>
+                                                            </tr>
+                                                         
+                                                        </tbody>
+                                                    </table>
                                                 </div>
 
 
@@ -483,22 +517,36 @@
         </div>
 
 
-
-
-
-        
-
-
-
-
-
-
     </form>
 
 
+    
 
 
 
+   
+<div
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  [ngStyle]="{'display':displayStyle}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body">
+        <img src="http://app.nexionautomation.com/FileData/{{person.name}}" id="imagemodel"
+   class="img-thumbnail" >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" 
+                (click)="closePopup()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 </section>
+

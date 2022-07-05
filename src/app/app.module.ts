@@ -66,6 +66,7 @@ import { LeaveTypeComponent } from './pages/Module/leave-type/leave-type.compone
 import { LeaveSettingComponent } from './pages/Module/leave-setting/leave-setting.component';
 
 import '../assets/select2/select2.min.js';
+import { ViewPOComponent } from './pages/PO/view-po/view-po.component';
 //import "file-viewer";
 
 // import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
@@ -123,7 +124,8 @@ registerLocaleData(localeEn, 'en-EN');
         StateMasterComponent,
         SupplierMasterComponent,
         LeaveTypeComponent,
-        LeaveSettingComponent
+        LeaveSettingComponent,
+        ViewPOComponent
    
     ],
     imports: [

@@ -57,7 +57,7 @@ export class SearchPoComponent  implements OnInit {
     private Logins1: Logins,
     private http: HttpClient,
     private fb: FormBuilder,
-    // private _router:Router
+    private _router:Router
 
 
   ) {
@@ -612,6 +612,16 @@ async onedit(string:string)
   //this.router.navigate(['CreatePo',string]);
 }
 
+
+openCityInNewWindow(string) {
+  // Converts the route into a string that can be used 
+  // with the window.open() function
+  const url = this._router.serializeUrl(
+    this._router.createUrlTree(['/viewPo',string])
+  );
+
+  window.open(url, '_blank');
+}
 //----------------------------------CURD OPERATIONS-------------------------------------------------------------
 
 }

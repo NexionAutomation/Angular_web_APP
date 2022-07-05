@@ -1,5 +1,5 @@
 import { Logins } from '@/Model/Utility/login';
-import { NumberSymbol } from '@angular/common';
+import { formatDate, NumberSymbol } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -32,6 +32,7 @@ export class CreatePOComponent implements OnInit {
   public loginForm: FormGroup;
   ActionFlag = 0;
   editData: CMAdminModuleMasterUser;
+  editDataID:any;
   arr: ExpenseItems[] = [];
    arr2=new Array() ;
 
@@ -43,6 +44,7 @@ export class CreatePOComponent implements OnInit {
   pOExpenseItems: any;
   pOTmPurchaseHeads: any;
   pOTmPurchaseBodiess: Enumerable<pOTmPurchaseBodies>;
+  loginForm2: any;
 
   constructor(
     private renderer: Renderer2,
@@ -69,36 +71,37 @@ export class CreatePOComponent implements OnInit {
 
     this.loginForm = new FormGroup({
 
-      ddlcompanyname: new FormControl(),
-      ddlsuppliername: new FormControl(),
-      txtorderdate: new FormControl(),
-      txtpaymentterms: new FormControl(),
-      txtindentno: new FormControl(),
-      txtfreightterms: new FormControl(),
-      txtorderno: new FormControl(),
-      txtgst: new FormControl(),
-      txtdelivery: new FormControl(),
-      chkuplaod: new FormControl(),
-      chklot: new FormControl(),
-      Drop_gst: new FormControl(),
-      DropDownList1: new FormControl(),
-      gst_rdo: new FormControl(),
-      btnsearch: new FormControl(),
-      txtdescription: new FormControl(),
-      txtcat: new FormControl(),
-      ddluom: new FormControl(),
-      txtqty: new FormControl(),
-      txtlistprice: new FormControl(),
-      txtdiscount: new FormControl(),
-      btn_add: new FormControl(),
-      txtremarks: new FormControl(),
-      txttotal: new FormControl(),
-      txtenduser: new FormControl(),
-
+      ddlcompanyname: new FormControl(null),
+      ddlsuppliername: new FormControl(null),
+      txtorderdate: new FormControl(null),
+      txtpaymentterms: new FormControl(null),
+      txtindentno: new FormControl(null),
+      txtfreightterms: new FormControl(null),
+      txtorderno: new FormControl(null),
+      txtgst: new FormControl(null),
+      txtdelivery: new FormControl(null),
+      chkuplaod: new FormControl(null),
+      chklot: new FormControl(null),
+      Drop_gst: new FormControl(null),
+      DropDownList1: new FormControl(null),
+      gst_rdo: new FormControl(null),
+      btnsearch: new FormControl(null),
+      txtdescription: new FormControl(null),
+      txtcat: new FormControl(null),
+      ddluom: new FormControl(null),
+      txtqty: new FormControl(null),
+      txtlistprice: new FormControl(null),
+      txtdiscount: new FormControl(null),
+      btn_add: new FormControl(null),
+      txtremarks: new FormControl(null),
+      txttotal: new FormControl(null),
+      txtenduser: new FormControl(null),
+      ddldelivery: new FormControl(null),
 
 
     });
 
+    
 
 
     this.LodeDataTable();
@@ -109,6 +112,7 @@ export class CreatePOComponent implements OnInit {
     this.chatRoomUid$ = this.route.params.pipe(
       map(params => params['id'])
     );
+
 
     if (this.chatRoomUid$.destination._value.id != undefined) {
       this.URLid = this.chatRoomUid$.destination._value.id;
@@ -598,31 +602,35 @@ id: number,
           })
 
           if (showConfirmButton == true) {
-
+            
 
             var output = await this.INSERTHeader(
-              1,
-              1,
-              1,
-              new Date("2019-10-10"),
-              "paymentTerms",
-              "indentNo",
-              "freightTerms",
-              "workOrderNo",
-              "gst",
-              new Date("2019-10-10"),
-              "remarks",
-              1.0,
-              "enduser",
-              new Date("2019-10-10"),
-              1
+             this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1,
+              Number(this.loginForm.get("ddlcompanyname").value),
+              Number(this.loginForm.get("ddlsuppliername").value),
+              new Date(this.loginForm.get("txtorderdate").value),
+              this.loginForm.get("txtpaymentterms").value,
+              this.loginForm.get("txtindentno").value,
+              this.loginForm.get("txtfreightterms").value,
+              this.loginForm.get("txtorderno").value,
+              this.loginForm.get("txtgst").value,
+              new Date( this.loginForm.get("txtdelivery").value),
+              this.loginForm.get("txtremarks").value,
+              this.loginForm.get("txttotal").value,
+              this.loginForm.get("txtenduser").value,
+              new Date(Date.now()),
+              this.Logins1.TMUserMaster.userCode
               ,
-              new Date("2019-10-10"),
-              1,
-              "deliveryMode",
-              1,
+              new Date(Date.now()),
+              this.Logins1.TMUserMaster.userCode,
+              this.loginForm.get("ddldelivery").value,
+              0,
               "INSERT"
             );
+
+
+
+            
 
 
             const myJSON = JSON.stringify(output);
@@ -685,18 +693,34 @@ id: number,
           if (showConfirmButton == true) {
 
 
-            var output = null;
-            // await this.INSERT(0,
-            //   this.loginForm.get('txtModuleName').value,
-            //   this.loginForm.get('txtModuleOrder').value,
-            //   this.Logins1.TMUserMaster.userCode
-            //   , 0, this.editData.rid,"UPDATE");
-
+            var output =  await this.INSERTHeader(
+              Number(this.URLid),
+              this.loginForm.get("ddlcompanyname").value,
+              this.loginForm.get("ddlsuppliername").value,
+              new Date(this.loginForm.get("txtorderdate").value),
+              this.loginForm.get("txtpaymentterms").value,
+              this.loginForm.get("txtindentno").value,
+              this.loginForm.get("txtfreightterms").value,
+              this.loginForm.get("txtorderno").value,
+              this.loginForm.get("txtgst").value,
+              new Date( this.loginForm.get("txtdelivery").value),
+              this.loginForm.get("txtremarks").value,
+              this.loginForm.get("txttotal").value,
+              this.loginForm.get("txtenduser").value,
+              new Date(Date.now()),
+              this.Logins1.TMUserMaster.userCode
+              ,
+              new Date(Date.now()),
+              this.Logins1.TMUserMaster.userCode,
+              this.loginForm.get("ddldelivery").value,
+              this.editDataID,
+              "UPDATE"
+            );
 
             const myJSON = JSON.stringify(output);
             const obj = JSON.parse(myJSON);
 
-            var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+            var outputFinal = obj["data"]["cMTmPurchaseHead"];
 
 
 
@@ -724,6 +748,7 @@ id: number,
               this.LodeDataTable();
               this.ActionFlag = 0;
               this.onReset();
+              this._router.navigate["/SearchPo"];
             } else {
 
               Swal.fire(
@@ -779,7 +804,7 @@ async onDel(string :string)
 
 
         var output = 
-        await this.INSERTITEMS(  Number(this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1),
+        await this.INSERTITEMS( 0,
         this.loginForm.get('txtdescription').value,
         this.loginForm.get('ddluom').value ,
         this.loginForm.get('txtqty').value,
@@ -832,8 +857,18 @@ async onDel(string :string)
         
             var pOTmPurchaseBodies= Enumerable.from( obj["data"]["pOTmPurchaseBodies"]).cast<pOTmPurchaseBodies>();
             console.log(pOTmPurchaseBodies);
-            var datas=  pOTmPurchaseBodies.where(x=>x.poId==Number(this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1)).toList();
+            // var datas=  pOTmPurchaseBodies.where(x=>x.poId==Number(this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1)).toList();
+            var datas;
+
+            if(this.ActionFlag==0) {
+               datas=  pOTmPurchaseBodies.where(x=>x.poId==Number(this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1)).toList();
         
+            }else if(this.ActionFlag==1)
+            {
+               datas=  pOTmPurchaseBodies.where(x=>x.poId==Number(this.URLid)).toList();
+        
+            }
+
             console.log(datas);
             this.pOExpenseItems=datas;
 
@@ -939,16 +974,16 @@ async Add_items()
     var output= this.pOTmPurchaseHeads;
     this.pOTmPurchaseHeads= Enumerable.from(this.pOTmPurchaseHeads).toArray();
      
-     
-     
-     var output=
+     if(this.ActionFlag==0)
+     {
+      var output=
       await this.INSERTITEMS(  Number(this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1),
      this.loginForm.get('txtdescription').value,
      this.loginForm.get('ddluom').value ,
      this.loginForm.get('txtqty').value,
      this.loginForm.get('txtlistprice').value,
      this.loginForm.get('txtdiscount').value,
-    //createdOn: Date,
+      //createdOn: Date,
     unitdata,
     //updateOn: Date,
     netdata,//(this.loginForm.get('txtlistprice').value)/(this.loginForm.get('txtqty').value/this.loginForm.get('txtdiscount').value/100),
@@ -958,6 +993,32 @@ async Add_items()
     this.loginForm.get('txtcat').value,
     0,
     "INSERT");
+     }
+
+
+      if(this.ActionFlag==1) {
+
+      var output=
+      await this.INSERTITEMS( Number(this.URLid),
+     this.loginForm.get('txtdescription').value,
+     this.loginForm.get('ddluom').value ,
+     this.loginForm.get('txtqty').value,
+     this.loginForm.get('txtlistprice').value,
+     this.loginForm.get('txtdiscount').value,
+      //createdOn: Date,
+    unitdata,
+    //updateOn: Date,
+    netdata,//(this.loginForm.get('txtlistprice').value)/(this.loginForm.get('txtqty').value/this.loginForm.get('txtdiscount').value/100),
+   
+    this.Logins1.TMUserMaster.userCode,
+    this.Logins1.TMUserMaster.userCode,
+    this.loginForm.get('txtcat').value,
+    0,
+    "INSERT");
+     }
+     
+    
+   
 
 
     
@@ -1006,11 +1067,21 @@ async Add_items()
         
             var pOTmPurchaseBodies= Enumerable.from( obj["data"]["pOTmPurchaseBodies"]).cast<pOTmPurchaseBodies>();
             console.log(pOTmPurchaseBodies);
-            var datas=  pOTmPurchaseBodies.where(x=>x.poId==Number(this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1)).toList();
+            if(this.ActionFlag==0) {
+              var datas=  pOTmPurchaseBodies.where(x=>x.poId==Number(this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1)).toList();
         
+            }else if(this.ActionFlag==1)
+            {
+              var datas=  pOTmPurchaseBodies.where(x=>x.poId==Number(this.URLid)).toList();
+        
+            }
+            
+          
             console.log(datas);
             this.pOExpenseItems=datas;
 
+
+            this.loginForm.controls.txttotal.setValue(Math.round(datas.sum(x=>x.netPrice)));
           }
     
        
@@ -1114,69 +1185,54 @@ async urlload(STRING)
   const obj = JSON.parse(myJSON);
 
   var pOTmPurchaseBodies= Enumerable.from( obj["data"]["pOTmPurchaseBodies"]).cast<pOTmPurchaseBodies>();
-  var pOTmPurchaseHeads1= Enumerable.from( obj["data"]["pOTmPurchaseHeads"]).cast<any>().where(x=>x.poId==Number(STRING)).singleOrDefault();
+  var pOTmPurchaseHeads1= Enumerable.from( obj["data"]["pOTmPurchaseHeads"]).cast<any>()
   console.log(pOTmPurchaseBodies);
   var datas=  pOTmPurchaseBodies.where(x=>x.poId==Number(STRING)).toList();
+  var datas2=  pOTmPurchaseHeads1.where(x=>x.poId==Number(STRING)).singleOrDefault();;
 
-  console.log(datas);
+  console.log(datas2);
   this.pOExpenseItems=datas;
 
-  var da=pOTmPurchaseHeads1.toArray();
-  
+ 
     
-console.log(da)
-console.log(da.companyId);
+
+    console.log(this.loginForm);
+    console.log(datas2.paymentTerms);
   this.loginForm.setValue({
 
-    ddlcompanyname: da.companyId,
-    ddlsuppliername: da.supplierId,
-    txtorderdate: da.orderDate,
-    txtpaymentterms: da.paymentTerms,
-    txtindentno: da.indentNo,
-    txtfreightterms:da.freightTerms,
-    txtorderno: da.workOrderNo,
-    // txtgst: da.gst,
-    // txtdelivery: da.deliveryDate
-   // chkuplaod: new FormControl(),
-    // chklot: true,
-    // Drop_gst: data.gst,
-    // DropDownList1: ,
-    // gst_rdo: new FormControl(),
-    // btnsearch: new FormControl(),
-    // txtdescription: new FormControl(),
-    // txtcat: new FormControl(),
-    // ddluom: new FormControl(),
-    // txtqty: new FormControl(),
-    // txtlistprice: new FormControl(),
-    // txtdiscount: new FormControl(),
-    // btn_add: new FormControl(),
-    // txtremarks: new FormControl(),
-    // txttotal: new FormControl(),
-    // txtenduser: new FormControl(),
+    
 
+    DropDownList1: 0,
+    Drop_gst: null,
+    btn_add: null,
+    btnsearch: null,
+    chklot: null,
+    chkuplaod: null,
+    ddlcompanyname: datas2.companyId,
+    ddlsuppliername: datas2.supplierId,
+    ddluom:null,
+    gst_rdo: null,
+    txtcat: null,
+    txtdelivery: formatDate(datas2.deliveryDate,'yyyy-MM-dd','en'),
+    txtdescription: null,
+    txtdiscount: null,
+    txtenduser: datas2.enduser,
+    txtfreightterms: datas2.freightTerms,
+    txtgst: datas2.gst,
+    txtindentno: datas2.indentNo,
+    txtlistprice: null,
+    txtorderdate: formatDate(datas2.orderDate,'yyyy-MM-dd','en') ,
+    txtorderno: datas2.workOrderNo,
+    txtpaymentterms: datas2.paymentTerms,
+    txtqty: null,
+    txtremarks: datas2.remarks,
+    txttotal: Math.round(datas.sum(x=>x.netPrice)) ,
+    ddldelivery:datas2.deliveryMode
 
-
-
-//     : 1
-// creationDate: "2022-05-03T05:20:00.000+05:30"
-// cuserId: 26
-// : "2022-05-04T00:00:00.000+05:30"
-// deliveryMode: "Lot"
-// enduser: ""
-// : "NIL"
-// : "EXTRA@18%"
-// id: 860
-// : ""
-// modificationDate: "2022-05-03T05:20:00.000+05:30"
-// muserId: 26
-// : "2022-05-03T00:00:00.000+05:30"
-// : "30 DAYS CREDIT"
-// poId: 1981
-// remarks: ""
-// : 43
-// total: 341400
-// : "1925"
+  
    });
+
+
 
 
 }
