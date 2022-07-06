@@ -297,7 +297,7 @@
                                                                 <td>
                                                                     <input type="button" value="Delete"
                                                                         id="GridView1_btnDelete_Row_0"
-                                                                        class="btn btn-sm btn-danger" (click)="onDel">
+                                                                        class="btn btn-sm btn-danger" (click)="onDel(value.expenseItemsId)">
                                                                     <a id="GridView1_btn_edit_0"
                                                                         class="btn btn-sm btn-dange fa fa-eye"></a>
 
@@ -397,11 +397,10 @@
                                                             </tr>
                                                             <tr *ngFor="let person of pOExpenseItemAttachmentss;">
                                                                 <td  >
-                                                                    <input type="submit"
-                                                                        name="ctl00$ContentPlaceHolder3$gvImages$ctl02$btndeleteImage"
-                                                                        value="Delete"
-                                                                        id="ContentPlaceHolder3_gvImages_btndeleteImage_0"
-                                                                        class="btn btn-sm btn-danger" tabindex="0">
+                                                                    <button type="button"
+                                                                               
+                                                                                    
+                                                                    class="badge bg-danger btn btn-sm" (click)="onDelI(person.attchmentId)"><a class="fa fa-trash"></a></button>
 
 
                                                                 </td>
@@ -410,9 +409,10 @@
                                                                 <td>{{person.imagDescription}}</td>
                                                                 <td>
                                                                     <a 
-                                                                        tabindex="0"><img
-                                                                             [src]="http://app.nexionautomation.com/FileData/{{person.name}}"
-                                                                            style="height:100px;width:100px;" class="img-thumbnail" (click)="openPopup($event)"></a>
+                                                                        tabindex="0"  (click)="openPopup(person.name)"><img
+                                                                         src="http://app.nexionautomation.com/FileData/{{person.name}}"
+                                                                    
+                                                                            style="height:100px;width:100px;" class="img-thumbnail"></a>
 
                                                                 </td>
                                                             </tr>
@@ -471,11 +471,29 @@
                                     <h3 class="card-title"><strong>Comments</strong></h3>
                                 </div>
 
-                                <div class="card-body">
-                                    <section class="comments">
-
-                                    </section>
-
+                                <div class="col-md-8">
+                                    <div class="box box-primary">
+    
+                                        <div class="box-header with-border">
+                                           
+                                        </div>
+    
+                                        <div class="box-body">
+                                            <div class="wrapper1">
+                                                <ul class="fa-ul twocolumn">
+                                                  <li><i class="fas fa-user-circle"></i>
+                                                    <h3>Lily Pond</h3>
+                                                    <p>Comments:-Lorem ipsum dolor sit amet,</p>
+                                                    <p>Status:- dvdds</p>
+                                                    <p>Date:- 2019-10-10</p>
+                                                        
+                                                </li>
+                                                 
+                                                </ul>
+                                              </div>
+    
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -500,11 +518,14 @@
                         <div class="col-sm-12">
 
                             <div class="col-sm-7 col-sm-offset-5">
-                                <input type="submit" formControlName="btnSave" value="Save" id="btnSave"
-                                    class="btn btn-primary mar_top10">
+                                <button type="submit" 
+                                                            value="Save" id="btnSave"
+                                                            class="btn btn-primary mar_top10" *ngIf="ActionFlag==0">Save</button>
 
-
-
+                                                            <button type="submit" 
+                                                            value="Update" id="btnSave"
+                                                            class="btn btn-primary mar_top10" *ngIf="ActionFlag==1">Update</button>
+                                             
                                 &nbsp;<input type="submit" formControlName="btnClear" value="Reset" id="btnClear"
                                     class="btn btn-warning mar_top10">
 
@@ -533,9 +554,8 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       
-      <div class="modal-body">
-        <img src="http://app.nexionautomation.com/FileData/{{person.name}}" id="imagemodel"
-   class="img-thumbnail" >
+      <div class="modal-body ">
+        <img  id="imagemodel" style="transform: center;"/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" 

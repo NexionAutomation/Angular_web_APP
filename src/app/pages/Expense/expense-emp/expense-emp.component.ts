@@ -1,13 +1,17 @@
 import { Logins } from '@/Model/Utility/login';
+import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CMAdminModuleMasterUser, ExpenseItems } from '@modules/Module/PoModules';
 import { CM_AdminModuleMaster } from '@pages/user-module/create-modulemaster/create-modulemaster.component';
 import { UserModuleServicesService } from '@pages/user-module/user-module-services.service';
 import { AppService } from '@services/app.service';
+import { Console } from 'console';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Enumerable, List } from 'sharp-collections';
 import Swal from 'sweetalert2';
 
@@ -23,17 +27,23 @@ export class ExpenseEmpComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   headers: any;
   CM_AdminModuleMaster: CM_AdminModuleMaster;
-  ExpenseItemsList:any;
+  ExpenseItemsList: any;
 
   public loginForm: FormGroup;
-  ActionFlag=0;
+  ActionFlag = 0;
   editData: CMAdminModuleMasterUser;
-   arr: ExpenseItems[] = [];
+  arr: ExpenseItems[] = [];
   Expheaders: any;
   pOExpenseItems: any;
-   file :any
+  file: any
   pOExpenseItemAttachmentss: any;
   displayStyle = "none";
+
+  chatRoomUid$: any;
+  URLid: any;
+  pOExpenseHeadsdata: any;
+  pOExpenseItemssdata: any;
+  pOExpenseStatusStatesData: any;
   constructor(
     private renderer: Renderer2,
     private toastr: ToastrService,
@@ -41,16 +51,18 @@ export class ExpenseEmpComponent implements OnInit {
     private UserModule_: UserModuleServicesService,
     private Logins1: Logins,
     private http: HttpClient,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private _router: Router
 
 
   ) {
-    
+
   }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-     
+
       txttitle: new FormControl(),
       txtworkorderno: new FormControl(),
       txtlocation: new FormControl(),
@@ -69,30 +81,98 @@ export class ExpenseEmpComponent implements OnInit {
       ddlstatus: new FormControl(),
       txtcomments: new FormControl(),
 
-      txtdescription1:new FormControl(),
+      txtdescription1: new FormControl(),
 
     });
 
 
 
-    this.LodeDataTable();
+    //this.LodeDataTable();
+
+
+    var id;
+    this.chatRoomUid$ = this.route.params.pipe(
+      map(params => params['id'])
+    );
+
+
+    if (this.chatRoomUid$.destination._value.id != undefined) {
+      this.URLid = this.chatRoomUid$.destination._value.id;
+      this.ActionFlag = 1;
+      this.urlload(this.URLid);
+      //console.log(this.URLid);
+    }
+    else {
+      //this._router.navigate(['/SearchPo']);
+      this.ActionFlag = 0;
+    }
 
 
 
-  
-   
+
+
 
   }
   openPopup(event) {
     this.displayStyle = "block";
     console.log(event);
-    // $('#imagemodel').attr('src',event.srcElement );
-    
+    $('#imagemodel').attr('src', 'http://app.nexionautomation.com/FileData/' + event);
+
     // console.log(event);
   }
   closePopup() {
     this.displayStyle = "none";
   }
+
+
+  async urlload(STRING) {
+    var data = await this.GETData2("", "");
+    const myJSON = JSON.stringify(data);
+    const obj = JSON.parse(myJSON);
+    console.log(obj);
+    var pOExpenseHeads = Enumerable.from(obj["data"]["pOExpenseHeads"]).cast<any>();
+    var pOExpenseItemss = Enumerable.from(obj["data"]["pOExpenseItems"]).cast<any>();
+    var pOExpenseStatusStates = Enumerable.from(obj["data"]["pOExpenseStatusStates"]).cast<any>();
+    var pOExpenseItemAttachments = Enumerable.from(obj["data"]["pOExpenseItemAttachments"]).cast<any>();
+
+
+    this.pOExpenseHeadsdata = pOExpenseHeads.where(x => x.expenseId == Number(STRING)).singleOrDefault();
+
+    this.pOExpenseItemssdata = pOExpenseItemss.where(x => x.expenseId == Number(STRING)).toList();
+
+    this.pOExpenseStatusStatesData = pOExpenseStatusStates.where(x => x.expenseId == Number(STRING)).toList();
+
+
+    // this.pOExpenseItems=datas;
+
+
+
+
+
+    this.loginForm.controls.txttitle.setValue(this.pOExpenseHeadsdata.title);
+    this.loginForm.controls.txtworkorderno.setValue(this.pOExpenseHeadsdata.workOrderId);
+    this.loginForm.controls.txtlocation.setValue(this.pOExpenseHeadsdata.location);
+    this.loginForm.controls.txtfromdate.setValue(formatDate(this.pOExpenseHeadsdata.periodForm, 'yyyy-MM-dd', 'en'));
+    this.loginForm.controls.txttodate.setValue(formatDate(this.pOExpenseHeadsdata.periodTo, 'yyyy-MM-dd', 'en'));
+
+    // console.log(this.pOExpenseStatusStatesData[0]);
+    // this.pOExpenseStatusStatesData.forEach(x=>{
+
+    //   console.log(x);
+    //   this.loginForm.controls.ddlstatus.setValue(x.statusId);
+    // this.loginForm.controls.txtcomments.setValue(x.comments);
+
+
+    // });
+
+
+
+    this.pOExpenseItems = this.pOExpenseItemssdata;
+    this.pOExpenseItemAttachmentss = Enumerable.from(pOExpenseItemAttachments).cast<any>().where(x => x.expenseId == Number(this.URLid)).toList();
+    ;
+
+  }
+
 
   async INSERTHeader(
     expenseId: number,
@@ -101,11 +181,11 @@ export class ExpenseEmpComponent implements OnInit {
     periodTo: Date,
     workOrderId: String,
     location: String,
-  
+
     createdBy: number,
-    
+
     updateBy: number,
-    ActionStatus:string
+    ActionStatus: string
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
@@ -152,9 +232,9 @@ export class ExpenseEmpComponent implements OnInit {
         periodTo,
         workOrderId,
         location,
-       
+
         createdBy,
-       
+
         updateBy
       }
     });
@@ -178,7 +258,7 @@ export class ExpenseEmpComponent implements OnInit {
     parkingAmt: number,
     amt: number,
     expenseItemsId: number,
-    ActionStatus:string
+    ActionStatus: string
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
@@ -232,20 +312,20 @@ export class ExpenseEmpComponent implements OnInit {
     var datas = JSON.stringify({
       query, variables: {
         expenseId,
-    date,
-    expenseTypeId,
-    amount,
-    approvedAmount,
-    //createdOn: Date,
-    createdBy,
-    //updateOn: Date,
-    updateBy,
-    description,
-    paidBy,
-    distance,
-    parkingAmt,
-    amt,
-    expenseItemsId,
+        date,
+        expenseTypeId,
+        amount,
+        approvedAmount,
+        //createdOn: Date,
+        createdBy,
+        //updateOn: Date,
+        updateBy,
+        description,
+        paidBy,
+        distance,
+        parkingAmt,
+        amt,
+        expenseItemsId,
       }
     });
     var ss = await this.Logins1.GraphqlFetchdata("query", datas);
@@ -253,61 +333,58 @@ export class ExpenseEmpComponent implements OnInit {
     return ss;
   }
   async INSERTStatus(
-    moduleId: number,
-moduleName: String,
-moduleOrder: number,
-
-cuserId: number,
-
-muserId: number,
-rid: number,
-    ActionStatus:string
+    expenseId: number,
+    statusId: number,
+    //createdOn: Date,
+    createdBy: number,
+    //updateOn: Date,
+    updateBy: number,
+    comments: String,
+    rid: number,
+    ActionStatus: string
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
 
 
-    let query = `mutation MyMutation($moduleId: Int!
-      $moduleName: String
-      $moduleOrder: Int!
-      
-      $cuserId: Int!
-      
-      $muserId: Int!
-      $rid: Int!) {
+    let query = `mutation MyMutation( $expenseId: Int
+      $statusId: Int
+     
+      $createdBy: Int
+     
+      $updateBy: Int
+      $comments: String
+      $rid: Long!) {
       __typename
-      cMTmAdminModuleMasters(triger: "${ActionStatus}",
-        data: {detail: {
-          moduleId: $moduleId,
-          moduleOrder: $moduleOrder,
-          creationDate: "2019-10-10",
-          cuserId: $cuserId,
-          modificationDate: "2019-10-10",
-          muserId: $muserId,
-          rid: $rid,
-          moduleName: $moduleName
-        }, iD: "${rid}"}) {
-        code
-        detail
+      cMExpenseStatusState(data: {detail:
+        {rid: $rid, 
+          comments: $comments,
+          createdBy: $createdBy, 
+          createdOn: "2019-10-10",
+          expenseId: $expenseId,
+          statusId: $statusId,
+          updateBy: $updateBy,
+          updateOn: "2019-10-10"
+        }, iD: ""}, triger: "INSERT") {
         iD
+        code
         message
         status
       }
     }
-    
-               
+     
        `
 
     var datas = JSON.stringify({
       query, variables: {
-        moduleId,
-moduleName,
-moduleOrder,
-
-cuserId,
-
-muserId,
-rid,
+        expenseId,
+        statusId,
+        //createdOn: Date,
+        createdBy,
+        //updateOn: Date,
+        updateBy,
+        comments,
+        rid,
       }
     });
     var ss = await this.Logins1.GraphqlFetchdata("query", datas);
@@ -316,14 +393,14 @@ rid,
   }
   async INSERTAttach(
     moduleId: number,
-moduleName: String,
-moduleOrder: number,
+    moduleName: String,
+    moduleOrder: number,
 
-cuserId: number,
+    cuserId: number,
 
-muserId: number,
-rid: number,
-    ActionStatus:string
+    muserId: number,
+    rid: number,
+    ActionStatus: string
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
@@ -363,13 +440,13 @@ rid: number,
     var datas = JSON.stringify({
       query, variables: {
         moduleId,
-moduleName,
-moduleOrder,
+        moduleName,
+        moduleOrder,
 
-cuserId,
+        cuserId,
 
-muserId,
-rid,
+        muserId,
+        rid,
       }
     });
     var ss = await this.Logins1.GraphqlFetchdata("query", datas);
@@ -453,9 +530,15 @@ rid,
         location
         createdOn
         createdBy
-        updateOn
-        updateBy
+       
         expenseId
+        amount
+        approvedAmount
+        createdName
+        statusId
+        statusname
+        updatedBy
+        updatedName
       }
       pOExpenseItems {
         expenseId
@@ -484,9 +567,43 @@ rid,
         comments
         rid
       }
+      pOExpenseItemAttachments {
+        attchmentId
+        contentType
+        createdBy
+        createdOn
+        expenseId
+        imagDescription
+        name
+      }
     }
     
     
+      `
+    var datas = JSON.stringify({ query, variables: { User, Password } });
+    var ss = await this.Logins1.GraphqlFetchQuery("query", query);
+    return ss;
+
+  }
+
+  async GETData3(User: string, Password: string): Promise<any> {
+
+    let data = '{User="' + User + '",Password="' + Password + '" }';
+    let query = `query MyQuery {
+      __typename
+     
+      pOExpenseItemAttachments {
+        attchmentId
+        contentType
+        createdBy
+        createdOn
+        expenseId
+        imagDescription
+        name
+      }
+     
+    
+    }
       `
     var datas = JSON.stringify({ query, variables: { User, Password } });
     var ss = await this.Logins1.GraphqlFetchQuery("query", query);
@@ -501,10 +618,10 @@ rid,
     const obj = JSON.parse(myJSON);
 
     this.persons = obj["data"]["pOExpenseHeads"]
-    this.pOExpenseItemAttachmentss = obj["data"]["pOExpenseItemAttachments"]
-    
+    this.pOExpenseItemAttachmentss = null;//obj["data"]["pOExpenseItemAttachments"]
 
-    
+
+
     $('#example').DataTable().destroy();
     $(document).ready(function () {
 
@@ -527,7 +644,7 @@ rid,
 
     this.Expheaders = obj["data"]["pOExpenseHeads"]
 
-   
+
   }
 
   ngOnDestroy(): void {
@@ -536,76 +653,79 @@ rid,
 
   }
 
-//----------------------------------CURD OPERATIONS-------------------------------------------------------------
+  //----------------------------------CURD OPERATIONS-------------------------------------------------------------
 
   async onSubmit() {
-    try{
-
-    alert("hello");
-      
-
-    if(this.ActionFlag==0)
-    {
+    try {
 
 
       if (this.ActionFlag == 0) {
-        const { value: showConfirmButton } = await Swal.fire({
-          title: "Do You Want To Save",
-          icon: 'question',
-          //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
-    
-          showConfirmButton: true,
-          showCancelButton: true
-        })
-    
-        if (showConfirmButton == true) {
 
 
-          var output =await  this.INSERTHeader(
-            1,
-           "fdf",
-          new Date("2019-10-10"),
-          new Date("2019-10-10"),
-           " workOrderId: String,",
-           " location: String,",
-           
-             1,
-            
-            1,
-            "INSERT"
-          );
+        if (this.ActionFlag == 0) {
+          const { value: showConfirmButton } = await Swal.fire({
+            title: "Do You Want To Save",
+            icon: 'question',
+            //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+
+            showConfirmButton: true,
+            showCancelButton: true
+          })
+
+          if (showConfirmButton == true) {
 
 
+            var output = await this.INSERTHeader(
+              1,
+              this.loginForm.get('txttitle').value,
+              new Date(this.loginForm.get('txtfromdate').value),
+              new Date(this.loginForm.get('txttodate').value),
+              this.loginForm.get('txtworkorderno').value,
+              this.loginForm.get('txtlocation').value,
+
+              this.Logins1.TMUserMaster.userCode,
+
+              this.Logins1.TMUserMaster.userCode,
+              "INSERT"
+            );
+
+            // status Comment
             const myJSON = JSON.stringify(output);
             const obj = JSON.parse(myJSON);
-        
+
             var outputFinal = obj["data"]["cMExpenseHead"];
-            localStorage.setItem("EXPOID",outputFinal[0].detail)
-          
 
-          
-          
+            // console.log(this.persons);
+            var datas = (this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1);
+            // console.log(datas);
 
-            // var output2 =await  this.INSERTITEMS(
-            //   1,
-            //  "fdf",
-            // new Date("2019-10-10"),
-            // new Date("2019-10-10"),
-            //  " workOrderId: String,",
-            //  " location: String,",
-             
-            //    1,
-              
-            //   1,
-            //   "INSERT"
-            // );
-
-            
+            var output2 = await this.INSERTStatus(
+              Number(datas),
+              Number(this.loginForm.get('ddlstatus').value),
 
 
+              this.Logins1.TMUserMaster.userCode,
 
-            if(outputFinal[0].message=="Success")
-            {
+              this.Logins1.TMUserMaster.userCode,
+              this.loginForm.get('txtcomments').value
+              ,
+
+              1,
+              "INSERT"
+            );
+
+
+            const myJSON2 = JSON.stringify(output2);
+            const obj2 = JSON.parse(myJSON2);
+
+            var outputFinal2 = obj2["data"]["cMExpenseStatusState"];
+
+
+            // status Comment
+
+
+
+            if (outputFinal[0].message == "Success" && outputFinal2[0].message == "Success") {
               const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -628,7 +748,7 @@ rid,
               })
               //this.LodeDataTable();
 
-            }else{
+            } else {
 
               Swal.fire(
                 'Failed',
@@ -638,45 +758,449 @@ rid,
 
             }
 
-         
+
+          }
+
         }
-    
+
+
+      }
+
+      if (this.ActionFlag == 1) {
+
+
+        if (this.ActionFlag == 1) {
+          const { value: showConfirmButton } = await Swal.fire({
+            title: "Do You Want To Save",
+            icon: 'question',
+            //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+
+            showConfirmButton: true,
+            showCancelButton: true
+          })
+
+          if (showConfirmButton == true) {
+
+
+            var output = await this.INSERTHeader(
+              Number(this.URLid),
+              this.loginForm.get('txttitle').value,
+              new Date(this.loginForm.get('txtfromdate').value),
+              new Date(this.loginForm.get('txttodate').value),
+              this.loginForm.get('txtworkorderno').value,
+              this.loginForm.get('txtlocation').value,
+
+              this.Logins1.TMUserMaster.userCode,
+
+              this.Logins1.TMUserMaster.userCode,
+              "UPDATE"
+            );
+
+            // status Comment
+            const myJSON = JSON.stringify(output);
+            const obj = JSON.parse(myJSON);
+
+            var outputFinal = obj["data"]["cMExpenseHead"];
+
+            // console.log(this.persons);
+            //var datas=  (this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0)+1);
+            // console.log(datas);
+
+            var output2 = await this.INSERTStatus(
+              Number(this.URLid),
+              Number(this.loginForm.get('ddlstatus').value),
+
+
+              this.Logins1.TMUserMaster.userCode,
+
+              this.Logins1.TMUserMaster.userCode,
+              this.loginForm.get('txtcomments').value
+              ,
+
+              1,
+              "INSERT"
+            );
+
+
+            const myJSON2 = JSON.stringify(output2);
+            const obj2 = JSON.parse(myJSON2);
+
+            var outputFinal2 = obj2["data"]["cMExpenseStatusState"];
+
+
+            // status Comment
+
+
+
+            if (outputFinal[0].message == "Success" && outputFinal2[0].message == "Success") {
+              const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+
+              })
+
+              this.Logins1.popupStatus
+              Toast.fire({
+                icon: 'success',
+                title: 'Data Update Successfully',
+
+
+              })
+              //this.LodeDataTable();
+
+            } else {
+
+              Swal.fire(
+                'Failed',
+                '',
+                'error'
+              )
+
+            }
+
+
+          }
+
+        }
+
+
+      }
+    } catch (error) {
+      Swal.fire(
+        'Failed',
+        error,
+        'error')
+    }
+
+  }
+
+
+  async onReset() {
+    this.loginForm.reset();
+    this.ActionFlag = 0;
+  }
+
+  async onedit(string: string) {
+    this.editData = Enumerable.from(this.persons).cast<CMAdminModuleMasterUser>().where(x => x.rid == Number(string)).singleOrDefault();
+
+    this.loginForm.setValue({
+      txtModuleName: this.editData.moduleName,
+      txtModuleOrder: this.editData.moduleOrder,
+
+    });
+    this.ActionFlag = 1;
+  }
+
+  //----------------------------------CURD OPERATIONS-------------------------------------------------------------
+
+
+
+
+
+
+  async Add_ImageUplode($event) {
+    try {
+
+
+      var dataid = 0;
+
+      if (this.ActionFlag == 0) {
+        dataid = Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)
+
+      }
+      else if (this.ActionFlag == 1) {
+        dataid = this.URLid;
+
+
+      }
+
+
+
+      var output =await this.uploadI(
+        Number(dataid),
+        "test",
+        " test",
+        this.loginForm.get('txtdescription1').value,
+        1,
+        new Date(Date.now()),
+        0,
+        this.file,
+"INSERT"
+      );
+      // status Comment
+//       const myJSON2 = JSON.stringify(output);
+//       const obj2 = JSON.parse(myJSON2);
+
+//       var outputFinal = obj2["data"]["cMExpenseItemAttachment07"];
+
+
+//       console.log("cMExpenseItemAttachment07");
+// console.log(outputFinal);
+      var data = await this.GETData3("", "");
+      const myJSON = JSON.stringify(data);
+      const obj = JSON.parse(myJSON);
+
+      var datafe = obj["data"]["pOExpenseItemAttachments"];
+
+     
+      if (this.ActionFlag == 0) {
+        var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
+
+      }
+      else if (this.ActionFlag == 1) {
+        var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.URLid)).toList();
       }
      
-    
+      console.log(datass);
+   
+
+      if (datass[0].message == "Success" ) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+
+        })
+
+        this.Logins1.popupStatus
+        Toast.fire({
+          icon: 'success',
+          title: 'File Uloade Successfully',
+
+
+        })
+        //this.LodeDataTable();
+
+      } else {
+
+        Swal.fire(
+          'Failed',
+          '',
+          'error'
+        )
+
+      }
+
+
+      
+
+
+
+
+     
+
+
+
+
+
+
+
+
+    }
+    catch (error) {
+      Swal.fire(
+        'Failed',
+        error,
+        'error')
+    }
+
   }
-  if(this.ActionFlag==1)
-  {
-    if (this.ActionFlag == 1) {
-      const { value: showConfirmButton } = await Swal.fire({
-        title: "Do You Want To Update",
-        icon: 'question',
-        //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
-  
-        showConfirmButton: true,
-        showCancelButton: true
-      })
-  
-      if (showConfirmButton == true) {
+
+  async uploadI(
+    expenseId: number,
+    name: String,
+    contentType: String,
+    imagDescription: String,
+    createdBy: number,
+    createdOn: Date,
+    attchmentId: number,
+    files: File,
+    ACTION:String
+
+  ) {
+    
+    // (
+    //   $expenseId: Int,
+    //   $name: String,
+    //   $contentType: String,
+    //   $imagDescription: String,
+    //   $createdBy: Int,
+    //   $createdOn: DateTime,
+    //   $attchmentId: Int!,
+    //   $files: Upload
+    //   )
 
 
-        var output = null;
-        // await this.INSERT(0,
-        //   this.loginForm.get('txtModuleName').value,
-        //   this.loginForm.get('txtModuleOrder').value,
-        //   this.Logins1.TMUserMaster.userCode
-        //   , 0, this.editData.rid,"UPDATE");
+    if(ACTION=="INSERT")
+    {
+
+      var operations = {
+        query: `
+  
+  
+      mutation MyMutation($file: Upload) {
+        __typename
+        cMExpenseItemAttachment07(data: 
+          {detail:
+            {attchmentId: ${attchmentId},
+              contentType: "${contentType}",
+              createdBy: ${createdBy},
+              createdOn: "2019-10-10",
+              expenseId: ${expenseId},
+              imagDescription:"${imagDescription}",
+              name: " ${name}"
+            }}, file: $file, triger: "INSERT") {
+          code
+          detail
+          iD
+          message
+          status
+        }
+      }
+      
+      `,
+        variables: {
+          file: null
+  
+  
+        }
+      }
+    }
+    else if(ACTION=="DELETE")
+    {
+      var operations = {
+        query: `
+  
+  
+      mutation MyMutation($file: Upload) {
+        __typename
+        cMExpenseItemAttachment07(data: 
+          {detail:
+            {attchmentId: ${attchmentId},
+              contentType: "${contentType}",
+              createdBy: ${createdBy},
+              createdOn: "2019-10-10",
+              expenseId: ${expenseId},
+              imagDescription:"${imagDescription}",
+              name: " ${name}"
+            }}, file: $file, triger: "DELETE") {
+          code
+          detail
+          iD
+          message
+          status
+        }
+      }
+      
+      `,
+        variables: {
+          file: null
+  
+  
+        }
+      }
+
+    }
+   
+
+
+
+
+    var _map = {
+      file: ["variables.file"]
+    }
+
+
+    var file = files;
+    var fd = new FormData()
+    fd.append('operations', JSON.stringify(operations))
+    fd.append('map', JSON.stringify(_map))
+    fd.append('file', file, file.name)
+
+
+    //   //var output = await this.INSERT(
+    //     this.loginForm.get('file1').value,
+
+    //  );
+
+    var ss = await this.Logins1.Graphqlfiledata("query", fd, file);
+
+    console.log(ss);
+    return ss;
+
+  }
+
+
+  async upload($event) {
+
+    this.file = $event.target.files[0];
+
+
+
+
+  }
+
+
+  async onDel(string: string) {
+    try {
+
+      var state = "Delete"
+      if (state == state) {
+
+
+
+        const { value: showConfirmButton } = await Swal.fire({
+          title: "Are You Sure Want To Delete",
+          icon: 'question',
+          //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+
+          showConfirmButton: true,
+          showCancelButton: true
+        })
+
+        if (showConfirmButton == true) {
+
+
+          var output =
+            await this.INSERTITEMS(
+              0,
+              this.loginForm.get('txtdate').value,
+              Number(this.loginForm.get('ddlExpenseType').value),
+              this.loginForm.get('txtamount').value,
+              0,
+              //createdOn: Date,
+              this.Logins1.TMUserMaster.userCode,
+              //updateOn: Date,
+              this.Logins1.TMUserMaster.userCode,
+              this.loginForm.get('txtdescription').value,
+              this.loginForm.get('ddlPaidby').value,
+              this.loginForm.get('txtDistance').value,
+              this.loginForm.get('txtParkingAmt').value,
+              0,
+              Number(string),
+              "DELETE");
 
 
           const myJSON = JSON.stringify(output);
           const obj = JSON.parse(myJSON);
-      
-          var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
-    
+
+          var outputFinal = obj["data"]["cMExpenseItem"];
 
 
-          if(outputFinal[0].message=="Success")
-          {
+          if (outputFinal[0].message == "Success") {
             const Toast = Swal.mixin({
               toast: true,
               position: 'top-end',
@@ -693,320 +1217,98 @@ rid,
             this.Logins1.popupStatus
             Toast.fire({
               icon: 'success',
-              title: 'Data Update Successfully',
+              title: 'Data Delete Successfully',
 
 
             })
-            this.LodeDataTable();
-          this.ActionFlag=0;
-          this.onReset();
-          }else{
+
+            var data = await this.GETData2("", "");
+            const myJSON = JSON.stringify(data);
+            const obj = JSON.parse(myJSON);
+
+            var datafe = obj["data"]["pOExpenseItems"];
+
+            var datas;
+            if (this.ActionFlag == 0) {
+              datas = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
+
+            }
+            else if (this.ActionFlag == 1) {
+              datas = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.URLid)).toList();
+
+
+            }
+
+            this.pOExpenseItems = datas;
+
+
+
+          } else {
 
             Swal.fire(
-              'Failed',
+              'Failed ',
               '',
               'error'
             )
 
           }
 
-       
+
+        }
+
       }
-  
-    }
-  }
-}catch(error )
-{
-  Swal.fire(
-    'Failed',
-    error,
-    'error')
-}
 
- }
-async onDel(string :string)
-{
-  try{
-    
-  // var state="Delete"
-  // if(state==state)
-  // {
-
-
-    
-  //     const { value: showConfirmButton } = await Swal.fire({
-  //       title: "Are You Sure Want To Delete",
-  //       icon: 'question',
-  //       //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
-  
-  //       showConfirmButton: true,
-  //       showCancelButton: true
-  //     })
-  
-  //     if (showConfirmButton == true) {
-
-
-  //       var output = null;
-  //       //await this.INSERT( 0,"0",0,0,0,Number(string),"DELETE");
-    
-  //       const myJSON = JSON.stringify(output);
-  //       const obj = JSON.parse(myJSON);
-    
-  //       var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
-
-       
-  //         if(outputFinal[0].message=="Success")
-  //         {
-  //           const Toast = Swal.mixin({
-  //             toast: true,
-  //             position: 'top-end',
-  //             showConfirmButton: false,
-  //             timer: 3000,
-  //             timerProgressBar: true,
-  //             didOpen: (toast) => {
-  //               toast.addEventListener('mouseenter', Swal.stopTimer)
-  //               toast.addEventListener('mouseleave', Swal.resumeTimer)
-  //             }
-
-  //           })
-
-  //           this.Logins1.popupStatus
-  //           Toast.fire({
-  //             icon: 'success',
-  //             title: 'Data Delete Successfully',
-
-
-  //           })
-  //           this.LodeDataTable();
-
-  //         }else{
-
-  //           Swal.fire(
-  //             'Failed ',
-  //             '',
-  //             'error'
-  //           )
-
-  //         }
-
-       
-  //     }
-  
-//}
-
-
-}
-catch(error)
-{
-  Swal.fire(
-    'Failed',
-    error,
-    'error')
-}
-}
-
-async onReset()
-{
-  this.loginForm.reset();
-  this.ActionFlag=0;
-}
-
-async onedit(string:string)
-{
-  this.editData=Enumerable.from( this.persons).cast<CMAdminModuleMasterUser>().where(x=>x.rid==Number(string)).singleOrDefault();
-  
-  this.loginForm.setValue({
-    txtModuleName: this.editData.moduleName,
-    txtModuleOrder:this.editData.moduleOrder,
-
-  });
-  this.ActionFlag=1;
-}
-
-//----------------------------------CURD OPERATIONS-------------------------------------------------------------
-
-
-
-
-
-
-async Add_ImageUplode($event)
-{
-  try
-  {
-
-
-     this.uploadI(
-      0,
-"test",
-" test",
-this.loginForm.get('txtdescription1').value ,
-1,
-new Date(Date.now()),
-0,
-this.file
-
-    );
-
-
-    await this.LodeDataheader();
-
-
-
-    
-
-          
-            
-           
-
-
-  }
-  catch(error)
-  {
-    Swal.fire(
-      'Failed',
-      error,
-      'error')
-  }
-
-}
-
-async uploadI(
-  expenseId: number,
-name: String,
-contentType: String,
-imagDescription: String,
-createdBy: number,
-createdOn: Date,
-attchmentId: number,
-files:File
-
-) {
-  alert("call");
-
-
-
-
-  // (
-  //   $expenseId: Int,
-  //   $name: String,
-  //   $contentType: String,
-  //   $imagDescription: String,
-  //   $createdBy: Int,
-  //   $createdOn: DateTime,
-  //   $attchmentId: Int!,
-  //   $files: Upload
-  //   )
-
-
-  var operations = {
-    query: `
-
-
-    mutation MyMutation($file: Upload) {
-      __typename
-      cMExpenseItemAttachment07(data: 
-        {detail:
-          {attchmentId: ${attchmentId},
-            contentType: "${contentType}",
-            createdBy: ${createdBy},
-            createdOn: "2019-10-10",
-            expenseId: ${expenseId},
-            imagDescription:"${imagDescription}",
-            name: " ${name}"
-          }}, file: $file, triger: "INSERT") {
-        code
-        detail
-        iD
-        message
-        status
-      }
-    }
-    
-    `,
-    variables: {
-      file:null
-     
 
     }
-  }
- 
- 
-
-
-     var _map = {
-      file: ["variables.file"]
+    catch (error) {
+      Swal.fire(
+        'Failed',
+        error,
+        'error')
     }
+  }
+  async onDelI(string: string) {
+    try {
 
-
-    var file =  files;
-var fd = new FormData()
-fd.append('operations', JSON.stringify(operations))
-fd.append('map', JSON.stringify(_map))
-fd.append('file', file, file.name)
-
-
-//   //var output = await this.INSERT(
-//     this.loginForm.get('file1').value,
-   
-//  );
-
- var ss = await this.Logins1.Graphqlfiledata("query", fd, file);
-
-console.log(ss);
- 
-}
-
-
-async upload($event) {
-  
-   this.file =  $event.target.files[0];
-
-
- 
- 
-}
-
-async Add_items()
-{try
-  {
-      var output = null;
-
-     
-      var output= await this.INSERTITEMS(  
-          Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0)+1),
-          this.loginForm.get('txtdate').value ,
-          Number(this.loginForm.get('ddlExpenseType').value),
-          this.loginForm.get('txtamount').value,
-    0,
-    //createdOn: Date,
-    this.Logins1.TMUserMaster.userCode,
-    //updateOn: Date,
-    this.Logins1.TMUserMaster.userCode,
-    this.loginForm.get('txtdescription').value,
-    this.loginForm.get('ddlPaidby').value,
-    this.loginForm.get('txtDistance').value,
-    this.loginForm.get('txtParkingAmt').value,
-    0,
-    0,
-    "INSERT");
-    
-
-       
-
-         
+      var state = "Delete"
+      if (state == state) {
 
 
 
+        const { value: showConfirmButton } = await Swal.fire({
+          title: "Are You Sure Want To Delete",
+          icon: 'question',
+          //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
 
-        const myJSON = JSON.stringify(output);
-        const obj = JSON.parse(myJSON);
-    
-        var outputFinal = obj["data"]["cMExpenseItem"];
+          showConfirmButton: true,
+          showCancelButton: true
+        })
 
-       
-          if(outputFinal[0].message=="Success")
-          {
+        if (showConfirmButton == true) {
+
+
+          var output =
+            await this.uploadI(
+              0,
+              "test",
+              " test",
+              this.loginForm.get('txtdescription1').value,
+              1,
+              new Date(Date.now()),
+              Number(string),
+              this.file,
+              "DELETE"
+      
+            );
+
+
+          const myJSON = JSON.stringify(output);
+          const obj = JSON.parse(myJSON);
+
+          var outputFinal = obj["data"]["cMExpenseItem"];
+
+
+          if (outputFinal[0].message == "Success") {
             const Toast = Swal.mixin({
               toast: true,
               position: 'top-end',
@@ -1023,78 +1325,197 @@ async Add_items()
             this.Logins1.popupStatus
             Toast.fire({
               icon: 'success',
-              title: 'Data ADD Successfully',
+              title: 'Data Delete Successfully',
 
 
             })
 
-
             var data = await this.GETData2("", "");
             const myJSON = JSON.stringify(data);
             const obj = JSON.parse(myJSON);
-        
-            var datafe= obj["data"]["pOExpenseItems"];
 
-            var datas= Enumerable.from( datafe).cast<ExpenseItems>().where(x=>x.expenseId==Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0)+1)).toList();
-        
-            this.pOExpenseItems=datas;
+            var datafe = obj["data"]["pOExpenseItems"];
+
+            var datas;
+            if (this.ActionFlag == 0) {
+              datas = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
+
+            }
+            else if (this.ActionFlag == 1) {
+              datas = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.URLid)).toList();
+
+
+            }
+
+            this.pOExpenseItems = datas;
+
+
+
+          } else {
+
+            Swal.fire(
+              'Failed ',
+              '',
+              'error'
+            )
 
           }
-    
-       
-
-   //---------------------------important code---------------------
-// // console.log();
-// const  datain=[{key:
-//       {
-        
-      
-//          expenseId: 0,
-// 	 expenseTypeId: Number(this.loginForm.get('ddlExpenseType').value),
-// 	 amount:  Number(this.loginForm.get('txtamount').value),
-// 	 approvedAmount: 1,
-// 	 createdBy: 1,
-// 	 updateBy: 1,
-// 	 description: this.loginForm.get('txtdescription').value,
-// 	 paidBy: this.loginForm.get('ddlPaidby').value,
-// 	 distance: Number(this.loginForm.get('txtDistance').value),
-// 	 parkingAmt: Number(this.loginForm.get('txtParkingAmt').value),
-// 	 aMt: Number(this.loginForm.get('ddlExpenseType').value),
-// 	 expenseItemsId: Number(uniqId()) ,
-//     Date:new Date(this.loginForm.get('txtdate').value)
-//   }}] as unknown as ExpenseItems;
-
-//    this.arr.push(datain);
 
 
-// const sorted = this.arr.sort((a, b) => a.expenseItemsId - b.expenseItemsId);
+        }
 
- //---------------------------important code---------------------
+      }
+
+
+    }
+    catch (error) {
+      Swal.fire(
+        'Failed',
+        error,
+        'error')
+    }
+  }
+  async Add_items() {
+    try {
+      var output = null;
+      var expid = 0;
+      if (this.ActionFlag == 0) {
+        expid = Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1);
+      }
+      else {
+        expid = this.URLid;
+
+      }
+
+      var output = await this.INSERTITEMS(
+        Number(expid),
+        this.loginForm.get('txtdate').value,
+        Number(this.loginForm.get('ddlExpenseType').value),
+        this.loginForm.get('txtamount').value,
+        0,
+        //createdOn: Date,
+        this.Logins1.TMUserMaster.userCode,
+        //updateOn: Date,
+        this.Logins1.TMUserMaster.userCode,
+        this.loginForm.get('txtdescription').value,
+        this.loginForm.get('ddlPaidby').value,
+        this.loginForm.get('txtDistance').value,
+        this.loginForm.get('txtParkingAmt').value,
+        0,
+        0,
+        "INSERT");
 
 
 
-}catch(error)
-{
-  Swal.fire(
-    'Failed',
-    error,
-    'error')
-}
 
-}
+
+
+
+
+
+      const myJSON = JSON.stringify(output);
+      const obj = JSON.parse(myJSON);
+
+      var outputFinal = obj["data"]["cMExpenseItem"];
+
+
+      if (outputFinal[0].message == "Success") {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+
+        })
+
+        this.Logins1.popupStatus
+        Toast.fire({
+          icon: 'success',
+          title: 'Data ADD Successfully',
+
+
+        })
+
+
+        var data = await this.GETData2("", "");
+        const myJSON = JSON.stringify(data);
+        const obj = JSON.parse(myJSON);
+
+        var datafe = obj["data"]["pOExpenseItems"];
+
+        var datas;
+        if (this.ActionFlag == 0) {
+          datas = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
+
+        }
+        else if (this.ActionFlag == 1) {
+          datas = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.URLid)).toList();
+
+
+        }
+        console.log(datas);
+        this.pOExpenseItems = datas;
+
+      }
+
+
+
+      //---------------------------important code---------------------
+      // // console.log();
+      // const  datain=[{key:
+      //       {
+
+
+      //          expenseId: 0,
+      // 	 expenseTypeId: Number(this.loginForm.get('ddlExpenseType').value),
+      // 	 amount:  Number(this.loginForm.get('txtamount').value),
+      // 	 approvedAmount: 1,
+      // 	 createdBy: 1,
+      // 	 updateBy: 1,
+      // 	 description: this.loginForm.get('txtdescription').value,
+      // 	 paidBy: this.loginForm.get('ddlPaidby').value,
+      // 	 distance: Number(this.loginForm.get('txtDistance').value),
+      // 	 parkingAmt: Number(this.loginForm.get('txtParkingAmt').value),
+      // 	 aMt: Number(this.loginForm.get('ddlExpenseType').value),
+      // 	 expenseItemsId: Number(uniqId()) ,
+      //     Date:new Date(this.loginForm.get('txtdate').value)
+      //   }}] as unknown as ExpenseItems;
+
+      //    this.arr.push(datain);
+
+
+      // const sorted = this.arr.sort((a, b) => a.expenseItemsId - b.expenseItemsId);
+
+      //---------------------------important code---------------------
+
+
+
+    } catch (error) {
+      Swal.fire(
+        'Failed',
+        error,
+        'error')
+    }
+
+  }
 
 
 }
 
 export function hashCode(s) {
-  for(var i = 0, h = 0; i < s.length; i++)
-      h = Math.imul(31, h) + s.charCodeAt(i) | 0;
+  for (var i = 0, h = 0; i < s.length; i++)
+    h = Math.imul(31, h) + s.charCodeAt(i) | 0;
   return h;
 }
 
 const uniqId = (() => {
   let i = 0;
   return () => {
-      return i++;
+    return i++;
   }
 })();

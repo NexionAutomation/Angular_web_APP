@@ -67,6 +67,7 @@ import { LeaveSettingComponent } from './pages/Module/leave-setting/leave-settin
 
 import '../assets/select2/select2.min.js';
 import { ViewPOComponent } from './pages/PO/view-po/view-po.component';
+import { OutstationViewComponent } from './pages/Expense/outstation-view/outstation-view.component';
 //import "file-viewer";
 
 // import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
@@ -125,7 +126,8 @@ registerLocaleData(localeEn, 'en-EN');
         SupplierMasterComponent,
         LeaveTypeComponent,
         LeaveSettingComponent,
-        ViewPOComponent
+        ViewPOComponent,
+        OutstationViewComponent
    
     ],
     imports: [

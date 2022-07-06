@@ -323,6 +323,12 @@ submodule1.forEach(element => {
           name: " SupplierMaster"
       },
       {
+        path: 'CreateExpOutView',
+        name: "Expense OutStation View"
+    },
+
+      
+      {
           path: '',
           name: " Dashboard"
       }]//array2

@@ -317,6 +317,12 @@ export class CreateUserRightsComponent implements OnInit {
     this.ModuleMaster2 = Enumerable.from(this.submodule).where(x => x.moduleId == Number(event)).toList();
     this.submodule2 = this.ModuleMaster2;
 
+console.log(this.submodule2);
+  
+this.checkAllCheckBox("$event");
+
+    // document.getElementById('Create,0').innerHTML=" <input type='checkbox'  id='Create,0' (change)='checkAllCheckBox($event)' >";
+   // document.getElementById("Create,"+0+"" ).setAttribute('checked', 'checked');
     // var rights = Enumerable.from(this.rightsModule2).where(x => x.userCode == Number(this.loginFormRights.get('lstUsers').value)).toList();
 
 
@@ -351,9 +357,10 @@ export class CreateUserRightsComponent implements OnInit {
   checkAllCheckBox(ev: any) {
 
 
-    var rights = Enumerable.from(this.rightsModule2).where(x => x.userCode == Number(this.loginFormRights.get('lstUsers').value)).toList();
+    var rights = Enumerable.from(this.rightsModule2).where(x => x.userCode == Number(this.loginFormRights.get('lstUsers').value) && x.moduleId==Number(this.loginFormRights.get('lstModules').value) && x.groupId==Number(this.loginFormRights.get('ddlGroup_Id').value)).toList();
 
-    console.log();
+    console.log("rights");
+    console.log(rights);
     // document.getElementById("Delete,4").setAttribute('checked', true);
     //document.getElementById("Create,1").setAttribute('checked', 'checked');
     if (rights.any()) {
