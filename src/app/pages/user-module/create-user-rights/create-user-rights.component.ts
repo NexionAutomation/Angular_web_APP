@@ -283,6 +283,8 @@ export class CreateUserRightsComponent implements OnInit {
     this.CMAdminModuleMasterUser = Enumerable.from(obj["data"]["cMTmAdminModuleMasters"]).cast<CMAdminModuleMasterUser>().toList();
     this.rightsModule2 = Enumerable.from(obj["data"]["cMWebUserRightsMaster"]).cast<CM_Web_UserRightsMaster>().toList();
 
+
+    console.log("this.rightsModule2");
     console.log(this.rightsModule2);
 
 

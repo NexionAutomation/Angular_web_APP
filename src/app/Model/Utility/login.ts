@@ -162,9 +162,12 @@ console.log(data);
 
    
 
-  
-this.https.post(environment.apiUrl, Query).subscribe()
-console.log();
+   
+
+    var data=  this.https.post(environment.apiUrl, Query).subscribe(res => res) 
+    
+console.log(data.closed==true?1:2)
+   
   }
 
 //   'Access-Control-Allow-Origin':'*',

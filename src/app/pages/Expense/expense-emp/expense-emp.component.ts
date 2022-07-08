@@ -87,7 +87,7 @@ export class ExpenseEmpComponent implements OnInit {
 
 
 
-    //this.LodeDataTable();
+    this.LodeDataTable();
 
 
     var id;
@@ -466,8 +466,7 @@ export class ExpenseEmpComponent implements OnInit {
         location
         createdOn
         createdBy
-        updateOn
-        updateBy
+        
         expenseId
       }
       pOExpenseItems {
@@ -911,7 +910,8 @@ export class ExpenseEmpComponent implements OnInit {
 
       var dataid = 0;
 
-      if (this.ActionFlag == 0) {
+      if (this.ActionFlag == 0) { 
+       
         dataid = Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)
 
       }
@@ -921,9 +921,7 @@ export class ExpenseEmpComponent implements OnInit {
 
       }
 
-
-
-      var output =await this.uploadI(
+      var output = this.uploadI(
         Number(dataid),
         "test",
         " test",
@@ -934,15 +932,17 @@ export class ExpenseEmpComponent implements OnInit {
         this.file,
 "INSERT"
       );
-      // status Comment
-//       const myJSON2 = JSON.stringify(output);
-//       const obj2 = JSON.parse(myJSON2);
 
-//       var outputFinal = obj2["data"]["cMExpenseItemAttachment07"];
+      // console.log("cMExpenseItemAttachment07");
+      // console.log(output);
+      // // status Comment
+      // const myJSON2 = JSON.stringify(output);
+      // const obj2 = JSON.parse(myJSON2);
+     
+      // var outputFinal = obj2["data"]["cMExpenseItemAttachment07"];
 
 
-//       console.log("cMExpenseItemAttachment07");
-// console.log(outputFinal);
+ 
       var data = await this.GETData3("", "");
       const myJSON = JSON.stringify(data);
       const obj = JSON.parse(myJSON);
@@ -958,10 +958,10 @@ export class ExpenseEmpComponent implements OnInit {
         var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.URLid)).toList();
       }
      
-      console.log(datass);
-   
+     
+      this.pOExpenseItemAttachmentss=datass;
 
-      if (datass[0].message == "Success" ) {
+     
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
@@ -984,15 +984,7 @@ export class ExpenseEmpComponent implements OnInit {
         })
         //this.LodeDataTable();
 
-      } else {
-
-        Swal.fire(
-          'Failed',
-          '',
-          'error'
-        )
-
-      }
+      
 
 
       
@@ -1032,17 +1024,7 @@ export class ExpenseEmpComponent implements OnInit {
 
   ) {
     
-    // (
-    //   $expenseId: Int,
-    //   $name: String,
-    //   $contentType: String,
-    //   $imagDescription: String,
-    //   $createdBy: Int,
-    //   $createdOn: DateTime,
-    //   $attchmentId: Int!,
-    //   $files: Upload
-    //   )
-
+    
 
     if(ACTION=="INSERT")
     {
@@ -1078,14 +1060,30 @@ export class ExpenseEmpComponent implements OnInit {
   
         }
       }
+
+
+      var _map = {
+        file: ["variables.file"]
+      }
+  
+  
+      var file = files;
+      var fd = new FormData()
+      fd.append('operations', JSON.stringify(operations))
+      fd.append('map', JSON.stringify(_map))
+      fd.append('file', file, file.name)
+  
+  
+  
+      var ss = await this.Logins1.Graphqlfiledata("query", fd, file);
+
+      return ss;
     }
     else if(ACTION=="DELETE")
     {
-      var operations = {
-        query: `
-  
-  
-      mutation MyMutation($file: Upload) {
+      
+        let query= `
+      mutation MyMutation {
         __typename
         cMExpenseItemAttachment07(data: 
           {detail:
@@ -1096,7 +1094,7 @@ export class ExpenseEmpComponent implements OnInit {
               expenseId: ${expenseId},
               imagDescription:"${imagDescription}",
               name: " ${name}"
-            }}, file: $file, triger: "DELETE") {
+            }}, triger: "DELETE") {
           code
           detail
           iD
@@ -1105,41 +1103,24 @@ export class ExpenseEmpComponent implements OnInit {
         }
       }
       
-      `,
-        variables: {
-          file: null
-  
-  
-        }
-      }
+      `
 
+      var datas = JSON.stringify({
+        query
+      });
+
+
+      var ss2 = await this.Logins1.GraphqlFetchdata("query", datas);
+      return ss2;
     }
    
 
 
 
 
-    var _map = {
-      file: ["variables.file"]
-    }
 
-
-    var file = files;
-    var fd = new FormData()
-    fd.append('operations', JSON.stringify(operations))
-    fd.append('map', JSON.stringify(_map))
-    fd.append('file', file, file.name)
-
-
-    //   //var output = await this.INSERT(
-    //     this.loginForm.get('file1').value,
-
-    //  );
-
-    var ss = await this.Logins1.Graphqlfiledata("query", fd, file);
-
-    console.log(ss);
-    return ss;
+    
+    
 
   }
 
@@ -1270,7 +1251,7 @@ export class ExpenseEmpComponent implements OnInit {
   async onDelI(string: string) {
     try {
 
-      var state = "Delete"
+      var state = "DELETE"
       if (state == state) {
 
 
@@ -1296,16 +1277,19 @@ export class ExpenseEmpComponent implements OnInit {
               1,
               new Date(Date.now()),
               Number(string),
-              this.file,
+              null,
               "DELETE"
       
             );
 
 
+            
+
+
           const myJSON = JSON.stringify(output);
           const obj = JSON.parse(myJSON);
 
-          var outputFinal = obj["data"]["cMExpenseItem"];
+          var outputFinal = obj["data"]["cMExpenseItemAttachment07"];
 
 
           if (outputFinal[0].message == "Success") {
@@ -1330,24 +1314,23 @@ export class ExpenseEmpComponent implements OnInit {
 
             })
 
-            var data = await this.GETData2("", "");
+            var data = await this.GETData3("", "");
             const myJSON = JSON.stringify(data);
             const obj = JSON.parse(myJSON);
-
-            var datafe = obj["data"]["pOExpenseItems"];
-
-            var datas;
+      
+            var datafe = obj["data"]["pOExpenseItemAttachments"];
+      
+           
             if (this.ActionFlag == 0) {
-              datas = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
-
+              var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
+      
             }
             else if (this.ActionFlag == 1) {
-              datas = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.URLid)).toList();
-
-
+              var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.URLid)).toList();
             }
-
-            this.pOExpenseItems = datas;
+           
+           
+            this.pOExpenseItemAttachmentss=datass;
 
 
 
@@ -1379,7 +1362,9 @@ export class ExpenseEmpComponent implements OnInit {
     try {
       var output = null;
       var expid = 0;
+      console.log(this.persons);
       if (this.ActionFlag == 0) {
+        console.log(this.persons);
         expid = Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1);
       }
       else {

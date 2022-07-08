@@ -6,7 +6,7 @@ import { CMAdminModuleMasterUser, CMAdminSubModuleMaster, CM_Web_UserRightsMaste
 import {Store} from '@ngrx/store';
 import {AppService} from '@services/app.service';
 import {concat, Observable} from 'rxjs';
-import { Enumerable, List } from 'sharp-collections';
+import { Dictionary, Enumerable, List } from 'sharp-collections';
 
 const BASE_CLASSES = 'main-sidebar elevation-4';
     var datas:any;
@@ -146,10 +146,12 @@ export class MenuSidebarComponent implements OnInit {
         this.UserMaster = Enumerable.from(obj["data"]["pOTmUserMasters"]).cast<TmUserMaster>().toList();
         this.CMAdminModuleMasterUser = Enumerable.from(obj["data"]["cMTmAdminModuleMasters"]).cast<CMAdminModuleMasterUser>().toList();
         this.rightsModule2 = Enumerable.from(obj["data"]["cMWebUserRightsMaster"]).cast<CM_Web_UserRightsMaster>().toList();
-    
+        
+        this.rightsModule2 =this.rightsModule2.where(x=>x.userCode==this.login.TMUserMaster.userCode).toList();
+       
 var result = this.submodule
 .join(this.rightsModule2, a => a.rid, b => b.subModuleId)
-.where(s => s.left.rid == s.right.subModuleId ) //&& s.right.userCode==this.login.TMUserMaster.userCode
+.where(s => s.left.rid == s.right.subModuleId  ) //&& s.right.userCode==this.login.TMUserMaster.userCode
 .toList();
 
     var da= result 
@@ -157,6 +159,9 @@ var result = this.submodule
 .where(s => s.left.right.moduleId == s.right.rid   )// &&  s.left.right.userCode==this.login.TMUserMaster.userCode
 .toList();
       
+console.log("submodule");
+console.log(da);
+
     
      var array2= new Array(); 
 
@@ -164,184 +169,180 @@ var result = this.submodule
      var array2 = new Array();
 
   
-var mainmodule=da.groupBy(x=>x.right.moduleName).select(x=>x.first()).toArray();
-var submodule1=da.groupBy(x=>x.left.left.subModuleName).select(x=>x.first()).toArray();
 
-console.log(mainmodule);
+var submodule1=da.toLookup(x=>x.right.moduleName).select(x=>x).toArray();
+var submodule2=da.groupBy(x=>x.left.left.moduleId ).select(x=>x).toList();
+// var submodule2=da.groupBy(x=>x.left.left.cuserId).select(x=>x.first()).toArray();
+
+
 console.log(submodule1);
+console.log(submodule2);
+
+
+
+
+
+const nams=new Array();
+
 submodule1.forEach(element => {
     
+    var Pat=new Array();
+    
+    element.toArray().forEach(ele=>{
+
   
-});
-
-// this.submodule.toArray().forEach(element => {
-    
-//   array2.push({
-//       name:  element.subModuleName ,
-//       path: element.navigationUrl
-//   });
-// });
-
-// for(var a=0;a<=mainmodule.length-1;a++)
-// {
-//   submodule1.forEach(element => {
-    
-//       if(element.right.moduleName==mainmodule[a].right.moduleName)
-//       {
         
-//         array2.push({
-//           name:  element.left.left.subModuleName ,
-//           path: element.left.left.navigationUrl
-//       });
+    
+    
+        Pat.push({
+      name:  ele.left.left.subModuleName,
+      path:  ele.left.left.navigationUrl
+  });
+
+
+        
+        }
+        );
+
+
+    array.push (
+        {
+            name:element.key,
+            path: ['/'],
+            children:Pat
+        });
 
        
 
-        
-
-  
-// }
+})
 
 
-//   });
- 
-  array.push (
-    {
-        name:'Dashboard' ,
-        path: ['/'],
-        children:[  {
-          path: 'profile',
-          name: " Profile"
-      },
-      {
-          path: 'blank',
-          name: " Blank"
-      },
-      {
-          path: 'sub-menu-1',
-          name: " SubMenu"
-      },
-      {
-          path: 'sub-menu-2',
-          name: " Blank"
-      },
-      {
-          path: 'Create-Drawing',
-          name: " CreateDrawingQrcode"
-      },
-      {
-          path: 'Read-Drawing',
-          name: " ReadDrawingQrcode"
-      },
+
+//   array.push (
+//     {
+//         name:'Dashboard' ,
+//         path: ['/'],
+//         children:[  {
+//           path: 'profile',
+//           name: " Profile"
+//       },
+//       {
+//           path: 'blank',
+//           name: " Blank"
+//       },
+//       {
+//           path: 'sub-menu-1',
+//           name: " SubMenu"
+//       },
+//       {
+//           path: 'sub-menu-2',
+//           name: " Blank"
+//       },
+//       {
+//           path: 'Create-Drawing',
+//           name: " CreateDrawingQrcode"
+//       },
+//       {
+//           path: 'Read-Drawing',
+//           name: " ReadDrawingQrcode"
+//       },
     
-      {
-          path: 'UserGroup',
-          name: " UserGroupMaster"
-      },
-      {
-          path: 'CreateUser',
-          name: " CreateUserMaster"
-      },
-      {
-          path: 'CreateUserRight',
-          name: " CreateUserRights"
-      },
-      {
-          path: 'CreateUserModule',
-          name: " CreateModulemaster"
-      },
-      {
-          path: 'CreateUsersubmodule',
-          name: " CreateSubModulemaster"
-      },
+//       {
+//           path: 'UserGroup',
+//           name: " UserGroupMaster"
+//       },
+//       {
+//           path: 'CreateUser',
+//           name: " CreateUserMaster"
+//       },
+//       {
+//           path: 'CreateUserRight',
+//           name: " CreateUserRights"
+//       },
+//       {
+//           path: 'CreateUserModule',
+//           name: " CreateModulemaster"
+//       },
+//       {
+//           path: 'CreateUsersubmodule',
+//           name: " CreateSubModulemaster"
+//       },
 
-      {
-          path: 'CreateExpense',
-          name: " ExpenseEmp"
-      },
-      {
-          path: 'ApprovedExpense',
-          name: " ExpenseManager"
-      },
-      {
-          path: 'AccountExpense',
-          name: " ExpenseAccount"
-      },
-      {
-          path: 'Upode',
-          name: " UplodeFile"
-      },
-      {
-          path: 'CreatePo',
-          name: " CreatePO"
-      },
-      {
-          path: 'SearchPo',
-          name: " SearchPo"
-      },
-      {
-          path: 'CreateCity',
-          name: " CityMaster"
-      },
-      {
-          path: 'CreateCompany',
-          name: " Companymaster"
-      },
-      {
-          path: 'CreateCountryMaster',
-          name: " Countrymaster"
-      },
-      {
-          path: 'CreateExpenseGroup',
-          name: " ExpenseGroup"
-      },
-      {
-          path: 'CreateExpenseStatus',
-          name: " ExpenseStatusType"
-      },
-      {
-          path: 'CreateExpenseType',
-          name: " ExpenseType"
-      },
-      {
-          path: 'CreateFinanceYear',
-          name: " FinanceYear"
-      },
-      {
-          path: 'CreateLeaveType',
-          name: " LeaveType"
-      },
-      {
-          path: 'CreateLeaveSetting',
-          name: " LeaveSetting"
-      },
-      {
-          path: 'CreateStateMaster',
-          name: " StateMaster"
-      },
-      {
-          path: 'CreateSupplier',
-          name: " SupplierMaster"
-      },
-      {
-        path: 'CreateExpOutView',
-        name: "Expense OutStation View"
-    },
+//       {
+//           path: 'CreateExpense',
+//           name: " ExpenseEmp"
+//       },
+//       {
+//           path: 'ApprovedExpense',
+//           name: " ExpenseManager"
+//       },
+//       {
+//           path: 'AccountExpense',
+//           name: " ExpenseAccount"
+//       },
+//       {
+//           path: 'Upode',
+//           name: " UplodeFile"
+//       },
+//       {
+//           path: 'CreatePo',
+//           name: " CreatePO"
+//       },
+//       {
+//           path: 'SearchPo',
+//           name: " SearchPo"
+//       },
+//       {
+//           path: 'CreateCity',
+//           name: " CityMaster"
+//       },
+//       {
+//           path: 'CreateCompany',
+//           name: " Companymaster"
+//       },
+//       {
+//           path: 'CreateCountryMaster',
+//           name: " Countrymaster"
+//       },
+//       {
+//           path: 'CreateExpenseGroup',
+//           name: " ExpenseGroup"
+//       },
+//       {
+//           path: 'CreateExpenseStatus',
+//           name: " ExpenseStatusType"
+//       },
+//       {
+//           path: 'CreateExpenseType',
+//           name: " ExpenseType"
+//       },
+//       {
+//           path: 'CreateFinanceYear',
+//           name: " FinanceYear"
+//       },
+//       {
+//           path: 'CreateLeaveType',
+//           name: " LeaveType"
+//       },
+//       {
+//           path: 'CreateLeaveSetting',
+//           name: " LeaveSetting"
+//       },
+//       {
+//           path: 'CreateStateMaster',
+//           name: " StateMaster"
+//       },
+//       {
+//           path: 'CreateSupplier',
+//           name: " SupplierMaster"
+//       },
+//       {
+//         path: 'CreateExpOutView',
+//         name: "Expense OutStation View"
+//     },
 
       
-      {
-          path: '',
-          name: " Dashboard"
-      }]//array2
-    });
 
-//   // array.push (
-//   //   {
-//   //       name:mainmodule[a].right.moduleName ,
-//   //       path: ['/'],
-//   //       children:array2
-//   //   });
-    
-// }
 
 this.menu=array;
 
