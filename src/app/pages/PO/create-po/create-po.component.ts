@@ -745,9 +745,9 @@ id: number,
 
 
               })
-              this.LodeDataTable();
-              this.ActionFlag = 0;
-              this.onReset();
+              //this.LodeDataTable();
+              //this.ActionFlag = 1;
+              //this.onReset();
               this._router.navigate["/SearchPo"];
             } else {
 

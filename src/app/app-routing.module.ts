@@ -40,6 +40,7 @@ import { StateMasterComponent } from '@pages/Module/state-master/state-master.co
 import { SupplierMasterComponent } from '@pages/Module/supplier-master/supplier-master.component';
 import { ViewPOComponent } from '@pages/PO/view-po/view-po.component';
 import { OutstationViewComponent } from '@pages/Expense/outstation-view/outstation-view.component';
+import { AttandanceComponent } from '@pages/Attandance/attandance/attandance.component';
 
 const routes: Routes = [
     {
@@ -175,6 +176,11 @@ const routes: Routes = [
                 path: 'CreateExpense/:id',
                 component:ExpenseEmpComponent
             },
+            {
+                path: 'CreateAttandance',
+                component:AttandanceComponent
+            },
+        
             
            
             {

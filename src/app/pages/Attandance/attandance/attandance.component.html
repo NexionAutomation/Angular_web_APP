@@ -1,0 +1,124 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Blank Page</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Blank Page</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+
+
+<div class="container m-3">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group">        
+         
+
+            <input #fileInput type="file" (change)="upload($event)">ssd
+
+
+          <input type="file" formControlName="file1" class="hidden-xs-up" name="file" multiple>
+          <button type="submit" class="btn btn-info" >Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Main content -->
+<section class="content  ">
+    <!-- Default box -->
+
+
+
+    <div class="form2">
+
+        <div class="card card-outline card-primary">
+            <div class="card-header "> PO Details ::</div>
+            <div class="card-body " style="overflow-x:auto;">
+
+
+
+                <!-- <table id="example" class="display" width="100%"></table> -->
+
+                <table id="example"  class="table table-striped ">
+
+                    <thead>
+                        <tr>
+                            <th  >Action</th>
+                            <th >Rid</th>
+                            <th >PO Number</th>
+                            <th >Company Name</th>
+                            <th>Supplier Name</th>
+                            <th >Order Date</th>
+                            <th >Payment Terms</th>
+                            <th >Indent No</th>
+                            <th >Freight Terms</th>
+                            <th >Work Order No</th>
+                            <th >Gst No</th>
+                            <th >Delivery Date</th>
+                            <th >Remarks</th>
+                            <th >Total</th>
+                            <th >Enduser</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let person of Attand;let a=index">
+                            <td>
+                                <!-- <button class="badge bg-success  btn btn-sm  " name='{{ person.poId}}'> <a
+                                        class="fa fa-edit" (click)="onedit(person.poId) " [routerLink]="['/CreatePo', person.poId]"></a></button>
+                                <br>
+                                <button class="badge bg-danger  btn btn-sm" name='{{ person.poId}}'
+                                    (click)="onDel(person.poId)"  ><a class="fa fa-trash"></a></button>
+                                    <br>
+                                    <button class="badge bg-info  btn btn-sm"  name='{{ person.poId}}'
+                                    ><a class="fa fa-file" target="_self" [routerLink]="['/viewPo',person.poId]" ></a></button>
+                             -->
+                            </td>
+
+
+                            <td> {{person.t1}}</td>
+                            <td> {{person.t2}}</td>
+                            <td>{{ person.t3 }}</td>
+                            <td> {{person.t4}}</td>
+                            <td>{{ person.t5}}</td>
+                            <!-- <td>{{ person.orderDate | date:"yyyy-MM-dd" }}</td> -->
+                            <td>{{ person.t6 }}</td>
+                            <td> {{person.t7}}</td>
+                            <td>{{ person.t8 }}</td>
+                            <td> {{person.t9 }}</td>
+                            <td>{{ person.t10  }}</td>
+                            <td>{{ person.t11 }}</td>
+                            <!-- <td>{{ person.deliveryDate | date:"yyyy-MM-dd" }}</td> -->
+                            <td> {{person.t12 }}</td>
+                            <td>{{ person.t13  }}</td>
+                            <td>{{ person.t14  }}</td>
+                           
+
+
+
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+<script>
+    var $disabledResults = $(".js-example-disabled-results");
+    $disabledResults.select2();
+</script>

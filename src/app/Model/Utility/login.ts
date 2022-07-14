@@ -6,22 +6,29 @@ import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { Listener } from "selenium-webdriver";
 import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, observeOn } from "rxjs/operators";
 import { from } from "linq-to-typescript"
 import { FormGroup } from "@angular/forms";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
+interface Retdata {
+  Return1: number;
+ 
+}
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 
 export class Logins implements OnInit {
   public user: any = null;
   public ActiveUserId: any = null;
   public TMUserMaster:TMUserMaster;
   public popupStatus: popup;
-
+   Return: any ;
+ 
   // loading: boolean;
   // posts: any;
 
@@ -39,7 +46,7 @@ export class Logins implements OnInit {
     throw new Error("Method not implemented.");
   }
 
-
+ 
   async GETBYID(User: string, Password: string): Promise<any> {
 
     let data = '{User="' + User + '",Password="' + Password + '" }';
@@ -122,6 +129,10 @@ export class Logins implements OnInit {
   }
 
 
+
+  
+
+
   async Graphqlfile(query: string, Query: string,files:FormGroup) {
 
    
@@ -160,14 +171,16 @@ console.log(data);
 
   async Graphqlfiledata(query: string, Query: FormData,files:File) {
 
-   
 
-   
 
-    var data=  this.https.post(environment.apiUrl, Query).subscribe(res => res) 
+await this.https.post(environment.apiUrl, Query  ).toPromise()
+.then(response => {
+ this.Return=response
+})
+;
+return this.Return;
+
     
-console.log(data.closed==true?1:2)
-   
   }
 
 //   'Access-Control-Allow-Origin':'*',
