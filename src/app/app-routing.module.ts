@@ -41,6 +41,7 @@ import { SupplierMasterComponent } from '@pages/Module/supplier-master/supplier-
 import { ViewPOComponent } from '@pages/PO/view-po/view-po.component';
 import { OutstationViewComponent } from '@pages/Expense/outstation-view/outstation-view.component';
 import { AttandanceComponent } from '@pages/Attandance/attandance/attandance.component';
+import { CreateIndentComponent } from '@pages/INDENT/create-indent/create-indent.component';
 
 const routes: Routes = [
     {
@@ -179,6 +180,10 @@ const routes: Routes = [
             {
                 path: 'CreateAttandance',
                 component:AttandanceComponent
+            },
+            {
+                path: 'CreateIndent',
+                component:CreateIndentComponent
             },
         
             

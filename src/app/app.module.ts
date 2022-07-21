@@ -69,6 +69,7 @@ import '../assets/select2/select2.min.js';
 import { ViewPOComponent } from './pages/PO/view-po/view-po.component';
 import { OutstationViewComponent } from './pages/Expense/outstation-view/outstation-view.component';
 import { AttandanceComponent } from './pages/Attandance/attandance/attandance.component';
+import { CreateIndentComponent } from './pages/INDENT/create-indent/create-indent.component';
 //import "file-viewer";
 
 // import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
@@ -129,7 +130,8 @@ registerLocaleData(localeEn, 'en-EN');
         LeaveSettingComponent,
         ViewPOComponent,
         OutstationViewComponent,
-        AttandanceComponent
+        AttandanceComponent,
+        CreateIndentComponent
    
     ],
     imports: [

@@ -1,0 +1,499 @@
+<div class="row">
+    <!-- Left col -->
+    
+    <section class="col-lg-12">
+
+
+        <div id="UpdateProgress1" style="display:none;" role="status" aria-hidden="true">
+
+                <div class="divWaiting" style="z-index: 15000;">
+                    <img id="imgWait" src="../images/loading3.gif" align="middle" style="height:150px;width:210px;">
+                </div>
+            
+</div>
+
+
+        
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="ContentPlaceHolder3_pnl_workorder">
+
+
+
+<div class="card card-danger">
+<div class="card-header with-border">
+<h3 class="card-title">Select work Order</h3>
+
+</div>
+<div class="card-body">
+<div class="row">
+
+<div class="col-sm-4">
+<label for="inputEmail3" class="control-label pull-left">Work Order</label>&nbsp;<span id="ContentPlaceHolder3_lblloginIdError" class="col-sm-3"></span>
+<a id="ContentPlaceHolder3_search_wo" class="fa fa-search" href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$search_wo','')" style="float:right"></a>
+<input name="ctl00$ContentPlaceHolder3$txt_workder" type="text" value="#wo123" id="ContentPlaceHolder3_txt_workder" class="form-control inputtext dropdown" onclick="myFunction()">
+
+
+<div id="myDIV" style="display: block;">
+<select name="ctl00$ContentPlaceHolder3$ddl_worder" id="ddl_worder" class="form-control inputtext dropdown" textmode="Search">
+<option selected="selected" value="--Select--">--Select--</option>
+
+</select>
+ </div>
+<span id="ContentPlaceHolder3_RequiredFieldValidator5" style="display:none;">--Select--</span>
+
+
+
+
+</div>
+
+<div class="col-sm-4">
+<label for="inputEmail3" class="control-label pull-left">Customer Name</label>
+<select name="ctl00$ContentPlaceHolder3$ddl_cust"  id="ContentPlaceHolder3_ddl_cust" class="form-control inputtext">
+
+</select>
+<span id="ContentPlaceHolder3_Req_ID" style="display:none;">--Select--</span>
+
+</div>
+
+
+</div>
+
+
+<!-- /.card-body -->
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+<div class="card card-danger">
+<div class="card-header with-border">
+<h3 class="card-title">Add work Order</h3>
+</div>
+<div class="card-body">
+<div class="row">
+<div class="col-sm-4">
+<label for="inputEmail3" class="control-label">Date</label>
+<input name="ctl00$ContentPlaceHolder3$txtdate" type="text" id="txtdate" class="form-control inputtext" autocomplete="off">
+
+<span id="ContentPlaceHolder3_RegularExpressionValidator1" style="color:Red;visibility:hidden;">From Date should be dd-mmm-yyyy</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="col-sm-4">
+<label for="inputEmail3" class="control-label">Description</label>
+<input name="ctl00$ContentPlaceHolder3$txt_desc" type="text" id="txt_desc" class="form-control inputtext" autocomplete="off">
+
+</div>
+
+
+<div class="col-md-4">
+<div class="bder top-mrg20">
+<div class="row">
+
+    <div class="col-sm-12">
+        &nbsp;
+                            
+    </div>
+
+
+</div>
+</div>
+</div>
+
+
+<div class="col-sm-7 col-sm-offset-5">
+<input type="submit" name="ctl00$ContentPlaceHolder3$btnSave" value="Save" id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10">
+
+
+
+                                    &nbsp;<input type="submit" name="ctl00$ContentPlaceHolder3$btn_reset_wo" value="Reset" id="ContentPlaceHolder3_btn_reset_wo" class="btn btn-warning mar_top10">
+
+</div>
+
+
+
+</div>
+<!-- /.card-body -->
+
+
+<!-- /.card-body -->
+</div>
+
+</div>
+
+
+
+
+<div class="clearfix">
+
+<input type="submit" name="ctl00$ContentPlaceHolder3$search_show" value="Hide" id="ContentPlaceHolder3_search_show" class="btn btn-primary">
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="card card-danger ">
+<div class="card-header with-border">
+<h3 class="card-title">Show work Order</h3>
+</div>
+<div class="card-body">
+<div class="row">
+<div class="col-md-12">
+<div class="bder top-mrg20">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="table-responsive">
+            <div class="table_wid">
+                <div>
+                   
+
+                    
+            <div class="row">
+                <div class="col-sm-12 ExportPanel">
+                    <div id="ContentPlaceHolder3_Div_Export" class="col-md-6">
+
+                        <div id="ContentPlaceHolder3_UpdatePanel1">
+
+
+                                <input type="image" name="ctl00$ContentPlaceHolder3$ImagebtnExcel" id="ContentPlaceHolder3_ImagebtnExcel" src="../images/excel_32X32.png" alt="Export To Excel" style="height:32px;width:32px;">
+                                
+                                
+
+                            
+</div>
+
+                    </div>
+                 
+                </div>
+            </div>
+
+
+
+
+                </div>
+                <div>
+
+</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- /.card-body -->
+
+
+<!-- /.card-body -->
+</div>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!------------work order session------->
+
+
+
+
+
+
+
+
+
+
+<!-------------------indent session----------------->
+
+
+
+<a id="ContentPlaceHolder3_LinkButton1" href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$LinkButton1','')"></a>
+
+<div id="ContentPlaceHolder3_Panel2" style="display: none; position: fixed; z-index: 10001;">
+
+
+<div class="panel panel-default">
+<div class="panel-heading"></div>
+<div class="panel-body">
+
+<div class="alert alert-warning">
+<strong><span id="ContentPlaceHolder3_status_model"></span></strong>
+</div>
+
+
+</div>
+
+<div class="panel-footer">
+
+ <input type="submit" name="ctl00$ContentPlaceHolder3$btn_cancel" value="Cancel" id="ContentPlaceHolder3_btn_cancel">
+</div>
+</div>
+
+</div>
+
+
+
+
+
+
+<a id="ContentPlaceHolder3_Linkbtn" href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$Linkbtn','')"></a>
+
+
+
+
+<div id="ContentPlaceHolder3_Panel1">
+
+
+<div class="container fa-tty " style="font-size: x-small">
+
+<div class="panel panel-default ">
+<div class="panel-heading">
+Indent Items Create
+<a id="ContentPlaceHolder3_lbn_close" class="pull-right  pull-right pull-right btn  btn-default pull-right fa fa-close" href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$lbn_close','')"></a>
+
+
+</div>
+
+
+
+<div class="panel-body">
+
+<div class="form-group">
+<a id="ContentPlaceHolder3_lbt_create" class="pull-right btn  btn-default fa fa-book pull-right " href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$lbt_create','')"></a>
+<a id="ContentPlaceHolder3_lbt_show" class="pull-right btn  btn-default pull-right fa fa-eye" href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$lbt_show','')"></a>
+
+
+
+
+</div>
+
+<div class="clearfix"></div>
+
+
+
+<div id="ContentPlaceHolder3_pnal_Create">
+
+<div class="card card-danger">
+    <div class="card-header with-border">
+        <h3 class="card-title">Select work Order</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <label class="control-label pull-left" for="inputEmail3">
+                    Customer Name</label>
+                <input name="ctl00$ContentPlaceHolder3$txt_cust_ind" type="text" readonly="readonly" id="txt_cust_ind" class="form-control inputtext" autocomplete="off">
+            </div>
+            <div class="col-sm-4">
+                <label class="control-label pull-left" for="inputEmail3">
+                    Work Order</label>&nbsp;<span id="ContentPlaceHolder3_Label1" class="col-sm-3"></span>
+                <input name="ctl00$ContentPlaceHolder3$txt_wo_ind" type="text" readonly="readonly" id="txt_wo_ind" class="form-control inputtext" autocomplete="off">
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>
+<div class="clearfix">
+</div>
+<div class="card card-danger">
+    <div class="card-header with-border">
+        <h3 class="card-title">Select work Order</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <label class="control-label" for="inputEmail3">
+                        Date</label>
+                    <input name="ctl00$ContentPlaceHolder3$txtfromdate" type="text" id="txtfromdate" class="form-control inputtext" autocomplete="off">
+                    
+                </div>
+
+
+
+
+
+
+                <div class="col-sm-4">
+                  
+                    <label class="control-label pull-left" for="inputEmail3">
+                        Product Part No</label>&nbsp;<span id="ContentPlaceHolder3_Label11" class="col-sm-3"></span>
+
+
+
+                     <a id="ContentPlaceHolder3_search_part_no" class="fa fa-search" href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$search_part_no','')" style="float:right"></a>
+                    <input name="ctl00$ContentPlaceHolder3$txt_part_no" type="text" id="ContentPlaceHolder3_txt_part_no" class="form-control inputtext dropdown" onclick="myFunction2()">
+
+
+<div id="myDIV2" style="display:none">
+
+                    <select name="ctl00$ContentPlaceHolder3$ddl_part_no" id="ContentPlaceHolder3_ddl_part_no" class="form-control " autocomplete="on">
+
+</select>
+                 
+ </div>
+
+
+
+
+
+
+
+
+
+                </div>
+                <div class="col-sm-4">
+                  
+                    <label class="control-label pull-left" for="inputEmail3">
+                        Description</label>&nbsp;<span id="ContentPlaceHolder3_Label2" class="col-sm-3"></span>
+                    <textarea name="ctl00$ContentPlaceHolder3$txt_met" rows="2" cols="20" id="txt_met" class="form-control " autocomplete="off"></textarea>
+                 
+
+
+
+
+
+
+                </div>
+                <div class="col-sm-4">
+                    <label class="control-label pull-left" for="inputEmail3">
+                        Qty</label>
+                    <input name="ctl00$ContentPlaceHolder3$txt_qty" type="number" id="txt_qty" class="form-control inputtext" autocomplete="off">
+                </div>
+            </div>
+            <div class="clearfix">
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <label class="control-label pull-left" for="inputEmail3">
+                        Remarks</label>&nbsp;<span id="ContentPlaceHolder3_Label3" class="col-sm-3"></span>
+                    <input name="ctl00$ContentPlaceHolder3$txt_remax" type="text" id="txt_remax" class="form-control inputtext" autocomplete="off">
+                </div>
+                <div class="col-sm-4  hidden">
+                    <label class="control-label pull-left" for="inputEmail3">
+                        Required/Purpose</label>
+                    <input name="ctl00$ContentPlaceHolder3$txt_purpose" type="text" id="txt_purpose" class="form-control inputtext" autocomplete="off">
+                </div>
+                <br>
+                <div class="col-sm-4">
+                    <label class="control-label pull-left" for="inputEmail3">
+                        Uplode Excel / Optional</label>
+                    <span class="checkcard"><input id="ContentPlaceHolder3_chk_fileUplode" type="checkcard" name="ctl00$ContentPlaceHolder3$chk_fileUplode" onclick="javascript:setTimeout('__doPostBack(\'ctl00$ContentPlaceHolder3$chk_fileUplode\',\'\')', 0)"></span>
+                    <br>
+                    <br>
+                    
+                    
+                </div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div>
+</div>
+<div class="card card-footer">
+    <div class="card-header with-border ">
+        <div class="form-group">
+            <div class="col-md-5">
+            </div>
+            <div class="col-md-4">
+                <input type="submit" name="ctl00$ContentPlaceHolder3$btn_ind_submit" value="Submit" id="ContentPlaceHolder3_btn_ind_submit" class="btn btn-sm btn-primary">
+                <input type="submit" name="ctl00$ContentPlaceHolder3$btn_ind_reset" value="Reset" id="ContentPlaceHolder3_btn_ind_reset" class="btn btn-sm btn-success">
+            </div>
+            <div class="col-md-3">
+                
+
+                 
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<br>
+<div class="panel-body">
+<div class="clearfix">
+</div>
+<br>
+
+
+
+
+
+
+<div>
+</div>
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+        
+    </div></div></div><div data-act-control-type="modalPopupBackground" id="ContentPlaceHolder3_ModalPopupExtender007_backgroundElement" class="modalBackground" style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;"></div><div data-act-control-type="modalPopupBackground" id="ContentPlaceHolder3_ModalPopupExtender2_backgroundElement" class="modalBackground" style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;"></div></section>
+    <!-- /.Left col -->
+    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+    <!-- right col -->
+</div>
