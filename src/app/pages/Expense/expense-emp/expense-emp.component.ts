@@ -469,6 +469,7 @@ export class ExpenseEmpComponent implements OnInit {
         
         expenseId
       }
+     
       pOExpenseItems {
         expenseId
         date

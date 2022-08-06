@@ -1,0 +1,680 @@
+<section class="content container-fluid">
+    <!-- Small cardes (Stat card) -->
+
+    <!-- /.row -->
+    <!-- Main row -->
+    <div class="row">
+        <!-- Left col -->
+
+        <section class="col-lg-12">
+
+
+            <div id="UpdateProgress1" style="display:none;" role="status" aria-hidden="true">
+
+                <div class="divWaiting" style="z-index: 15000;">
+                    <img id="imgWait" src="images/loading3.gif" align="middle" style="height:150px;width:210px;">
+                </div>
+
+            </div>
+
+
+
+
+
+            <div class="col-md-12  ">
+                <div id="" class="row">
+
+                    <div>
+
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="Col-sm-8 card-body with-border  card ">
+                                        <div class="clearfix" style="margin-bottom: 5px;"></div>
+
+                                        <div class="col-sm-3">
+                                            <label for="inputEmail3" class=" control-label pull-left">Expense
+                                                Type</label>&nbsp;
+                                            <select name="ctl00$ContentPlaceHolder3$ddl_ExpenseType"
+                                                 id="ContentPlaceHolder3_ddl_ExpenseType" class="form-control">
+                                                <option selected="selected" value="Local Expense">Local Expense</option>
+                                                <option value="OutStation Expense">OutStation Expense</option>
+                                                <option value=""></option>
+
+                                            </select>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label for="inputEmail3" class=" control-label pull-left">Financial
+                                                Year</label>&nbsp;
+                                            <select name="ctl00$ContentPlaceHolder3$ddl_Year"
+                                                id="ContentPlaceHolder3_ddl_Year" class="form-control">
+                                                <option value="2000-2001">2000-2001</option>
+                                                <option value="2001-2002">2001-2002</option>
+                                                <option value="2002-2003">2002-2003</option>
+                                                <option value="2003-2004">2003-2004</option>
+                                                <option value="2004-2005">2004-2005</option>
+                                                <option value="2005-2006">2005-2006</option>
+                                                <option value="2006-2007">2006-2007</option>
+                                                <option value="2007-2008">2007-2008</option>
+                                                <option value="2008-2009">2008-2009</option>
+                                                <option value="2009-2010">2009-2010</option>
+                                                <option value="2010-2011">2010-2011</option>
+                                                <option value="2011-2012">2011-2012</option>
+                                                <option value="2012-2013">2012-2013</option>
+                                                <option value="2013-2014">2013-2014</option>
+                                                <option value="2014-2015">2014-2015</option>
+                                                <option value="2015-2016">2015-2016</option>
+                                                <option value="2016-2017">2016-2017</option>
+                                                <option value="2017-2018">2017-2018</option>
+                                                <option value="2018-2019">2018-2019</option>
+                                                <option value="2019-2020">2019-2020</option>
+                                                <option value="2020-2021">2020-2021</option>
+                                                <option value="2021-2022">2021-2022</option>
+                                                <option selected="selected" value="2022-2023">2022-2023</option>
+                                                <option value="2023-2024">2023-2024</option>
+                                                <option value="2024-2025">2024-2025</option>
+                                                <option value="2025-2026">2025-2026</option>
+                                                <option value="2026-2027">2026-2027</option>
+                                                <option value="2027-2028">2027-2028</option>
+                                                <option value="2028-2029">2028-2029</option>
+                                                <option value="2029-2030">2029-2030</option>
+                                                <option value="2030-2031">2030-2031</option>
+                                                <option value="2031-2032">2031-2032</option>
+                                                <option value="2032-2033">2032-2033</option>
+                                                <option value="2033-2034">2033-2034</option>
+                                                <option value="2034-2035">2034-2035</option>
+                                                <option value="2035-2036">2035-2036</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-2">
+
+                                        </div>
+                                        <div class="col-sm-4">
+
+                                            <a id="ContentPlaceHolder3_btnCreate" class="btn btn-dropcard  "
+                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btnCreate','')"><i
+                                                    class="fa fa-plus-square-o fa-lg"> Add Local </i></a>
+
+                                            <a id="ContentPlaceHolder3_btncreate1" class="btn btn-dropcard  "
+                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btncreate1','')"><i
+                                                    class="fa fa-plus-square-o fa-lg"> Add Outsation </i></a>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="col-sm-3">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-12  card-body with-border  card ">
+                                            <h4 class="card-title">As On Date Expense</h4>
+
+                                            <div class="clearfix" style="margin-bottom: 5px;"></div>
+
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="table-responsive">
+                                                        <div class="table_wid">
+                                                            <table style="width: 100%;">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="background: #edebeb;">Status</td>
+                                                                        <td style="background: #edebeb;">Count</td>
+                                                                        <td style="background: #edebeb;">Amount</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>Draft</td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_AsonDate_Draft_Count"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_AsonDate_Draft_Count','')">3</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_AsonDate_Draft_Amt"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_AsonDate_Draft_Amt','')">3250</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Submit</td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_AsonDate_Submit_Count"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_AsonDate_Submit_Count','')">1</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_AsonDate_Submit_Amt"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_AsonDate_Submit_Amt','')">300</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Approved</td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_AsonDate_Approved_Count"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_AsonDate_Approved_Count','')">0</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_AsonDate_Approved_Amt"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_AsonDate_Approved_Amt','')">0</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Paid</td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_AsonDate_Paid_Count"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_AsonDate_Paid_Count','')">5</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_AsonDate_Paid_Amt"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_AsonDate_Paid_Amt','')">1703</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-sm-3">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-12  card-body with-border  card ">
+                                            <h4 class="card-title">Current Month Expense</h4>
+
+                                            <div class="clearfix" style="margin-bottom: 5px;"></div>
+
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="table-responsive">
+                                                        <div class="table_wid">
+                                                            <table style="width: 100%;">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="background: #edebeb;">Status</td>
+                                                                        <td style="background: #edebeb;">Count</td>
+                                                                        <td style="background: #edebeb;">Amount</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>Draft</td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_CurrentMonth_Draft_Count"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_CurrentMonth_Draft_Count','')">0</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_CurrentMonth_Draft_Amt"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_CurrentMonth_Draft_Amt','')">0</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Submit</td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_CurrentMonth_Submit_Count"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_CurrentMonth_Submit_Count','')">0</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_CurrentMonth_Submit_Amt"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_CurrentMonth_Submit_Amt','')">0</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Approved</td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_CurrentMonth_Approved_Count"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_CurrentMonth_Approved_Count','')">0</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_CurrentMonth_Approved_Amt"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_CurrentMonth_Approved_Amt','')">0</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Paid</td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_CurrentMonth_Paid_Count"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_CurrentMonth_Paid_Count','')">0</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_CurrentMonth_Paid_Amt"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_CurrentMonth_Paid_Amt','')">0</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="col-sm-3">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-12  card-body with-border  card ">
+                                            <h4 class="card-title">Last Month Expense</h4>
+
+                                            <div class="clearfix" style="margin-bottom: 5px;"></div>
+
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="table-responsive">
+                                                        <div class="table_wid">
+                                                            <table style="width: 100%;">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="background: #edebeb;">Status</td>
+                                                                        <td style="background: #edebeb;">Count</td>
+                                                                        <td style="background: #edebeb;">Amount</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Draft</td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_LastMonth_Draft_Count"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_LastMonth_Draft_Count','')">0</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_LastMonth_Draft_Amt"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_LastMonth_Draft_Amt','')">0</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Submit</td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_LastMonth_Submit_Count"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_LastMonth_Submit_Count','')">0</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_LastMonth_Submit_Amt"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_LastMonth_Submit_Amt','')">0</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Approved</td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_LastMonth_Approved_Count"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_LastMonth_Approved_Count','')">0</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_LastMonth_Approved_Amt"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_LastMonth_Approved_Amt','')">0</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Paid</td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_LastMonth_Paid_Count"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_LastMonth_Paid_Count','')">0</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_LastMonth_Paid_Amt"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_LastMonth_Paid_Amt','')">0</a>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-sm-3">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-12  card-body with-border  card ">
+                                            <h4 class="card-title">Last 3 Month Expense</h4>
+
+                                            <div class="clearfix" style="margin-bottom: 5px;"></div>
+
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="table-responsive">
+                                                        <div class="table_wid">
+                                                            <table style="width: 100%;">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="background: #edebeb;">Status</td>
+                                                                        <td style="background: #edebeb;">Count</td>
+                                                                        <td style="background: #edebeb;">Amount</td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>Draft</td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_ThreeMonth_Draft_Count"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_ThreeMonth_Draft_Count','')">0</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_ThreeMonth_Draft_Amt"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_ThreeMonth_Draft_Amt','')">0</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Submit</td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_ThreeMonth_Submit_Count"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_ThreeMonth_Submit_Count','')">0</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_ThreeMonth_Submit_Amt"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_ThreeMonth_Submit_Amt','')">0</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Approved</td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_ThreeMonth_Approved_Count"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_ThreeMonth_Approved_Count','')">0</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_ThreeMonth_Approved_Amt"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_ThreeMonth_Approved_Amt','')">0</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Paid</td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_ThreeMonth_Paid_Count"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_ThreeMonth_Paid_Count','')">0</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a id="ContentPlaceHolder3_btn_ThreeMonth_Paid_Amt"
+                                                                                href="javascript:__doPostBack('ctl00$ContentPlaceHolder3$btn_ThreeMonth_Paid_Amt','')">0</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="Col-sm-8 card-body with-border  card ">
+                                            <div class="clearfix" style="margin-bottom: 5px;"></div>
+
+
+                                            <script
+                                                type="text/javascript"> google.load("visualization", "1", { packages: ["corechart"] });
+                                                    google.setOnLoadCallback(drawChart);
+                                                    function drawChart() {
+                                                        var data = new google.visualization.DataTable();
+                                                        data.addColumn('string', 'Month');
+                                                        data.addColumn('number', 'Pending');
+                                                        data.addColumn('number', 'Submit');
+                                                        data.addColumn('number', 'Approved');
+                                                        data.addColumn('number', 'Paid');
+                                                        data.addRows(0); var chart = new google.visualization.ColumnChart(document.getElementById('chart_div')); chart.draw(data, { width: 950, height: 400, title: 'Local Expense', hAxis: { title: 'Year 1-Apr-2022 To 31-Mar-2023', titleTextStyle: { color: 'green' } } });
+                                                    }</script>
+
+
+
+                                            <div class="clearfix" style="margin-bottom: 5px;"></div>
+                                            <div id="chart_div">
+                                                <div style="position: relative;">
+                                                    <div dir="ltr"
+                                                        style="position: relative; width: 950px; height: 400px;">
+                                                        <div aria-label="A chart."
+                                                            style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;">
+                                                            <svg width="950" height="400" aria-label="A chart."
+                                                                style="overflow: hidden;">
+                                                                <defs id="_ABSTRACT_RENDERER_ID_0">
+                                                                    <clipPath id="_ABSTRACT_RENDERER_ID_1">
+                                                                        <rect x="143" y="77" width="664" height="247">
+                                                                        </rect>
+                                                                    </clipPath>
+                                                                </defs>
+                                                                <rect x="0" y="0" width="950" height="400" stroke="none"
+                                                                    stroke-width="0" fill="#ffffff"></rect>
+                                                                <g><text text-anchor="start" x="143" y="51.9"
+                                                                        font-family="Arial" font-size="14"
+                                                                        font-weight="bold" stroke="none"
+                                                                        stroke-width="0" fill="#000000">Local
+                                                                        Expense</text>
+                                                                    <rect x="143" y="40" width="664" height="14"
+                                                                        stroke="none" stroke-width="0" fill-opacity="0"
+                                                                        fill="#ffffff"></rect>
+                                                                </g>
+                                                                <g>
+                                                                    <rect x="821" y="77" width="115" height="83"
+                                                                        stroke="none" stroke-width="0" fill-opacity="0"
+                                                                        fill="#ffffff"></rect>
+                                                                    <g>
+                                                                        <rect x="821" y="77" width="115" height="14"
+                                                                            stroke="none" stroke-width="0"
+                                                                            fill-opacity="0" fill="#ffffff"></rect>
+                                                                        <g><text text-anchor="start" x="854" y="88.9"
+                                                                                font-family="Arial" font-size="14"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#222222">Pending</text></g>
+                                                                        <rect x="821" y="77" width="28" height="14"
+                                                                            stroke="none" stroke-width="0"
+                                                                            fill="#3366cc"></rect>
+                                                                    </g>
+                                                                    <g>
+                                                                        <rect x="821" y="100" width="115" height="14"
+                                                                            stroke="none" stroke-width="0"
+                                                                            fill-opacity="0" fill="#ffffff"></rect>
+                                                                        <g><text text-anchor="start" x="854" y="111.9"
+                                                                                font-family="Arial" font-size="14"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#222222">Submit</text></g>
+                                                                        <rect x="821" y="100" width="28" height="14"
+                                                                            stroke="none" stroke-width="0"
+                                                                            fill="#dc3912"></rect>
+                                                                    </g>
+                                                                    <g>
+                                                                        <rect x="821" y="123" width="115" height="14"
+                                                                            stroke="none" stroke-width="0"
+                                                                            fill-opacity="0" fill="#ffffff"></rect>
+                                                                        <g><text text-anchor="start" x="854" y="134.9"
+                                                                                font-family="Arial" font-size="14"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#222222">Approved</text></g>
+                                                                        <rect x="821" y="123" width="28" height="14"
+                                                                            stroke="none" stroke-width="0"
+                                                                            fill="#ff9900"></rect>
+                                                                    </g>
+                                                                    <g>
+                                                                        <rect x="821" y="146" width="115" height="14"
+                                                                            stroke="none" stroke-width="0"
+                                                                            fill-opacity="0" fill="#ffffff"></rect>
+                                                                        <g><text text-anchor="start" x="854" y="157.9"
+                                                                                font-family="Arial" font-size="14"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#222222">Paid</text></g>
+                                                                        <rect x="821" y="146" width="28" height="14"
+                                                                            stroke="none" stroke-width="0"
+                                                                            fill="#109618"></rect>
+                                                                    </g>
+                                                                </g>
+                                                                <g>
+                                                                    <rect x="143" y="77" width="664" height="247"
+                                                                        stroke="none" stroke-width="0" fill-opacity="0"
+                                                                        fill="#ffffff"></rect>
+                                                                    <g
+                                                                        clip-path="url(http://po.nexionautomation.com/dashboard.aspx#_ABSTRACT_RENDERER_ID_1)">
+                                                                        <g>
+                                                                            <rect x="143" y="323" width="664" height="1"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#cccccc"></rect>
+                                                                            <rect x="143" y="274" width="664" height="1"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#cccccc"></rect>
+                                                                            <rect x="143" y="225" width="664" height="1"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#cccccc"></rect>
+                                                                            <rect x="143" y="175" width="664" height="1"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#cccccc"></rect>
+                                                                            <rect x="143" y="126" width="664" height="1"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#cccccc"></rect>
+                                                                            <rect x="143" y="77" width="664" height="1"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#cccccc"></rect>
+                                                                            <rect x="143" y="298" width="664" height="1"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#ebebeb"></rect>
+                                                                            <rect x="143" y="249" width="664" height="1"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#ebebeb"></rect>
+                                                                            <rect x="143" y="200" width="664" height="1"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#ebebeb"></rect>
+                                                                            <rect x="143" y="151" width="664" height="1"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#ebebeb"></rect>
+                                                                            <rect x="143" y="102" width="664" height="1"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#ebebeb"></rect>
+                                                                        </g>
+                                                                        <g>
+                                                                            <rect x="143" y="323" width="664" height="1"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#333333"></rect>
+                                                                        </g>
+                                                                    </g>
+                                                                    <g></g>
+                                                                    <g>
+                                                                        <g><text text-anchor="end" x="129" y="328.4"
+                                                                                font-family="Arial" font-size="14"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#444444">0.0</text></g>
+                                                                        <g><text text-anchor="end" x="129" y="279.2"
+                                                                                font-family="Arial" font-size="14"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#444444">0.2</text></g>
+                                                                        <g><text text-anchor="end" x="129" y="230"
+                                                                                font-family="Arial" font-size="14"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#444444">0.4</text></g>
+                                                                        <g><text text-anchor="end" x="129" y="180.8"
+                                                                                font-family="Arial" font-size="14"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#444444">0.6</text></g>
+                                                                        <g><text text-anchor="end" x="129" y="131.6"
+                                                                                font-family="Arial" font-size="14"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#444444">0.8</text></g>
+                                                                        <g><text text-anchor="end" x="129" y="82.4"
+                                                                                font-family="Arial" font-size="14"
+                                                                                stroke="none" stroke-width="0"
+                                                                                fill="#444444">1.0</text></g>
+                                                                    </g>
+                                                                </g>
+                                                                <g>
+                                                                    <g><text text-anchor="middle" x="475" y="371.4"
+                                                                            font-family="Arial" font-size="14"
+                                                                            font-style="italic" stroke="none"
+                                                                            stroke-width="0" fill="#008000">Year
+                                                                            1-Apr-2022 To 31-Mar-2023</text>
+                                                                        <rect x="143" y="359.5" width="664" height="14"
+                                                                            stroke="none" stroke-width="0"
+                                                                            fill-opacity="0" fill="#ffffff"></rect>
+                                                                    </g>
+                                                                </g>
+                                                                <g></g>
+                                                            </svg>
+                                                            <div aria-label="A tabular representation of the data in the chart."
+                                                                style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;">
+                                                                <table>
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Month</th>
+                                                                            <th>Pending</th>
+                                                                            <th>Submit</th>
+                                                                            <th>Approved</th>
+                                                                            <th>Paid</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody></tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div aria-hidden="true"
+                                                        style="display: none; position: absolute; top: 410px; left: 960px; white-space: nowrap; font-family: Arial; font-size: 14px;">
+                                                        Paid</div>
+                                                    <div></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </section>
+        <!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+        <!-- right col -->
+    </div>
+    <!-- /.row (main row) -->
+
+</section>

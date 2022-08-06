@@ -48,6 +48,10 @@
                             <th scope="col">Last Updated</th>
                             <th scope="col">Creation Date</th>
                         </tr>
+
+
+                       
+
                     </thead>
                     <tbody>
                         <tr *ngFor="let person of persons;let a=index">
@@ -58,13 +62,14 @@
                                 <button class="badge bg-danger  btn btn-sm" name='{{ person.expenseId}}'
                                     (click)="onDel(person.expenseId)"><a class="fa fa-trash"></a></button>
                                 <br>
-                                <button class="badge bg-info  btn btn-sm" name='{{ person.expenseId}}'><a class="fa fa-file"
-                                        target="_self" [routerLink]="['/viewPo',person.expenseId]"></a></button>
+                                <button class="badge bg-info  btn btn-sm" name='{{ person.expenseId}}'><a
+                                        class="fa fa-file" target="_self"
+                                        [routerLink]="['/viewPo',person.expenseId]"></a></button>
 
                             </td>
 
 
-                           
+
                             <td>{{ person.expenseId }}</td>
                             <td> {{person.title}}</td>
                             <td>{{ person.periodForm | date:"yyyy-MM-dd" }}</td>
@@ -75,7 +80,7 @@
                             <td>{{ person.approvedAmount }}</td>
                             <td>{{ person.statusname }}</td>
                             <td> {{person.updatedName }}</td>
-                            
+
                             <td>{{ person.createdOn | date:"yyyy-MM-dd" }}</td>
 
 
