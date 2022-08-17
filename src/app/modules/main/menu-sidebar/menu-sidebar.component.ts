@@ -159,8 +159,6 @@ var result = this.submodule
 .where(s => s.left.right.moduleId == s.right.rid   )// &&  s.left.right.userCode==this.login.TMUserMaster.userCode
 .toList();
       
-console.log("submodule");
-console.log(da);
 
     
      var array2= new Array(); 
@@ -175,8 +173,7 @@ var submodule2=da.groupBy(x=>x.left.left.moduleId ).select(x=>x).toList();
 // var submodule2=da.groupBy(x=>x.left.left.cuserId).select(x=>x.first()).toArray();
 
 
-console.log(submodule1);
-console.log(submodule2);
+
 
 
 

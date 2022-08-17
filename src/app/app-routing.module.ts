@@ -43,6 +43,8 @@ import { OutstationViewComponent } from '@pages/Expense/outstation-view/outstati
 import { AttandanceComponent } from '@pages/Attandance/attandance/attandance.component';
 import { CreateIndentComponent } from '@pages/INDENT/create-indent/create-indent.component';
 import { CreateExpDashboardComponent } from '@pages/Expense/Exp_Dashboard/create-exp-dashboard/create-exp-dashboard.component';
+import { CreatePOFileComponent } from '@pages/Po-File/create-pofile/create-pofile.component'; 
+import { CreatePOItemsComponent } from '@pages/Po-File/create-poitems/create-poitems.component';
 
 const routes: Routes = [
     {
@@ -192,6 +194,14 @@ const routes: Routes = [
                 component:CreateExpDashboardComponent
             },
         
+            {
+                path: 'CreatePOFile',
+                component:CreatePOFileComponent
+            },
+            {
+                path: 'CreatePOItems/:id',
+                component:CreatePOItemsComponent
+            },
             
            
             {

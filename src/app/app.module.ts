@@ -71,6 +71,11 @@ import { OutstationViewComponent } from './pages/Expense/outstation-view/outstat
 import { AttandanceComponent } from './pages/Attandance/attandance/attandance.component';
 import { CreateIndentComponent } from './pages/INDENT/create-indent/create-indent.component';
 import { CreateExpDashboardComponent } from './pages/Expense/Exp_Dashboard/create-exp-dashboard/create-exp-dashboard.component';
+
+import { CreatePOItemsComponent } from './pages/Po-File/create-poitems/create-poitems.component';
+import { CreatePOFileComponent } from '@pages/Po-File/create-pofile/create-pofile.component';
+
+
 //import "file-viewer";
 
 // import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
@@ -81,7 +86,7 @@ registerLocaleData(localeEn, 'en-EN');
 @NgModule({
     declarations: [
         
-        
+       
         AppComponent,
         MainComponent,
         LoginComponent,
@@ -133,7 +138,9 @@ registerLocaleData(localeEn, 'en-EN');
         OutstationViewComponent,
         AttandanceComponent,
         CreateIndentComponent,
-        CreateExpDashboardComponent
+        CreateExpDashboardComponent,
+        CreatePOFileComponent,
+        CreatePOItemsComponent
    
     ],
     imports: [

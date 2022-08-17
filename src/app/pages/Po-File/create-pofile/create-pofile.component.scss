@@ -1,0 +1,10 @@
+
+/* Important part */
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    width: auto;
+    height: 80vh;
+    overflow-y: auto;
+}
