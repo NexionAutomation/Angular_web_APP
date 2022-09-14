@@ -65,8 +65,8 @@ export class ViewPOComponent implements OnInit {
       alert(this.chatRoomUid$.destination._value.id);
       this.URLid = this.chatRoomUid$.destination._value.id;
 
-      //   var site = "http://po.nexionautomation.com/printpo.aspx?poid="+this.URLid ;
-      // document.getElementById('iFrameName').setAttribute("src",site) ;
+        var site = "http://po.nexionautomation.com/printpo.aspx?poid="+this.URLid ;
+      document.getElementById('iFrameName').setAttribute("src",site) ;
 
       // this.printDiv("print");
     }

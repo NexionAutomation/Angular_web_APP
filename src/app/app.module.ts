@@ -74,6 +74,7 @@ import { CreateExpDashboardComponent } from './pages/Expense/Exp_Dashboard/creat
 
 import { CreatePOItemsComponent } from './pages/Po-File/create-poitems/create-poitems.component';
 import { CreatePOFileComponent } from '@pages/Po-File/create-pofile/create-pofile.component';
+import { SearchPoItemsComponent } from './pages/PO/search-po-items/search-po-items.component';
 
 
 //import "file-viewer";
@@ -140,7 +141,8 @@ registerLocaleData(localeEn, 'en-EN');
         CreateIndentComponent,
         CreateExpDashboardComponent,
         CreatePOFileComponent,
-        CreatePOItemsComponent
+        CreatePOItemsComponent,
+        SearchPoItemsComponent
    
     ],
     imports: [

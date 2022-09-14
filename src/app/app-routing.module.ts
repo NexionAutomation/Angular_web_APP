@@ -45,6 +45,7 @@ import { CreateIndentComponent } from '@pages/INDENT/create-indent/create-indent
 import { CreateExpDashboardComponent } from '@pages/Expense/Exp_Dashboard/create-exp-dashboard/create-exp-dashboard.component';
 import { CreatePOFileComponent } from '@pages/Po-File/create-pofile/create-pofile.component'; 
 import { CreatePOItemsComponent } from '@pages/Po-File/create-poitems/create-poitems.component';
+import { SearchPoItemsComponent } from '@pages/PO/search-po-items/search-po-items.component';
 
 const routes: Routes = [
     {
@@ -201,6 +202,10 @@ const routes: Routes = [
             {
                 path: 'CreatePOItems/:id',
                 component:CreatePOItemsComponent
+            },
+            {
+                path: 'SearchPOItems',
+                component:SearchPoItemsComponent
             },
             
            

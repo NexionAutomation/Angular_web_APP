@@ -306,19 +306,47 @@ rid,
     // .toList();
    
     
-this.persons= this.pOTmPurchaseHeads.take(200);
+this.persons= this.pOTmPurchaseHeads;
     //console.log(da.take(10));
-    $('#example').DataTable().destroy();
-    $(document).ready(function () {
+    // $('#example').DataTable().destroy();
+    // $(document).ready(function () {
 
-      this.dtOptions = $('#example').DataTable({
+    //   this.dtOptions = $('#example').DataTable({
 
-        dom: 'Bfrtip',
-        paging: true
+    //     dom: 'Bfrtip',
+    //     paging: true
 
-      });
+    //   });
 
-    });
+
+
+      
+
+    // });
+
+
+
+    $(document).ready(function() {
+      // Setup - add a text input to each footer cell
+      $('#example tfoot th').each( function () {
+          var title = $('#example thead th').eq( $(this).index() ).text();
+          $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+      } );
+   
+      // DataTable
+      var table = $('#example').DataTable();
+   
+      // Apply the search
+      table.columns().every( function () {
+          var that = this;
+   
+          $( 'input', this.footer() ).on( 'keyup change', function () {
+              that
+                  .search('A')
+                  .draw();
+          } );
+      } );
+  } );
 
   }
 
