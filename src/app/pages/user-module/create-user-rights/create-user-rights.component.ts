@@ -12,6 +12,7 @@ import { UserModuleServicesService } from '../user-module-services.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { element } from 'protractor';
 import { join } from 'path';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-create-user-rights',
   templateUrl: './create-user-rights.component.html',
@@ -321,7 +322,7 @@ export class CreateUserRightsComponent implements OnInit {
 
 console.log(this.submodule2);
   
-this.checkAllCheckBox("$event");
+this.checkAllCheckBox(event);
 
     // document.getElementById('Create,0').innerHTML=" <input type='checkbox'  id='Create,0' (change)='checkAllCheckBox($event)' >";
    // document.getElementById("Create,"+0+"" ).setAttribute('checked', 'checked');
@@ -376,7 +377,8 @@ this.checkAllCheckBox("$event");
         //$(this).parent().find('input[type="checkbox"]').prop('checked', true);
         if (data[a].canView == true) {
           document.getElementById("Create," + data[a].subModuleId + "").setAttribute('checked', 'checked')
-        } if (data[a].canUpdate == true) {
+        }
+         if (data[a].canUpdate == true) {
           document.getElementById("Update," + data[a].subModuleId + "").setAttribute('checked', 'checked')
         } if (data[a].canDelete == true) {
           document.getElementById("Delete," + data[a].subModuleId + "").setAttribute('checked', 'checked')
@@ -384,6 +386,10 @@ this.checkAllCheckBox("$event");
         }
         if (data[a].canSave == true) {
           document.getElementById("Save," + data[a].subModuleId + "").setAttribute('checked', 'checked')
+        }
+
+        if (data[a].canExport == true) {
+          document.getElementById("ExportExcel," + data[a].subModuleId + "").setAttribute('checked', 'checked')
         }
         //data[a].canView==true?document.getElementById("Create,1").setAttribute('checkbox', 'checked'):document.getElementById("Create,1").removeAttribute('checked');
         // data[a].canUpdate==true?document.getElementById("Update,"+data[a].subModuleId+"").setAttribute('checked', 'checked'):'';
@@ -448,6 +454,30 @@ this.checkAllCheckBox("$event");
     this.Rights = rit;
     console.log(someObj);
 
+
+
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+
+    })
+
+    this.Logins1.popupStatus
+    Toast.fire({
+      icon: 'success',
+      title: this.Rights.length.toString(),
+
+
+    })
+
     var Finddata = Enumerable.from(this.rightsModule2).where(x => x.groupId == Number(this.loginFormRights.get('ddlGroup_Id').value)
       && x.userCode == Number(this.loginFormRights.get('lstUsers').value) && x.moduleId == Number(this.loginFormRights.get('lstModules').value));
 
@@ -481,7 +511,7 @@ this.checkAllCheckBox("$event");
             this.Rights[t].userID,
             this.Rights[t].Status[0] == "ExportExcel" ? true : false,
             Number(this.loginFormRights.get('lstModules').value),
-      "DELETE"
+            "DELETE"
           )
           
      

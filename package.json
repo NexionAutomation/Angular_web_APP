@@ -1,6 +1,6 @@
 {
   "name": "nexion",
-  "version": "0.1.1",
+  "version": "1.0.0", 
   "private": true,
   "main": "main.js",
   "scripts": {
@@ -13,7 +13,8 @@
     "postinstall": "ngcc",
     "start:electron": "ng build --base-href ./ && electron .",
     "Deploy:App": "electron-packager APP Nexion --platform=win32 --arch=x64",
-    "electron-package-win": "ng build --prod && electron-packager . --no-prune --ignore=/node_modules --ignore=/e2e --ignore=/src --overwrite --icon=./favicon.icon"
+    "electron-package-win": "ng build --prod && electron-packager . --no-prune --ignore=/node_modules --ignore=/e2e --ignore=/src --overwrite --icon=./favicon.icon",
+  "build_Pro":"ng build --prod"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [

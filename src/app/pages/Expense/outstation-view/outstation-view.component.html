@@ -78,14 +78,23 @@
                             <td>{{ person.location }}</td>
                             <td> {{person.amount }}</td>
                             <td>{{ person.approvedAmount }}</td>
-                            <td>{{ person.statusname }}</td>
+                            <td>
+                                <span class="badge badge-primary " *ngIf='person.statusname=="Draft"'> {{ person.statusname }}</span>
+                                <span class="badge badge-success " *ngIf='person.statusname=="Submit"'> {{ person.statusname }}</span>
+                                <span class="badge badge-danger " *ngIf='person.statusname=="Delete"'> {{ person.statusname }}</span>
+                                <span class="badge badge-warning " *ngIf='person.statusname=="Approved"'> {{ person.statusname }}</span>
+                                <span class="badge badge-secondary " *ngIf='person.statusname=="Reject"'> {{ person.statusname }}</span>
+                                <span class="badge badge-success "  style="background-color: burlywood" *ngIf='person.statusname=="Paid"'> {{ person.statusname }}</span>
+                               
+                           
+                            </td>
                             <td> {{person.updatedName }}</td>
 
                             <td>{{ person.createdOn | date:"yyyy-MM-dd" }}</td>
 
+                           
 
-
-
+                            
 
                         </tr>
                     </tbody>

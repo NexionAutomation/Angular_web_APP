@@ -76,6 +76,9 @@ import { CreatePOItemsComponent } from './pages/Po-File/create-poitems/create-po
 import { CreatePOFileComponent } from '@pages/Po-File/create-pofile/create-pofile.component';
 import { SearchPoItemsComponent } from './pages/PO/search-po-items/search-po-items.component';
 
+import * as CanvasJSAngularChart from '../assets/canvasjs.angular.component';
+var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
+
 
 //import "file-viewer";
 
@@ -142,8 +145,8 @@ registerLocaleData(localeEn, 'en-EN');
         CreateExpDashboardComponent,
         CreatePOFileComponent,
         CreatePOItemsComponent,
-        SearchPoItemsComponent
-   
+        SearchPoItemsComponent,
+        CanvasJSChart
     ],
     imports: [
         // ApolloModule,
@@ -151,7 +154,7 @@ registerLocaleData(localeEn, 'en-EN');
         DataTablesModule,
          ApolloModule, 
         BrowserModule,
-        
+    
        
         StoreModule.forRoot({auth: authReducer, ui: uiReducer}),
         SweetAlert2Module.forRoot(),

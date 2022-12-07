@@ -23,6 +23,7 @@ import Swal from 'sweetalert2';
 export class ExpenseEmpComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   persons: any;
+  pOVwOutstationExpenseComments2:any;
   persons1: any;
   dtTrigger: Subject<any> = new Subject<any>();
   headers: any;
@@ -42,6 +43,7 @@ export class ExpenseEmpComponent implements OnInit {
   chatRoomUid$: any;
   URLid: any;
   pOExpenseHeadsdata: any;
+  pOExpenseTypes:any
   pOExpenseItemssdata: any;
   pOExpenseStatusStatesData: any;
   constructor(
@@ -130,6 +132,9 @@ export class ExpenseEmpComponent implements OnInit {
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
     console.log(obj);
+
+    var pOVwOutstationExpenseComments = Enumerable.from(obj["data"]["pOVwOutstationExpenseComments"]).cast<any>();
+     this.pOExpenseTypes = Enumerable.from(obj["data"]["pOExpenseTypes"]).cast<any>();
     var pOExpenseHeads = Enumerable.from(obj["data"]["pOExpenseHeads"]).cast<any>();
     var pOExpenseItemss = Enumerable.from(obj["data"]["pOExpenseItems"]).cast<any>();
     var pOExpenseStatusStates = Enumerable.from(obj["data"]["pOExpenseStatusStates"]).cast<any>();
@@ -140,12 +145,14 @@ export class ExpenseEmpComponent implements OnInit {
 
     this.pOExpenseItemssdata = pOExpenseItemss.where(x => x.expenseId == Number(STRING)).toList();
 
+
     this.pOExpenseStatusStatesData = pOExpenseStatusStates.where(x => x.expenseId == Number(STRING)).toList();
 
 
+
+    console.log(this.pOExpenseHeadsdata);
+    console.log(this.pOExpenseItemssdata);
     // this.pOExpenseItems=datas;
-
-
 
 
 
@@ -164,12 +171,47 @@ export class ExpenseEmpComponent implements OnInit {
 
 
     // });
+    var pOVwOutstationExpenseComments2=Enumerable.from(pOVwOutstationExpenseComments).cast<any>().where(x => x.expenseId == Number(this.URLid)).orderByDescending(a=>a.createdOn).toList();
+    var result =  this.pOExpenseItemssdata
+    .join(this.pOExpenseTypes, a => a.expenseTypeId, b => b.expenseTypeId)
+    .where(s => s.left.expenseTypeId == s.right.expenseTypeId )
+    // &&    s.left.groupId== s.right.groupId)
+    .toList();
 
-
-
-    this.pOExpenseItems = this.pOExpenseItemssdata;
+    console.log(result);
+     this.persons=result;
+     this.pOVwOutstationExpenseComments2=pOVwOutstationExpenseComments2;
+    this.pOExpenseItems = result;
     this.pOExpenseItemAttachmentss = Enumerable.from(pOExpenseItemAttachments).cast<any>().where(x => x.expenseId == Number(this.URLid)).toList();
     ;
+
+
+
+    $('#example').DataTable().destroy();
+    $(document).ready(function () {
+
+      this.dtOptions = $('#example').DataTable({
+
+        dom: 'Bfrtip',
+        paging: false,
+        search: true
+
+      });
+
+    });
+
+    $('#example2').DataTable().destroy();
+    $(document).ready(function () {
+
+      this.dtOptions = $('#example2').DataTable({
+
+        dom: 'Bfrtip',
+        paging: false,
+        search: true
+
+      });
+
+    });
 
   }
 
@@ -506,8 +548,30 @@ export class ExpenseEmpComponent implements OnInit {
         createdOn
         attchmentId
       }
-    }
+
+      pOVwOutstationExpenseComments {
+        expenseId
+        comments
+        statusName
+        userName
+        createdOn
+      }
     
+    
+
+    pOExpenseTypes {
+      typeName
+      egroupId
+      createdOn
+      createdBy
+      updateOn
+      updateBy
+      rate
+      amt
+      km
+      park
+    }
+  }
     
       `
     var datas = JSON.stringify({ query, variables: { User, Password } });
@@ -576,6 +640,32 @@ export class ExpenseEmpComponent implements OnInit {
         imagDescription
         name
       }
+
+      pOVwOutstationExpenseComments {
+        expenseId
+        comments
+        statusName
+        userName
+        createdOn
+      }
+    
+    
+
+    pOExpenseTypes {
+      typeName
+      egroupId
+      createdOn
+      createdBy
+      updateOn
+      updateBy
+      rate
+      amt
+      km
+      park
+      expenseTypeId
+    }
+
+
     }
     
     
@@ -600,6 +690,7 @@ export class ExpenseEmpComponent implements OnInit {
         expenseId
         imagDescription
         name
+        
       }
      
     
@@ -613,26 +704,23 @@ export class ExpenseEmpComponent implements OnInit {
 
 
   async LodeDataTable() {
+
+
+
+    
+
+
+    
     var data = await this.GETData("", "");
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-    this.persons = obj["data"]["pOExpenseHeads"]
-    this.pOExpenseItemAttachmentss = null;//obj["data"]["pOExpenseItemAttachments"]
+    this.persons = obj["data"]["pOExpenseHeads"];
+    //this.pOExpenseItemAttachmentss = null;//obj["data"]["pOExpenseItemAttachments"]
 
 
-
-    $('#example').DataTable().destroy();
-    $(document).ready(function () {
-
-      this.dtOptions = $('#example').DataTable({
-
-        dom: 'Bfrtip',
-        paging: true
-
-      });
-
-    });
+    
+   
 
   }
 
@@ -942,14 +1030,17 @@ export class ExpenseEmpComponent implements OnInit {
      
       // var outputFinal = obj2["data"]["cMExpenseItemAttachment07"];
 
-
+      setTimeout(() => {}, 5000);
  
       var data = await this.GETData3("", "");
       const myJSON = JSON.stringify(data);
       const obj = JSON.parse(myJSON);
 
-      var datafe = obj["data"]["pOExpenseItemAttachments"];
-
+      var datafe = Enumerable.from(obj["data"]["pOExpenseItemAttachments"]).cast<any>();
+        
+      
+       var datas=datafe
+      
      
       if (this.ActionFlag == 0) {
         var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
@@ -960,8 +1051,12 @@ export class ExpenseEmpComponent implements OnInit {
       }
      
      
+      
+
       this.pOExpenseItemAttachmentss=datass;
 
+
+     
      
         const Toast = Swal.mixin({
           toast: true,
@@ -1208,8 +1303,13 @@ export class ExpenseEmpComponent implements OnInit {
             const myJSON = JSON.stringify(data);
             const obj = JSON.parse(myJSON);
 
-            var datafe = obj["data"]["pOExpenseItems"];
+            var datafe = Enumerable.from(obj["data"]["pOExpenseItems"]).cast<any>();
+        
+       var pOExpenseTypes = Enumerable.from(obj["data"]["pOExpenseTypes"]).cast<any>();
 
+
+
+      
             var datas;
             if (this.ActionFlag == 0) {
               datas = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
@@ -1221,7 +1321,13 @@ export class ExpenseEmpComponent implements OnInit {
 
             }
 
-            this.pOExpenseItems = datas;
+
+            var result =  datas
+        .join(pOExpenseTypes, a => a.expenseTypeId, b => b.expenseTypeId)
+        .where(s => s.left.expenseTypeId == s.right.expenseTypeId  )
+        // &&    s.left.groupId== s.right.groupId)
+        .toList();
+            this.pOExpenseItems = result;
 
 
 
@@ -1319,8 +1425,12 @@ export class ExpenseEmpComponent implements OnInit {
             const myJSON = JSON.stringify(data);
             const obj = JSON.parse(myJSON);
       
-            var datafe = obj["data"]["pOExpenseItemAttachments"];
-      
+            var datafe = Enumerable.from(obj["data"]["pOExpenseItemAttachments"]).cast<any>();
+        
+       
+
+        
+         var datas=datafe
            
             if (this.ActionFlag == 0) {
               var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
@@ -1331,7 +1441,24 @@ export class ExpenseEmpComponent implements OnInit {
             }
            
            
+            
+
             this.pOExpenseItemAttachmentss=datass;
+
+
+
+            $('#example2').DataTable().destroy();
+            $(document).ready(function () {
+        
+              this.dtOptions = $('#example2').DataTable({
+        
+                dom: 'Bfrtip',
+                paging: false,
+                search: true
+        
+              });
+        
+            });
 
 
 
@@ -1432,9 +1559,14 @@ export class ExpenseEmpComponent implements OnInit {
         const myJSON = JSON.stringify(data);
         const obj = JSON.parse(myJSON);
 
-        var datafe = obj["data"]["pOExpenseItems"];
+        //var datafe = obj["data"]["pOExpenseItems"];
 
-        var datas;
+        var datafe = Enumerable.from(obj["data"]["pOExpenseItems"]).cast<any>();
+        
+       var pOExpenseTypes = Enumerable.from(obj["data"]["pOExpenseTypes"]).cast<any>();
+
+         
+         var datas=datafe
         if (this.ActionFlag == 0) {
           datas = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
 
@@ -1444,8 +1576,16 @@ export class ExpenseEmpComponent implements OnInit {
 
 
         }
-        console.log(datas);
-        this.pOExpenseItems = datas;
+        
+
+
+
+        var result =  datas
+        .join(pOExpenseTypes, a => a.expenseTypeId, b => b.expenseTypeId)
+        .where(s => s.left.expenseTypeId == s.right.expenseTypeId  )
+        // &&    s.left.groupId== s.right.groupId)
+        .toList();
+        this.pOExpenseItems = result;
 
       }
 

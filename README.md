@@ -75,5 +75,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 1)npm run  electron-package-win
 
 ## wix-mix Installer
+
 1)node build_installer.js
-2)
+2)ng build --prod --output-hashing none --watch
+3)npm run build-prod

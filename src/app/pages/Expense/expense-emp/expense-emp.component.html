@@ -1,3 +1,69 @@
+<style>
+
+
+
+.vertical {
+    width: 5px;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    background-color: #ccc;
+    position: absolute;
+    z-index: -1;
+}
+.comment {
+    position: relative;
+    margin: 60px auto;
+    width: 700px;
+    padding: 3px 20px 3px 20px;
+}
+.comment p{
+    padding: 10px;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.7;
+    position: relative;
+    max-width: 300px;
+    background-color: transparent
+}
+.comment p:nth-child(odd) {
+    left: 55%;
+}
+.comment p:nth-child(even) {
+    right: 0;
+}
+.comment p:nth-child(odd)::before , .comment p:nth-child(even)::before{
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    display: block;
+    border: 3px solid #ccc;
+    border-radius: 50%;
+    background-color: #2c3e50;
+    top: 40%;
+}
+.comment p:nth-child(odd)::before {
+    right: 107.5%;
+}
+.comment p:nth-child(even)::before {
+    left: 107.5%;
+}
+.comment p:nth-child(odd)::after , .comment p:nth-child(even)::after {
+    content: '';
+    position: absolute;
+    border: solid 8px;
+    top: 40%;
+}
+.comment p:nth-child(odd)::after {
+    right: 100%;
+    border-color: transparent #ccc transparent transparent;
+}
+.comment p:nth-child(even)::after {
+    left: 100%;
+    border-color: transparent  transparent transparent #ccc;
+}
+</style>
 <section class="col-lg-12">
 
 
@@ -269,35 +335,40 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="bder top-mrg20">
+                           
                                 <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="table-responsive">
-                                            <div class="table_wid">
+                                  
+                                            <div class="card-body" style="overflow-x:auto;">
 
-                                                <div>
-                                                    <table cellspacing="0" rules="all" border="1" id="example"
-                                                        class="table table-responsive">
-                                                        <tbody>
+                                               
+                                                    <table id="example" border="1" class="row-border hover">
+                                                        <thead>
                                                             <tr>
-                                                                <th scope="col">&nbsp;</th>
-                                                                <th scope="col">SrNo</th>
-                                                                <th scope="col">Date</th>
-                                                                <th scope="col">Description</th>
-                                                                <th scope="col">Type ID</th>
-                                                                <th scope="col">Type Name</th>
-                                                                <th scope="col">Distance</th>
-                                                                <th scope="col">Amt (A)</th>
-                                                                <th scope="col">Park/Toll (B)</th>
-                                                                <th scope="col">Total(A + B) </th>
-                                                                <th scope="col">Approved Amount</th>
-                                                                <th scope="col">Paid By</th>
+                                                                <th >&nbsp;</th>
+                                                                <th >SrNo</th>
+                                                                <th style="width: 150px;">Date</th>
+                                                                <th  style="width: 300px;">Description</th>
+                                                                                       <th >Type ID</th>
+                                                                <th >Type Name</th>
+                                                                <th >Distance</th>
+                                                                <th >Amt (A)</th>
+                                                                <th >Park/Toll (B)</th>
+                                                                <th >Total(A + B) </th>
+                                                                <th >Approved Amount</th>
+                                                                <th >Paid By</th>
+                                    
                                                             </tr>
+                                                        </thead>
+                                                        
+                                                        
+                                                        
+                                                        <tbody>
+                                                            
                                                             <tr *ngFor="let  value  of pOExpenseItems;let a=index">
                                                                 <td>
                                                                     <input type="button" value="Delete"
                                                                         id="GridView1_btnDelete_Row_0"
-                                                                        class="btn btn-sm btn-danger" (click)="onDel(value.expenseItemsId)">
+                                                                        class="btn btn-sm btn-danger" (click)="onDel(value.left.expenseItemsId)">
                                                                     <a id="GridView1_btn_edit_0"
                                                                         class="btn btn-sm btn-dange fa fa-eye"></a>
 
@@ -308,30 +379,34 @@
                                                                 <td style="width:100px;">
                                                                     <span id="GridView1_lblRowNumber_0">{{a}}</span>
                                                                 </td>
-                                                                <td>{{value.Date}}</td>
-                                                                <td>{{value.description}}</td>
-                                                                <td>{{value.expenseTypeId}}</td>
-                                                                <td>{{value.expenseTypeId}}</td>
-                                                                <td>{{value.expenseTypeId}}</td>
-                                                                <td>{{value.expenseTypeId}}</td>
-                                                                <td>{{value.expenseTypeId}}</td>
-                                                                <td>{{value.expenseTypeId}}</td>
-                                                                <td>{{value.expenseTypeId}}</td>
-                                                                <td>{{value.expenseItemsId}}</td>
+                                                                <td>{{value.left.date | date:"yyyy-MM-dd" }}</td>
+                                                                <td>{{value.left.description}}</td>
+                                                                <td>{{value.left.expenseTypeId}}</td>
+                                                                <td>{{value.right.typeName}}</td>
+                                                                <td>{{value.left.distance}}</td>
+                                                                <td>{{value.left.amount}}</td>
+                                                                <td>{{value.left.parkingAmt}}</td>
+                                                                <td>{{ value.left.amount + value.left.parkingAmt }}</td>
+                                                                <td>{{value.left.approvedAmount}}</td>
+                                                                <td>{{value.left.paidBy}}</td>
                                                             </tr>
+
+
+                                                            
 
 
 
 
                                                         </tbody>
                                                     </table>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                    </div>
+
+
+                                                
+                                            </div>
+                                      
                                 </div>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -384,10 +459,8 @@
                                             <div class="table_wid table table-responsive ">
 
                                                 <div>
-                                                    <table  rules="all" border="1"
-                                                        id="ContentPlaceHolder3_gvImages"
-                                                        style="border-collapse:collapse;">
-                                                        <tbody>
+                                                    <table id="example2" border="1" class="row-border hover">
+                                                   <thead>
                                                             <tr>
                                                                 <th scope="col">Action</th>
                                                                 <th scope="col">Image Id</th>
@@ -395,6 +468,8 @@
                                                                 <th scope="col">Description</th>
                                                                 <th scope="col">Image</th>
                                                             </tr>
+                                                        </thead>
+                                                        <tbody>
                                                             <tr *ngFor="let person of pOExpenseItemAttachmentss;">
                                                                 <td  >
                                                                     <button type="button"
@@ -407,12 +482,12 @@
                                                                 <td>{{person.attchmentId}}</td>
                                                                 <td>{{person.name}}</td>
                                                                 <td>{{person.imagDescription}}</td>
-                                                                <td>
+                                                                <td class="col-md-12">
                                                                     <a 
                                                                         tabindex="0"  (click)="openPopup(person.name)"><img
                                                                          src="http://app.nexionautomation.com/FileData/{{person.name}}"
                                                                     
-                                                                            style="height:100px;width:100px;" class="img-thumbnail"></a>
+                                                                            class="img-thumbnail" style="height:100px;width:100px;"></a>   <!--style="height:100px;width:100px;"-->
 
                                                                 </td>
                                                             </tr>
@@ -456,6 +531,10 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-12">
+
+
+
+
                                         <label for="inputEmail3" class="control-label pull-left">Comments</label>&nbsp;
                                         <textarea formControlName="txtcomments" rows="2" cols="20" id="txtcomments"
                                             class="form-control "></textarea>
@@ -478,19 +557,27 @@
                                            
                                         </div>
     
-                                        <div class="box-body">
-                                            <div class="wrapper1">
-                                                <ul class="fa-ul twocolumn">
-                                                  <li><i class="fas fa-user-circle"></i>
-                                                    <h3>Lily Pond</h3>
-                                                    <p>Comments:-Lorem ipsum dolor sit amet,</p>
-                                                    <p>Status:- dvdds</p>
-                                                    <p>Date:- 2019-10-10</p>
-                                                        
-                                                </li>
-                                                 
-                                                </ul>
-                                              </div>
+                                        <div class="box-body container">
+
+
+                                            
+
+                                            <div class="comment container-fluid">
+                                                <p *ngFor="let person of pOVwOutstationExpenseComments2;">
+                                                    <span class="badge badge-primary col-md-3"> {{person.statusName}}</span>
+                                                    <span class="badge badge-success col-md-6" >{{person.userName}}</span>
+                                                    <span class="badge badge-warning col-md-3">{{person.createdOn | date:"yyyy-MM-dd"}} </span>
+                                                
+                                                        <label class="col-md-12"> {{person.comments}}</label>
+                                                    
+                                                </p>
+                                                
+                                               
+                                                <div class="vertical"></div>
+                                            </div>
+
+                                    
+                                           
     
                                         </div>
                                     </div>
@@ -555,7 +642,7 @@
     <div class="modal-content">
       
       <div class="modal-body ">
-        <img  id="imagemodel" style="transform: center;"/>
+        <img  id="imagemodel" class="img-thumbnail" style="transform: center;"  />
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" 

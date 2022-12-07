@@ -279,10 +279,16 @@
                                         <div class="table-responsive">
                                             <div class="table_wid">
 
-                                                <div>
-                                                    <table cellspacing="0" rules="all" border="1" id="example"
-                                                        class="table table-responsive">
-                                                        <tbody>
+                                                <div class="card-body " style="overflow-x:auto;">
+
+
+
+                                                    <!-- <table id="example" class="display" width="100%"></table> -->
+                                    
+                                                    <table id="example"  class="table table-striped">
+
+
+                                                        <thead>
                                                             <tr>
                                                                 <th scope="col">&nbsp;</th>
                                                                 <th scope="col">SrNo</th>
@@ -297,6 +303,10 @@
                                                                 <th scope="col">Approved Amount</th>
                                                                 <th scope="col">Paid By</th>
                                                             </tr>
+
+                                                        </thead>
+                                                        <tbody>
+                                                           
                                                             <tr *ngFor="let  value  of arr;let a=index">
                                                                 <td>
                                                                     <input type="button"
@@ -419,7 +429,7 @@
                                     <div class="col-sm-12">
                                         <label for="inputEmail3" class="control-label pull-left">Status</label>&nbsp;
                                         <select formControlName="ddlstatus" id="ddlstatus" class="form-control">
-                                            <option value="1">Draft</option>
+                                            <option value="1" selected>Draft</option>
                                             <option value="2">Submit</option>
                                             <option value="6">Delete</option>
 

@@ -156,7 +156,8 @@ var result = this.submodule
 
     var da= result 
      .join(this.CMAdminModuleMasterUser, a => a.right.moduleId, b => b.rid)
-.where(s => s.left.right.moduleId == s.right.rid   )// &&  s.left.right.userCode==this.login.TMUserMaster.userCode
+.where(s => s.left.right.moduleId == s.right.rid   )
+.where(s => s.left.right.canSave != true  )// &&  s.left.right.userCode==this.login.TMUserMaster.userCode
 .toList();
       
 
@@ -338,7 +339,17 @@ submodule1.forEach(element => {
 //         name: "Expense OutStation View"
 //     },
 
-      
+
+  array.push (
+    {
+        name:'Dashboard Rights' ,
+        path: ['/'],
+        children:[  {
+          path: '/CreateUserRight',
+          name: "User Rights"
+      }]
+    }
+  )
 
 
 this.menu=array;
