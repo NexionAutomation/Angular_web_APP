@@ -40,7 +40,7 @@ export class CreatePOComponent implements OnInit {
   POTmSupplierMasters: Enumerable<Tm_supplierMaster>;
   POTmCompanyMasters: Enumerable<TM_CountryMaster>;
   chatRoomUid$: any;
-  URLid: number;
+  public URLid: number;
   pOExpenseItems: any;
   pOTmPurchaseHeads: any;
   pOTmPurchaseBodiess: Enumerable<pOTmPurchaseBodies>;
@@ -502,28 +502,34 @@ id: number,
         sname
         spanNo
       }
-      pOTmPurchaseHeads {
-        id
-        companyId
-        creationDate
-        cuserId
-        deliveryDate
-        deliveryMode
-        enduser
-        freightTerms
-        gst
-        indentNo
-        modificationDate
-        muserId
-        orderDate
-        paymentTerms
-        poId
-        remarks
-        supplierId
-        total
-        workOrderNo
+      pOTmPurchaseHeads(order: {id: DESC, deliveryDate: DESC}, first: 5) {
+        nodes {
+          id
+          companyId
+          creationDate
+          cuserId
+          deliveryDate
+          deliveryMode
+          enduser
+          freightTerms
+          gst
+          indentNo
+          modificationDate
+          muserId
+          orderDate
+          paymentTerms
+          poId
+          remarks
+          supplierId
+          total
+          workOrderNo
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
       }
-      pOTmPurchaseBodies {
+      pOTmPurchaseBodies (where: {poId: {eq: ${  this.URLid="undefined"?null:this.URLid}}}){
         id
         catname
         creationDate
@@ -556,11 +562,12 @@ id: number,
 
     this.POTmSupplierMasters = Enumerable.from(obj["data"]["pOTmSupplierMasters"]).cast<Tm_supplierMaster>();
     this.POTmCompanyMasters = Enumerable.from(obj["data"]["pOTmCompanyMasters"]).cast<TM_CountryMaster>();
-    this.pOTmPurchaseHeads = Enumerable.from(obj["data"]["pOTmPurchaseHeads"]).cast<TM_PurchaseHead>();;
+    this.pOTmPurchaseHeads = Enumerable.from(obj["data"]["pOTmPurchaseHeads"]["nodes"]).cast<TM_PurchaseHead>();;
     this.pOTmPurchaseBodiess = Enumerable.from(obj["data"]["pOTmPurchaseBodies"]);
 
 
     
+    console.log(obj)
     $('#example').DataTable().destroy();
     $(document).ready(function () {
 
@@ -976,7 +983,9 @@ async Add_items()
      
      if(this.ActionFlag==0)
      {
+      this.URLid=Number(this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1);
       var output=
+      
       await this.INSERTITEMS(  Number(this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1),
      this.loginForm.get('txtdescription').value,
      this.loginForm.get('ddluom').value ,
@@ -1131,28 +1140,30 @@ async GETData2(User: string, Password: string): Promise<any> {
   let data = '{User="' + User + '",Password="' + Password + '" }';
   let query = `query MyQuery {
     __typename
-    pOTmPurchaseHeads {
-      id
-      companyId
-      creationDate
-      cuserId
-      deliveryDate
-      deliveryMode
-      enduser
-      freightTerms
-      gst
-      indentNo
-      modificationDate
-      muserId
-      orderDate
-      paymentTerms
-      poId
-      remarks
-      supplierId
-      total
-      workOrderNo
+    pOTmPurchaseHeads(where: {poId: {eq: ${this.URLid}}}) {
+      nodes {
+        id
+        companyId
+        creationDate
+        cuserId
+        deliveryDate
+        deliveryMode
+        enduser
+        freightTerms
+        gst
+        indentNo
+        modificationDate
+        muserId
+        orderDate
+        paymentTerms
+        poId
+        remarks
+        supplierId
+        total
+        workOrderNo
+      }
     }
-    pOTmPurchaseBodies {
+    pOTmPurchaseBodies(where: {poId: {eq: ${this.URLid}}}) {
       id
       catname
       creationDate
@@ -1185,7 +1196,7 @@ async urlload(STRING)
   const obj = JSON.parse(myJSON);
 
   var pOTmPurchaseBodies= Enumerable.from( obj["data"]["pOTmPurchaseBodies"]).cast<pOTmPurchaseBodies>();
-  var pOTmPurchaseHeads1= Enumerable.from( obj["data"]["pOTmPurchaseHeads"]).cast<any>()
+  var pOTmPurchaseHeads1= Enumerable.from( obj["data"]["pOTmPurchaseHeads"]["nodes"]).cast<any>()
   console.log(pOTmPurchaseBodies);
   var datas=  pOTmPurchaseBodies.where(x=>x.poId==Number(STRING)).toList();
   var datas2=  pOTmPurchaseHeads1.where(x=>x.poId==Number(STRING)).singleOrDefault();;

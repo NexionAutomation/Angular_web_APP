@@ -1,0 +1,53 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1></h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Complaint Box</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content  ">
+    <!-- Default box -->
+
+
+
+    <div class="form2">
+
+        <div class="card card-outline card-primary">
+            <div class="card-header "> Create Complaint ::</div>
+            <div class="card-body " style="overflow-x:auto;"   >
+
+               
+                <!-- <ckeditor [editor]="Editor"   [data]="Output"  ></ckeditor> -->
+                <!-- <ckeditor [data]="model" [editor]="Editor"></ckeditor> -->
+
+                <ckeditor  [(ngModel)]="test" [editor]="Editor"  ></ckeditor>
+                <!-- <table id="example" class="display" width="100%"></table> *ngIf="ActionFlag==0" (change)="onChange($event)"-->
+            <br>
+                <button type="submit" 
+                value="Save" id="btnSave"
+                class="btn btn-primary mar_top10" (click)="onSubmit()" *ngIf="ActionFlag==0" >Save</button> 
+                              
+              
+            </div>
+        </div>
+
+    </div>
+
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+<script>
+    var $disabledResults = $(".js-example-disabled-results");
+    $disabledResults.select2();
+</script>

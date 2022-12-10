@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CMAdminModuleMasterUser, TM_CompanyMaster, TM_CountryMaster, TM_PurchaseHead, Tm_supplierMaster } from '@modules/Module/PoModules';
+import { TM_CompanyMaster, TM_CountryMaster, TM_PurchaseHead, Tm_supplierMaster } from '@modules/Module/PoModules';
 import { CM_AdminModuleMaster } from '@pages/user-module/create-modulemaster/create-modulemaster.component';
 import { UserModuleServicesService } from '@pages/user-module/user-module-services.service';
 import { AppService } from '@services/app.service';
@@ -12,18 +12,14 @@ import { Subject } from 'rxjs';
 import { Enumerable } from 'sharp-collections';
 import Swal from 'sweetalert2';
 
-
-
 @Component({
-  selector: 'app-search-po',
-  templateUrl: './search-po.component.html',
-  styleUrls: ['./search-po.component.scss']
+  selector: 'app-view-complaint-box',
+  templateUrl: './view-complaint-box.component.html',
+  styleUrls: ['./view-complaint-box.component.scss']
 })
+export class ViewComplaintBoxComponent implements OnInit {
 
-export class SearchPoComponent  implements OnInit {
-
-
-    public Module_Id: number;
+  public Module_Id: number;
   public ModuleName: string;
   public ModuleOrder: number;
   public CUser_Id: number;
@@ -44,7 +40,7 @@ export class SearchPoComponent  implements OnInit {
   public loginForm: FormGroup;
   POTmSupplierMasters: Enumerable<Tm_supplierMaster>;
   POTmCompanyMasters: Enumerable<TM_CountryMaster>;
-  pOTmPurchaseHeads: Enumerable<TM_PurchaseHead>;
+  pOTmPurchaseHeads: Enumerable<any>;
   POTmCompanyMasters1: Enumerable<TM_CompanyMaster>;
   public PurchaseHead: TM_PurchaseHead;
   editData: any;
@@ -249,38 +245,18 @@ rid,
 
     let data = '{User="' + User + '",Password="' + Password + '" }';
     let query = `query MyQuery {
-      __typename
-     cMPOFetchdata(first: 50, order: {deliveryDate: DESC, poId: DESC}) {
-          nodes {
-            id
-            workOrderNo
-            total
-            supplierName
-            supplierId
-            remarks
-            poId
-            paymentTerms
-            orderDate
-            muserId
-            modificationDate
-            indentNo
-            gst
-            freightTerms
-            enduser
-            deliveryMode
-            deliveryDate
-            cuserId
-            creationDate
-            companyName
-            companyId
-          }
-          pageInfo {
-            endCursor
-            hasNextPage
-          }
-        }
+      cmComplaintBoxHead {
+        createdBy
+        createdOn
+        description
+        expenseId
+        status
+        tokennumber
+        updateBy
+        updateOn
+      }
     }
-  `
+     `
     var datas = JSON.stringify({ query, variables: { User, Password } });
     var ss = await this.Logins1.GraphqlFetchQuery("query", query);
     return ss;
@@ -292,42 +268,26 @@ rid,
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-    this.POTmSupplierMasters = Enumerable.from( obj["data"]["pOTmSupplierMasters"]).cast<Tm_supplierMaster>();
-    this.POTmCompanyMasters1 =  Enumerable.from(obj["data"]["pOTmCompanyMasters"]).cast<TM_CompanyMaster>()
-    this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["cMPOFetchdata"]["nodes"]).cast<TM_PurchaseHead>();
+    this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["cmComplaintBoxHead"]).cast<any>();
     
     
-
-    //   var result = this.pOTmPurchaseHeads
-    // .join(this.POTmSupplierMasters, a => a.supplierID, b => b.iD)
-    // .where(s => s.left.supplierID == s.right.iD )
-    // .toList();
+    console.log(this.pOTmPurchaseHeads );
 
     
-    // var result2 = result
-    // .join(this.POTmCompanyMasters1, a => a.left.companyID, b => b.iD)
-    // .where(s => s.left.left.companyID== s.right.iD)
-    // .toList();
-   
     
-this.persons= this.pOTmPurchaseHeads;
+this.persons= this.pOTmPurchaseHeads.take(200);
     //console.log(da.take(10));
-    // $('#example').DataTable().destroy();
-    // $(document).ready(function () {
+    $('#example').DataTable().destroy();
+    $(document).ready(function () {
 
-    //   this.dtOptions = $('#example').DataTable({
+      this.dtOptions = $('#example').DataTable({
 
-    //     dom: 'Bfrtip',
-    //     paging: true
+        dom: 'Bfrtip',
+        paging: true
 
-    //   });
+      });
 
-
-
-      
-
-    // });
-
+    });
 
   }
 
@@ -609,7 +569,7 @@ async onReset()
 
 async onedit(string:string)
 {
-  this.PurchaseHead=Enumerable.from( this.persons).cast<TM_PurchaseHead>().where(x=>x.pOId==Number(string)).singleOrDefault();
+  this.PurchaseHead=Enumerable.from( this.persons).cast<any>().where(x=>x.pOId==Number(string)).singleOrDefault();
   
   this.loginForm.setValue({
     txtModuleName: this.editData.moduleName,
@@ -632,5 +592,6 @@ openCityInNewWindow(string) {
   window.open(url, '_blank');
 }
 //----------------------------------CURD OPERATIONS-------------------------------------------------------------
+
 
 }

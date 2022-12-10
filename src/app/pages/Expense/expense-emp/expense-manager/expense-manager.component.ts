@@ -8,19 +8,19 @@ import { CMAdminModuleMasterUser, ExpenseItems } from '@modules/Module/PoModules
 import { CM_AdminModuleMaster } from '@pages/user-module/create-modulemaster/create-modulemaster.component';
 import { UserModuleServicesService } from '@pages/user-module/user-module-services.service';
 import { AppService } from '@services/app.service';
-import { Console } from 'console';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Enumerable, List } from 'sharp-collections';
+import { Enumerable } from 'sharp-collections';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-expense-emp',
-  templateUrl: './expense-emp.component.html',
-  styleUrls: ['./expense-emp.component.scss']
+  selector: 'app-expense-manager',
+  templateUrl: './expense-manager.component.html',
+  styleUrls: ['./expense-manager.component.scss']
 })
-export class ExpenseEmpComponent implements OnInit {
+export class ExpenseManagerComponent implements OnInit {
+
   dtOptions: DataTables.Settings = {};
   persons: any;
   pOVwOutstationExpenseComments2:any;
@@ -126,6 +126,21 @@ export class ExpenseEmpComponent implements OnInit {
     this.displayStyle = "none";
   }
 
+  QuickApproved()
+  {
+    var datass=this.pOExpenseItems
+  
+    
+    
+   
+          
+  //var datass34=Enumerable.from(datass).selectMany();
+
+  //console.log(phoneNumbers)
+   // const phoneNumbers = this.pOExpenseItems.reduce((pn, u) => [ ...pn, ...u.phoneNumbers ], []);
+
+ alert("hello");
+  }
 
   async urlload(STRING) {
     var data = await this.GETData2("", "");

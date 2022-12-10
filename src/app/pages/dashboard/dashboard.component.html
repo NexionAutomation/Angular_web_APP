@@ -91,12 +91,32 @@
                     ></a>
                 </div>
 
+                <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+               <!-- 
+                <canvas baseChart width="400" height="400"
+                [type]="'line'"
+                [data]="lineChartData"
+                [options]="lineChartOptions"
+                [legend]="lineChartLegend">
+              </canvas> -->
 
-                <div>
-                    <canvasjs-chart [options]="chartOptions" ></canvasjs-chart>
-                </div>
+
+              <!-- <div class="chart-wrapper">
+                <canvas baseChart 
+                    [datasets]="lineChartData" 
+                    [labels]="lineChartLabels" 
+                    [options]="lineChartOptions"
+                    [colors]="lineChartColors" 
+                    [legend]="lineChartLegend" 
+                    [chartType]="lineChartType" 
+                    [plugins]="lineChartPlugins">
+                </canvas> -->
+                
+                <!-- <div echarts [options]="chartOption" class="demo-chart"></div> -->
+               
             </div>
             <!-- ./col -->
+          
         </div>
         <!-- /.row -->
     </div>

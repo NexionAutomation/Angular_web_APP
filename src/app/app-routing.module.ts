@@ -22,8 +22,8 @@ import { CreateUserRightsComponent } from '@pages/user-module/create-user-rights
 import { CreateModulemasterComponent } from '@pages/user-module/create-modulemaster/create-modulemaster.component';
 import { CreateSubModulemasterComponent } from '@pages/user-module/create-sub-modulemaster/create-sub-modulemaster.component';
 import { UplodeFileComponent } from '@pages/uplode-file/uplode-file.component';
-import { ExpenseEmpComponent } from '@pages/Expense/expense-emp/expense-emp.component';
-import { ExpenseManagerComponent } from '@pages/Expense/expense-manager/expense-manager.component';
+import { ExpenseEmpComponent } from '@pages/Expense/expense-emp/EMP/expense-emp.component';
+import { ExpenseManagerComponent } from '@pages/Expense/expense-emp/expense-manager/expense-manager.component'; 
 import { ExpenseAccountComponent } from '@pages/Expense/expense-account/expense-account.component';
 import { CreatePOComponent } from '@pages/PO/create-po/create-po.component';
 import { SearchPoComponent } from '@pages/PO/search-po/search-po.component';
@@ -39,13 +39,18 @@ import { LeaveSettingComponent } from '@pages/Module/leave-setting/leave-setting
 import { StateMasterComponent } from '@pages/Module/state-master/state-master.component';
 import { SupplierMasterComponent } from '@pages/Module/supplier-master/supplier-master.component';
 import { ViewPOComponent } from '@pages/PO/view-po/view-po.component';
-import { OutstationViewComponent } from '@pages/Expense/outstation-view/outstation-view.component';
+import { OutstationViewComponent } from '@pages/Expense/Exp-View/outstation-view/outstation-view.component'; 
 import { AttandanceComponent } from '@pages/Attandance/attandance/attandance.component';
 import { CreateIndentComponent } from '@pages/INDENT/create-indent/create-indent.component';
 import { CreateExpDashboardComponent } from '@pages/Expense/Exp_Dashboard/create-exp-dashboard/create-exp-dashboard.component';
 import { CreatePOFileComponent } from '@pages/Po-File/create-pofile/create-pofile.component'; 
 import { CreatePOItemsComponent } from '@pages/Po-File/create-poitems/create-poitems.component';
 import { SearchPoItemsComponent } from '@pages/PO/search-po-items/search-po-items.component';
+import { CreateComplaintBoxComponent } from '@pages/ComplantBox/create-complaint-box/create-complaint-box.component';
+import { ViewComplaintBoxComponent } from '@pages/ComplantBox/view-complaint-box/view-complaint-box.component';
+import { ExpenseViewmanagerComponent } from '@pages/Expense/Exp-View/expense-viewmanager/expense-viewmanager.component';
+import { ExpenseViewAccountComponent } from '@pages/Expense/Exp-View/expense-view-account/expense-view-account.component';
+import { PoDashboardComponent } from '@pages/PO/po-dashboard/po-dashboard.component';
 
 const routes: Routes = [
     {
@@ -105,11 +110,11 @@ const routes: Routes = [
                 component: ExpenseEmpComponent
             },
             {
-                path: 'ApprovedExpense',
+                path: 'ApprovedExpense/:id',
                 component: ExpenseManagerComponent
             },
             {
-                path: 'AccountExpense',
+                path: 'AccountExpense/:id',
                 component: ExpenseAccountComponent
             },
             {
@@ -178,9 +183,18 @@ const routes: Routes = [
                 component:OutstationViewComponent
             },
             {
+                path: 'CreateExpOutMannagerView',
+                component:ExpenseViewmanagerComponent
+            },
+            {
+                path: 'CreateExpOutAccountView',
+                component:ExpenseViewAccountComponent
+            },
+            {
                 path: 'CreateExpense/:id',
                 component:ExpenseEmpComponent
             },
+            
             {
                 path: 'CreateAttandance',
                 component:AttandanceComponent
@@ -206,6 +220,22 @@ const routes: Routes = [
             {
                 path: 'SearchPOItems',
                 component:SearchPoItemsComponent
+            },
+            {
+                path: 'CreateComplaintBox/:id',
+                component:CreateComplaintBoxComponent
+            },
+            {
+                path: 'CreateComplaintBox',
+                component:CreateComplaintBoxComponent
+            },
+            {
+                path: 'ViewComplaintBox',
+                component:ViewComplaintBoxComponent
+            },
+            {
+                path: 'PoDashboard',
+                component:PoDashboardComponent
             },
             
            

@@ -1,23 +1,26 @@
 import { Logins } from '@/Model/Utility/login';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TM_CompanyMaster, TM_CountryMaster, TM_PurchaseHead, Tm_supplierMaster } from '@modules/Module/PoModules';
 import { CM_AdminModuleMaster } from '@pages/user-module/create-modulemaster/create-modulemaster.component';
 import { UserModuleServicesService } from '@pages/user-module/user-module-services.service';
 import { AppService } from '@services/app.service';
+import { DataTableDirective } from 'angular-datatables';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { Enumerable } from 'sharp-collections';
 import Swal from 'sweetalert2';
+
+
 
 @Component({
   selector: 'app-outstation-view',
   templateUrl: './outstation-view.component.html',
   styleUrls: ['./outstation-view.component.scss']
 })
-export class OutstationViewComponent implements OnInit {
+export class OutstationViewComponent implements OnInit,AfterViewInit,OnDestroy {
 
   public Module_Id: number;
   public ModuleName: string;
@@ -29,10 +32,14 @@ export class OutstationViewComponent implements OnInit {
   public CM_AdminModuleMaster: CM_AdminModuleMaster
    ActionFlag= 0;
 
+   @ViewChild(DataTableDirective, {static: false})
+   dtElement: DataTableDirective;
+
   dtOptions: DataTables.Settings = {};
   persons: any;
   persons1: any;
   dtTrigger: Subject<any> = new Subject<any>();
+    //dtTrigger: Subject = new Subject();//
   headers: any;
   //CM_AdminModuleMaster: CM_AdminModuleMaster;
 
@@ -61,16 +68,61 @@ export class OutstationViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.loginForm = new FormGroup({
       txtModuleName: new FormControl(null),
       txtModuleOrder: new FormControl(null),
+      
 
     });
+
+
+    
 
     this.LodeDataTable();
 
   }
+ 
+  ngAfterViewInit(): void {
+    this.dtTrigger.next();
+  }
 
+
+  datatablecall()
+  {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      paging: true,
+      dom: 'Bfrtip',
+     
+      
+      
+  }
+
+var navItems = this.http.get(this.persons);
+  
+console.log(navItems)
+
+  this.http.get<any>(this.persons)
+      .subscribe(data => {
+        this.persons = (data as any).data;
+        // Calling the DT trigger to manually render the table
+        this.dtTrigger.next();
+      });
+      
+    
+  }
+
+  // rerender(): void {
+  //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+  //     // Destroy the table first
+  //     dtInstance.destroy();
+  //     // Call the dtTrigger to rerender again
+  //     this.dtTrigger.next();
+  //   });
+  // }
+
+  
   async INSERTHeader(
     poId: number,
     companyId: number,
@@ -246,24 +298,29 @@ rid,
     let data = '{User="' + User + '",Password="' + Password + '" }';
     let query = `query MyQuery {
       __typename
-      pOExpenseHeads {
-        title
-        periodForm
-        periodTo
-        workOrderId
-        location
-        amount
-        approvedAmount
-        statusId
-        statusname
-        createdBy
-        createdName
-        createdOn
-        updatedBy
-        updatedName
-        expenseId
+      pOExpenseHeads(first: 50, order: {expenseId: DESC, periodForm: DESC}) {
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+        nodes {
+          amount
+          approvedAmount
+          createdBy
+          createdName
+          createdOn
+          expenseId
+          location
+          periodForm
+          periodTo
+          statusname
+          statusId
+          title
+          updatedBy
+          updatedName
+          workOrderId
+        }
       }
-     
       pOExpenseStatusStates {
         expenseId
         statusId
@@ -290,7 +347,7 @@ rid,
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-    this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["pOExpenseHeads"]).cast<any>();
+    this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["pOExpenseHeads"]["nodes"]).cast<any>();
     
     
     console.log(this.pOTmPurchaseHeads );
@@ -309,26 +366,64 @@ rid,
     
 this.persons= this.pOTmPurchaseHeads.take(200);
     //console.log(da.take(10));
+
+
+    // let table = $('#example').DataTable({
+    //   drawCallback: () => {
+    //     $('.paginate_button.next').on('click', () => {
+    //       this.nextButtonClickEvent();
+    //     });
+    //   },
+    //    //     dom: 'Bfrtip',
+    // //     paging: true
+    // });
+
+
+
+
     $('#example').DataTable().destroy();
     $(document).ready(function () {
+      
 
       this.dtOptions = $('#example').DataTable({
-
-        dom: 'Bfrtip',
-        paging: true
-
+       
+              dom: 'Bfrtip',
+           paging: true
       });
+
+
+     
 
     });
 
-  }
+    // this.dtOptions({
 
+    //   drawCallback: () => {
+    //     $('.paginate_button.next').on('click', () => {
+    //       this.nextButtonClickEvent();
+    //     });
+    //   },
+    // })
+
+
+
+   
+
+
+
+
+   
+
+  }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
 
   }
 
+  nextButtonClickEvent(): void {
+    alert("hello");
+}
 //----------------------------------CURD OPERATIONS-------------------------------------------------------------
 
   async onSubmit() {

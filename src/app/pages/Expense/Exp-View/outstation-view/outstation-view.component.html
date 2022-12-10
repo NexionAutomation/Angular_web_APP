@@ -1,0 +1,114 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Blank Page</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Blank Page</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content  ">
+    <!-- Default box -->
+
+
+
+    <div class="form2">
+
+        <div class="card card-outline card-primary">
+            <div class="card-header "> PO Details ::</div>
+            <div class="card-body " style="overflow-x:auto;">
+
+               
+                <!-- <table id="example" class="display" width="100%"></table> -->
+
+                <table id="example" class="table table-striped ">
+
+                    <thead>
+                        <tr>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">ExpenseId</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">PeriodForm</th>
+                            <th scope="col">PeriodTo</th>
+                            <th scope="col">WorkOrderId</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Approved Amount</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Last Updated</th>
+                            <th scope="col">Creation Date</th>
+                        </tr>
+
+
+                       
+
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let person of persons;let a=index">
+                            <td><button class="badge bg-success  btn btn-sm  " name='{{ person.expenseId}}'> <a
+                                        class="fa fa-edit" (click)="onedit(person.expenseId) "
+                                        [routerLink]="['/CreateExpense', person.expenseId]"></a></button>
+                                <br>
+                                <button class="badge bg-danger  btn btn-sm" name='{{ person.expenseId}}'
+                                    (click)="onDel(person.expenseId)"><a class="fa fa-trash"></a></button>
+                                <br>
+                                <button class="badge bg-info  btn btn-sm" name='{{ person.expenseId}}'><a
+                                        class="fa fa-file" target="_self"
+                                        [routerLink]="['/viewPo',person.expenseId]"></a></button>
+
+                            </td>
+
+
+
+                            <td>{{ person.expenseId }}</td>
+                            <td> {{person.title}}</td>
+                            <td>{{ person.periodForm | date:"yyyy-MM-dd" }}</td>
+                            <td>{{ person.periodTo | date:"yyyy-MM-dd"}}</td>
+                            <td> {{person.workOrderId}}</td>
+                            <td>{{ person.location }}</td>
+                            <td> {{person.amount }}</td>
+                            <td>{{ person.approvedAmount }}</td>
+                            <td>
+                                <span class="badge badge-primary " *ngIf='person.statusname=="Draft"'> {{ person.statusname }}</span>
+                                <span class="badge badge-success " *ngIf='person.statusname=="Submit"'> {{ person.statusname }}</span>
+                                <span class="badge badge-danger " *ngIf='person.statusname=="Delete"'> {{ person.statusname }}</span>
+                                <span class="badge badge-warning " *ngIf='person.statusname=="Approved"'> {{ person.statusname }}</span>
+                                <span class="badge badge-secondary " *ngIf='person.statusname=="Reject"'> {{ person.statusname }}</span>
+                                <span class="badge badge-success "  style="background-color: burlywood" *ngIf='person.statusname=="Paid"'> {{ person.statusname }}</span>
+                               
+                           
+                            </td>
+                            <td> {{person.updatedName }}</td>
+
+                            <td>{{ person.createdOn | date:"yyyy-MM-dd" }}</td>
+
+                           
+
+                            
+
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+<script>
+    var $disabledResults = $(".js-example-disabled-results");
+    $disabledResults.select2();
+</script>

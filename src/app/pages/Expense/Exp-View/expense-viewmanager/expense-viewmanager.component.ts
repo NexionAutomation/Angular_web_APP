@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CMAdminModuleMasterUser, TM_CompanyMaster, TM_CountryMaster, TM_PurchaseHead, Tm_supplierMaster } from '@modules/Module/PoModules';
+import { TM_CompanyMaster, TM_CountryMaster, TM_PurchaseHead, Tm_supplierMaster } from '@modules/Module/PoModules';
 import { CM_AdminModuleMaster } from '@pages/user-module/create-modulemaster/create-modulemaster.component';
 import { UserModuleServicesService } from '@pages/user-module/user-module-services.service';
 import { AppService } from '@services/app.service';
@@ -12,18 +12,15 @@ import { Subject } from 'rxjs';
 import { Enumerable } from 'sharp-collections';
 import Swal from 'sweetalert2';
 
-
-
 @Component({
-  selector: 'app-search-po',
-  templateUrl: './search-po.component.html',
-  styleUrls: ['./search-po.component.scss']
+  selector: 'app-expense-viewmanager',
+  templateUrl: './expense-viewmanager.component.html',
+  styleUrls: ['./expense-viewmanager.component.scss']
 })
+export class ExpenseViewmanagerComponent implements OnInit {
 
-export class SearchPoComponent  implements OnInit {
-
-
-    public Module_Id: number;
+  
+  public Module_Id: number;
   public ModuleName: string;
   public ModuleOrder: number;
   public CUser_Id: number;
@@ -44,7 +41,7 @@ export class SearchPoComponent  implements OnInit {
   public loginForm: FormGroup;
   POTmSupplierMasters: Enumerable<Tm_supplierMaster>;
   POTmCompanyMasters: Enumerable<TM_CountryMaster>;
-  pOTmPurchaseHeads: Enumerable<TM_PurchaseHead>;
+  pOTmPurchaseHeads: Enumerable<any>;
   POTmCompanyMasters1: Enumerable<TM_CompanyMaster>;
   public PurchaseHead: TM_PurchaseHead;
   editData: any;
@@ -250,37 +247,39 @@ rid,
     let data = '{User="' + User + '",Password="' + Password + '" }';
     let query = `query MyQuery {
       __typename
-     cMPOFetchdata(first: 50, order: {deliveryDate: DESC, poId: DESC}) {
-          nodes {
-            id
-            workOrderNo
-            total
-            supplierName
-            supplierId
-            remarks
-            poId
-            paymentTerms
-            orderDate
-            muserId
-            modificationDate
-            indentNo
-            gst
-            freightTerms
-            enduser
-            deliveryMode
-            deliveryDate
-            cuserId
-            creationDate
-            companyName
-            companyId
-          }
-          pageInfo {
-            endCursor
-            hasNextPage
-          }
-        }
+      pOExpenseHeads {
+        title
+        periodForm
+        periodTo
+        workOrderId
+        location
+        amount
+        approvedAmount
+        statusId
+        statusname
+        createdBy
+        createdName
+        createdOn
+        updatedBy
+        updatedName
+        expenseId
+      }
+     
+      pOExpenseStatusStates {
+        expenseId
+        statusId
+        createdOn
+        createdBy
+        updateOn
+        updateBy
+        comments
+        rid
+      }
+    
     }
-  `
+    
+    
+      `
     var datas = JSON.stringify({ query, variables: { User, Password } });
     var ss = await this.Logins1.GraphqlFetchQuery("query", query);
     return ss;
@@ -292,11 +291,10 @@ rid,
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-    this.POTmSupplierMasters = Enumerable.from( obj["data"]["pOTmSupplierMasters"]).cast<Tm_supplierMaster>();
-    this.POTmCompanyMasters1 =  Enumerable.from(obj["data"]["pOTmCompanyMasters"]).cast<TM_CompanyMaster>()
-    this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["cMPOFetchdata"]["nodes"]).cast<TM_PurchaseHead>();
+    this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["pOExpenseHeads"]).cast<any>();
     
     
+    console.log(this.pOTmPurchaseHeads );
 
     //   var result = this.pOTmPurchaseHeads
     // .join(this.POTmSupplierMasters, a => a.supplierID, b => b.iD)
@@ -310,24 +308,19 @@ rid,
     // .toList();
    
     
-this.persons= this.pOTmPurchaseHeads;
+this.persons= this.pOTmPurchaseHeads.take(200);
     //console.log(da.take(10));
-    // $('#example').DataTable().destroy();
-    // $(document).ready(function () {
+    $('#example').DataTable().destroy();
+    $(document).ready(function () {
 
-    //   this.dtOptions = $('#example').DataTable({
+      this.dtOptions = $('#example').DataTable({
 
-    //     dom: 'Bfrtip',
-    //     paging: true
+        dom: 'Bfrtip',
+        paging: true
 
-    //   });
+      });
 
-
-
-      
-
-    // });
-
+    });
 
   }
 

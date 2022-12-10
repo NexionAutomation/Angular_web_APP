@@ -165,6 +165,10 @@ export class ExpenseStatusMaster
 	public updateBy: number;
 	public statusId: number;
 }
+
+
+
+
 export class TM_FinaicalYear
 {
 	public id: number;
@@ -226,6 +230,13 @@ export class ExpenseItems
 	public aMt: number;
 	public expenseItemsId: number;
 	public Date: Date;
+}
+
+
+export class TM_PurchaseHeadscema
+{
+	public supplierName: string;
+	public total: number;
 }
 
 export class TM_PurchaseHead

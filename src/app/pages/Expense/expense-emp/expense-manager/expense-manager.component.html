@@ -1,0 +1,863 @@
+<style>
+
+
+
+    .vertical {
+        width: 5px;
+        top: 0;
+        left: 50%;
+        height: 100%;
+        background-color: #ccc;
+        position: absolute;
+        z-index: -1;
+    }
+    .comment {
+        position: relative;
+        margin: 60px auto;
+        width: 700px;
+        padding: 3px 20px 3px 20px;
+    }
+    .comment p{
+        padding: 10px;
+        font-size: 16px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.7;
+        position: relative;
+        max-width: 300px;
+        background-color: transparent
+    }
+    .comment p:nth-child(odd) {
+        left: 55%;
+    }
+    .comment p:nth-child(even) {
+        right: 0;
+    }
+    .comment p:nth-child(odd)::before , .comment p:nth-child(even)::before{
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        display: block;
+        border: 3px solid #ccc;
+        border-radius: 50%;
+        background-color: #2c3e50;
+        top: 40%;
+    }
+    .comment p:nth-child(odd)::before {
+        right: 107.5%;
+    }
+    .comment p:nth-child(even)::before {
+        left: 107.5%;
+    }
+    .comment p:nth-child(odd)::after , .comment p:nth-child(even)::after {
+        content: '';
+        position: absolute;
+        border: solid 8px;
+        top: 40%;
+    }
+    .comment p:nth-child(odd)::after {
+        right: 100%;
+        border-color: transparent #ccc transparent transparent;
+    }
+    .comment p:nth-child(even)::after {
+        left: 100%;
+        border-color: transparent  transparent transparent #ccc;
+    }
+    </style>
+    <section class="col-lg-12">
+    
+    
+        <div id="UpdateProgress1" style="display:none;" role="status" aria-hidden="true">
+    
+            <div class="divWaiting" style="z-index: 15000;">
+                <img id="imgWait" src="images/loading3.gif" align="middle" style="height:150px;width:210px;">
+            </div>
+    
+        </div>
+    
+    
+    
+    
+    
+    
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" id="UpdatePanel1">
+    
+    
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+    
+    
+                    <!--Start Form Heading -->
+                    <div class="card-header with-border">
+                        <h3 class="card-title"><strong>Out Station Expense</strong></h3>
+                    </div>
+                    <!--Start Form Heading -->
+    
+                    <!--Start Form Body -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="bder top-mrg20">
+    
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-horizontal">
+    
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <label for="inputEmail3" class="control-label pull-left">Customer
+                                                            Name</label>
+                                                        <input formControlName="txttitle" type="text" id="txttitle"
+                                                            class="form-control inputtext" autocomplete="off" readonly>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label for="inputEmail3" class="control-label pull-left">Work
+                                                            Order</label>&nbsp;<span id="lblloginIdError"
+                                                            class="col-sm-3"></span>
+                                                        <input formControlName="txtworkorderno" type="text"
+                                                            id="txtworkorderno" class="form-control inputtext"
+                                                            autocomplete="off" readonly>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label for="inputEmail3" class="control-label pull-left">Site
+                                                            Location</label>&nbsp;
+                                                        <input formControlName="txtlocation" type="text" id="txtlocation"
+                                                            class="form-control inputtext" autocomplete="off" readonly>
+                                                    </div>
+    
+                                                </div>
+    
+                                                <div class="clearfix" style="margin-bottom: 5px;"></div>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <label for="inputEmail3" class="control-label">From Date</label>
+                                                        <input formControlName="txtfromdate" type="date" id="txtfromdate"
+                                                            class="form-control inputtext" autocomplete="off" readonly>
+    
+                                                        <span id="RegularExpressionValidator1"
+                                                            style="color:Red;visibility:hidden;">From Date should be
+                                                            dd-mmm-yyyy</span>
+    
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label for="inputEmail3" class="control-label">To Date</label>
+                                                        <input formControlName="txttodate" type="date" id="txttodate"
+                                                            class="form-control inputtext" autocomplete="off" readonly>
+    
+                                                        <span id="RegularExpressionValidator2"
+                                                            style="color:Red;visibility:hidden;">From Date should be
+                                                            dd-mmm-yyyy</span>
+    
+                                                    </div>
+    
+                                                </div>
+    
+                                                <div class="clearfix" style="margin-bottom: 5px;">
+                                                    <span id="RequiredFieldValidator4" class="errorlabels"
+                                                        style="font-size:8pt;display:none;">Enter Work
+                                                        Order No</span>
+    
+                                                    <span id="RequiredFieldValidator5" class="errorlabels"
+                                                        style="font-size:8pt;display:none;">Enter
+                                                        Location</span>
+    
+                                                    <span id="RequiredFieldValidator2" class="errorlabels"
+                                                        style="font-size:8pt;display:none;">Enter From
+                                                        Date</span>
+    
+                                                    <span id="RequiredFieldValidator7" class="errorlabels"
+                                                        style="font-size:8pt;display:none;">Enter To
+                                                        Date</span>
+    
+    
+    
+                                                </div>
+    
+    
+    
+    
+                                            </div>
+                                        </div>
+                                    </div>
+    
+    
+    
+    
+    
+                                </div>
+    
+    
+    
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Form Body -->
+    
+                </div>
+    
+                <div class="card card-group" >
+                    <div class="card-header with-border">
+                        <h3 class="card-title"><strong>Add Expense Items</strong></h3>
+                    </div>
+                    <!--Start Form Heading -->
+    
+                    <!--Start Form Body -->
+                    <div class="card-body" >
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="bder top-mrg20">
+    
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-horizontal">
+                                                <div id="div_manual" class="row">
+                                                    <div class="col-sm-2">
+                                                        <label for="inputEmail3"
+                                                            class="control-label pull-left">Date</label>&nbsp;
+                                                        <input formControlName="txtdate" type="date" id="txtdate"
+                                                            class="form-control inputtext" autocomplete="off">
+    
+                                                        <span id="RegularExpressionValidator3"
+                                                            style="color:Red;visibility:hidden;">From Date should be
+                                                            dd-mmm-yyyy</span>
+    
+                                                    </div>
+    
+                                                    <div class="col-sm-3">
+                                                        <label for="inputEmail3"
+                                                            class="control-label pull-left">Description</label>&nbsp;
+                                                        <input formControlName="txtdescription" type="text"
+                                                            id="txtdescription" class="form-control inputtext"
+                                                            autocomplete="off">
+    
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <label for="inputEmail3" class="control-label pull-left">Paid
+                                                            By</label>&nbsp;
+                                                        <select formControlName="ddlPaidby" id="ddlPaidby"
+                                                            class="form-control">
+                                                            <option selected="selected" value="NAPL">NAPL</option>
+                                                            <option value="Customer">Customer</option>
+    
+                                                        </select>
+                                                    </div>
+    
+                                                    <div class="col-sm-2">
+                                                        <label for="inputEmail3"
+                                                            class="control-label pull-left">Type</label>&nbsp;
+                                                        <select formControlName="ddlExpenseType"
+                                                            onchange="javascript:setTimeout('__doPostBack(\'ddlExpenseType\',\'\')', 0)"
+                                                            id="ddlExpenseType" class="form-control">
+                                                            <option selected="selected" value="0">---Select Type---</option>
+                                                            <option value="1">Breakfast</option>
+                                                            <option value="4">Local Transport</option>
+                                                            <option value="7">Daily Allowance</option>
+                                                            <option value="8">Grocery</option>
+                                                            <option value="9">Refreshment</option>
+                                                            <option value="10">Miscellaneous</option>
+                                                            <option value="11">Lunch</option>
+                                                            <option value="12">Taxi/Cab</option>
+                                                            <option value="13">Auto/E-rikshaw</option>
+                                                            <option value="14">Bus</option>
+                                                            <option value="15">Train</option>
+                                                            <option value="16">Metro Train</option>
+                                                            <option value="17">Airfare</option>
+                                                            <option value="18">Bike</option>
+                                                            <option value="19">Car</option>
+                                                            <option value="20">Hotel</option>
+                                                            <option value="21">Guest house</option>
+                                                            <option value="22">Self Accommodation</option>
+                                                            <option value="23">Dinner</option>
+                                                            <option value="0">--Select All--</option>
+    
+                                                        </select>
+                                                        <span id="lblrate" style="color:Red;"></span>
+                                                    </div>
+    
+    
+                                                    <div class="col-sm-1">
+                                                        <label for="inputEmail3"
+                                                            class="control-label pull-left">Km</label>&nbsp;
+                                                        <input formControlName="txtDistance" type="number" id="txtDistance"
+                                                            class="form-control inputtext">
+    
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <label for="inputEmail3"
+                                                            class="control-label pull-left">Amount</label>&nbsp;
+                                                        <input formControlName="txtamount" type="number" id="txtamount"
+                                                            class="form-control inputtext">
+    
+                                                    </div>
+    
+                                                    <div class="col-sm-1">
+                                                        <label for="inputEmail3"
+                                                            class="control-label ">Park/Toll</label>&nbsp;
+                                                        <input formControlName="txtParkingAmt" type="number"
+                                                            id="txtParkingAmt" class="form-control inputtext">
+    
+                                                    </div>
+    
+                                                    <div class="col-sm-1">
+                                                        <div class="clearfix" style="margin-top: 30px;"></div>
+                                                        <label for="inputEmail3" class="control-label pull-left"></label>
+                                                        &nbsp;
+                                                        <button type="button" id="btn_add" class="btn btn-primary"
+                                                            (click)="Add_items()" disabled>ADD</button>
+                                                    </div>
+    
+                                                </div>
+                                                <div class="row">
+                                                    <span id="RequiredFieldValidator1" class="errorlabels"
+                                                        style="display:none;">Enter Date</span>
+    
+                                                    <span id="RequiredFieldValidator6" class="
+                                " style="font-size:8pt;display:none;">Select Expense Type</span>
+    
+                                                    <span id="RequiredFieldValidator3" class="errorlabels"
+                                                        style="font-size:8pt;display:none;">Enter
+                                                        Amount</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix" style="margin-top: 15px;"></div>
+                <div class="card card-default">
+                    <div class="card-header with-border">
+                        <h3 class="card-title"><strong>Expense Details</strong></h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                
+                                    <div class="">
+                                        <div class="btn  btn-danger" style="float: right;margin: -9px;" (click)="QuickApproved()">Quick Approved</div>
+                                        <br>        
+                                        <div class="card-body" style="overflow-x:auto;">
+    
+                                                                                          
+                                                        <table id="example" border="1" class="row-border hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th >&nbsp;</th>
+                                                                    <th >SrNo</th>
+                                                                    <th style="width: 150px;">Date</th>
+                                                                    <th  style="width: 300px;">Description</th>
+                                                                                           <th >Type ID</th>
+                                                                    <th >Type Name</th>
+                                                                    <th >Distance</th>
+                                                                    <th >Amt (A)</th>
+                                                                    <th >Park/Toll (B)</th>
+                                                                    <th >Total(A + B) </th>
+                                                                    <th >Approved Amount</th>
+                                                                    <th >Paid By</th>
+                                        
+                                                                </tr>
+                                                            </thead>
+                                                            
+                                                            
+                                                            
+                                                            <tbody>
+                                                                
+                                                                <tr *ngFor="let  value  of pOExpenseItems;let a=index">
+                                                                    <td>
+                                                                            <button class="badge bg-success  btn btn-sm  " disabled> <a
+                                                                                class="fa fa-edit" 
+                                                                                ></a></button>
+                                                                        <br>
+                                                                        <button class="badge bg-danger  btn btn-sm" 
+                                                                        (click)="onDel(value.left.expenseItemsId)" disabled><a class="fa fa-trash" ></a></button>
+                                                                        <br>
+    
+    
+                                                                    </td>
+                                                                    <td style="width:100px;">
+                                                                        <span id="GridView1_lblRowNumber_0">{{a}}</span>
+                                                                    </td>
+                                                                    <td>{{value.left.date | date:"yyyy-MM-dd" }}</td>
+                                                                    <td>{{value.left.description}}</td>
+                                                                    <td>{{value.left.expenseTypeId}}</td>
+                                                                    <td>{{value.right.typeName}}</td>
+                                                                    <td>{{value.left.distance}}</td>
+                                                                    <td>{{value.left.amount}}</td>
+                                                                    <td>{{value.left.parkingAmt}}</td>
+                                                                    <td>{{ value.left.amount + value.left.parkingAmt }}</td>
+                                                                    <td><input  type="number" 
+                                                                        class="form-control inputtext" value="{{value.left.approvedAmount}}"></td>
+                                                                    <td>{{value.left.paidBy}}</td>
+                                                                </tr>
+    
+    
+                                                                
+    
+    
+    
+    
+                                                            </tbody>
+                                                        </table>
+    
+    
+    
+                                                    
+                                                </div>
+                                          
+                                    </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="clearfix"></div>
+                </div>
+    
+                <div class="card card-group" >
+                    <div class="card-header with-border">
+                        <h3 class="card-title"><strong>Add Attachment Items</strong></h3>
+                    </div>
+    
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="bder top-mrg20">
+    
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <input formControlName="txtdescription1" type="text"
+                                                class="form-control inputtext">
+    
+    
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input #fileInput type="file" formControlName="FileUpload1" id="FileUpload1"  (change)="upload($event)" disabled>
+                                            <button type="button" formControlName="btnUpload" class="btn btn-primary"
+                                                value="" id="btnUpload" (click)="Add_ImageUplode($event)" disabled>File Upload</button>
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+    
+                <div class="card card-default">
+                    <div class="card-header with-border">
+                        <h3 class="card-title"><strong>View Attachment </strong></h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="bder top-mrg20">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="table-responsive">
+                                                <div class="table_wid table table-responsive ">
+    
+                                                    <div>
+                                                        <table id="example2" border="1" class="row-border hover">
+                                                       <thead>
+                                                                <tr>
+                                                                    <th scope="col">Action</th>
+                                                                    <th scope="col">Image Id</th>
+                                                                    <th scope="col">Name</th>
+                                                                    <th scope="col">Description</th>
+                                                                    <th scope="col">Image</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let person of pOExpenseItemAttachmentss;">
+                                                                    <td  >
+                                                                        <button type="button"
+                                                                                   
+                                                                                        
+                                                                        class="badge bg-danger btn btn-sm" (click)="onDelI(person.attchmentId)" disabled><a class="fa fa-trash"></a></button>
+    
+    
+                                                                    </td>
+                                                                    <td>{{person.attchmentId}}</td>
+                                                                    <td>{{person.name}}</td>
+                                                                    <td>{{person.imagDescription}}</td>
+                                                                    <td class="col-md-12">
+                                                                        <a 
+                                                                            tabindex="0"  (click)="openPopup(person.name)"><img
+                                                                             src="http://app.nexionautomation.com/FileData/{{person.name}}"
+                                                                        
+                                                                                class="img-thumbnail" style="height:100px;width:100px;"></a>   <!--style="height:100px;width:100px;"-->
+    
+                                                                    </td>
+                                                                </tr>
+                                                             
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+    
+    
+                                                </div>
+                                            </div>
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="clearfix"></div>
+                </div>
+    
+                <div id="dialog" style="display: none">
+                </div>
+    
+                <div class="card card-default">
+    
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="bder top-mrg20">
+                                    <div class="row">
+    
+                                        <div class="col-sm-12">
+                                            <label for="inputEmail3" class="control-label pull-left">Status</label>&nbsp;
+                                            <select id="ddlstatus" class="form-control">
+                                                <!-- <option value="1">Draft</option> -->
+                                                <option value="3" selected>Reject</option>
+                                                <option value="4">Approved</option>
+                                                <!-- <option value="5">Paid</option>
+                                                <option value="7">Review</option> -->
+                                                <!-- <option value="6">Delete</option> -->
+    
+                                            </select>
+
+                                           
+                                        </div>
+                                        <div class="col-sm-12">
+    
+    
+    
+    
+                                            <label for="inputEmail3" class="control-label pull-left">Comments</label>&nbsp;
+                                            <textarea formControlName="txtcomments" rows="2" cols="20" id="txtcomments"
+                                                class="form-control "></textarea>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card card-primary">
+    
+                                    <div class="card-header with-border">
+                                        <h3 class="card-title"><strong>Comments</strong></h3>
+                                    </div>
+    
+                                    <div class="col-md-8">
+                                        <div class="box box-primary">
+        
+                                            <div class="box-header with-border">
+                                               
+                                            </div>
+        
+                                            <div class="box-body container">
+    
+    
+    
+                                                <!-- <div class="card direct-chat direct-chat-primary">
+                                                    <div class="card-header ui-sortable-handle" style="cursor: move;">
+                                                    <h3 class="card-title">Direct Chat</h3>
+                                                    <div class="card-tools">
+                                                    <span title="3 New Messages" class="badge badge-primary">3</span>
+                                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                    <i class="fas fa-minus"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
+                                                    <i class="fas fa-comments"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                                    <i class="fas fa-times"></i>
+                                                    </button>
+                                                    </div>
+                                                    </div>
+                                                    
+                                                    <div class="card-body">
+                                                    
+                                                    <div class="direct-chat-messages">
+                                                    
+                                                    <div class="direct-chat-msg">
+                                                    <div class="direct-chat-infos clearfix">
+                                                    <span class="direct-chat-name float-left">Alexander Pierce</span>
+                                                    <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
+                                                    </div>
+                                                    
+                                                    <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
+                                                    
+                                                    <div class="direct-chat-text">
+                                                    Is this template really for free? That's unbelievable!
+                                                    </div>
+                                                    
+                                                    </div>
+                                                    
+                                                    
+                                                    <div class="direct-chat-msg right">
+                                                    <div class="direct-chat-infos clearfix">
+                                                    <span class="direct-chat-name float-right">Sarah Bullock</span>
+                                                    <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
+                                                    </div>
+                                                    
+                                                    <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image">
+                                                    
+                                                    <div class="direct-chat-text">
+                                                    You better believe it!
+                                                    </div>
+                                                    
+                                                    </div>
+                                                    
+                                                    
+                                                    <div class="direct-chat-msg">
+                                                    <div class="direct-chat-infos clearfix">
+                                                    <span class="direct-chat-name float-left">Alexander Pierce</span>
+                                                    <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
+                                                    </div>
+                                                    
+                                                    <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
+                                                    
+                                                    <div class="direct-chat-text">
+                                                    Working with AdminLTE on a great new app! Wanna join?
+                                                    </div>
+                                                    
+                                                    </div>
+                                                    
+                                                    
+                                                    <div class="direct-chat-msg right">
+                                                    <div class="direct-chat-infos clearfix">
+                                                    <span class="direct-chat-name float-right">Sarah Bullock</span>
+                                                    <span class="direct-chat-timestamp float-left">23 Jan 6:10 pm</span>
+                                                    </div>
+                                                    
+                                                    <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image">
+                                                    
+                                                    <div class="direct-chat-text">
+                                                    I would love to.
+                                                    </div>
+                                                    
+                                                    </div>
+                                                    
+                                                    </div>
+                                                    
+                                                    
+                                                    <div class="direct-chat-contacts">
+                                                    <ul class="contacts-list">
+                                                    <li>
+                                                    <a href="#">
+                                                    <img class="contacts-list-img" src="dist/img/user1-128x128.jpg" alt="User Avatar">
+                                                    <div class="contacts-list-info">
+                                                    <span class="contacts-list-name">
+                                                    Count Dracula
+                                                    <small class="contacts-list-date float-right">2/28/2015</small>
+                                                    </span>
+                                                    <span class="contacts-list-msg">How have you been? I was...</span>
+                                                    </div>
+                                                    
+                                                    </a>
+                                                    </li>
+                                                    
+                                                    <li>
+                                                    <a href="#">
+                                                    <img class="contacts-list-img" src="dist/img/user7-128x128.jpg" alt="User Avatar">
+                                                    <div class="contacts-list-info">
+                                                    <span class="contacts-list-name">
+                                                    Sarah Doe
+                                                    <small class="contacts-list-date float-right">2/23/2015</small>
+                                                    </span>
+                                                    <span class="contacts-list-msg">I will be waiting for...</span>
+                                                    </div>
+                                                    
+                                                    </a>
+                                                    </li>
+                                                    
+                                                    <li>
+                                                    <a href="#">
+                                                    <img class="contacts-list-img" src="dist/img/user3-128x128.jpg" alt="User Avatar">
+                                                    <div class="contacts-list-info">
+                                                    <span class="contacts-list-name">
+                                                    Nadia Jolie
+                                                    <small class="contacts-list-date float-right">2/20/2015</small>
+                                                    </span>
+                                                    <span class="contacts-list-msg">I'll call you back at...</span>
+                                                    </div>
+                                                    
+                                                    </a>
+                                                    </li>
+                                                    
+                                                    <li>
+                                                    <a href="#">
+                                                    <img class="contacts-list-img" src="dist/img/user5-128x128.jpg" alt="User Avatar">
+                                                    <div class="contacts-list-info">
+                                                    <span class="contacts-list-name">
+                                                    Nora S. Vans
+                                                    <small class="contacts-list-date float-right">2/10/2015</small>
+                                                    </span>
+                                                    <span class="contacts-list-msg">Where is your new...</span>
+                                                    </div>
+                                                    
+                                                    </a>
+                                                    </li>
+                                                    
+                                                    <li>
+                                                    <a href="#">
+                                                    <img class="contacts-list-img" src="dist/img/user6-128x128.jpg" alt="User Avatar">
+                                                    <div class="contacts-list-info">
+                                                    <span class="contacts-list-name">
+                                                    John K.
+                                                    <small class="contacts-list-date float-right">1/27/2015</small>
+                                                    </span>
+                                                    <span class="contacts-list-msg">Can I take a look at...</span>
+                                                    </div>
+                                                    
+                                                    </a>
+                                                    </li>
+                                                    
+                                                    <li>
+                                                    <a href="#">
+                                                    <img class="contacts-list-img" src="dist/img/user8-128x128.jpg" alt="User Avatar">
+                                                    <div class="contacts-list-info">
+                                                    <span class="contacts-list-name">
+                                                    Kenneth M.
+                                                    <small class="contacts-list-date float-right">1/4/2015</small>
+                                                    </span>
+                                                    <span class="contacts-list-msg">Never mind I found...</span>
+                                                    </div>
+                                                    
+                                                    </a>
+                                                    </li>
+                                                    
+                                                    </ul>
+                                                    
+                                                    </div>
+                                                    
+                                                    </div>
+                                                    
+                                                    <div class="card-footer">
+                                                    <form action="#" method="post">
+                                                    <div class="input-group">
+                                                    <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                                                    <span class="input-group-append">
+                                                    <button type="button" class="btn btn-primary">Send</button>
+                                                    </span>
+                                                    </div>
+                                                    </form>
+                                                    </div>
+                                                    
+                                                    </div> -->
+    
+                                                
+    
+                                                <div class="comment container-fluid">
+                                                    <p *ngFor="let person of pOVwOutstationExpenseComments2;">
+                                                        <span class="badge badge-primary col-md-3"> {{person.statusName}}</span>
+                                                        <span class="badge badge-success col-md-6" >{{person.userName}}</span>
+                                                        <span class="badge badge-warning col-md-3">{{person.createdOn | date:"yyyy-MM-dd"}} </span>
+                                                    
+                                                            <label class="col-md-12"> {{person.comments}}</label>
+                                                        
+                                                    </p>
+    
+    
+    
+                                                    
+    
+    
+                                                    
+                                                    
+                                                   
+                                                    <div class="vertical"></div>
+                                                </div>
+    
+                                        
+                                               
+        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="divfooter" class="card card-footer">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label"></label>
+                            <div class="col-sm-6">
+    
+                                <span id="lblError"></span>
+    
+    
+    
+    
+    
+    
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+    
+                                <div class="col-sm-7 col-sm-offset-5">
+                                    <button type="submit" 
+                                                                value="Save" id="btnSave"
+                                                                class="btn btn-primary mar_top10" *ngIf="ActionFlag==0">Save</button>
+    
+                                                                <button type="submit" 
+                                                                value="Update" id="btnSave"
+                                                                class="btn btn-primary mar_top10" *ngIf="ActionFlag==1">Update</button>
+                                                 
+                                    &nbsp;<input type="submit" formControlName="btnClear" value="Reset" id="btnClear"
+                                        class="btn btn-warning mar_top10" disabled>
+    
+                                </div>
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+    
+        </form>
+    
+    
+        
+    
+    
+    
+       
+    <div
+      class="modal"
+      tabindex="-1"
+      role="dialog"
+      [ngStyle]="{'display':displayStyle}">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          
+          <div class="modal-body ">
+            <img  id="imagemodel" class="img-thumbnail" style="transform: center;"  />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" 
+                    (click)="closePopup()">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    </section>
+    
+    

@@ -34,7 +34,9 @@
               "node_modules/datatables.net-buttons-dt/css/buttons.dataTables.css",
        
               "src/assets/select2/select2.min.css",
-              "src/assets/select2/select2.min.js"
+              "src/assets/select2/select2.min.js",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.css"
               
                ],
             "scripts": [
@@ -87,7 +89,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumError": "8mb"
                 },
                 {
                   "type": "anyComponentStyle",
