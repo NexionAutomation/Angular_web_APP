@@ -10,10 +10,10 @@
             <div class="info-box">
                 <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">CPU Traffic</span>
+                    <span class="info-box-text">Create Number Of Po (Current Month)</span>
                     <span class="info-box-number">
                         10
-                        <small>%</small>
+                        <!-- <small>%</small> -->
                     </span>
                 </div>
 
@@ -25,7 +25,7 @@
             <div class="info-box mb-3">
                 <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Likes</span>
+                    <span class="info-box-text">Total Po Amount (Current Month)</span>
                     <span class="info-box-number">41,410</span>
                 </div>
 
@@ -39,7 +39,7 @@
             <div class="info-box mb-3">
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Sales</span>
+                    <span class="info-box-text" >Upcomming Po (Delivery Data)</span>
                     <span class="info-box-number">760</span>
                 </div>
 
@@ -51,7 +51,7 @@
             <div class="info-box mb-3">
                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">New Members</span>
+                    <span class="info-box-text">Total Number Of Suppliers</span>
                     <span class="info-box-number">2,000</span>
                 </div>
 
@@ -224,6 +224,89 @@
 
         </section>
 
+
+
+
+
+        <section class="col-lg-12">
+            <div class="form2">
+
+                <div class="card card-outline card-primary">
+                    <div class="card-header "> PO Details ::</div>
+                    <div class="card-body " style="overflow-x:auto;">
+        
+        
+        
+                        <!-- <table id="example" class="display" width="100%"></table> -->
+        
+                        <table id="example"  class="table table-striped ">
+        
+                            <thead>
+                                <tr>
+                                    <th  >Action</th>
+                                    <th >Rid</th>
+                                    <th >PO Number</th>
+                                    <th >Company Name</th>
+                                    <th>Supplier Name</th>
+                                    <th >Order Date</th>
+                                    <th >Payment Terms</th>
+                                    <th >Indent No</th>
+                                    <th >Freight Terms</th>
+                                    <th >Work Order No</th>
+                                    <th >Gst No</th>
+                                    <th >Delivery Date</th>
+                                    <th >Remarks</th>
+                                    <th >Total</th>
+                                    <th >Enduser</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let person of deleverydate;let a=index">
+                                    <td><button class="badge bg-success  btn btn-sm  " name='{{ person.poId}}'> <a
+                                                class="fa fa-edit" (click)="onedit(person.poId) " [routerLink]="['/CreatePo', person.poId]"></a></button>
+                                        <br>
+                                        <button class="badge bg-danger  btn btn-sm" name='{{ person.poId}}'
+                                            (click)="onDel(person.poId)"  ><a class="fa fa-trash"></a></button>
+                                            <br>
+                                            <button class="badge bg-info  btn btn-sm"  name='{{ person.poId}}'
+                                            ><a class="fa fa-file" target="_self" [routerLink]="['/viewPo',person.poId]" ></a></button>
+                                    
+                                    </td>
+        
+        
+                                    <td > {{person.poId}}</td>
+                                    <td > {{person.id}}</td>
+                                    <td>{{ person.companyName }}</td>
+                                    <td> {{person.supplierName}}</td>
+                                    <td>{{ person.orderDate | date:"yyyy-MM-dd" }}</td>
+                                    <td>{{ person.paymentTerms }}</td>
+                                    <td> {{person.indentNo}}</td>
+                                    <td>{{ person.freightTerms }}</td>
+                                    <td> {{person.workOrderNo }}</td>
+                                    <td>{{ person.gst  }}</td>
+                                    <td>{{ person.deliveryDate | date:"yyyy-MM-dd" }}</td>
+                                    <td> {{person.remarks }}</td>
+                                    <td>{{ person.total  }}</td>
+                                    <td>{{ person.enduser  }}</td>
+                                   
+        
+        
+        
+                                </tr>
+                            </tbody>
+                        </table>
+        
+        
+                    </div>
+                </div>
+        
+            </div>
+        </section>
+        
+      
+
+    
+
         <!-- /.Left col -->
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
 
@@ -233,3 +316,4 @@
 
 
 </section>
+

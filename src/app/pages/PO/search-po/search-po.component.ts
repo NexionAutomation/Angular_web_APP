@@ -292,42 +292,27 @@ rid,
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-    this.POTmSupplierMasters = Enumerable.from( obj["data"]["pOTmSupplierMasters"]).cast<Tm_supplierMaster>();
-    this.POTmCompanyMasters1 =  Enumerable.from(obj["data"]["pOTmCompanyMasters"]).cast<TM_CompanyMaster>()
-    this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["cMPOFetchdata"]["nodes"]).cast<TM_PurchaseHead>();
+       this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["cMPOFetchdata"]["nodes"]).cast<any>();
     
-    
-
-    //   var result = this.pOTmPurchaseHeads
-    // .join(this.POTmSupplierMasters, a => a.supplierID, b => b.iD)
-    // .where(s => s.left.supplierID == s.right.iD )
-    // .toList();
-
-    
-    // var result2 = result
-    // .join(this.POTmCompanyMasters1, a => a.left.companyID, b => b.iD)
-    // .where(s => s.left.left.companyID== s.right.iD)
-    // .toList();
-   
     
 this.persons= this.pOTmPurchaseHeads;
-    //console.log(da.take(10));
-    // $('#example').DataTable().destroy();
-    // $(document).ready(function () {
+$('#example').DataTable().destroy();
+$(document).ready(function () {
 
-    //   this.dtOptions = $('#example').DataTable({
+  this.dtOptions = $('#example').DataTable({
 
-    //     dom: 'Bfrtip',
-    //     paging: true
-
-    //   });
+    dom: 'Bfrtip',
+    paging: true
 
 
 
-      
+  });
 
-    // });
 
+
+});
+
+   
 
   }
 

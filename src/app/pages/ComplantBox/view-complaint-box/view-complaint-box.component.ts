@@ -44,6 +44,7 @@ export class ViewComplaintBoxComponent implements OnInit {
   POTmCompanyMasters1: Enumerable<TM_CompanyMaster>;
   public PurchaseHead: TM_PurchaseHead;
   editData: any;
+  userMasterData: Enumerable<any>;
  
   constructor(
     private renderer: Renderer2,
@@ -180,13 +181,7 @@ export class ViewComplaintBoxComponent implements OnInit {
   }
 
   async INSERT(
-    moduleId: number,
-moduleName: String,
-moduleOrder: number,
-
-cuserId: number,
-
-muserId: number,
+    
 rid: number,
     ActionStatus:string
   ) {
@@ -194,47 +189,22 @@ rid: number,
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
 
 
-    let query = `mutation MyMutation($moduleId: Int!
-      $moduleName: String
-      $moduleOrder: Int!
-      
-      $cuserId: Int!
-      
-      $muserId: Int!
-      $rid: Int!) {
-      __typename
-      cMTmAdminModuleMasters(triger: "${ActionStatus}",
-        data: {detail: {
-          moduleId: $moduleId,
-          moduleOrder: $moduleOrder,
-          creationDate: "2019-10-10",
-          cuserId: $cuserId,
-          modificationDate: "2019-10-10",
-          muserId: $muserId,
-          rid: $rid,
-          moduleName: $moduleName
-        }, iD: "${rid}"}) {
-        code
-        detail
-        iD
-        message
-        status
-      }
-    }
-    
-               
+    let query = `mutation MyMutation($expenseId: Long!
+      ) {
+        __typename
+        cmComplaintBoxHead(data: {detail: {expenseId: $expenseId}}, triger: "DELETE") {
+          code
+          detail
+          iD
+          message
+          status
+        }
+      }       
        `
 
     var datas = JSON.stringify({
       query, variables: {
-        moduleId,
-moduleName,
-moduleOrder,
-
-cuserId,
-
-muserId,
-rid,
+        expenseId:rid
       }
     });
     var ss = await this.Logins1.GraphqlFetchdata("query", datas);
@@ -255,6 +225,13 @@ rid,
         updateBy
         updateOn
       }
+      userMasterData {
+        rid
+        reportingManager
+        userName
+        userCode
+        accountStatus
+      }
     }
      `
     var datas = JSON.stringify({ query, variables: { User, Password } });
@@ -270,10 +247,14 @@ rid,
 
     this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["cmComplaintBoxHead"]).cast<any>();
     
+    this.userMasterData = Enumerable.from( obj["data"]["userMasterData"]).cast<any>();
+    
+    
     
     console.log(this.pOTmPurchaseHeads );
 
     
+    //createdBy
     
 this.persons= this.pOTmPurchaseHeads.take(200);
     //console.log(da.take(10));
@@ -321,11 +302,11 @@ this.persons= this.pOTmPurchaseHeads.take(200);
         if (showConfirmButton == true) {
 
 
-          var output = await this.INSERT(0,
-            this.loginForm.get('txtModuleName').value,
-            this.loginForm.get('txtModuleOrder').value,
-            this.Logins1.TMUserMaster.userCode
-            , 0, 0,"INSERT");
+          // var output = await this.INSERT(0,
+          //   this.loginForm.get('txtModuleName').value,
+          //   this.loginForm.get('txtModuleOrder').value,
+          //   this.Logins1.TMUserMaster.userCode
+          //   , 0, 0,"INSERT");
 
 
             const myJSON = JSON.stringify(output);
@@ -391,11 +372,12 @@ this.persons= this.pOTmPurchaseHeads.take(200);
       if (showConfirmButton == true) {
 
 
-        var output = await this.INSERT(0,
-          this.loginForm.get('txtModuleName').value,
-          this.loginForm.get('txtModuleOrder').value,
-          this.Logins1.TMUserMaster.userCode
-          , 0, this.editData.rid,"UPDATE");
+     var output =null;
+     //= await this.INSERT(0,
+        //   this.loginForm.get('txtModuleName').value,
+        //   this.loginForm.get('txtModuleOrder').value,
+        //   this.Logins1.TMUserMaster.userCode
+        //   , 0, this.editData.rid,"UPDATE");
 
 
           const myJSON = JSON.stringify(output);
@@ -478,33 +460,11 @@ async onDel(string :string)
       if (showConfirmButton == true) {
 
         
-        var output = await  this.INSERTHeader(
-          Number(string),
-         1,
-          1,
-          new Date("2019-10-10"),
-         "paymentTerms",
-         "indentNo",
-         "freightTerms",
-         "workOrderNo",
-         "gst",
-         new Date("2019-10-10"),
-         "remarks",
-          1.0,
-         "enduser",
-         new Date("2019-10-10"),
-         1
-       ,
-         new Date("2019-10-10"),
-         1,
-         "deliveryMode" ,
-         Number(string),
-         "DELETE"
-       );
+        var output = await this.INSERT( parseInt( string),"DELETE");
         const myJSON = JSON.stringify(output);
         const obj = JSON.parse(myJSON);
     
-        var outputFinal = obj["data"]["cMTmPurchaseHead"];
+        var outputFinal = obj["data"]["cmComplaintBoxHead"];
 
        
           if(outputFinal[0].message=="Success")

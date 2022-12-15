@@ -23,17 +23,17 @@ import Swal from 'sweetalert2';
 })
 export class CreateComplaintBoxComponent implements OnInit {
 
-  public Output:any
+  public Output: any
   public Editor = ClassicEditor;
 
-  
+
   public model;
-  
+
   ActionFlag: number;
   chatRoomUid$: any;
   URLid: number;
   public test: string;
-  
+
   constructor(
     private renderer: Renderer2,
     private toastr: ToastrService,
@@ -46,11 +46,11 @@ export class CreateComplaintBoxComponent implements OnInit {
     private _router: Router
   ) { }
 
-  public onChange( { editor }: ChangeEvent ) {
+  public onChange({ editor }: ChangeEvent) {
     const data = editor.getData();
-    this.test=data
+    this.test = data
     console.log(data)
-}
+  }
 
   ngOnInit(): void {
 
@@ -76,7 +76,7 @@ export class CreateComplaintBoxComponent implements OnInit {
 
   async urlload(STRING) {
 
-     
+
 
     var data = await this.GETData("", "");
     const myJSON = JSON.stringify(data);
@@ -84,14 +84,14 @@ export class CreateComplaintBoxComponent implements OnInit {
     console.log(obj);
 
     var pOVwOutstationExpenseComments = Enumerable.from(obj["data"]["cmComplaintBoxHead"]).cast<any>();
-    var data55=pOVwOutstationExpenseComments.where(x=>x.expenseId==this.URLid).select(x=>x.description).toArray();
-  
-    
+    var data55 = pOVwOutstationExpenseComments.where(x => x.expenseId == this.URLid).select(x => x.description).toArray();
 
-    this.test= data55[0];
-    
 
-    
+
+    this.test = data55[0];
+
+
+
 
   }
 
@@ -110,6 +110,7 @@ export class CreateComplaintBoxComponent implements OnInit {
         updateBy
         updateOn
       }
+      
     }
      `
     var datas = JSON.stringify({ query, variables: { User, Password } });
@@ -135,16 +136,16 @@ export class CreateComplaintBoxComponent implements OnInit {
 
           if (showConfirmButton == true) {
 
-var data=new Date()
+            var data = new Date()
             var output = await this.INSERTHeader(
               0,
-this.test,
-"Submit",
-"autogeneratted",
-null,
-this.Logins1.TMUserMaster.userCode,
- null,
-0
+              this.test,
+              "Submit",
+              "autogeneratted",
+              null,
+              this.Logins1.TMUserMaster.userCode,
+              null,
+              0
             );
 
             // status Comment
@@ -153,37 +154,9 @@ this.Logins1.TMUserMaster.userCode,
 
             var outputFinal = obj["data"]["cmComplaintBoxHead"];
 
-            // console.log(this.persons);
-            //var datas = (this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1);
-            // console.log(datas);
-
-            // var output2 = await this.INSERTHeader(
-            //   Number(datas),
-            //   Number(this.loginForm.get('ddlstatus').value),
 
 
-            //   this.Logins1.TMUserMaster.userCode,
-
-            //   this.Logins1.TMUserMaster.userCode,
-            //   this.loginForm.get('txtcomments').value
-            //   ,
-
-            //   1,
-            //   "INSERT"
-            // );
-
-
-            // const myJSON2 = JSON.stringify(output2);
-            // const obj2 = JSON.parse(myJSON2);
-
-            // var outputFinal2 = obj2["data"]["cMExpenseStatusState"];
-
-
-            // // status Comment
-
-
-
-            if (outputFinal[0].message == "Success" ) {
+            if (outputFinal[0].message == "Success") {
               const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -204,6 +177,7 @@ this.Logins1.TMUserMaster.userCode,
 
 
               })
+              this._router.navigate(['/ViewComplaintBox'])
               //this.LodeDataTable();
 
             } else {
@@ -330,7 +304,7 @@ this.Logins1.TMUserMaster.userCode,
 
 
       // }
-    
+
     } catch (error) {
       Swal.fire(
         'Failed',
@@ -342,15 +316,15 @@ this.Logins1.TMUserMaster.userCode,
 
 
 
-   async INSERTHeader(
+  async INSERTHeader(
     expenseId: number,
-description: String,
-status: String,
-tokennumber: String,
-createdOn: Date,
-createdBy: number,
-updateOn: Date,
-updateBy: number
+    description: String,
+    status: String,
+    tokennumber: String,
+    createdOn: Date,
+    createdBy: number,
+    updateOn: Date,
+    updateBy: number
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);

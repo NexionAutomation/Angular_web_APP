@@ -26,7 +26,7 @@
         </li>
         <!-- Menu Body -->
         <li class="user-body">
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-4 text-center">
                     <a [routerLink]="['/']">Followers</a>
                 </div>
@@ -36,12 +36,12 @@
                 <div class="col-4 text-center">
                     <a [routerLink]="['/']">Friends</a>
                 </div>
-            </div>
+            </div> -->
             <!-- /.row -->
         </li>
         <!-- Menu Footer-->
         <li class="user-footer">
-            <a [routerLink]="['/profile']" class="btn btn-default btn-flat">
+            <a [routerLink]="['/profile']" class="btn btn-default btn-flat" aria-disabled="true">
                 Profile
             </a>
             <a (click)="logout()" class="btn btn-default btn-flat float-right"

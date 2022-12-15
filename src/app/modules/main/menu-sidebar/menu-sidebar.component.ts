@@ -340,16 +340,16 @@ submodule1.forEach(element => {
 //     },
 
 
-  array.push (
-    {
-        name:'Dashboard Rights' ,
-        path: ['/'],
-        children:[  {
-          path: '/CreateUserRight',
-          name: "User Rights"
-      }]
-    }
-  )
+  // array.push (
+  //   {
+  //       name:'Dashboard Rights' ,
+  //       path: ['/'],
+  //       children:[  {
+  //         path: '/CreateUserRight',
+  //         name: "User Rights"
+  //     }]
+  //   }
+  // )
 
 
 this.menu=array;

@@ -10,6 +10,7 @@ import { CM_AdminModuleMaster } from '@pages/user-module/create-modulemaster/cre
 
 
 import { ToastrService } from 'ngx-toastr';
+import { element } from 'protractor';
 import { Subject } from 'rxjs';
 
 import { Enumerable } from 'sharp-collections';
@@ -30,7 +31,7 @@ export class PoDashboardComponent implements OnInit {
   public MUser_Id: number;
   public RID: number;
   public status: any;
-
+  public deleverydate:any;
   public status2:TM_PurchaseHeadscema;
   public CM_AdminModuleMaster: CM_AdminModuleMaster
    ActionFlag= 0;
@@ -71,6 +72,13 @@ export class PoDashboardComponent implements OnInit {
     });
 
     this.LodeDataTable();
+
+
+    $(document).ready(function() {
+      var empName = 'abc';
+    
+      $('#tb_id td.grn:contains("' + empName + '")').closest('tr').addClass('blink');
+    });
 
   }
 
@@ -291,31 +299,54 @@ rid,
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-    this.POTmSupplierMasters = Enumerable.from( obj["data"]["pOTmSupplierMasters"]).cast<Tm_supplierMaster>();
-    this.POTmCompanyMasters1 =  Enumerable.from(obj["data"]["pOTmCompanyMasters"]).cast<TM_CompanyMaster>()
-    this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["cMPOFetchdata"]["nodes"]).cast<TM_PurchaseHead>();
+   this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["cMPOFetchdata"]["nodes"]).cast<TM_PurchaseHead>();
       this.persons= this.pOTmPurchaseHeads;
 
-      this.persons= Enumerable.from( obj["data"]["cMPOFetchdata"]["nodes"]).cast<any>();
-      var filter = "  x =>    x['supplierName'], x['total']  ";
-   //var status2= this.persons.toLookup(x=>x.supplierName).List();
-      
-  
-      //Enumerable.from(this.persons).cast<TM_PurchaseHeadscema>().toArray();
-     
+      this.persons= Enumerable.from( obj["data"]["cMPOFetchdata"]["nodes"]).toList();
+        var status2= this.persons.toLookup(x=>x.supplierName).toArray();
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() - 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        
+        var today3 = yyyy  + '-' + mm  + '-' + dd;
+       
+        var fhgthis=this.persons;
+  this.deleverydate=fhgthis;
+        
 
 
+ 
+   var  data1=new Array()
+   var  data2=new Array()
+   var  data3=new Array()
+   const colour=[];
+   
+colour.push(this.getRandomColor())
+   status2.forEach(element => {
 
+    const totalYears = parseInt( element.average(u => u.total));
+     var fay=this.getRandomColor();
+
+
+     data1.push(element.key);
+     data2.push(totalYears);
+     data3.push(fay);
+    
+    
+  });
+
+//'pie',
           var gsf2=new Chart(document.getElementById("myChart2"), {
-      type: 'pie', data: {
-        //labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
-        datasets: [{ 
-            data: [1500,1600,1700,1750],
-            label: ["Pending","Pending2","Pending3","Pending4"],
-            backgroundColor:  ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"], 
-           
-          }
-        ]
+      type: 'pie',
+      data:{
+        labels: data1,
+        datasets: [{
+          label: "Average Max Purchase Co",
+          backgroundColor: data3,
+          data: data2
+        }]
       },
       options: {
         responsive: true,
@@ -326,13 +357,28 @@ rid,
       },
         title: {
           display: true,
-          text: 'World population per region (in millions)'
+          text: 'Total Number Of Average Max Purchase of Suppliers'
         }
       }
     })
 
 
-    
+    $('#example').DataTable().destroy();
+    $(document).ready(function () {
+
+      this.dtOptions = $('#example').DataTable({
+
+        dom: 'Bfrtip',
+        paging: true
+
+
+
+      });
+
+
+
+    });
+
 
 
   }
@@ -343,6 +389,9 @@ rid,
 
   }
 
+
+
+  
 
    getRandomColor() {
     var letters = '0123456789ABCDEF'.split('');

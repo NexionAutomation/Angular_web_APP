@@ -707,7 +707,7 @@ export class ExpenseEmpComponent implements OnInit {
     let query = `query MyQuery {
       __typename
      
-      pOExpenseItemAttachments {
+      pOExpenseItemAttachments(where: {expenseId: {eq: ${parseInt( this.URLid)}}}) {
         attchmentId
         contentType
         createdBy
@@ -715,7 +715,6 @@ export class ExpenseEmpComponent implements OnInit {
         expenseId
         imagDescription
         name
-        
       }
      
     
@@ -834,10 +833,6 @@ export class ExpenseEmpComponent implements OnInit {
             var outputFinal2 = obj2["data"]["cMExpenseStatusState"];
 
 
-            // status Comment
-
-
-
             if (outputFinal[0].message == "Success" && outputFinal2[0].message == "Success") {
               const Toast = Swal.mixin({
                 toast: true,
@@ -859,6 +854,8 @@ export class ExpenseEmpComponent implements OnInit {
 
 
               })
+
+              this._router.navigate(['/','CreateExpOutView']);
               //this.LodeDataTable();
 
             } else {
@@ -915,10 +912,7 @@ export class ExpenseEmpComponent implements OnInit {
 
             var outputFinal = obj["data"]["cMExpenseHead"];
 
-            // console.log(this.persons);
-            //var datas=  (this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0)+1);
-            // console.log(datas);
-
+       
             var output2 = await this.INSERTStatus(
               Number(this.URLid),
               Number(this.loginForm.get('ddlstatus').value),
@@ -966,7 +960,8 @@ export class ExpenseEmpComponent implements OnInit {
 
 
               })
-              //this.LodeDataTable();
+              this._router.navigate(['/','CreateExpOutView']);
+             
 
             } else {
 
@@ -1047,42 +1042,9 @@ export class ExpenseEmpComponent implements OnInit {
 "INSERT"
       );
 
-      // console.log("cMExpenseItemAttachment07");
-      // console.log(output);
-      // // status Comment
-      // const myJSON2 = JSON.stringify(output);
-      // const obj2 = JSON.parse(myJSON2);
-     
-      // var outputFinal = obj2["data"]["cMExpenseItemAttachment07"];
-
-      setTimeout(() => {}, 5000);
- 
-      var data = await this.GETData3("", "");
-      const myJSON = JSON.stringify(data);
-      const obj = JSON.parse(myJSON);
-
-      var datafe = Enumerable.from(obj["data"]["pOExpenseItemAttachments"]).cast<any>();
-        
       
-       var datas=datafe
-      
-     
-      if (this.ActionFlag == 0) {
-        var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
+      this.attachedLoad();
 
-      }
-      else if (this.ActionFlag == 1) {
-        var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.URLid)).toList();
-      }
-     
-     
-      
-
-      this.pOExpenseItemAttachmentss=datass;
-
-
-     
-     
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
@@ -1130,6 +1092,32 @@ export class ExpenseEmpComponent implements OnInit {
         'error')
     }
 
+  }
+
+
+ async attachedLoad()
+  {
+
+    
+    var data = await this.GETData3("", "");
+    const myJSON = JSON.stringify(data);
+    const obj = JSON.parse(myJSON);
+
+    var datafe = Enumerable.from(obj["data"]["pOExpenseItemAttachments"]).cast<any>();
+      
+    
+     var datas=datafe
+    
+   
+    if (this.ActionFlag == 0) {
+      var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
+
+    }
+    else if (this.ActionFlag == 1) {
+      var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.URLid)).toList();
+    }
+   
+    this.pOExpenseItemAttachmentss=datass;
   }
 
   async uploadI(

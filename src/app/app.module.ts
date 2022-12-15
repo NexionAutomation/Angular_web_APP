@@ -85,6 +85,7 @@ import { ExpenseViewAccountComponent } from './pages/Expense/Exp-View/expense-vi
 import { ExpenseViewmanagerComponent } from './pages/Expense/Exp-View/expense-viewmanager/expense-viewmanager.component';
 import { PoDashboardComponent } from './pages/PO/po-dashboard/po-dashboard.component'; 
 
+import { NgxOrgChartModule } from 'ngx-org-chart';
 
 //import "file-viewer";
 
@@ -169,9 +170,10 @@ registerLocaleData(localeEn, 'en-EN');
         FormsModule,
         StoreModule.forRoot({auth: authReducer, ui: uiReducer}),
         SweetAlert2Module.forRoot(),
-
+     
     //=> In submodules only:
     SweetAlert2Module,
+    NgxOrgChartModule,
 
     //=> In submodules only, overriding options from your root module:
     SweetAlert2Module.forChild({ /* options */ }),

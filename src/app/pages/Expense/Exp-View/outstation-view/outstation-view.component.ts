@@ -20,7 +20,7 @@ import Swal from 'sweetalert2';
   templateUrl: './outstation-view.component.html',
   styleUrls: ['./outstation-view.component.scss']
 })
-export class OutstationViewComponent implements OnInit,AfterViewInit,OnDestroy {
+export class OutstationViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public Module_Id: number;
   public ModuleName: string;
@@ -30,18 +30,18 @@ export class OutstationViewComponent implements OnInit,AfterViewInit,OnDestroy {
   public RID: number;
   public status: any;
   public CM_AdminModuleMaster: CM_AdminModuleMaster
-   ActionFlag= 0;
+  ActionFlag = 0;
 
-   @ViewChild(DataTableDirective, {static: false})
-   dtElement: DataTableDirective;
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement: DataTableDirective;
 
   dtOptions: DataTables.Settings = {};
   persons: any;
   persons1: any;
   dtTrigger: Subject<any> = new Subject<any>();
-    //dtTrigger: Subject = new Subject();//
+
   headers: any;
-  //CM_AdminModuleMaster: CM_AdminModuleMaster;
+
 
 
   public loginForm: FormGroup;
@@ -51,7 +51,7 @@ export class OutstationViewComponent implements OnInit,AfterViewInit,OnDestroy {
   POTmCompanyMasters1: Enumerable<TM_CompanyMaster>;
   public PurchaseHead: TM_PurchaseHead;
   editData: any;
- 
+
   constructor(
     private renderer: Renderer2,
     private toastr: ToastrService,
@@ -60,7 +60,7 @@ export class OutstationViewComponent implements OnInit,AfterViewInit,OnDestroy {
     private Logins1: Logins,
     private http: HttpClient,
     private fb: FormBuilder,
-    private _router:Router
+    private _router: Router
 
 
   ) {
@@ -72,57 +72,49 @@ export class OutstationViewComponent implements OnInit,AfterViewInit,OnDestroy {
     this.loginForm = new FormGroup({
       txtModuleName: new FormControl(null),
       txtModuleOrder: new FormControl(null),
-      
+
 
     });
 
 
-    
+
 
     this.LodeDataTable();
 
   }
- 
+
   ngAfterViewInit(): void {
     this.dtTrigger.next();
   }
 
 
-  datatablecall()
-  {
+  datatablecall() {
     this.dtOptions = {
       pagingType: 'full_numbers',
       paging: true,
       dom: 'Bfrtip',
-     
-      
-      
-  }
 
-var navItems = this.http.get(this.persons);
-  
-console.log(navItems)
 
-  this.http.get<any>(this.persons)
+
+    }
+
+    var navItems = this.http.get(this.persons);
+
+    console.log(navItems)
+
+    this.http.get<any>(this.persons)
       .subscribe(data => {
         this.persons = (data as any).data;
         // Calling the DT trigger to manually render the table
         this.dtTrigger.next();
       });
-      
-    
+
+
   }
 
-  // rerender(): void {
-  //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-  //     // Destroy the table first
-  //     dtInstance.destroy();
-  //     // Call the dtTrigger to rerender again
-  //     this.dtTrigger.next();
-  //   });
-  // }
 
-  
+
+
   async INSERTHeader(
     poId: number,
     companyId: number,
@@ -143,7 +135,7 @@ console.log(navItems)
     muserId: number,
     deliveryMode: String,
     id: number,
-    ActionStatus:string,
+    ActionStatus: string,
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
@@ -233,14 +225,14 @@ console.log(navItems)
 
   async INSERT(
     moduleId: number,
-moduleName: String,
-moduleOrder: number,
+    moduleName: String,
+    moduleOrder: number,
 
-cuserId: number,
+    cuserId: number,
 
-muserId: number,
-rid: number,
-    ActionStatus:string
+    muserId: number,
+    rid: number,
+    ActionStatus: string
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
@@ -280,13 +272,13 @@ rid: number,
     var datas = JSON.stringify({
       query, variables: {
         moduleId,
-moduleName,
-moduleOrder,
+        moduleName,
+        moduleOrder,
 
-cuserId,
+        cuserId,
 
-muserId,
-rid,
+        muserId,
+        rid,
       }
     });
     var ss = await this.Logins1.GraphqlFetchdata("query", datas);
@@ -298,7 +290,8 @@ rid,
     let data = '{User="' + User + '",Password="' + Password + '" }';
     let query = `query MyQuery {
       __typename
-      pOExpenseHeads(first: 50, order: {expenseId: DESC, periodForm: DESC}) {
+      pOExpenseHeads(first: 50, order: {expenseId: DESC, periodForm: DESC}, 
+        where: {createdBy: {eq: ${ this.Logins1.TMUserMaster.userCode}}}) {
         pageInfo {
           endCursor
           hasNextPage
@@ -321,19 +314,7 @@ rid,
           workOrderId
         }
       }
-      pOExpenseStatusStates {
-        expenseId
-        statusId
-        createdOn
-        createdBy
-        updateOn
-        updateBy
-        comments
-        rid
-      }
-    
     }
-    
     
       `
     var datas = JSON.stringify({ query, variables: { User, Password } });
@@ -347,72 +328,33 @@ rid,
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-    this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["pOExpenseHeads"]["nodes"]).cast<any>();
-    
-    
-    console.log(this.pOTmPurchaseHeads );
-
-    //   var result = this.pOTmPurchaseHeads
-    // .join(this.POTmSupplierMasters, a => a.supplierID, b => b.iD)
-    // .where(s => s.left.supplierID == s.right.iD )
-    // .toList();
-
-    
-    // var result2 = result
-    // .join(this.POTmCompanyMasters1, a => a.left.companyID, b => b.iD)
-    // .where(s => s.left.left.companyID== s.right.iD)
-    // .toList();
-   
-    
-this.persons= this.pOTmPurchaseHeads.take(200);
-    //console.log(da.take(10));
+    this.pOTmPurchaseHeads = Enumerable.from(obj["data"]["pOExpenseHeads"]["nodes"]).cast<any>();
 
 
-    // let table = $('#example').DataTable({
-    //   drawCallback: () => {
-    //     $('.paginate_button.next').on('click', () => {
-    //       this.nextButtonClickEvent();
-    //     });
-    //   },
-    //    //     dom: 'Bfrtip',
-    // //     paging: true
-    // });
+    console.log(this.pOTmPurchaseHeads);
+
+
+
+    this.persons = this.pOTmPurchaseHeads.take(200);
 
 
 
 
     $('#example').DataTable().destroy();
     $(document).ready(function () {
-      
+
 
       this.dtOptions = $('#example').DataTable({
-       
-              dom: 'Bfrtip',
-           paging: true
+
+        dom: 'Bfrtip',
+        paging: true
       });
 
 
-     
+
 
     });
 
-    // this.dtOptions({
-
-    //   drawCallback: () => {
-    //     $('.paginate_button.next').on('click', () => {
-    //       this.nextButtonClickEvent();
-    //     });
-    //   },
-    // })
-
-
-
-   
-
-
-
-
-   
 
   }
   ngOnDestroy(): void {
@@ -422,48 +364,46 @@ this.persons= this.pOTmPurchaseHeads.take(200);
   }
 
   nextButtonClickEvent(): void {
-    alert("hello");
-}
-//----------------------------------CURD OPERATIONS-------------------------------------------------------------
+
+  }
+  //----------------------------------CURD OPERATIONS-------------------------------------------------------------
 
   async onSubmit() {
-    try{
+    try {
 
-    
-
-    if(this.ActionFlag==0)
-    {
 
 
       if (this.ActionFlag == 0) {
-        const { value: showConfirmButton } = await Swal.fire({
-          title: "Do You Want To Save",
-          icon: 'question',
-          //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
-    
-          showConfirmButton: true,
-          showCancelButton: true
-        })
-    
-        if (showConfirmButton == true) {
 
 
-          var output = await this.INSERT(0,
-            this.loginForm.get('txtModuleName').value,
-            this.loginForm.get('txtModuleOrder').value,
-            this.Logins1.TMUserMaster.userCode
-            , 0, 0,"INSERT");
+        if (this.ActionFlag == 0) {
+          const { value: showConfirmButton } = await Swal.fire({
+            title: "Do You Want To Save",
+            icon: 'question',
+            //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+
+            showConfirmButton: true,
+            showCancelButton: true
+          })
+
+          if (showConfirmButton == true) {
+
+
+            var output = await this.INSERT(0,
+              this.loginForm.get('txtModuleName').value,
+              this.loginForm.get('txtModuleOrder').value,
+              this.Logins1.TMUserMaster.userCode
+              , 0, 0, "INSERT");
 
 
             const myJSON = JSON.stringify(output);
             const obj = JSON.parse(myJSON);
-        
+
             var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
-      
 
 
-            if(outputFinal[0].message=="Success")
-            {
+
+            if (outputFinal[0].message == "Success") {
               const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -486,7 +426,7 @@ this.persons= this.pOTmPurchaseHeads.take(200);
               })
               this.LodeDataTable();
 
-            }else{
+            } else {
 
               Swal.fire(
                 'Failed',
@@ -496,146 +436,140 @@ this.persons= this.pOTmPurchaseHeads.take(200);
 
             }
 
-         
-        }
-    
-      }
-     
-    
-  }
-  if(this.ActionFlag==1)
-  {
-    if (this.ActionFlag == 1) {
-      const { value: showConfirmButton } = await Swal.fire({
-        title: "Do You Want To Update",
-        icon: 'question',
-        //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
-  
-        showConfirmButton: true,
-        showCancelButton: true
-      })
-  
-      if (showConfirmButton == true) {
-
-
-        var output = await this.INSERT(0,
-          this.loginForm.get('txtModuleName').value,
-          this.loginForm.get('txtModuleOrder').value,
-          this.Logins1.TMUserMaster.userCode
-          , 0, this.editData.rid,"UPDATE");
-
-
-          const myJSON = JSON.stringify(output);
-          const obj = JSON.parse(myJSON);
-      
-          var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
-    
-
-
-          if(outputFinal[0].message=="Success")
-          {
-            const Toast = Swal.mixin({
-              toast: true,
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 3000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-              }
-
-            })
-
-            this.Logins1.popupStatus
-            Toast.fire({
-              icon: 'success',
-              title: 'Data Update Successfully',
-
-
-            })
-            this.LodeDataTable();
-          this.ActionFlag=0;
-          this.onReset();
-          }else{
-
-            Swal.fire(
-              'Failed',
-              '',
-              'error'
-            )
 
           }
 
-       
+        }
+
+
       }
-  
+      if (this.ActionFlag == 1) {
+        if (this.ActionFlag == 1) {
+          const { value: showConfirmButton } = await Swal.fire({
+            title: "Do You Want To Update",
+            icon: 'question',
+            //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+
+            showConfirmButton: true,
+            showCancelButton: true
+          })
+
+          if (showConfirmButton == true) {
+
+
+            var output = await this.INSERT(0,
+              this.loginForm.get('txtModuleName').value,
+              this.loginForm.get('txtModuleOrder').value,
+              this.Logins1.TMUserMaster.userCode
+              , 0, this.editData.rid, "UPDATE");
+
+
+            const myJSON = JSON.stringify(output);
+            const obj = JSON.parse(myJSON);
+
+            var outputFinal = obj["data"]["cMTmAdminModuleMasters"];
+
+
+
+            if (outputFinal[0].message == "Success") {
+              const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+
+              })
+
+              this.Logins1.popupStatus
+              Toast.fire({
+                icon: 'success',
+                title: 'Data Update Successfully',
+
+
+              })
+              this.LodeDataTable();
+              this.ActionFlag = 0;
+              this.onReset();
+            } else {
+
+              Swal.fire(
+                'Failed',
+                '',
+                'error'
+              )
+
+            }
+
+
+          }
+
+        }
+      }
+    } catch (error) {
+      Swal.fire(
+        'Failed',
+        error,
+        'error')
     }
+
   }
-}catch(error )
-{
-  Swal.fire(
-    'Failed',
-    error,
-    'error')
-}
-
- }
-async onDel(string :string)
-{
-  try{
-  var state="Delete"
+  async onDel(string: string) {
+    try {
+      var state = "Delete"
 
 
- 
-  if(state==state)
-  {
+
+      if (state == state) {
 
 
-    
-      const { value: showConfirmButton } = await Swal.fire({
-        title: "Are You Sure Want To Delete",
-        icon: 'question',
-        //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
-  
-        showConfirmButton: true,
-        showCancelButton: true
-      })
-  
-      if (showConfirmButton == true) {
 
-        
-        var output = await  this.INSERTHeader(
-          Number(string),
-         1,
-          1,
-          new Date("2019-10-10"),
-         "paymentTerms",
-         "indentNo",
-         "freightTerms",
-         "workOrderNo",
-         "gst",
-         new Date("2019-10-10"),
-         "remarks",
-          1.0,
-         "enduser",
-         new Date("2019-10-10"),
-         1
-       ,
-         new Date("2019-10-10"),
-         1,
-         "deliveryMode" ,
-         Number(string),
-         "DELETE"
-       );
-        const myJSON = JSON.stringify(output);
-        const obj = JSON.parse(myJSON);
-    
-        var outputFinal = obj["data"]["cMTmPurchaseHead"];
+        const { value: showConfirmButton } = await Swal.fire({
+          title: "Are You Sure Want To Delete",
+          icon: 'question',
+          //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
 
-       
-          if(outputFinal[0].message=="Success")
-          {
+          showConfirmButton: true,
+          showCancelButton: true
+        })
+
+        if (showConfirmButton == true) {
+
+
+          var output = await this.INSERTHeader(
+            Number(string),
+            1,
+            1,
+            new Date("2019-10-10"),
+            "paymentTerms",
+            "indentNo",
+            "freightTerms",
+            "workOrderNo",
+            "gst",
+            new Date("2019-10-10"),
+            "remarks",
+            1.0,
+            "enduser",
+            new Date("2019-10-10"),
+            1
+            ,
+            new Date("2019-10-10"),
+            1,
+            "deliveryMode",
+            Number(string),
+            "DELETE"
+          );
+          const myJSON = JSON.stringify(output);
+          const obj = JSON.parse(myJSON);
+
+          var outputFinal = obj["data"]["cMTmPurchaseHead"];
+
+
+          if (outputFinal[0].message == "Success") {
             const Toast = Swal.mixin({
               toast: true,
               position: 'top-end',
@@ -658,7 +592,7 @@ async onDel(string :string)
             })
             await this.LodeDataTable();
 
-          }else{
+          } else {
 
             Swal.fire(
               'Failed ',
@@ -668,56 +602,52 @@ async onDel(string :string)
 
           }
 
-       
+
+        }
+
       }
-  
-}
 
 
-}
-catch(error)
-{
-  Swal.fire(
-    'Failed',
-    error,
-    'error')
-}
-}
-async onreport()
-{
-  const url = 'https://www.google.com';
+    }
+    catch (error) {
+      Swal.fire(
+        'Failed',
+        error,
+        'error')
+    }
+  }
+  async onreport() {
+    const url = 'https://www.google.com';
     window.open(url, '_blank');
-}
-async onReset()
-{
-  this.loginForm.reset();
-  this.ActionFlag=0;
-}
+  }
+  async onReset() {
+    this.loginForm.reset();
+    this.ActionFlag = 0;
+  }
 
-async onedit(string:string)
-{
-  this.PurchaseHead=Enumerable.from( this.persons).cast<TM_PurchaseHead>().where(x=>x.pOId==Number(string)).singleOrDefault();
-  
-  this.loginForm.setValue({
-    txtModuleName: this.editData.moduleName,
-    txtModuleOrder:this.editData.moduleOrder,
+  async onedit(string: string) {
+    this.PurchaseHead = Enumerable.from(this.persons).cast<TM_PurchaseHead>().where(x => x.pOId == Number(string)).singleOrDefault();
 
-  });
-  this.ActionFlag=1;
-  
-  //this.router.navigate(['CreatePo',string]);
-}
+    this.loginForm.setValue({
+      txtModuleName: this.editData.moduleName,
+      txtModuleOrder: this.editData.moduleOrder,
+
+    });
+    this.ActionFlag = 1;
+
+    //this.router.navigate(['CreatePo',string]);
+  }
 
 
-openCityInNewWindow(string) {
-  // Converts the route into a string that can be used 
-  // with the window.open() function
-  const url = this._router.serializeUrl(
-    this._router.createUrlTree(['/viewPo',string])
-  );
+  openCityInNewWindow(string) {
+    // Converts the route into a string that can be used 
+    // with the window.open() function
+    const url = this._router.serializeUrl(
+      this._router.createUrlTree(['/viewPo', string])
+    );
 
-  window.open(url, '_blank');
-}
-//----------------------------------CURD OPERATIONS-------------------------------------------------------------
+    window.open(url, '_blank');
+  }
+  //----------------------------------CURD OPERATIONS-------------------------------------------------------------
 
 }
