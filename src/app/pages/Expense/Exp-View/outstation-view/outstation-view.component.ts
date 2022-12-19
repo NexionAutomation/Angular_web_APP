@@ -116,105 +116,30 @@ export class OutstationViewComponent implements OnInit, AfterViewInit, OnDestroy
 
 
   async INSERTHeader(
-    poId: number,
-    companyId: number,
-    supplierId: number,
-    orderDate: Date,
-    paymentTerms: String,
-    indentNo: String,
-    freightTerms: String,
-    workOrderNo: String,
-    gst: String,
-    deliveryDate: Date,
-    remarks: String,
-    total: number,
-    enduser: String,
-    creationDate: Date,
-    cuserId: number,
-    modificationDate: Date,
-    muserId: number,
-    deliveryMode: String,
+  
     id: number,
-    ActionStatus: string,
+    ActionStatus:string,
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
 
 
-    let query = `mutation MyMutation(
-      $poId: Int
-      $companyId: Int
-      $supplierId: Int
-      $orderDate: DateTime
-      $paymentTerms: String
-      $indentNo: String
-      $freightTerms: String
-      $workOrderNo: String
-      $gst: String
-      $deliveryDate: DateTime
-      $remarks: String
-      $total: Float
-      $enduser: String
-      $creationDate: DateTime
-      $cuserId: Int
-      $modificationDate: DateTime
-      $muserId: Int
-      $deliveryMode: String
-      $id: Int) {
+    let query = `mutation MyMutation($id: Long!) {
       __typename
-      cMTmPurchaseHead(data: {detail:
-        {
-          companyId: $companyId,
-          creationDate: $creationDate,
-          cuserId: $cuserId, 
-          deliveryDate: $deliveryDate, 
-          deliveryMode: $deliveryMode,
-          enduser: $enduser,
-          freightTerms:$freightTerms,
-          gst: $gst, 
-          id: $id,
-          indentNo: $indentNo,
-          modificationDate: $modificationDate,
-          muserId: $muserId,
-          orderDate: $orderDate,
-          paymentTerms: $paymentTerms, 
-          poId: $poId,
-          remarks: $remarks, 
-          supplierId: $supplierId,
-          total:$total,
-          workOrderNo: $workOrderNo
-        }, iD: "${poId}"}, triger: "${ActionStatus}")
-        { 
-          iD
-          code
-          message
-          status
-          detail
-        }
+      cMExpenseHead(data: {detail: {expenseId: $id}}, triger: "${ActionStatus}") {
+        code
+        detail
+        iD
+        message
+        status
+      }
     }
     
        `
 
     var datas = JSON.stringify({
       query, variables: {
-        poId,
-        companyId,
-        supplierId,
-        orderDate,
-        paymentTerms,
-        indentNo,
-        freightTerms,
-        workOrderNo,
-        gst,
-        deliveryDate,
-        remarks,
-        total,
-        enduser,
-        creationDate,
-        cuserId,
-        modificationDate,
-        muserId,
-        deliveryMode,
+       
         id,
       }
     });
@@ -222,7 +147,6 @@ export class OutstationViewComponent implements OnInit, AfterViewInit, OnDestroy
 
     return ss;
   }
-
   async INSERT(
     moduleId: number,
     moduleName: String,
@@ -330,15 +254,7 @@ export class OutstationViewComponent implements OnInit, AfterViewInit, OnDestroy
 
     this.pOTmPurchaseHeads = Enumerable.from(obj["data"]["pOExpenseHeads"]["nodes"]).cast<any>();
 
-
-    console.log(this.pOTmPurchaseHeads);
-
-
-
     this.persons = this.pOTmPurchaseHeads.take(200);
-
-
-
 
     $('#example').DataTable().destroy();
     $(document).ready(function () {
@@ -541,32 +457,14 @@ export class OutstationViewComponent implements OnInit, AfterViewInit, OnDestroy
 
 
           var output = await this.INSERTHeader(
-            Number(string),
-            1,
-            1,
-            new Date("2019-10-10"),
-            "paymentTerms",
-            "indentNo",
-            "freightTerms",
-            "workOrderNo",
-            "gst",
-            new Date("2019-10-10"),
-            "remarks",
-            1.0,
-            "enduser",
-            new Date("2019-10-10"),
-            1
-            ,
-            new Date("2019-10-10"),
-            1,
-            "deliveryMode",
+           
             Number(string),
             "DELETE"
           );
           const myJSON = JSON.stringify(output);
           const obj = JSON.parse(myJSON);
 
-          var outputFinal = obj["data"]["cMTmPurchaseHead"];
+          var outputFinal = obj["data"]["cMExpenseHead"];
 
 
           if (outputFinal[0].message == "Success") {

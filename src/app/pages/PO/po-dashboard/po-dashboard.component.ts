@@ -74,11 +74,7 @@ export class PoDashboardComponent implements OnInit {
     this.LodeDataTable();
 
 
-    $(document).ready(function() {
-      var empName = 'abc';
     
-      $('#tb_id td.grn:contains("' + empName + '")').closest('tr').addClass('blink');
-    });
 
   }
 

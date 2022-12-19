@@ -4,8 +4,8 @@
 
 export const environment = {
     production: false,
-    apiUrl: 'https://localhost:44330/GraphQL',//'https://nexionenterpriseapi.azurewebsites.net/graphql',//'https://localhost:44330/GraphQL',
-  imgUrl: 'https://img.dev.com'
+    apiUrl: 'https://nexionenterpriseapi.azurewebsites.net/graphql',//'https://localhost:44330/GraphQL',//'https://nexionenterpriseapi.azurewebsites.net/graphql',//'https://localhost:44330/GraphQL',
+    imgUrl: 'https://img.dev.com'
 
 };
 //https://localhost:44330/GraphQL

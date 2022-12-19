@@ -239,8 +239,8 @@
                                                     <div class="clearfix" style="margin-top: 30px;"></div>
                                                     <label for="inputEmail3" class="control-label pull-left"></label>
                                                     &nbsp;
-                                                    <button type="button" id="btn_add" class="btn btn-primary"
-                                                        (click)="Add_items()">ADD</button>
+                                                    <button type="button" id="btn_add" class="btn btn-primary" [disabled]="isDisabled"
+                                                        (click)="Add_items()" >ADD</button>
                                                 </div>
 
                                             </div>
@@ -302,11 +302,14 @@
                                                             
                                                             <tr *ngFor="let  value  of pOExpenseItems;let a=index">
                                                                 <td>
-                                                                    <input type="button" value="Delete"
+                                                                    <!-- <input type="button" value="Delete"
                                                                         id="GridView1_btnDelete_Row_0"
                                                                         class="btn btn-sm btn-danger" (click)="onDel(value.left.expenseItemsId)">
                                                                     <a id="GridView1_btn_edit_0"
-                                                                        class="btn btn-sm btn-dange fa fa-eye"></a>
+                                                                        class="btn btn-sm btn-dange fa fa-eye"></a> -->
+
+                                                                        <button type="button" class="badge bg-danger btn btn-sm" (click)="onDel(value.left.expenseItemsId)" [disabled]="isDisabled"><a class="fa fa-trash"></a></button>
+    
 
 
 
@@ -369,11 +372,11 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <input #fileInput type="file" formControlName="FileUpload1" id="FileUpload1"  (change)="upload($event)">
-                                        <button type="button" formControlName="btnUpload" class="btn btn-primary"
-                                            value="" id="btnUpload" (click)="Add_ImageUplode($event)">File Upload</button>
+                                        <button type="button" class="btn btn-primary"
+                                            id="btnUpload" (click)="Add_ImageUplode($event)" [disabled]="isDisabled">File Upload</button>
 
-                                            <button type="button" formControlName="btnUpload" class="btn btn-warning"
-                                            value="" id="btnUpload" (click)="attachedLoad()" >Refresh</button>
+                                            <button type="button"  class="btn btn-warning"
+                                             id="btnUpload" (click)="attachedLoad()" [disabled]="isDisabled" >Refresh</button>
 
                                     </div>
                                 </div>
@@ -414,7 +417,7 @@
                                                                     <button type="button"
                                                                                
                                                                                     
-                                                                    class="badge bg-danger btn btn-sm" (click)="onDelI(person.attchmentId)"><a class="fa fa-trash"></a></button>
+                                                                    class="badge bg-danger btn btn-sm" (click)="onDelI(person.attchmentId)" [disabled]="isDisabled"><a class="fa fa-trash"></a></button>
 
 
                                                                 </td>
@@ -466,13 +469,12 @@
                                             <option value="1" selected>Draft</option>
                                             <option value="2">Submit</option>
                                             <option value="6">Delete</option>
+                                            <option value="3" disabled>Reject</option>
+                                            <option value="4" disabled >Approved</option>
 
                                         </select>
                                     </div>
                                     <div class="col-sm-12">
-
-
-
 
                                         <label for="inputEmail3" class="control-label pull-left">Comments</label>&nbsp;
                                         <textarea formControlName="txtcomments" rows="2" cols="20" id="txtcomments"
@@ -531,10 +533,10 @@
 
                                                             <button type="submit" 
                                                             value="Update" id="btnSave"
-                                                            class="btn btn-primary mar_top10" *ngIf="ActionFlag==1">Update</button>
+                                                            class="btn btn-primary mar_top10" *ngIf="ActionFlag==1" [disabled]="isDisabled">Update</button>
                                              
-                                &nbsp;<input type="submit" formControlName="btnClear" value="Reset" id="btnClear"
-                                    class="btn btn-warning mar_top10">
+                                <!-- &nbsp;<input type="submit" formControlName="btnClear" value="Reset" id="btnClear"
+                                    class="btn btn-warning mar_top10"> -->
 
                             </div>
 

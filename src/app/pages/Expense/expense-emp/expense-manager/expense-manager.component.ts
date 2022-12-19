@@ -4,14 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CMAdminModuleMasterUser, ExpenseItems } from '@modules/Module/PoModules';
+import { CMAdminModuleMasterUser, CMPoITEMS, ExpenseItems } from '@modules/Module/PoModules';
 import { CM_AdminModuleMaster } from '@pages/user-module/create-modulemaster/create-modulemaster.component';
 import { UserModuleServicesService } from '@pages/user-module/user-module-services.service';
 import { AppService } from '@services/app.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Enumerable } from 'sharp-collections';
+import { Enumerable, List } from 'sharp-collections';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -20,16 +20,15 @@ import Swal from 'sweetalert2';
   styleUrls: ['./expense-manager.component.scss']
 })
 export class ExpenseManagerComponent implements OnInit {
-
   dtOptions: DataTables.Settings = {};
   persons: any;
-  pOVwOutstationExpenseComments2:any;
+  pOVwOutstationExpenseComments2: any;
   persons1: any;
   dtTrigger: Subject<any> = new Subject<any>();
   headers: any;
   CM_AdminModuleMaster: CM_AdminModuleMaster;
   ExpenseItemsList: any;
-
+  poitems: CMPoITEMS;
   public loginForm: FormGroup;
   ActionFlag = 0;
   editData: CMAdminModuleMasterUser;
@@ -43,7 +42,7 @@ export class ExpenseManagerComponent implements OnInit {
   chatRoomUid$: any;
   URLid: any;
   pOExpenseHeadsdata: any;
-  pOExpenseTypes:any
+  pOExpenseTypes: any
   pOExpenseItemssdata: any;
   pOExpenseStatusStatesData: any;
   constructor(
@@ -82,7 +81,7 @@ export class ExpenseManagerComponent implements OnInit {
       FileUpload1: new FormControl(),
       ddlstatus: new FormControl(),
       txtcomments: new FormControl(),
-
+      txtstatus: new FormControl(),
       txtdescription1: new FormControl(),
 
     });
@@ -90,7 +89,6 @@ export class ExpenseManagerComponent implements OnInit {
 
 
     this.LodeDataTable();
-
 
     var id;
     this.chatRoomUid$ = this.route.params.pipe(
@@ -106,15 +104,20 @@ export class ExpenseManagerComponent implements OnInit {
     }
     else {
       //this._router.navigate(['/SearchPo']);
-      this.ActionFlag = 0;
+      this.URLid =
+        this.ActionFlag = 0;
     }
 
+  }
 
+  QuickApproved() {
 
-
-
+    var jsonObject = Enumerable.from(this.pOExpenseItemssdata).cast<CMPoITEMS>().toArray();
+    var objIndex = jsonObject.map((obj => obj.approvedAmount = (obj.amount + obj.parkingAmt)));
 
   }
+
+
   openPopup(event) {
     this.displayStyle = "block";
     console.log(event);
@@ -126,21 +129,6 @@ export class ExpenseManagerComponent implements OnInit {
     this.displayStyle = "none";
   }
 
-  QuickApproved()
-  {
-    var datass=this.pOExpenseItems
-  
-    
-    
-   
-          
-  //var datass34=Enumerable.from(datass).selectMany();
-
-  //console.log(phoneNumbers)
-   // const phoneNumbers = this.pOExpenseItems.reduce((pn, u) => [ ...pn, ...u.phoneNumbers ], []);
-
- alert("hello");
-  }
 
   async urlload(STRING) {
     var data = await this.GETData2("", "");
@@ -149,8 +137,8 @@ export class ExpenseManagerComponent implements OnInit {
     console.log(obj);
 
     var pOVwOutstationExpenseComments = Enumerable.from(obj["data"]["pOVwOutstationExpenseComments"]).cast<any>();
-     this.pOExpenseTypes = Enumerable.from(obj["data"]["pOExpenseTypes"]).cast<any>();
-    var pOExpenseHeads = Enumerable.from(obj["data"]["pOExpenseHeads"]).cast<any>();
+    this.pOExpenseTypes = Enumerable.from(obj["data"]["pOExpenseTypes"]).cast<any>();
+    var pOExpenseHeads = Enumerable.from(obj["data"]["pOExpenseHeads"]["nodes"]).cast<any>();
     var pOExpenseItemss = Enumerable.from(obj["data"]["pOExpenseItems"]).cast<any>();
     var pOExpenseStatusStates = Enumerable.from(obj["data"]["pOExpenseStatusStates"]).cast<any>();
     var pOExpenseItemAttachments = Enumerable.from(obj["data"]["pOExpenseItemAttachments"]).cast<any>();
@@ -163,12 +151,7 @@ export class ExpenseManagerComponent implements OnInit {
 
     this.pOExpenseStatusStatesData = pOExpenseStatusStates.where(x => x.expenseId == Number(STRING)).toList();
 
-
-
-    console.log(this.pOExpenseHeadsdata);
-    console.log(this.pOExpenseItemssdata);
-    // this.pOExpenseItems=datas;
-
+    var pOExpenseStatusStatesData2 = pOExpenseStatusStates.where(x => x.expenseId == Number(STRING)).orderByDescending(x => x.rid).take(1).singleOrDefault();
 
 
     this.loginForm.controls.txttitle.setValue(this.pOExpenseHeadsdata.title);
@@ -176,57 +159,26 @@ export class ExpenseManagerComponent implements OnInit {
     this.loginForm.controls.txtlocation.setValue(this.pOExpenseHeadsdata.location);
     this.loginForm.controls.txtfromdate.setValue(formatDate(this.pOExpenseHeadsdata.periodForm, 'yyyy-MM-dd', 'en'));
     this.loginForm.controls.txttodate.setValue(formatDate(this.pOExpenseHeadsdata.periodTo, 'yyyy-MM-dd', 'en'));
-
-    // console.log(this.pOExpenseStatusStatesData[0]);
-    // this.pOExpenseStatusStatesData.forEach(x=>{
-
-    //   console.log(x);
-    //   this.loginForm.controls.ddlstatus.setValue(x.statusId);
-    // this.loginForm.controls.txtcomments.setValue(x.comments);
+    this.loginForm.controls.ddlstatus.setValue(pOExpenseStatusStatesData2.statusId);
 
 
-    // });
-    var pOVwOutstationExpenseComments2=Enumerable.from(pOVwOutstationExpenseComments).cast<any>().where(x => x.expenseId == Number(this.URLid)).orderByDescending(a=>a.createdOn).toList();
-    var result =  this.pOExpenseItemssdata
-    .join(this.pOExpenseTypes, a => a.expenseTypeId, b => b.expenseTypeId)
-    .where(s => s.left.expenseTypeId == s.right.expenseTypeId )
-    // &&    s.left.groupId== s.right.groupId)
-    .toList();
+    var pOVwOutstationExpenseComments2 = Enumerable.from(pOVwOutstationExpenseComments).cast<any>().where(x => x.expenseId == Number(this.URLid)).orderByDescending(a => a.createdOn).toList();
+    var result = this.pOExpenseItemssdata
+      .join(this.pOExpenseTypes, a => a.expenseTypeId, b => b.expenseTypeId)
+      .where(s => s.left.expenseTypeId == s.right.expenseTypeId)
+      // &&    s.left.groupId== s.right.groupId)
+      .toList();
 
     console.log(result);
-     this.persons=result;
-     this.pOVwOutstationExpenseComments2=pOVwOutstationExpenseComments2;
+    this.persons = result;
+    this.pOVwOutstationExpenseComments2 = pOVwOutstationExpenseComments2;
     this.pOExpenseItems = result;
     this.pOExpenseItemAttachmentss = Enumerable.from(pOExpenseItemAttachments).cast<any>().where(x => x.expenseId == Number(this.URLid)).toList();
     ;
 
 
 
-    $('#example').DataTable().destroy();
-    $(document).ready(function () {
-
-      this.dtOptions = $('#example').DataTable({
-
-        dom: 'Bfrtip',
-        paging: false,
-        search: true
-
-      });
-
-    });
-
-    $('#example2').DataTable().destroy();
-    $(document).ready(function () {
-
-      this.dtOptions = $('#example2').DataTable({
-
-        dom: 'Bfrtip',
-        paging: false,
-        search: true
-
-      });
-
-    });
+    this.LodeDatascema();
 
   }
 
@@ -511,20 +463,29 @@ export class ExpenseManagerComponent implements OnInit {
     return ss;
   }
   async GETData(User: string, Password: string): Promise<any> {
-
+    const d = new Date();
+    let day = d.getDate();
     let data = '{User="' + User + '",Password="' + Password + '" }';
     let query = `query MyQuery {
       __typename
-      pOExpenseHeads {
-        title
-        periodForm
-        periodTo
-        workOrderId
-        location
-        createdOn
-        createdBy
-        
-        expenseId
+      pOExpenseHeads(order: {expenseId: DESC, periodForm: DESC}, first: 5) {
+        nodes {
+          amount
+          approvedAmount
+          createdBy
+          createdName
+          createdOn
+          expenseId
+          location
+          periodForm
+          periodTo
+          statusname
+          statusId
+          title
+          updatedBy
+          updatedName
+          workOrderId
+        }
       }
      
       pOExpenseItems {
@@ -596,12 +557,44 @@ export class ExpenseManagerComponent implements OnInit {
   }
 
 
+
+  async LodeDatascema() {
+    $('#example').DataTable().destroy();
+
+    $(document).ready(function () {
+
+      this.dtOptions = $('#example').DataTable({
+
+        dom: 'Bfrtip',
+        paging: false,
+        search: true
+
+      });
+
+    });
+
+    $('#example2').DataTable().destroy();
+    $(document).ready(function () {
+
+      this.dtOptions = $('#example2').DataTable({
+
+        dom: 'Bfrtip',
+        paging: false,
+        search: true
+
+      });
+
+    });
+
+  }
+
   async GETData2(User: string, Password: string): Promise<any> {
 
     let data = '{User="' + User + '",Password="' + Password + '" }';
     let query = `query MyQuery {
       __typename
-      pOExpenseHeads {
+      pOExpenseHeads (where: {expenseId: {eq: ${parseInt(this.URLid)}}}){
+        nodes {
         title
         periodForm
         periodTo
@@ -618,8 +611,9 @@ export class ExpenseManagerComponent implements OnInit {
         statusname
         updatedBy
         updatedName
+        }
       }
-      pOExpenseItems {
+      pOExpenseItems (where: {expenseId: {eq: ${parseInt(this.URLid)}}}){
         expenseId
         date
         expenseTypeId
@@ -636,7 +630,7 @@ export class ExpenseManagerComponent implements OnInit {
         amt
         expenseItemsId
       }
-      pOExpenseStatusStates {
+      pOExpenseStatusStates (where: {expenseId: {eq: ${parseInt(this.URLid)}}}) {
         expenseId
         statusId
         createdOn
@@ -646,7 +640,7 @@ export class ExpenseManagerComponent implements OnInit {
         comments
         rid
       }
-      pOExpenseItemAttachments {
+      pOExpenseItemAttachments (where: {expenseId: {eq: ${parseInt(this.URLid)}}}) {
         attchmentId
         contentType
         createdBy
@@ -656,7 +650,7 @@ export class ExpenseManagerComponent implements OnInit {
         name
       }
 
-      pOVwOutstationExpenseComments {
+      pOVwOutstationExpenseComments (where: {expenseId: {eq: ${parseInt(this.URLid)}}}) {
         expenseId
         comments
         statusName
@@ -697,7 +691,7 @@ export class ExpenseManagerComponent implements OnInit {
     let query = `query MyQuery {
       __typename
      
-      pOExpenseItemAttachments {
+      pOExpenseItemAttachments(where: {expenseId: {eq: ${parseInt(this.URLid)}}}) {
         attchmentId
         contentType
         createdBy
@@ -705,7 +699,6 @@ export class ExpenseManagerComponent implements OnInit {
         expenseId
         imagDescription
         name
-        
       }
      
     
@@ -722,20 +715,20 @@ export class ExpenseManagerComponent implements OnInit {
 
 
 
-    
 
 
-    
+
+
     var data = await this.GETData("", "");
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-    this.persons = obj["data"]["pOExpenseHeads"];
+    this.persons = obj["data"]["pOExpenseHeads"]["nodes"];
     //this.pOExpenseItemAttachmentss = null;//obj["data"]["pOExpenseItemAttachments"]
 
 
-    
-   
+
+    this.LodeDatascema();
 
   }
 
@@ -745,7 +738,7 @@ export class ExpenseManagerComponent implements OnInit {
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-    this.Expheaders = obj["data"]["pOExpenseHeads"]
+    this.Expheaders = obj["data"]["pOExpenseHeads"]["nodes"];
 
 
   }
@@ -824,10 +817,6 @@ export class ExpenseManagerComponent implements OnInit {
             var outputFinal2 = obj2["data"]["cMExpenseStatusState"];
 
 
-            // status Comment
-
-
-
             if (outputFinal[0].message == "Success" && outputFinal2[0].message == "Success") {
               const Toast = Swal.mixin({
                 toast: true,
@@ -849,6 +838,8 @@ export class ExpenseManagerComponent implements OnInit {
 
 
               })
+
+              this._router.navigate(['/', 'CreateExpOutMannagerView']);
               //this.LodeDataTable();
 
             } else {
@@ -874,7 +865,7 @@ export class ExpenseManagerComponent implements OnInit {
 
         if (this.ActionFlag == 1) {
           const { value: showConfirmButton } = await Swal.fire({
-            title: "Do You Want To Save",
+            title: "Do You Want To Update",
             icon: 'question',
             //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
 
@@ -905,9 +896,6 @@ export class ExpenseManagerComponent implements OnInit {
 
             var outputFinal = obj["data"]["cMExpenseHead"];
 
-            // console.log(this.persons);
-            //var datas=  (this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0)+1);
-            // console.log(datas);
 
             var output2 = await this.INSERTStatus(
               Number(this.URLid),
@@ -934,6 +922,37 @@ export class ExpenseManagerComponent implements OnInit {
             // status Comment
 
 
+            var outputFinal22;
+            if (this.pOExpenseItemssdata.any()) {
+              this.pOExpenseItemssdata.toArray().forEach(async a => {
+                var output22;
+                output22 = await this.INSERTITEMS(
+                  parseInt(this.URLid),
+                  a.date,
+                  Number(a.expenseTypeId),
+                  a.amount,
+                  a.approvedAmount,
+                  //createdOn: Date,
+                  this.Logins1.TMUserMaster.userCode,
+                  //updateOn: Date,
+                  this.Logins1.TMUserMaster.userCode,
+                  a.description,
+                  a.paidBy,
+                  a.distance,
+                  a.parkingAmt,
+                  a.amt,
+                  Number(a.expenseItemsId),
+                  "UPDATE")
+                const myJSON22 = JSON.stringify(output22);
+                const obj22 = JSON.parse(myJSON22);
+
+                outputFinal22 = obj22["data"]["cMExpenseItem"];
+
+              });
+            }
+
+
+
 
             if (outputFinal[0].message == "Success" && outputFinal2[0].message == "Success") {
               const Toast = Swal.mixin({
@@ -956,7 +975,8 @@ export class ExpenseManagerComponent implements OnInit {
 
 
               })
-              //this.LodeDataTable();
+              this._router.navigate(['/', 'CreateExpOutMannagerView']);
+
 
             } else {
 
@@ -984,6 +1004,13 @@ export class ExpenseManagerComponent implements OnInit {
 
   }
 
+  txtamountApprovedChange(id: string, value: Event) {
+    var val = (value.target as HTMLInputElement).value;
+    var jsonObject = Enumerable.from(this.pOExpenseItemssdata).cast<CMPoITEMS>().toArray();
+    var objIndex = jsonObject.filter(obj => obj.expenseItemsId == parseInt(id)).map((obj => obj.approvedAmount = parseInt(val)));
+
+    console.log(this.pOExpenseItemssdata);
+  }
 
   async onReset() {
     this.loginForm.reset();
@@ -1014,10 +1041,10 @@ export class ExpenseManagerComponent implements OnInit {
 
       var dataid = 0;
 
-      if (this.ActionFlag == 0) { 
-       
-        dataid = Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)
+      if (this.ActionFlag == 0) {
 
+        dataid = Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)
+        this.URLid = dataid;
       }
       else if (this.ActionFlag == 1) {
         dataid = this.URLid;
@@ -1034,76 +1061,43 @@ export class ExpenseManagerComponent implements OnInit {
         new Date(Date.now()),
         0,
         this.file,
-"INSERT"
+        "INSERT"
       );
 
-      // console.log("cMExpenseItemAttachment07");
-      // console.log(output);
-      // // status Comment
-      // const myJSON2 = JSON.stringify(output);
-      // const obj2 = JSON.parse(myJSON2);
-     
-      // var outputFinal = obj2["data"]["cMExpenseItemAttachment07"];
 
-      setTimeout(() => {}, 5000);
- 
-      var data = await this.GETData3("", "");
-      const myJSON = JSON.stringify(data);
-      const obj = JSON.parse(myJSON);
+      this.attachedLoad();
 
-      var datafe = Enumerable.from(obj["data"]["pOExpenseItemAttachments"]).cast<any>();
-        
-      
-       var datas=datafe
-      
-     
-      if (this.ActionFlag == 0) {
-        var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
 
-      }
-      else if (this.ActionFlag == 1) {
-        var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.URLid)).toList();
-      }
-     
-     
-      
+      })
 
-      this.pOExpenseItemAttachmentss=datass;
+      this.Logins1.popupStatus
+      Toast.fire({
+        icon: 'success',
+        title: 'File Uloade Successfully',
 
 
-     
-     
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-
-        })
-
-        this.Logins1.popupStatus
-        Toast.fire({
-          icon: 'success',
-          title: 'File Uloade Successfully',
-
-
-        })
-        //this.LodeDataTable();
-
-      
-
-
-      
+      })
+      //this.LodeDataTable();
 
 
 
 
-     
+      this.LodeDatascema();
+
+
+
+
+
 
 
 
@@ -1122,6 +1116,31 @@ export class ExpenseManagerComponent implements OnInit {
 
   }
 
+
+  async attachedLoad() {
+
+
+    var data = await this.GETData3("", "");
+    const myJSON = JSON.stringify(data);
+    const obj = JSON.parse(myJSON);
+
+    var datafe = Enumerable.from(obj["data"]["pOExpenseItemAttachments"]).cast<any>();
+
+
+    var datas = datafe
+
+
+    if (this.ActionFlag == 0) {
+      var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
+
+    }
+    else if (this.ActionFlag == 1) {
+      var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.URLid)).toList();
+    }
+
+    this.pOExpenseItemAttachmentss = datass;
+  }
+
   async uploadI(
     expenseId: number,
     name: String,
@@ -1131,14 +1150,13 @@ export class ExpenseManagerComponent implements OnInit {
     createdOn: Date,
     attchmentId: number,
     files: File,
-    ACTION:String
+    ACTION: String
 
   ) {
-    
-    
 
-    if(ACTION=="INSERT")
-    {
+
+
+    if (ACTION == "INSERT") {
 
       var operations = {
         query: `
@@ -1167,8 +1185,8 @@ export class ExpenseManagerComponent implements OnInit {
       `,
         variables: {
           file: null
-  
-  
+
+
         }
       }
 
@@ -1176,24 +1194,23 @@ export class ExpenseManagerComponent implements OnInit {
       var _map = {
         file: ["variables.file"]
       }
-  
-  
+
+
       var file = files;
       var fd = new FormData()
       fd.append('operations', JSON.stringify(operations))
       fd.append('map', JSON.stringify(_map))
       fd.append('file', file, file.name)
-  
-  
-  
+
+
+
       var ss = await this.Logins1.Graphqlfiledata("query", fd, file);
 
       return ss;
     }
-    else if(ACTION=="DELETE")
-    {
-      
-        let query= `
+    else if (ACTION == "DELETE") {
+
+      let query = `
       mutation MyMutation {
         __typename
         cMExpenseItemAttachment07(data: 
@@ -1224,14 +1241,14 @@ export class ExpenseManagerComponent implements OnInit {
       var ss2 = await this.Logins1.GraphqlFetchdata("query", datas);
       return ss2;
     }
-   
 
 
 
 
 
-    
-    
+
+
+
 
   }
 
@@ -1319,12 +1336,12 @@ export class ExpenseManagerComponent implements OnInit {
             const obj = JSON.parse(myJSON);
 
             var datafe = Enumerable.from(obj["data"]["pOExpenseItems"]).cast<any>();
-        
-       var pOExpenseTypes = Enumerable.from(obj["data"]["pOExpenseTypes"]).cast<any>();
+
+            var pOExpenseTypes = Enumerable.from(obj["data"]["pOExpenseTypes"]).cast<any>();
 
 
 
-      
+
             var datas;
             if (this.ActionFlag == 0) {
               datas = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
@@ -1336,15 +1353,14 @@ export class ExpenseManagerComponent implements OnInit {
 
             }
 
-
-            var result =  datas
-        .join(pOExpenseTypes, a => a.expenseTypeId, b => b.expenseTypeId)
-        .where(s => s.left.expenseTypeId == s.right.expenseTypeId  )
-        // &&    s.left.groupId== s.right.groupId)
-        .toList();
+            var result = datas
+              .join(pOExpenseTypes, a => a.expenseTypeId, b => b.expenseTypeId)
+              .where(s => s.left.expenseTypeId == s.right.expenseTypeId)
+              // &&    s.left.groupId== s.right.groupId)
+              .toList();
             this.pOExpenseItems = result;
 
-
+            this.LodeDatascema();
 
           } else {
 
@@ -1355,12 +1371,9 @@ export class ExpenseManagerComponent implements OnInit {
             )
 
           }
-
-
         }
 
       }
-
 
     }
     catch (error) {
@@ -1376,8 +1389,6 @@ export class ExpenseManagerComponent implements OnInit {
       var state = "DELETE"
       if (state == state) {
 
-
-
         const { value: showConfirmButton } = await Swal.fire({
           title: "Are You Sure Want To Delete",
           icon: 'question',
@@ -1388,7 +1399,6 @@ export class ExpenseManagerComponent implements OnInit {
         })
 
         if (showConfirmButton == true) {
-
 
           var output =
             await this.uploadI(
@@ -1401,12 +1411,8 @@ export class ExpenseManagerComponent implements OnInit {
               Number(string),
               null,
               "DELETE"
-      
+
             );
-
-
-            
-
 
           const myJSON = JSON.stringify(output);
           const obj = JSON.parse(myJSON);
@@ -1439,43 +1445,33 @@ export class ExpenseManagerComponent implements OnInit {
             var data = await this.GETData3("", "");
             const myJSON = JSON.stringify(data);
             const obj = JSON.parse(myJSON);
-      
-            var datafe = Enumerable.from(obj["data"]["pOExpenseItemAttachments"]).cast<any>();
-        
-       
 
-        
-         var datas=datafe
-           
+            var datafe = Enumerable.from(obj["data"]["pOExpenseItemAttachments"]).cast<any>();
+
+            var datas = datafe
+
             if (this.ActionFlag == 0) {
               var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
-      
+
             }
             else if (this.ActionFlag == 1) {
               var datass = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.URLid)).toList();
             }
-           
-           
-            
 
-            this.pOExpenseItemAttachmentss=datass;
-
-
+            this.pOExpenseItemAttachmentss = datass;
 
             $('#example2').DataTable().destroy();
             $(document).ready(function () {
-        
+
               this.dtOptions = $('#example2').DataTable({
-        
+
                 dom: 'Bfrtip',
                 paging: false,
                 search: true
-        
+
               });
-        
+
             });
-
-
 
           } else {
 
@@ -1491,7 +1487,6 @@ export class ExpenseManagerComponent implements OnInit {
         }
 
       }
-
 
     }
     catch (error) {
@@ -1509,6 +1504,7 @@ export class ExpenseManagerComponent implements OnInit {
       if (this.ActionFlag == 0) {
         console.log(this.persons);
         expid = Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1);
+        this.URLid = expid;
       }
       else {
         expid = this.URLid;
@@ -1532,13 +1528,6 @@ export class ExpenseManagerComponent implements OnInit {
         0,
         0,
         "INSERT");
-
-
-
-
-
-
-
 
 
       const myJSON = JSON.stringify(output);
@@ -1577,11 +1566,11 @@ export class ExpenseManagerComponent implements OnInit {
         //var datafe = obj["data"]["pOExpenseItems"];
 
         var datafe = Enumerable.from(obj["data"]["pOExpenseItems"]).cast<any>();
-        
-       var pOExpenseTypes = Enumerable.from(obj["data"]["pOExpenseTypes"]).cast<any>();
 
-         
-         var datas=datafe
+        var pOExpenseTypes = Enumerable.from(obj["data"]["pOExpenseTypes"]).cast<any>();
+
+
+        var datas = datafe
         if (this.ActionFlag == 0) {
           datas = Enumerable.from(datafe).cast<any>().where(x => x.expenseId == Number(this.persons.reduce((oa, u) => Math.max(oa, u.expenseId), 0) + 1)).toList();
 
@@ -1591,15 +1580,15 @@ export class ExpenseManagerComponent implements OnInit {
 
 
         }
-        
 
 
 
-        var result =  datas
-        .join(pOExpenseTypes, a => a.expenseTypeId, b => b.expenseTypeId)
-        .where(s => s.left.expenseTypeId == s.right.expenseTypeId  )
-        // &&    s.left.groupId== s.right.groupId)
-        .toList();
+
+        var result = datas
+          .join(pOExpenseTypes, a => a.expenseTypeId, b => b.expenseTypeId)
+          .where(s => s.left.expenseTypeId == s.right.expenseTypeId)
+          // &&    s.left.groupId== s.right.groupId)
+          .toList();
         this.pOExpenseItems = result;
 
       }
@@ -1607,34 +1596,11 @@ export class ExpenseManagerComponent implements OnInit {
 
 
       //---------------------------important code---------------------
-      // // console.log();
-      // const  datain=[{key:
-      //       {
 
-
-      //          expenseId: 0,
-      // 	 expenseTypeId: Number(this.loginForm.get('ddlExpenseType').value),
-      // 	 amount:  Number(this.loginForm.get('txtamount').value),
-      // 	 approvedAmount: 1,
-      // 	 createdBy: 1,
-      // 	 updateBy: 1,
-      // 	 description: this.loginForm.get('txtdescription').value,
-      // 	 paidBy: this.loginForm.get('ddlPaidby').value,
-      // 	 distance: Number(this.loginForm.get('txtDistance').value),
-      // 	 parkingAmt: Number(this.loginForm.get('txtParkingAmt').value),
-      // 	 aMt: Number(this.loginForm.get('ddlExpenseType').value),
-      // 	 expenseItemsId: Number(uniqId()) ,
-      //     Date:new Date(this.loginForm.get('txtdate').value)
-      //   }}] as unknown as ExpenseItems;
-
-      //    this.arr.push(datain);
-
-
-      // const sorted = this.arr.sort((a, b) => a.expenseItemsId - b.expenseItemsId);
 
       //---------------------------important code---------------------
 
-
+      this.LodeDatascema();
 
     } catch (error) {
       Swal.fire(

@@ -29,7 +29,8 @@ export class ExpenseEmpComponent implements OnInit {
   headers: any;
   CM_AdminModuleMaster: CM_AdminModuleMaster;
   ExpenseItemsList: any;
-
+  isDisabled: boolean;
+  
   public loginForm: FormGroup;
   ActionFlag = 0;
   editData: CMAdminModuleMasterUser;
@@ -153,12 +154,6 @@ export class ExpenseEmpComponent implements OnInit {
 
 
 
-    console.log(this.pOExpenseHeadsdata);
-    console.log(this.pOExpenseItemssdata);
-    // this.pOExpenseItems=datas;
-
-
-
     this.loginForm.controls.txttitle.setValue(this.pOExpenseHeadsdata.title);
     this.loginForm.controls.txtworkorderno.setValue(this.pOExpenseHeadsdata.workOrderId);
     this.loginForm.controls.txtlocation.setValue(this.pOExpenseHeadsdata.location);
@@ -166,17 +161,12 @@ export class ExpenseEmpComponent implements OnInit {
     this.loginForm.controls.txttodate.setValue(formatDate(this.pOExpenseHeadsdata.periodTo, 'yyyy-MM-dd', 'en'));
     this.loginForm.controls.ddlstatus.setValue(  pOExpenseStatusStatesData2.statusId);
     
-
     
-    // console.log(this.pOExpenseStatusStatesData[0]);
-    // this.pOExpenseStatusStatesData.forEach(x=>{
-
-    //   console.log(x);
-    //   this.loginForm.controls.ddlstatus.setValue(x.statusId);
-    // this.loginForm.controls.txtcomments.setValue(x.comments);
-
-
-    // });
+    if( pOExpenseStatusStatesData2.statusId==4)
+    {
+      this.isDisabled=true;
+    }
+    
     var pOVwOutstationExpenseComments2=Enumerable.from(pOVwOutstationExpenseComments).cast<any>().where(x => x.expenseId == Number(this.URLid)).orderByDescending(a=>a.createdOn).toList();
     var result =  this.pOExpenseItemssdata
     .join(this.pOExpenseTypes, a => a.expenseTypeId, b => b.expenseTypeId)
@@ -797,7 +787,7 @@ export class ExpenseEmpComponent implements OnInit {
 
               this.Logins1.TMUserMaster.userCode,
 
-              this.Logins1.TMUserMaster.userCode,
+              this.Logins1.TMUserMaster.reportingManager,
               "INSERT"
             );
 
@@ -902,7 +892,7 @@ export class ExpenseEmpComponent implements OnInit {
 
               this.Logins1.TMUserMaster.userCode,
 
-              this.Logins1.TMUserMaster.userCode,
+              this.Logins1.TMUserMaster.reportingManager,
               "UPDATE"
             );
 

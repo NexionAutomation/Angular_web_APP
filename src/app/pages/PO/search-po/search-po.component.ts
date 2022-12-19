@@ -250,7 +250,7 @@ rid,
     let data = '{User="' + User + '",Password="' + Password + '" }';
     let query = `query MyQuery {
       __typename
-     cMPOFetchdata(first: 50, order: {deliveryDate: DESC, poId: DESC}) {
+     cMPOFetchdata(first: 50, order: {orderDate: DESC, poId: DESC}) {
           nodes {
             id
             workOrderNo

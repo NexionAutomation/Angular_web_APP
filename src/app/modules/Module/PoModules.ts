@@ -56,6 +56,26 @@ export interface CMAdminModuleMasterUser {
     muserId: number;
     rid: number;
 }
+
+
+export interface CMPoITEMS {
+amount: number;
+amt: number;
+approvedAmount:number;
+createdBy: number;
+createdOn: number;
+date: Date;
+description: string;
+distance: number;
+expenseId: number;
+expenseItemsId: number;
+expenseTypeId: number;
+paidBy: string;
+parkingAmt: number;
+updateBy: number;
+updateOn: Date;
+}
+
 export class CM_Web_UserRightsMaster
 {
 	public groupId: number;

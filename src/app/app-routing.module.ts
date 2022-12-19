@@ -24,7 +24,7 @@ import { CreateSubModulemasterComponent } from '@pages/user-module/create-sub-mo
 import { UplodeFileComponent } from '@pages/uplode-file/uplode-file.component';
 import { ExpenseEmpComponent } from '@pages/Expense/expense-emp/EMP/expense-emp.component';
 import { ExpenseManagerComponent } from '@pages/Expense/expense-emp/expense-manager/expense-manager.component'; 
-import { ExpenseAccountComponent } from '@pages/Expense/expense-account/expense-account.component';
+
 import { CreatePOComponent } from '@pages/PO/create-po/create-po.component';
 import { SearchPoComponent } from '@pages/PO/search-po/search-po.component';
 import { CityMasterComponent } from '@pages/Module/city-master/city-master.component';
@@ -113,10 +113,10 @@ const routes: Routes = [
                 path: 'ApprovedExpense/:id',
                 component: ExpenseManagerComponent
             },
-            {
-                path: 'AccountExpense/:id',
-                component: ExpenseAccountComponent
-            },
+            // {
+            //     path: 'AccountExpense/:id',
+            //     component: ''//ExpenseAccountComponent
+            // },
             {
                 path: 'Upode',
                 component: UplodeFileComponent

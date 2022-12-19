@@ -247,24 +247,31 @@ rid,
     let data = '{User="' + User + '",Password="' + Password + '" }';
     let query = `query MyQuery {
       __typename
-      pOExpenseHeads {
-        title
-        periodForm
-        periodTo
-        workOrderId
-        location
-        amount
-        approvedAmount
-        statusId
-        statusname
-        createdBy
-        createdName
-        createdOn
-        updatedBy
-        updatedName
-        expenseId
+      pOExpenseHeads(first: 50, order: {expenseId: DESC, periodForm: DESC}, 
+        where: {managerid: {eq: ${ this.Logins1.TMUserMaster.userCode}}}) {
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+        nodes {
+          amount
+          approvedAmount
+          createdBy
+          createdName
+          createdOn
+          expenseId
+          location
+          periodForm
+          periodTo
+          statusname
+          statusId
+          title
+          updatedBy
+          updatedName
+          workOrderId,
+          managerid
+        }
       }
-     
       pOExpenseStatusStates {
         expenseId
         statusId
@@ -291,22 +298,8 @@ rid,
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-    this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["pOExpenseHeads"]).cast<any>();
+    this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["pOExpenseHeads"]["nodes"]).cast<any>();
     
-    
-    console.log(this.pOTmPurchaseHeads );
-
-    //   var result = this.pOTmPurchaseHeads
-    // .join(this.POTmSupplierMasters, a => a.supplierID, b => b.iD)
-    // .where(s => s.left.supplierID == s.right.iD )
-    // .toList();
-
-    
-    // var result2 = result
-    // .join(this.POTmCompanyMasters1, a => a.left.companyID, b => b.iD)
-    // .where(s => s.left.left.companyID== s.right.iD)
-    // .toList();
-   
     
 this.persons= this.pOTmPurchaseHeads.take(200);
     //console.log(da.take(10));

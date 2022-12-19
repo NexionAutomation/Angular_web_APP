@@ -114,6 +114,11 @@ export class ExpenseAccountComponent implements OnInit {
 
 
   }
+
+  QuickApproved()
+  {
+    
+  }
   openPopup(event) {
     this.displayStyle = "block";
     console.log(event);

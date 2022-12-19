@@ -59,7 +59,7 @@
                                         [routerLink]="['/CreateExpense', person.expenseId]"></a></button>
                                 <br>
                                 <button class="badge bg-danger  btn btn-sm" name='{{ person.expenseId}}'
-                                    (click)="onDel(person.expenseId)"><a class="fa fa-trash"></a></button>
+                                    (click)="onDel(person.expenseId)" [disabled]='person.statusname=="Approved"'><a class="fa fa-trash"></a></button>
                                 <br>
                                 <button class="badge bg-info  btn btn-sm" name='{{ person.expenseId}}'><a
                                         class="fa fa-file" target="_self"

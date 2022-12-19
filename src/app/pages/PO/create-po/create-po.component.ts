@@ -28,7 +28,7 @@ export class CreatePOComponent implements OnInit {
   headers: any;
   CM_AdminModuleMaster: CM_AdminModuleMaster;
   ExpenseItemsList: any;
-
+  datevalue:any;
   public loginForm: FormGroup;
   ActionFlag = 0;
   editData: CMAdminModuleMasterUser;
@@ -45,6 +45,7 @@ export class CreatePOComponent implements OnInit {
   pOTmPurchaseHeads: any;
   pOTmPurchaseBodiess: Enumerable<pOTmPurchaseBodies>;
   loginForm2: any;
+  shown: boolean;
 
   constructor(
     private renderer: Renderer2,
@@ -97,13 +98,13 @@ export class CreatePOComponent implements OnInit {
       txttotal: new FormControl(null),
       txtenduser: new FormControl(null),
       ddldelivery: new FormControl(null),
-
+      ddlMake: new FormControl(null),
 
     });
 
     
 
-
+    this.currentdatepicker()
     this.LodeDataTable();
 
 
@@ -258,7 +259,9 @@ muserId: number,
 
 catname: String,
 id: number,
+make:string,
     ActionStatus: string
+    
   ) {
 
     //var user= (Number)parseInt(this.Logins1.TM_UserMaster.User_Code.);
@@ -276,8 +279,10 @@ id: number,
       $cuserId: Int
       
       $muserId: Int
-      $id: Decimal!
-      $catname: String) {
+      $id: Decimal!,
+      
+      $catname: String,
+      $make:String) {
       __typename
       cMTmPurchaseBody(data: {detail:
         {id: $id,
@@ -293,6 +298,7 @@ id: number,
           poId: $poId,
           qty: $qty,
           unitPrice: $unitPrice, 
+          make:$make
           uom: $uom}, iD: "${id}"}, triger: "${ActionStatus}") {
         iD
         code
@@ -317,7 +323,7 @@ id: number,
         cuserId,
         // modificationDate,
         muserId,
-        
+        make,
         catname,
         id,
       }
@@ -543,7 +549,8 @@ id: number,
         poId
         qty
         unitPrice
-        uom
+        uom,
+        make
       }
       
     }
@@ -567,18 +574,8 @@ id: number,
 
 
     
-    console.log(obj)
-    $('#example').DataTable().destroy();
-    $(document).ready(function () {
-
-      this.dtOptions = $('#example').DataTable({
-
-        dom: 'Bfrtip',
-        paging: true
-
-      });
-
-    });
+this.datatableload();
+   
 
   }
 
@@ -588,6 +585,22 @@ id: number,
 
   }
 
+
+  async datatableload()
+  {
+    $('#example').DataTable().destroy();
+    $(document).ready(function () {
+
+      this.dtOptions = $('#example').DataTable({
+
+        dom: 'Bfrtip',
+        paging: false
+
+      });
+
+    });
+
+  }
   //----------------------------------CURD OPERATIONS-------------------------------------------------------------
 
   async onSubmit() {
@@ -826,6 +839,8 @@ async onDel(string :string)
        this.Logins1.TMUserMaster.userCode,
        this.loginForm.get('txtcat').value,
        Number(string),
+       this.loginForm.get('ddlMake').value,
+       
        "DELETE");
    
     
@@ -876,10 +891,11 @@ async onDel(string :string)
         
             }
 
-            console.log(datas);
+           
             this.pOExpenseItems=datas;
 
-           
+            this.loginForm.controls.txttotal.setValue(Math.round(datas.sum(x=>x.netPrice)));
+            this.datatableload();
 
           }else{
 
@@ -927,47 +943,17 @@ catch(error)
   //----------------------------------CURD OPERATIONS-------------------------------------------------------------
 
 
-//   async Add_items() {
-//     try {
 
-
-   
-// // console.log();
-// var  datain=
-//   {
+  checked(value){
+    var element = <HTMLInputElement> document.getElementById("abc");
+var isChecked = element.checked;
     
-
-//         txtdescription: this.loginForm.get('txtdescription').value,
-//         txtcat:this.loginForm.get('txtcat').value,
-//         ddluom: this.loginForm.get('ddluom').value,
-//         txtqty: this.loginForm.get('txtqty').value,
-//          txtlistprice: this.loginForm.get('txtlistprice').value,
-//          txtdiscount: this.loginForm.get('txtdiscount').value,
-    
-
-// } ;
-
-// console.log(datain);
-// this.arr2.push(datain);
-
-
-
-
-//     } catch (error) {
-//       Swal.fire(
-//         'Failed',
-//         error,
-//         'error')
-//     }
-
-//   }
-
-
-
-
-
-
-  
+    if(isChecked==true){
+      this.shown= true;
+    }
+    else if(isChecked==false)
+      this.shown= false;
+  }
 async Add_items()
 {try
   {
@@ -977,6 +963,12 @@ async Add_items()
     
      var unitdata= this.loginForm.get('txtlistprice').value - (this.loginForm.get('txtlistprice').value * this.loginForm.get('txtdiscount').value) / 100;
      var netdata= this.loginForm.get('txtqty').value  * Number(unitdata);
+
+     if(this.loginForm.get('chklot').value==true)
+     {
+       netdata= unitdata;
+     }
+
 
     var output= this.pOTmPurchaseHeads;
     this.pOTmPurchaseHeads= Enumerable.from(this.pOTmPurchaseHeads).toArray();
@@ -1001,6 +993,8 @@ async Add_items()
     this.Logins1.TMUserMaster.userCode,
     this.loginForm.get('txtcat').value,
     0,
+    this.loginForm.get('ddlMake').value,
+    
     "INSERT");
      }
 
@@ -1023,23 +1017,11 @@ async Add_items()
     this.Logins1.TMUserMaster.userCode,
     this.loginForm.get('txtcat').value,
     0,
+    this.loginForm.get('ddlMake').value,
     "INSERT");
      }
      
     
-   
-
-
-    
-      
-
-       
-
-         
-
-
-
-
         const myJSON = JSON.stringify(output);
         const obj = JSON.parse(myJSON);
     
@@ -1091,6 +1073,8 @@ async Add_items()
 
 
             this.loginForm.controls.txttotal.setValue(Math.round(datas.sum(x=>x.netPrice)));
+          
+            this.datatableload();
           }
     
        
@@ -1177,7 +1161,8 @@ async GETData2(User: string, Password: string): Promise<any> {
       poId
       qty
       unitPrice
-      uom
+      uom,
+      make
     }
   }
   
@@ -1188,6 +1173,23 @@ async GETData2(User: string, Password: string): Promise<any> {
 
 }
 
+
+currentdatepicker(){
+  const date = new Date()
+  const year = date.getFullYear()
+  
+  let month: number | string = date.getMonth() + 1
+  let day: number | string = date.getDate()
+  
+  if (month < 10) month = '0' + month
+  if (day < 10) day = '0' + day
+  
+  const today =  `${day}-${month}-${year}` 
+  // var dat=formatDate(today,'yyyy-MM-dd','en') 
+ var dat= formatDate(date,'yyyy-MM-dd','en')
+  this.loginForm.controls.txtorderdate.setValue(dat);
+
+};
 
 async urlload(STRING)
 {
@@ -1238,8 +1240,8 @@ async urlload(STRING)
     txtqty: null,
     txtremarks: datas2.remarks,
     txttotal: Math.round(datas.sum(x=>x.netPrice)) ,
-    ddldelivery:datas2.deliveryMode
-
+    ddldelivery:datas2.deliveryMode,
+    ddlMake:null
   
    });
 

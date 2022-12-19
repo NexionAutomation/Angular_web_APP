@@ -23,10 +23,13 @@
 
 
 
-                <div class="card-body" style="overflow-x:auto;">
+                <div class="row card-body" >
                     
+                    <div style="overflow-x:auto; float: left;" >
+                        
+                    <ngx-org-chart  [nodes]="nodes" direction="vertical"  ></ngx-org-chart>
 
-                    <ngx-org-chart class="col-md-12" [nodes]="nodes" direction="vertical" ></ngx-org-chart>
+                    </div>
 
                 </div>
 

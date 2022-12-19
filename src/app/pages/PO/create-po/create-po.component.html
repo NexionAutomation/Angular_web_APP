@@ -34,6 +34,7 @@
         </div>
 
 
+        <br>
         <div class="col-md-12">
 
 
@@ -97,8 +98,8 @@
                                                 <div class="col-sm-4">
                                                     <label for="inputEmail3" class="control-label">Order Date</label>
                                                     <input formControlName="txtorderdate" type="date"
-                                                        value="20-Jun-2022" id="txtorderdate"
-                                                        class="form-control inputtext" >
+                                                        id="txtorderdate"
+                                                        class="form-control inputtext" id="txtDate" >
 
                                                 </div>
                                             </div>
@@ -311,15 +312,18 @@
                                                 <div class="col-sm-1">
                                                     <label for="inputEmail3"
                                                         class="control-label pull-left">Make</label>&nbsp;
-                                                    <select formControlName="ddluom"
+                                                        <input formControlName="ddlMake" id="ddlMake"  type="text"
+                                                        id="txtcat" class="form-control inputtext ">
+
+                                                    <!-- <select formControlName="ddlMake"
                                                         id="ddluom" class="form-control">
                                                         <option selected="selected" value=" ">--Select--</option>
-                                                        <option value="Pcs">Schindler</option>
-                                                        <option value="Lot">Rockwell</option>
-                                                        <option value="KG">Other</option>
+                                                        <option value="Schindler">Schindler</option>
+                                                        <option value="Rockwell">Rockwell</option>
+                                                        <option value="Other" style="display: none;">Other</option>
                                                         
 
-                                                    </select>
+                                                    </select> -->
                                                 </div>
 
 
@@ -399,12 +403,12 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="table-responsive">
-                                                        <div class="table_wid">
+                                                        <div class=" card card-body table_wid">
                                                             <div>
-                                                                <table id="example"  class="table table-striped " border="1"
+                                                                <table id="example"  class="table table-striped border-style table-bordered" 
                                                                    
-                                                                    style="border-style:None;border-collapse:collapse;">
-                                                                    <tbody>
+                                                                   >
+                                                                   <thead>
                                                                         <tr>
                                                                             <th scope="col">Action</th>
                                                                             <th scope="col">SrNo</th>
@@ -418,11 +422,11 @@
                                                                             <th scope="col">Unit Price</th>
                                                                             <th scope="col">Net Price</th>
                                                                         </tr>
+                                                                    </thead>
+                                                                        <tbody>
                                                                         <tr style="background-color:0;" *ngFor="let person of pOExpenseItems;let a=index" >
                                                                             <td>
-                                                                                <button type="button"
-                                                                               
-                                                                                    
+                                                                                <button type="button"    
                                                                                 class="badge bg-danger btn btn-sm" (click)="onDel(person.id)"><a class="fa fa-trash"></a></button>
 
                                                                                    
@@ -436,7 +440,7 @@
                                                                             <td>{{person.description}}</td>
                                                                             <td>{{person.catname}}</td>
                                                                             <td>{{person.uom}}</td>
-                                                                            <td>{{person.uom}}</td>
+                                                                            <td>{{person.make}}</td>
                                                                             <td>{{person.qty}}</td>
                                                                             <td>{{person.listPrice}}</td>
                                                                             <td>{{person.dis}}</td>
@@ -487,16 +491,16 @@
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <input id="chkenduser" type="checkbox"
-                                                        formControlName="chkenduser" checked="checked"
-                                                        onclick="javascript:setTimeout('__doPostBack(\'chkenduser\',\'\')', 0)"><label
+                                                        formControlName="chkenduser" 
+                                                        id= 'abc' (change)="checked('abc')" ><label
                                                         for="chkenduser">End User</label>
                                                 </div>
                                             </div>
-                                            <div id="divenduser" class="col-sm-4">
+                                            <div id="divenduser" class="col-sm-4" *ngIf='shown'>
                                                 <label class="control-label pull-left" for="inputEmail3">
                                                     End User Name</label>&nbsp;
                                                 <input formControlName="txtenduser" type="text"
-                                                    id="txtenduser" class="form-control inputtext">
+                                                    id="txtenduser" class="form-control inputtext"  >
                                             </div>
                                             <span id="RequiredFieldValidator7" class="errorlabels"
                                                 style="font-size:8pt;display:none;">Select Type Of Delivery</span>
@@ -527,7 +531,7 @@
                                                             value="Update" id="btnSave"
                                                             class="btn btn-primary mar_top10" *ngIf="ActionFlag==1">Update</button>
                                                         &nbsp;
-                                                        <input type="submit"
+                                                        <!-- <input type="submit"
                                                            
                                                             value="Save &amp; Print"
                                                             id="btnsaveprint"
@@ -535,7 +539,7 @@
                                                         &nbsp;<input type="submit"
                                                             formControlName="btnClear" value="Reset"
                                                             id="btnClear"
-                                                            class="btn btn-primary mar_top10">
+                                                            class="btn btn-primary mar_top10"> -->
                                                     </div>
                                                 </div>
                                             </div>

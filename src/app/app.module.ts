@@ -50,7 +50,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { UplodeFileComponent } from './pages/uplode-file/uplode-file.component';
 import { ExpenseEmpComponent } from './pages/Expense/expense-emp/EMP/expense-emp.component';
 import { ExpenseManagerComponent } from '@pages/Expense/expense-emp/expense-manager/expense-manager.component'; 
-import { ExpenseAccountComponent } from './pages/Expense/expense-account/expense-account.component';
+
 import { CreatePOComponent } from './pages/PO/create-po/create-po.component';
 import { SearchPoComponent } from './pages/PO/search-po/search-po.component';
 import { CityMasterComponent } from './pages/Module/city-master/city-master.component';
@@ -131,7 +131,7 @@ registerLocaleData(localeEn, 'en-EN');
         UplodeFileComponent,
         ExpenseEmpComponent,
         ExpenseManagerComponent,
-        ExpenseAccountComponent,
+       
         CreatePOComponent,
         SearchPoComponent,
         CityMasterComponent,
@@ -157,7 +157,8 @@ registerLocaleData(localeEn, 'en-EN');
         ViewComplaintBoxComponent,
         ExpenseViewAccountComponent,
         ExpenseViewmanagerComponent,
-        PoDashboardComponent,
+        PoDashboardComponent
+      
         
     ],
     imports: [
