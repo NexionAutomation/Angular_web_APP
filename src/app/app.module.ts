@@ -86,6 +86,7 @@ import { ExpenseViewmanagerComponent } from './pages/Expense/Exp-View/expense-vi
 import { PoDashboardComponent } from './pages/PO/po-dashboard/po-dashboard.component'; 
 
 import { NgxOrgChartModule } from 'ngx-org-chart';
+import { ExpenseFileComponent } from './pages/Expense/Exp-View/expense-file/expense-file.component';
 
 //import "file-viewer";
 
@@ -157,7 +158,8 @@ registerLocaleData(localeEn, 'en-EN');
         ViewComplaintBoxComponent,
         ExpenseViewAccountComponent,
         ExpenseViewmanagerComponent,
-        PoDashboardComponent
+        PoDashboardComponent,
+        ExpenseFileComponent
       
         
     ],

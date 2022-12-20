@@ -3,19 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { pOTmPurchaseBodies, TM_CompanyMaster, TM_CountryMaster, TM_PurchaseHead, Tm_supplierMaster } from '@modules/Module/PoModules';
+import { pOTmPurchaseBodies } from '@modules/Module/PoModules';
 import { AppService } from '@services/app.service';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { Enumerable } from 'sharp-collections';
 const numWords = require('num-words');
-
 @Component({
-  selector: 'app-view-po',
-  templateUrl: './view-po.component.html',
-  styleUrls: ['./view-po.component.scss']
+  selector: 'app-expense-file',
+  templateUrl: './expense-file.component.html',
+  styleUrls: ['./expense-file.component.scss']
 })
-export class ViewPOComponent implements OnInit {
+export class ExpenseFileComponent implements OnInit {
+
   chatRoomUid$: any;
   URLid: any;
   Total:any;
@@ -65,18 +65,18 @@ export class ViewPOComponent implements OnInit {
       
       this.URLid = this.chatRoomUid$.destination._value.id;
 
-        var site = "http://po.nexionautomation.com/printpo.aspx?poid="+this.URLid ;
+        var site = "http://po.nexionautomation.com/printoutstation.aspx?ID="+this.URLid ;
       document.getElementById('iFrameName').setAttribute("src",site) ;
 
       // this.printDiv("print");
     }
     else {
       //alert( this.URLid);
-      this._router.navigate(['/SearchPo']);
+      //this._router.navigate(['/SearchPo']);
       //this.ActionFlag = 0;
     }
 
-    this.LodeDataTable();
+    //this.LodeDataTable();
 
   }
 
@@ -227,6 +227,5 @@ console.log(this.pohead.companyName);
 
     //document.body.innerHTML = originalContents;
   }
-
 
 }

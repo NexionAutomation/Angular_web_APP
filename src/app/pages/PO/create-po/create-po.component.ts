@@ -46,6 +46,8 @@ export class CreatePOComponent implements OnInit {
   pOTmPurchaseBodiess: Enumerable<pOTmPurchaseBodies>;
   loginForm2: any;
   shown: boolean;
+  shown2: boolean;
+  Attand: any;
 
   constructor(
     private renderer: Renderer2,
@@ -924,6 +926,99 @@ catch(error)
 }
 
 
+async onDelExcel(string :string)
+{
+  try{
+    
+  var state="Delete"
+  if(state==state)
+  {
+
+
+    
+      const { value: showConfirmButton } = await Swal.fire({
+        title: "Are You Sure Want To Delete",
+        icon: 'question',
+        //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+  
+        showConfirmButton: true,
+        showCancelButton: true
+      })
+  
+      if (showConfirmButton == true) {
+
+
+
+
+       
+     
+      
+      var data3 = Enumerable.from(this.Attand).toArray();
+     var data4= data3.splice( parseInt( string),1)
+      this.Attand=data3
+          if("Success"=="Success")
+          {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+
+            })
+
+            this.Logins1.popupStatus
+            Toast.fire({
+              icon: 'success',
+              title: 'Data Delete Successfully',
+
+
+            })
+
+            $('#example2').DataTable().destroy();
+            $(document).ready(function () {
+        
+              this.dtOptions = $('#example2').DataTable({
+        
+                dom: 'Bfrtip',
+                paging: true
+        
+              });
+        
+            });
+
+         
+
+          }else{
+
+            Swal.fire(
+              'Failed ',
+              '',
+              'error'
+            )
+
+          }
+
+       
+      }
+  
+}
+
+
+}
+catch(error)
+{
+  Swal.fire(
+    'Failed',
+    error,
+    'error')
+}
+}
+
   async onReset() {
     this.loginForm.reset();
     this.ActionFlag = 0;
@@ -954,6 +1049,300 @@ var isChecked = element.checked;
     else if(isChecked==false)
       this.shown= false;
   }
+
+  checked2(value){
+    var element = <HTMLInputElement> document.getElementById("abc2");
+var isChecked = element.checked;
+    
+    if(isChecked==true){
+      this.shown2= true;
+    }
+    else if(isChecked==false)
+      this.shown2= false;
+  }
+
+  async upload($event) {
+
+
+
+    const { value: showConfirmButton } = await Swal.fire({
+      title: "Are You Sure  Want To Uplode Excel",
+      icon: 'question',
+      //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+
+      showConfirmButton: true,
+      showCancelButton: true
+    })
+
+
+  
+  if(showConfirmButton==true)
+  {
+    
+    var operations = {
+      query: `
+      query MyQuery($file: Upload) {
+        uploadFileExcel(files: $file) {
+        
+          t1
+          t10
+          t11
+          t12
+          t13
+          t14
+          t15
+          t16
+          t17
+          t18
+          t19
+          t2
+          t20
+          t21
+          t22
+          t23
+          t24
+          t25
+          t26
+          t27
+          t28
+          t29
+          t3
+          t30
+          t31
+          t32
+          t33
+          t34
+          t35
+          t36
+          t37
+          t38
+          t39
+          t4
+          t40
+          t41
+          t42
+          t43
+          t44
+          t45
+          t46
+          t48
+          t49
+          t47
+          t5
+          t50
+          t51
+          t6
+          t7
+          t8
+          t9
+      
+        }
+      }
+      
+      `,
+      variables: {
+        file: null
+      }
+    }
+  
+  
+       var _map = {
+        file: ["variables.file"]
+      }
+  
+  
+      var file =  $event.target.files[0];
+  var fd = new FormData()
+  fd.append('operations', JSON.stringify(operations))
+  fd.append('map', JSON.stringify(_map))
+  fd.append('file', file, file.name)
+  
+  
+  
+   var ret= await this.Logins1.Graphqlfiledata("query1", fd, file);
+  
+  
+   const myJSON = JSON.stringify(ret);
+   
+   const obj = JSON.parse(myJSON);
+  
+  
+   var outputFinal = obj["data"]["uploadFileExcel"];
+  
+   this.Attand=outputFinal;
+  
+  
+   $('#example2').DataTable().destroy();
+   $(document).ready(function () {
+  
+     this.dtOptions = $('#example2').DataTable({
+  
+       dom: 'Bfrtip',
+       paging: true
+  
+     });
+  
+   });
+
+  }
+  
+   
+  }
+
+  async Add_itemsUplodeExcel()
+  {try
+    {
+        var output = null;
+  
+      var output= this.pOTmPurchaseHeads;
+      this.pOTmPurchaseHeads= Enumerable.from(this.pOTmPurchaseHeads).toArray();
+       
+       if(this.ActionFlag==0)
+       {
+        this.URLid=Number(this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1);
+        var  exceldata2=  this.Attand;
+          var ind=0;
+        
+          exceldata2.forEach(async a =>{
+        var output=await this.INSERTITEMS( 
+          Number(this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1),
+          a.t1,
+        a.t3,
+        Number( a.t5),
+        Number(a.t6),
+          Number(a.t7),
+           //createdOn: Date,
+           Number( a.t8),//unitdata1,
+         //updateOn: Date,
+         Number(a.t9),//netdata,//(this.loginForm.get('txtlistprice').value)/(this.loginForm.get('txtqty').value/this.loginForm.get('txtdiscount').value/100),
+        
+         this.Logins1.TMUserMaster.userCode,
+         this.Logins1.TMUserMaster.userCode,
+         a.t2,
+         0,
+         a.t4,
+         
+         "INSERT")
+          });
+
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+
+          })
+          this.Logins1.popupStatus
+          Toast.fire({
+            icon: 'success',
+            title: 'Data ADD Successfully',
+
+
+          })
+
+          this.Attand=null;
+
+       }
+       
+  
+  
+        if(this.ActionFlag==1) {
+          var  exceldata2=  this.Attand;
+          var ind=0;
+        
+          exceldata2.forEach(async a =>{
+           
+        await this.INSERTITEMS( Number(this.URLid),
+         a.t1,
+        a.t3,
+        Number( a.t5),
+        Number(a.t6),
+          Number(a.t7),
+           //createdOn: Date,
+           Number( a.t8),//unitdata1,
+         //updateOn: Date,
+         Number(a.t9),//netdata,//(this.loginForm.get('txtlistprice').value)/(this.loginForm.get('txtqty').value/this.loginForm.get('txtdiscount').value/100),
+        
+         this.Logins1.TMUserMaster.userCode,
+         this.Logins1.TMUserMaster.userCode,
+         a.t2,
+         0,
+         a.t4,
+      "INSERT");
+      ind++;
+          })
+
+          this.Attand=null;
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+
+          })
+          this.Logins1.popupStatus
+          Toast.fire({
+            icon: 'success',
+            title: 'Data ADD Successfully',
+
+
+          })
+
+          //this.Attand=null;
+       }
+       
+      
+  
+         
+            if("Success"=="Success")
+            {
+              var data = await this.GETData2("", "");
+              const myJSON = JSON.stringify(data);
+              const obj = JSON.parse(myJSON);
+          
+              var pOTmPurchaseBodies= Enumerable.from( obj["data"]["pOTmPurchaseBodies"]).cast<pOTmPurchaseBodies>();
+              console.log(pOTmPurchaseBodies);
+              if(this.ActionFlag==0) {
+                var datas=  pOTmPurchaseBodies.where(x=>x.poId==Number(this.pOTmPurchaseHeads.reduce((oa, u) => Math.max(oa, u.poId), 0)+1)).toList();
+          
+              }else if(this.ActionFlag==1)
+              {
+                var datas=  pOTmPurchaseBodies.where(x=>x.poId==Number(this.URLid)).toList();
+          
+              }
+              
+            
+              console.log(datas);
+              this.pOExpenseItems=datas;
+  
+  
+              this.loginForm.controls.txttotal.setValue(Math.round(datas.sum(x=>x.netPrice)));
+            
+              this.datatableload();
+            }
+      
+       
+  }catch(error)
+  {
+    Swal.fire(
+      'Failed',
+      error,
+      'error')
+  }
+  
+  }
+
+
 async Add_items()
 {try
   {
@@ -1207,7 +1596,7 @@ async urlload(STRING)
   this.pOExpenseItems=datas;
 
  
-    
+    this.datatableload();
 
     console.log(this.loginForm);
     console.log(datas2.paymentTerms);

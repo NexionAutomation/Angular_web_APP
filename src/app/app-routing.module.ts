@@ -51,6 +51,7 @@ import { ViewComplaintBoxComponent } from '@pages/ComplantBox/view-complaint-box
 import { ExpenseViewmanagerComponent } from '@pages/Expense/Exp-View/expense-viewmanager/expense-viewmanager.component';
 import { ExpenseViewAccountComponent } from '@pages/Expense/Exp-View/expense-view-account/expense-view-account.component';
 import { PoDashboardComponent } from '@pages/PO/po-dashboard/po-dashboard.component';
+import { ExpenseFileComponent } from '@pages/Expense/Exp-View/expense-file/expense-file.component';
 
 const routes: Routes = [
     {
@@ -249,6 +250,13 @@ const routes: Routes = [
     {
         path: 'viewPo/:id',
         component: ViewPOComponent,
+        canActivate: [NonAuthGuard],
+        
+        
+    },
+    {
+        path: 'viewExpense/:id',
+        component: ExpenseFileComponent,
         canActivate: [NonAuthGuard],
         
         
