@@ -526,15 +526,50 @@
                                                                                 <span
                                                                                     id="GridView1_lblRowNumber_0">{{a}}</span>
                                                                             </td>
-                                                                            <td>{{person.description}}</td>
-                                                                            <td>{{person.catname}}</td>
-                                                                            <td>{{person.uom}}</td>
-                                                                            <td>{{person.make}}</td>
-                                                                            <td>{{person.qty}}</td>
-                                                                            <td>{{person.listPrice}}</td>
-                                                                            <td>{{person.dis}}</td>
-                                                                            <td>{{person.unitPrice}}</td>
-                                                                            <td>{{person.netPrice}}</td>
+                                                                            <td (mouseenter)="mouseEnter(true,person.id,'desc')" (mouseleave)="mouseLeave(false,person.id,'desc')">
+                                                                                <P id="label_desc{{person.id}}">  {{person.description}} </P>
+                                                                                <textarea calss="form-control" id="desc{{person.id}}"  (dblclick)="Tabledatachange(person.id,'desc')" style="display: none;" value="{{person.description}}" > </textarea>
+                                                                             
+                                                                            </td>
+                                                                            <td (mouseenter)="mouseEnter(true,person.id,'catname')" (mouseleave)="mouseLeave(false,person.id,'catname')">
+                                                                                <P id="label_catname{{person.id}}">  {{person.catname}} </P>
+                                                                                <input type="text" calss="form-control" id="catname{{person.id}}" (dblclick)="Tabledatachange(person.id,'catname')"  style="display: none;" value="{{person.catname}}" > 
+                                                                             
+                                                                            </td>
+                                                                            <td >
+                                                                                <P id="label_uom{{person.id}}"> {{person.uom}} </P>
+                                                                                <input type="text" calss="form-control" id="uom{{person.id}}"   style="display: none;" value="{{person.uom}}" > 
+                                                                             
+                                                                            </td>
+                                                                            <td (mouseenter)="mouseEnter(true,person.id,'make')" (mouseleave)="mouseLeave(false,person.id,'make')">
+                                                                                <P id="label_make{{person.id}}">  {{person.make}} </P>
+                                                                                <input type="text" calss="form-control" id="make{{person.id}}"  (dblclick)="Tabledatachange(person.id,'make')" style="display: none;" value="{{person.make}}" > 
+                                                                             
+                                                                            </td>
+                                                                            <td  (mouseenter)="mouseEnter(true,person.id,'qty')" (mouseleave)="mouseLeave(false,person.id,'qty')"> 
+                                                                              <P id="label_qty{{person.id}}"> {{person.qty}}  </P>
+                                                                             <input type="number" calss="form-control" id="qty{{person.id}}" (dblclick)="Tabledatachange(person.id,'qty')"  style="display: none;" value="{{person.qty}}" > 
+                                                                            </td>
+                                                                            <td (mouseenter)="mouseEnter(true,person.id,'listPrice')" (mouseleave)="mouseLeave(false,person.id,'listPrice')">
+                                                                                <P id="label_listPrice{{person.id}}">  {{person.listPrice}} </P>
+                                                                                <input type="number" calss="form-control" id="listPrice{{person.id}}"  (dblclick)="Tabledatachange(person.id,'listPrice')" style="display: none;" value="{{person.listPrice}}" > 
+                                                                             
+                                                                            </td>
+                                                                            <td (mouseenter)="mouseEnter(true,person.id,'dis')" (mouseleave)="mouseLeave(false,person.id,'dis')">
+                                                                                <P id="label_dis{{person.id}}">  {{person.dis}} </P>
+                                                                                <input type="number" calss="form-control" id="dis{{person.id}}"  (dblclick)="Tabledatachange(person.id,'dis')" style="display: none;" value="{{person.dis}}" > 
+                                                                             
+                                                                            </td>
+                                                                            <td >
+                                                                                <P id="label_unitPrice{{person.id}}">  {{person.unitPrice}} </P>
+                                                                                <input type="text" calss="form-control" id="unitPrice{{person.id}}"    style="display: none;" value="{{person.unitPrice}}" > 
+                                                                             
+                                                                            </td>
+                                                                            <td >
+                                                                                <P id="label_netPrice{{person.id}}"> {{person.netPrice}} </P>
+                                                                                <input type="text" calss="form-control" id="netPrice{{person.id}}"   style="display: none;" value="{{person.netPrice}}" > 
+                                                                             
+                                                                            </td>
 
 
                                                                            

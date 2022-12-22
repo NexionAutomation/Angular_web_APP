@@ -35,7 +35,9 @@ export class CreatePOComponent implements OnInit {
   editDataID:any;
   arr: ExpenseItems[] = [];
    arr2=new Array() ;
-
+   edititems:boolean;
+   poid:number
+  
 
   POTmSupplierMasters: Enumerable<Tm_supplierMaster>;
   POTmCompanyMasters: Enumerable<TM_CountryMaster>;
@@ -48,6 +50,7 @@ export class CreatePOComponent implements OnInit {
   shown: boolean;
   shown2: boolean;
   Attand: any;
+  isDisplay: boolean;
 
   constructor(
     private renderer: Renderer2,
@@ -69,7 +72,7 @@ export class CreatePOComponent implements OnInit {
 
 
 
-
+    this.edititems=false
    
 
     this.loginForm = new FormGroup({
@@ -135,7 +138,147 @@ export class CreatePOComponent implements OnInit {
 
 
 
+  mouseEnter(data : boolean, id:string,identity:string){
 
+    var idname='label_'+identity+id
+document.getElementById(identity+id).style.display = 'inline';
+document.getElementById(  idname).style.display = 'none';
+
+    
+ }
+ async Tabledatachange(id:string,status :string)
+ {
+  const { value: showConfirmButton } = await Swal.fire({
+    title: "Are You Sure Want To Update",
+    icon: 'question',
+    //html: '<div class="alert alert-success" role="alert">Do You Want To Save</div>',
+
+    showConfirmButton: true,
+    showCancelButton: true
+  })
+  if(showConfirmButton==true)
+  {
+    let val =(<HTMLInputElement>document.getElementById(status+id)).value;
+  
+    var data= Enumerable.from( this.pOExpenseItems).cast<pOTmPurchaseBodies>().toArray();
+    
+    switch(status) { 
+      case "desc": { 
+        alert(val)
+       data.filter(a=>a.id== parseInt( id)).map(a=>a.description=val)
+         //statements; 
+         break; 
+      } 
+      case "catname": { 
+        data.filter(a=>a.id== parseInt( id)).map(a=>a.catname=val)
+         //statements; 
+         break; 
+      } 
+      case "make": { 
+        data.filter(a=>a.id== parseInt( id)).map(a=>a.make=val)
+        //statements; 
+        break; 
+     } 
+     case "qty": { 
+      data.filter(a=>a.id== parseInt( id)).map(a=>a.qty= Number( val))
+
+      data.filter(a=>a.id== parseInt( id)).map(a=>a.unitPrice= Number(a.listPrice - (a.listPrice * a.dis) / 100))
+      data.filter(a=>a.id== parseInt( id)).map(a=>a.netPrice= a.qty  * Number(a.listPrice - (a.listPrice * a.dis) / 100))
+      
+      this.loginForm.controls.txttotal.setValue(Math.round( Enumerable.from( data).sum(x=>x.netPrice)));
+      //statements; 
+      break; 
+        } 
+     case "listPrice": { 
+      data.filter(a=>a.id== parseInt( id)).map(a=>a.listPrice= Number(val))
+
+      data.filter(a=>a.id== parseInt( id)).map(a=>a.unitPrice= Number(a.listPrice - (a.listPrice * a.dis) / 100))
+      data.filter(a=>a.id== parseInt( id)).map(a=>a.netPrice= a.qty  * Number(a.listPrice - (a.listPrice * a.dis) / 100))
+      
+      this.loginForm.controls.txttotal.setValue(Math.round( Enumerable.from( data).sum(x=>x.netPrice)));
+      
+          //statements; 
+          break; 
+            } 
+     case "dis": { 
+      data.filter(a=>a.id== parseInt( id)).map(a=>a.dis= Number(val))
+      data.filter(a=>a.id== parseInt( id)).map(a=>a.unitPrice= Number(a.listPrice - (a.listPrice * a.dis) / 100))
+      data.filter(a=>a.id== parseInt( id)).map(a=>a.netPrice= a.qty  * Number(a.listPrice - (a.listPrice * a.dis) / 100))
+      
+      this.loginForm.controls.txttotal.setValue(Math.round( Enumerable.from( data).sum(x=>x.netPrice)));
+      
+      
+              //statements; 
+              break; 
+                } 
+      default: { 
+         //statements; 
+         break; 
+      } 
+   } 
+    
+   var FinalDataFetch = Enumerable.from( this.pOExpenseItems).cast<any>()
+
+   var data234=FinalDataFetch.where(a=>a.id==id).singleOrDefault();
+    var output=
+      await this.INSERTITEMS( Number(this.URLid),
+      data234.description,
+      data234.uom ,
+      data234.qty  ,
+      data234.listPrice ,
+      data234.dis ,
+      //createdOn: Date,
+      data234.unitPrice ,
+    //updateOn: Date,
+    data234.netPrice ,//(this.loginForm.get('txtlistprice').value)/(this.loginForm.get('txtqty').value/this.loginForm.get('txtdiscount').value/100),
+   
+     this.Logins1.TMUserMaster.userCode,
+     this.Logins1.TMUserMaster.userCode,
+    data234.catname ,
+    data234.id,
+    data234.make,
+    "UPDATE");
+     }
+     
+    
+        const myJSON = JSON.stringify(output);
+        const obj = JSON.parse(myJSON);
+    
+        var outputFinal = obj["data"]["cMTmPurchaseBody"];
+
+       
+          if(outputFinal[0].message=="Success")
+          {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+
+            })
+
+            this.Logins1.popupStatus
+            Toast.fire({
+              icon: 'success',
+              title: 'Data Update Successfully',
+
+
+            })
+
+  }
+
+ }
+
+ mouseLeave(data : boolean, id:string,identity:string){
+  var idname='label_'+identity+id
+  document.getElementById(identity+id).style.display = 'none';
+  document.getElementById(  idname).style.display = 'inline';
+ }
 
   async INSERTHeader(
     poId: number,
@@ -735,7 +878,7 @@ this.datatableload();
               new Date(Date.now()),
               this.Logins1.TMUserMaster.userCode,
               this.loginForm.get("ddldelivery").value,
-              this.editDataID,
+              this.poid,
               "UPDATE"
             );
 
@@ -1592,18 +1735,14 @@ async urlload(STRING)
   var datas=  pOTmPurchaseBodies.where(x=>x.poId==Number(STRING)).toList();
   var datas2=  pOTmPurchaseHeads1.where(x=>x.poId==Number(STRING)).singleOrDefault();;
 
-  console.log(datas2);
+  this.poid=Number(datas2.id);
+ 
   this.pOExpenseItems=datas;
 
  
     this.datatableload();
 
-    console.log(this.loginForm);
-    console.log(datas2.paymentTerms);
   this.loginForm.setValue({
-
-    
-
     DropDownList1: 0,
     Drop_gst: null,
     btn_add: null,

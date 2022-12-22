@@ -297,6 +297,7 @@ export class pOTmPurchaseBodies
 	public muserId: number;
 	public catname: string;
 	public id: number;
+	public make: string;
 
 
 
