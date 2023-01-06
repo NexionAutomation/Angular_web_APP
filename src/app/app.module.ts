@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {NgModule, Pipe, PipeTransform} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from '@/app-routing.module';
@@ -66,7 +66,7 @@ import { LeaveTypeComponent } from './pages/Module/leave-type/leave-type.compone
 import { LeaveSettingComponent } from './pages/Module/leave-setting/leave-setting.component';
 
 import '../assets/select2/select2.min.js';
-import { ViewPOComponent } from './pages/PO/view-po/view-po.component';
+import {   ViewPOComponent } from './pages/PO/view-po/view-po.component';
 import { OutstationViewComponent } from '@pages/Expense/Exp-View/outstation-view/outstation-view.component'; 
 import { AttandanceComponent } from './pages/Attandance/attandance/attandance.component';
 import { CreateIndentComponent } from './pages/INDENT/create-indent/create-indent.component';
@@ -87,6 +87,7 @@ import { PoDashboardComponent } from './pages/PO/po-dashboard/po-dashboard.compo
 
 import { NgxOrgChartModule } from 'ngx-org-chart';
 import { ExpenseFileComponent } from './pages/Expense/Exp-View/expense-file/expense-file.component';
+import { IndianCurrency, ReplaceSubstring } from './pages/PO/view-po/conversion.pipe';
 
 //import "file-viewer";
 
@@ -159,7 +160,9 @@ registerLocaleData(localeEn, 'en-EN');
         ExpenseViewAccountComponent,
         ExpenseViewmanagerComponent,
         PoDashboardComponent,
-        ExpenseFileComponent
+        ExpenseFileComponent,
+        IndianCurrency,
+        ReplaceSubstring
       
         
     ],
@@ -198,7 +201,13 @@ registerLocaleData(localeEn, 'en-EN');
       ],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+
+    
+}
+
+
+
 
 // {
 //     provide: APOLLO_OPTIONS,

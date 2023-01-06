@@ -13,3 +13,60 @@
     height: 100%;
     margin:0px;
 }
+// .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+//     background-color: red;
+//  }
+
+body, div, table, thead, tbody, tfoot, tr, th, td, p {
+   // font-family: "Calibri";
+   font-size: small;
+}
+
+.table td, .table th {
+    text-align: center;
+
+    padding: 1px;
+    /* padding: 0.75rem; */
+    vertical-align: top;
+   // border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #2125296e;
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid #2125296e;
+}
+// .table-bordered td, .table-bordered th {
+//     border: 1px solid #212529;
+// }
+
+
+table, th, td {
+    border: 1px solid #2125296e;
+    border-collapse: collapse;
+  }
+
+// table, th, td {
+//   border: 1px solid black;
+//   border-collapse: collapse;
+// }
+
+@media print {
+    .table-breaked {
+       page-break-before: auto;
+    }
+    .no-border{
+       border: none !important;
+    }
+    .footer-repeat {
+       display: table-footer-group;
+      }
+     
+
+    }

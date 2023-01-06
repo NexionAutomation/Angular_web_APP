@@ -10,6 +10,8 @@ import { map } from 'rxjs/operators';
 import { Enumerable } from 'sharp-collections';
 const numWords = require('num-words');
 
+
+
 @Component({
   selector: 'app-view-po',
   templateUrl: './view-po.component.html',
@@ -31,11 +33,16 @@ export class ViewPOComponent implements OnInit {
    pobody: any;
    pocomp: any;
    posuppl: any; 
+   Usercode: any; 
+ Totalinnumber:any
 
    heroes = [
    1,2,3,4
   ];
   myHero:any; 
+  Podate: any;
+  user: any;
+  pOTmUserMasters: Enumerable<any>;
   
   constructor(
     private renderer: Renderer2,
@@ -53,7 +60,7 @@ export class ViewPOComponent implements OnInit {
 
 
 
-     this.Total = numWords(12345) 
+    
 
     
     var id;
@@ -65,8 +72,8 @@ export class ViewPOComponent implements OnInit {
       
       this.URLid = this.chatRoomUid$.destination._value.id;
 
-        var site = "http://po.nexionautomation.com/printpo.aspx?poid="+this.URLid ;
-      document.getElementById('iFrameName').setAttribute("src",site) ;
+        //var site = "http://po.nexionautomation.com/printpo.aspx?poid="+this.URLid ;
+      //document.getElementById('iFrameName').setAttribute("src",site) ;
 
       // this.printDiv("print");
     }
@@ -87,24 +94,37 @@ export class ViewPOComponent implements OnInit {
 
     this.POTmSupplierMasters = Enumerable.from(obj["data"]["pOTmSupplierMasters"]).cast<any>();
     this.POTmCompanyMasters1 = Enumerable.from(obj["data"]["pOTmCompanyMasters"]).cast<any>();
-    this.pOTmPurchaseHeads = Enumerable.from(obj["data"]["pOTmPurchaseHeads"]).cast<any>();
+    this.pOTmPurchaseHeads = Enumerable.from(obj["data"]["pOTmPurchaseHeads"]["nodes"]).cast<any>();
     this.pOTmPurchaseBodiessss = Enumerable.from(obj["data"]["pOTmPurchaseBodies"]).cast<pOTmPurchaseBodies>();;
 
+    this.pOTmUserMasters = Enumerable.from(obj["data"]["pOTmUserMasters"]).cast<any>();;
 
 
+    
     this.pohead = this.pOTmPurchaseHeads.where(x => x.poId == Number(this.URLid)).singleOrDefault();
  this.pocomp = this.POTmCompanyMasters1.where(x => x.id == Number(this.pohead.companyId)).singleOrDefault();
  this.posuppl = this.POTmSupplierMasters.where(x => x.id == Number(this.pohead.supplierId)).singleOrDefault();
  this.persons = this.pOTmPurchaseBodiessss.where(x => x.poId == Number(this.URLid)).toList();
+ this.user = this.pOTmUserMasters.where(x => x.userCode == Number(this.pohead.cuserId)).singleOrDefault();
+
+var datainword= Number( Enumerable.from( this.persons).sum(a=>a.netPrice).toString());
+
+var datae= new Date( this.pohead.orderDate );
+ this.Total = numWords( Math.round( datainword)) ;
+var user= this.user.userName.toString()
+
+ var res= Math.round(datainword).toLocaleString('en-IN'); 
+ this.Totalinnumber=res+" /-";
+ 
+ this.Podate= Number(datae.getFullYear().toString())-(2000)+1;
+ this.Usercode=  user.toUpperCase();//user.substring(0,2).toUpperCase()
 
 
 
-console.log(this.pohead.companyName);
-    console.log(this.pohead);
-    console.log(this.pocomp);
-    console.log(this.posuppl);
-    console.log(this.persons);
-    //var purchase=this.pOTmPurchaseBodiessss.where(x=>x.)
+ this.persons.toArray().map(a=>a.listPrice=parseFloat(parseFloat(a.listPrice).toFixed(3)).toLocaleString('en-IN'))
+ this.persons.toArray().map(a=>a.unitPrice=parseFloat(parseFloat(a.unitPrice).toFixed(3)).toLocaleString('en-IN'))
+ this.persons.toArray().map(a=>a.netPrice=parseFloat(parseFloat(a.netPrice).toFixed(3)).toLocaleString('en-IN'))
+ 
     $('#example').DataTable().destroy();
     $(document).ready(function () {
 
@@ -170,28 +190,35 @@ console.log(this.pohead.companyName);
         sname
         spanNo
       }
-      pOTmPurchaseHeads {
-        id
-        companyId
-        creationDate
-        cuserId
-        deliveryDate
-        deliveryMode
-        enduser
-        freightTerms
-        gst
-        indentNo
-        modificationDate
-        muserId
-        orderDate
-        paymentTerms
-        poId
-        remarks
-        supplierId
-        total
-        workOrderNo
+      pOTmPurchaseHeads(
+        where: {poId: {eq: ${  this.URLid=="undefined"?null:this.URLid}}}) {
+        nodes {
+          id
+          companyId
+          creationDate
+          cuserId
+          deliveryDate
+          deliveryMode
+          enduser
+          freightTerms
+          gst
+          indentNo
+          modificationDate
+          muserId
+          orderDate
+          paymentTerms
+          poId
+          remarks
+          supplierId
+          total
+          workOrderNo
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
       }
-      pOTmPurchaseBodies {
+      pOTmPurchaseBodies (where: {poId: {eq: ${  this.URLid=="undefined"?null:this.URLid}}}){
         id
         catname
         creationDate
@@ -205,7 +232,35 @@ console.log(this.pohead.companyName);
         poId
         qty
         unitPrice
-        uom
+        uom,
+        make
+      }
+
+      pOTmUserMasters  {
+        userName
+        userId
+       
+        emailId
+        mobileNo
+        groupId
+        accountStatus
+        fromTime
+        fromTimeAmPm
+        toTime
+        toTimeAmPm
+        userImage
+        creationDate
+        cuserId
+        modificationDate
+        muserId
+        recordstatus
+        reasonForDeletion
+        deletedDate
+        duserCode
+        userCode
+        lastLoginDateTime
+        reportingManager
+        rid
       }
       
     }
@@ -230,3 +285,6 @@ console.log(this.pohead.companyName);
 
 
 }
+
+
+

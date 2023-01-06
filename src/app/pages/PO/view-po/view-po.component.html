@@ -1,10 +1,275 @@
 <!-- <a  [routerLink]="['/SearchPo']" >Back</a> -->
-<div class="card" id="print">
-    <div class="card-body " >
-        <div  class="video-container">
-   
-            <iframe height="100%" width="100%" id="iFrameName" scrolling="no"  frameborder="0" ></iframe> 
+<div class="card" id="print" style="display: none;">
+    <div class="card-body ">
+        <div class="video-container">
+
+            <iframe height="100%" width="100%" id="iFrameName" scrolling="no" frameborder="0"></iframe>
         </div>
-        
+
     </div>
-  </div>
+</div>
+
+<div style="
+padding: 34px;
+
+">
+    <div class="invoice p-3 mb-3 border border-dark">
+
+        <div class="row ">
+            <div class="col-6">
+                <h2>
+                    {{pocomp.companyName}}
+                </h2>
+            </div>
+            <div class="col-6" style="padding-left: 109px;">
+
+
+                <div style="text-align: center;"> <img id="imgphhoto"
+                        src="http://po.nexionautomation.com/Images/logo.png" style="
+                       margin-right: -182px;
+    margin-bottom: -19px;
+                    ">
+
+                </div>
+
+
+                <br>
+
+            </div>
+
+        </div>
+        <hr>
+        <div class="row invoice-info">
+            <div class="col-sm-6 invoice-col">
+
+                <address>
+                    {{pocomp.caddress1}}<br>
+                    {{pocomp.caddress2 }} {{pocomp.caddress3 }}<br>
+                    Phone: {{pocomp.cmobileNo }}<br>
+                    Email: {{pocomp.cemailId }}
+                </address>
+
+            </div>
+            <div class="col-sm-6 " style="padding-left: 109px; text-align: center;" >
+
+              
+                <strong style="font-size: 27px;" >Purchase Order</strong><br>
+                <address>
+                    <strong style="font-size: 17px;">NAPL/FY{{pohead.orderDate | date:"yy"  }}-{{ Podate  }}/PO:{{pohead.id}}</strong><br>
+
+                </address>
+            </div>
+
+            <!-- <div class="col-sm-4 invoice-col">
+    <b>Invoice #007612</b><br>
+    <br>
+    <b>Order ID:</b> 4F3S8J<br>
+    <b>Payment Due:</b> 2/22/2014<br>
+    <b>Account:</b> 968-34567
+    </div> -->
+
+        </div>
+        <hr>
+        <div class="row invoice-info">
+            <div class="col-sm-8 invoice-col">
+                Supplier
+                <address>
+                    <strong style="
+        font-size: 16px;
+    ">{{posuppl.supplierName }}</strong><br>
+                    {{posuppl.address1 }}<br>
+                    {{posuppl.address2 }} {{posuppl.address3 }}<br>
+                    Phone: {{posuppl.cmobileNo }}<br>
+                    Gst: {{posuppl.gst }}<br>
+
+                    Contact Person: {{posuppl.contactPerson }}
+                </address>
+            </div>
+
+
+
+
+
+
+
+            <div class="col-sm-4 invoice-col center" style="text-align: justify;  ">
+                <b>Order Date    :</b><label class="tabid" style=" margin-left: 35px;font-weight: normal; ">{{pohead.orderDate | date:"dd-MM-yyyy"  }}</label><br>
+
+               <b>Payment Terms  :</b><label class="tabid" style=" margin-left: 12px;font-weight: normal; "> {{pohead.paymentTerms}}</label><br>
+                <b>indent no     :</b><label class="tabid" style=" margin-left: 50px;font-weight: normal; "> {{pohead.indentNo}}</label><br>
+                <b>Freight Terms :</b><label class="tabid" style=" margin-left: 25px;font-weight: normal; ">{{pohead.freightTerms}}</label><br>
+                <b>Work Order No :</b><label class="tabid" style=" margin-left: 20px;font-weight: normal; ">{{pohead.workOrderNo}}</label><br>
+                <b>Gst           :</b><label class="tabid" style=" margin-left: 90px;font-weight: normal;"> {{pohead.gst}}</label><br>
+                <b>Delivery      :</b><label class="tabid" style=" margin-left: 55px;font-weight: normal; ">{{pohead.deliveryDate | date:"dd-MM-yyyy"}}</label><br>
+            </div>
+
+            <!-- <div class="col-sm-4 invoice-col">
+        <b>Invoice #007612</b><br>
+        <br>
+        <b>Order ID:</b> 4F3S8J<br>
+        <b>Payment Due:</b> 2/22/2014<br>
+        <b>Account:</b> 968-34567
+        </div> -->
+
+        </div>
+        <hr>
+        <div class="row invoice-info">
+            <div class="col-sm-8 invoice-col ">
+                Ship To
+                <address>
+                    <strong style="
+            font-size: 16px;
+        "> {{pocomp.companyName}}</strong><br>
+                    {{pocomp.saddress1}}<br>
+                    {{pocomp.companyName}} {{pocomp.saddress3}}<br>
+                    Phone: {{pocomp.smobileNo}}<br>
+                    Attn: {{pocomp.sattendentName}}
+                </address>
+            </div>
+
+
+
+            <div class="col-sm-4 invoice-col" style="text-align: justify;">
+                Invoice To
+                <address>
+                    <strong style="
+            font-size: 16px;
+        "> {{pocomp.iname}}</strong><br>
+                    {{pocomp.iaddress1}}<br>
+                    {{pocomp.iaddress2}} {{pocomp.iaddress3}}<br>
+                    Phone: {{pocomp.imobileNo}}<br>
+                    Gst No: {{pocomp.igst}}<br>
+                    Pan No: {{pocomp.ipanNo}}<br>
+                </address>
+            </div>
+
+
+
+            <!-- <div class="col-sm-4 invoice-col">
+            <b>Invoice #007612</b><br>
+            <br>
+            <b>Order ID:</b> 4F3S8J<br>
+            <b>Payment Due:</b> 2/22/2014<br>
+            <b>Account:</b> 968-34567
+            </div> -->
+
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-12 table-responsive table-breaked ">
+                <!-- <table class="table table-striped"> !--->
+                <table class="table table-striped  " style="border:solid,1px ;padding: inherit;    padding: -0.25rem;">
+                    <thead style="font-size: 13px;">
+                        <tr >
+                            <th >SR.</th>
+                            <th>DESCRIPTION OF GOODS / PART NO.</th>
+                            <th>CAT NO.</th>
+                            <th>UOM</th>
+                            <th>MAKE</th>
+                            <th>QTY</th>
+                            <th>LIST PRICE</th>
+                            <th>DIS %</th>
+                            <th>UNIT PRICE </th>
+                            <th>NET PRICE </th>
+                        </tr>
+                    <tbody>
+
+
+                        <tr *ngFor="let item of persons;let a=index ">
+                            
+                            <td>{{a+1}}</td>
+                            <td style="text-align: justify;">{{item.description |  replaceSubstring: " ":"" }}</td>
+                            <td>{{item.catname |  replaceSubstring: " ":"" }}</td>
+                            <td>{{item.uom}}</td>
+                            <td>{{item.make}}</td>
+                            <td>{{item.qty}}</td>
+                            <td>{{item.listPrice }}</td>
+                            <td>{{item.dis}}</td>
+                            <td>{{item.unitPrice}}</td>
+                            <td>{{item.netPrice }}</td>
+                        </tr>
+
+
+
+                    </tbody>
+                   
+                </table>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-8">
+
+
+                <div *ngIf="pohead.deliveryMode" style="font-size: 13px;">
+                    <p class="lead">Delivery Mode:{{pohead.deliveryMode}}</p>
+
+                </div>
+                <div *ngIf="pohead.enduser" style="font-size: 13px;">
+                    <p class="lead">End Customer: {{pohead.enduser}}</p>
+
+                </div>
+
+
+                <div *ngIf="pohead.remarks" style="font-size: 13px;">
+                    <p class="lead">Purchase comments: {{pohead.remarks}}</p>
+
+
+                </div>
+
+
+                <div style="border: solid,1px;">
+                    <p class="lead">Note:</p>
+
+                    <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                        If Suppliers Commits Any Mistake Regarding Vehicle Number ,Invoice Number, Date, Amount , Expire
+                        Date of E-way Bill ( E-way Bill Must Be Valid for Entire Transporting Days) .
+
+                        In Case of Vehicle Inspection by Competent Govt. Authority and Found Any Discrepancy in Document
+                        in That Case Supplier is Liable to Pay All the Penalties.
+
+                        Buyer is Not Responsible to Pay Any Type of Penalty.
+                    </p>
+
+
+
+                </div>
+            </div>
+
+            <div class="col-4" style="border-color:#2125296e;" >
+
+                <div class="table-responsive  ">
+                    <input type="text" class="form-control  " style="text-align: center; " value="Total :- {{Totalinnumber}}" readonly/> 
+                    <p class="text-capitalize text-center" >{{Total}} Only  </p>
+                 </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <b class="">Prepared By: </b>
+                <br>&nbsp;({{Usercode}})
+
+            </div>
+
+            <div class="col-md-4">
+                <!-- <b class="" style="float: right;">Authorised Signatory :  </b> -->
+
+            </div>
+            <div class="col-md-4">
+                <b class="" style="float: right;">Authorised Signatory :  </b>
+
+            </div>
+
+        </div>
+        <div class="col-md-12" style="text-align:center;">****** This Is A Software Generated   Po And Does Not Require Formal
+Signature And Stamps. *****</div>
+
+    </div>
+</div>

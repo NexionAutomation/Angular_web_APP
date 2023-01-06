@@ -219,10 +219,23 @@ export class CreateSubModulemasterComponent implements OnInit {
      this.persons=result;
     
    
-    $('#example').DataTable().destroy();
+    var table=$('#example').DataTable().destroy();
     $(document).ready(function () {
 
       this.dtOptions = $('#example').DataTable({
+        drawCallback: function(){
+          $('.paginate_button.next:not(.disabled)', this.api().table().container())          
+             .on('click', function(){
+              //this.test();
+              
+              $('#show_alert').html(
+                'Currently showing page '+(info.page+1)+' of '+info.pages+' pages.'
+            );
+        // Output the data for the visible rows to the browser's console
+           
+             
+             });       
+       },
 
         dom: 'Bfrtip',
         paging: true
@@ -236,10 +249,18 @@ export class CreateSubModulemasterComponent implements OnInit {
     });
 
 
+    var info = table.page.info();
+ 
+
+
 
 
 
   }
+
+   show_alert() {
+    alert("Hello! I am an alert box!");
+}
 
   ddlModule(event: Event) {
 

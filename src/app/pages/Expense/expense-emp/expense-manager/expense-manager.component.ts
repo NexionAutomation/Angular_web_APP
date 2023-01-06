@@ -883,8 +883,8 @@ export class ExpenseManagerComponent implements OnInit {
               new Date(this.loginForm.get('txttodate').value),
               this.loginForm.get('txtworkorderno').value,
               this.loginForm.get('txtlocation').value,
-
-              this.Logins1.TMUserMaster.userCode,
+              this.pOExpenseHeadsdata.createdBy,
+              //this.Logins1.TMUserMaster.userCode,
 
               this.Logins1.TMUserMaster.userCode,
               "UPDATE"
