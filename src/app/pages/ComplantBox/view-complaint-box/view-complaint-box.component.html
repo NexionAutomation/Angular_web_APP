@@ -43,6 +43,7 @@
                             <th scope="col">Status</th>
                            
                             <th scope="col">Creation Date</th>
+                            <th scope="col">Create By</th>
                         </tr>
 
 
@@ -51,12 +52,12 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let person of persons;let a=index">
-                            <td><button class="badge bg-success  btn btn-sm  " name='{{ person.expenseId}}'> <a
-                                        class="fa fa-edit" (click)="onedit(person.expenseId) "
-                                        [routerLink]="['/CreateComplaintBox', person.expenseId]"></a></button>
+                            <td><button class="badge bg-success  btn btn-sm  " name='{{ person.left.expenseId}}'> <a
+                                        class="fa fa-edit" (click)="onedit(person.left.expenseId) "
+                                        [routerLink]="['/CreateComplaintBox', person.left.expenseId]"></a></button>
                                 <br>
-                                <button class="badge bg-danger  btn btn-sm" name='{{ person.expenseId}}'
-                                    (click)="onDel(person.expenseId)"><a class="fa fa-trash"></a></button>
+                                <button class="badge bg-danger  btn btn-sm"  [disabled]='person.left.status=="Submit"' name='{{ person.left.expenseId}}'
+                                    (click)="onDel(person.left.expenseId)"><a class="fa fa-trash"></a></button>
                                 <br>
                                 <!-- <button class="badge bg-info  btn btn-sm" name='{{ person.expenseId}}'><a
                                         class="fa fa-file" target="_self"
@@ -66,22 +67,24 @@
 
 
 
-                            <td>{{ person.expenseId }}</td>
+                            <td>{{ person.left.expenseId }}</td>
                           
-                            <td> {{person.tokennumber }}</td>
+                            <td> {{person.left.tokennumber }}</td>
                             <td>
-                                <span class="badge badge-primary " *ngIf='person.status=="Draft"'> {{ person.status }}</span>
-                                <span class="badge badge-success " *ngIf='person.status=="Submit"'> {{ person.status }}</span>
-                                <span class="badge badge-danger " *ngIf='person.status=="Delete"'> {{ person.status }}</span>
-                                <span class="badge badge-warning " *ngIf='person.status=="Approved"'> {{ person.status }}</span>
-                                <span class="badge badge-secondary " *ngIf='person.status=="Reject"'> {{ person.status }}</span>
-                                <span class="badge badge-success "  style="background-color: burlywood" *ngIf='person.status=="Paid"'> {{ person.status }}</span>
+                                <span class="badge badge-primary " *ngIf='person.left.status=="Draft"'> {{ person.left.status }}</span>
+                                <span class="badge badge-success " *ngIf='person.left.status=="Submit"'> {{ person.left.status }}</span>
+                                <span class="badge badge-danger " *ngIf='person.left.status=="Delete"'> {{ person.left.status }}</span>
+                                <span class="badge badge-warning " *ngIf='person.left.status=="Approved"'> {{ person.left.status }}</span>
+                                <span class="badge badge-secondary " *ngIf='person.left.status=="Reject"'> {{ person.left.status }}</span>
+                                <span class="badge badge-success "  style="background-color: burlywood" *ngIf='person.left.status=="Paid"'> {{ person.left.status }}</span>
                                
                            
                             </td>
                           
 
-                            <td>{{ person.createdOn | date:"yyyy-MM-dd" }}</td>
+                            <td>{{ person.left.createdOn | date:"yyyy-MM-dd" }}</td>
+
+                            <td>{{ person.right.userName  }}</td>
 
                            
 

@@ -250,13 +250,18 @@ rid: number,
     this.userMasterData = Enumerable.from( obj["data"]["userMasterData"]).cast<any>();
     
     
+
+
     
-    console.log(this.pOTmPurchaseHeads );
+   var result = this.pOTmPurchaseHeads
+.join(this.userMasterData, a => a.createdBy, b => b.userCode)
+.where(s => s.left.userCode == s.right.createdBy  ) //&& s.right.userCode==this.login.TMUserMaster.userCode
+.toList();
 
     
     //createdBy
     
-this.persons= this.pOTmPurchaseHeads.take(200);
+this.persons= result.take(200);
     //console.log(da.take(10));
     $('#example').DataTable().destroy();
     $(document).ready(function () {

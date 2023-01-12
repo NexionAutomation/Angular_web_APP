@@ -861,7 +861,7 @@ this.datatableload();
             var output =  await this.INSERTHeader(
               Number(this.URLid),
               this.loginForm.get("ddlcompanyname").value,
-              this.loginForm.get("ddlsuppliername").value,
+              Number(this.loginForm.get("ddlsuppliername").value),
               new Date(this.loginForm.get("txtorderdate").value),
               this.loginForm.get("txtpaymentterms").value,
               this.loginForm.get("txtindentno").value,
