@@ -62,10 +62,10 @@ export class DashboardComponent implements OnInit {
     //   }
     // })
     //public Editor = ClassicEditor;
-    
 
 
-    this.nodes = [
+
+    var data=[
       {
         name: 'Nexion Automation',
       
@@ -189,5 +189,10 @@ export class DashboardComponent implements OnInit {
 
 
     ];
+    //var jsonObject : any = JSON.parse(data)
+
+    const myJSON = null;//JSON.stringify(data);
+    const obj = JSON.parse(myJSON);
+    this.nodes = obj
   }
 }

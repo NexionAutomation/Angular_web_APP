@@ -71,7 +71,6 @@ export class CreatePOComponent implements OnInit {
 
 
 
-
     this.edititems=false
    
 
@@ -125,10 +124,17 @@ export class CreatePOComponent implements OnInit {
       this.ActionFlag = 1;
        this.urlload( this.URLid);
       //console.log(this.URLid);
+
+    
     }
     else {
       //this._router.navigate(['/SearchPo']);
       this.ActionFlag = 0;
+      // this.loginForm.setValue({
+      //   txtgst:"Extra As Applicable"
+      // });
+
+      this.loginForm.controls.txtgst.setValue("Extra As Applicable");
     }
     
 
@@ -719,6 +725,8 @@ make:string,
 
 
     
+
+   
 this.datatableload();
    
 
@@ -1731,14 +1739,22 @@ async urlload(STRING)
 
   var pOTmPurchaseBodies= Enumerable.from( obj["data"]["pOTmPurchaseBodies"]).cast<pOTmPurchaseBodies>();
   var pOTmPurchaseHeads1= Enumerable.from( obj["data"]["pOTmPurchaseHeads"]["nodes"]).cast<any>()
-  console.log(pOTmPurchaseBodies);
+
   var datas=  pOTmPurchaseBodies.where(x=>x.poId==Number(STRING)).toList();
   var datas2=  pOTmPurchaseHeads1.where(x=>x.poId==Number(STRING)).singleOrDefault();;
+
+
+
+  
+
 
   this.poid=Number(datas2.id);
  
   this.pOExpenseItems=datas;
-
+  // this.pOExpenseItems.toArray().map(a=>a.listPrice=parseFloat(parseFloat(a.listPrice).toFixed(2)).toLocaleString('en-IN'))
+  // this.pOExpenseItems.toArray().map(a=>a.unitPrice=parseFloat(parseFloat(a.unitPrice).toFixed(2)).toLocaleString('en-IN'))
+  // this.pOExpenseItems.toArray().map(a=>a.netPrice=parseFloat(parseFloat(a.netPrice).toFixed(2)).toLocaleString('en-IN'))
+  
  
     this.datatableload();
 
@@ -1772,6 +1788,11 @@ async urlload(STRING)
     ddlMake:null
   
    });
+
+
+    this.pOExpenseItems.toArray().map(a=>a.listPrice=parseFloat(parseFloat(a.listPrice).toFixed(2)).toLocaleString('en-IN'))
+ this.pOExpenseItems.toArray().map(a=>a.unitPrice=parseFloat(parseFloat(a.unitPrice).toFixed(2)).toLocaleString('en-IN'))
+   this.pOExpenseItems.toArray().map(a=>a.netPrice=parseFloat(parseFloat(a.netPrice).toFixed(2)).toLocaleString('en-IN'))
 
 
 

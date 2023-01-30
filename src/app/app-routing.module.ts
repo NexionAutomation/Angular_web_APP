@@ -287,7 +287,7 @@ const routes: Routes = [
         canActivate: [NonAuthGuard]
     },
     
-    {path: '**',  component: LoginComponent,} //redirectTo: '',
+    {path: '**',  redirectTo: ''} //redirectTo: '',
 ];
 
 @NgModule({

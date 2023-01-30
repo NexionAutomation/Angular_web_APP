@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, Pipe, PipeTransform} from '@angular/core';
+import {Inject, NgModule, Pipe, PipeTransform, PLATFORM_ID, Renderer2} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from '@/app-routing.module';
@@ -20,7 +20,7 @@ import {MessagesComponent} from '@modules/main/header/messages/messages.componen
 import {NotificationsComponent} from '@modules/main/header/notifications/notifications.component';
 import {ButtonComponent} from './components/button/button.component';
 
-import {registerLocaleData} from '@angular/common';
+import {isPlatformBrowser, registerLocaleData} from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import {UserComponent} from '@modules/main/header/user/user.component';
 import {ForgotPasswordComponent} from '@modules/forgot-password/forgot-password.component';
@@ -203,8 +203,22 @@ registerLocaleData(localeEn, 'en-EN');
 })
 export class AppModule {
 
+
+    // constructor(@Inject(PLATFORM_ID) private platformId: Object, private renderer: Renderer2) { }
+
+
+    // ngAfterViewInit(): void {
+    //     if (isPlatformBrowser(this.platformId)) {
+    //       let loader = this.renderer.selectRootElement('#loader');
+    //       if (loader.style.display != "none") loader.style.display = "none"; //hide loader
+    //       console.log("test view init")
+    //     }
+    // }
+
     
 }
+
+
 
 
 

@@ -39,7 +39,8 @@ export class ViewPOComponent implements OnInit {
    heroes = [
    1,2,3,4
   ];
-  myHero:any; 
+  myHero:any;
+  predate: any 
   Podate: any;
   user: any;
   pOTmUserMasters: Enumerable<any>;
@@ -109,21 +110,33 @@ export class ViewPOComponent implements OnInit {
 
 var datainword= Number( Enumerable.from( this.persons).sum(a=>a.netPrice).toString());
 
+
 var datae= new Date( this.pohead.orderDate );
+var gf=datae.getMonth()+1
+if(gf>=4)
+{
+  this.predate= (Number(datae.getFullYear().toString())-(2000));
+  this.Podate=Number(this.predate)+1
+}
+else
+{
+  this.predate=(Number(datae.getFullYear().toString())-(2000)-1)
+  this.Podate=Number(this.predate)+1
+}
  this.Total = numWords( Math.round( datainword)) ;
 var user= this.user.userName.toString()
 
  var res= Math.round(datainword).toLocaleString('en-IN'); 
  this.Totalinnumber=res+" /-";
  
- this.Podate= Number(datae.getFullYear().toString())-(2000)+1;
+ //this.Podate= Number(datae.getFullYear().toString())-(2000)+1;
  this.Usercode=  user.toUpperCase();//user.substring(0,2).toUpperCase()
 
 
 
- this.persons.toArray().map(a=>a.listPrice=parseFloat(parseFloat(a.listPrice).toFixed(3)).toLocaleString('en-IN'))
- this.persons.toArray().map(a=>a.unitPrice=parseFloat(parseFloat(a.unitPrice).toFixed(3)).toLocaleString('en-IN'))
- this.persons.toArray().map(a=>a.netPrice=parseFloat(parseFloat(a.netPrice).toFixed(3)).toLocaleString('en-IN'))
+ this.persons.toArray().map(a=>a.listPrice=parseFloat(parseFloat(a.listPrice).toFixed(2)).toLocaleString('en-IN'))
+ this.persons.toArray().map(a=>a.unitPrice=parseFloat(parseFloat(a.unitPrice).toFixed(2)).toLocaleString('en-IN'))
+ this.persons.toArray().map(a=>a.netPrice=parseFloat(parseFloat(a.netPrice).toFixed(2)).toLocaleString('en-IN'))
  
     $('#example').DataTable().destroy();
     $(document).ready(function () {

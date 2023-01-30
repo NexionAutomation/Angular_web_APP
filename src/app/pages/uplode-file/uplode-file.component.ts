@@ -59,6 +59,261 @@ ActionStatus:any;
 
   }
 
+
+
+  async emails()
+  {
+    try{
+      alert("call");
+
+      var data=`<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+      <head>
+      <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+      </style>
+      </head>
+      <body>
+      
+      <h2>HTML Table</h2>
+      
+      <table>
+        <tr>
+          <th>Company</th>
+          <th>Contact</th>
+          <th>Country</th>
+        </tr>
+        <tr>
+          <td>Alfreds Futterkiste</td>
+          <td>Maria Anders</td>
+          <td>Germany</td>
+        </tr>
+        <tr>
+          <td>Centro comercial Moctezuma</td>
+          <td>Francisco Chang</td>
+          <td>Mexico</td>
+        </tr>
+        <tr>
+          <td>Ernst Handel</td>
+          <td>Roland Mendel</td>
+          <td>Austria</td>
+        </tr>
+        <tr>
+          <td>Island Trading</td>
+          <td>Helen Bennett</td>
+          <td>UK</td>
+        </tr>
+        <tr>
+          <td>Laughing Bacchus Winecellars</td>
+          <td>Yoshi Tannamuri</td>
+          <td>Canada</td>
+        </tr>
+        <tr>
+          <td>Magazzini Alimentari Riuniti</td>
+          <td>Giovanni Rovelli</td>
+          <td>Italy</td>
+        </tr>
+      </table>
+      
+      </body>
+      </html>
+      `;
+
+      var output = 
+      await this.emailsSend(
+        "sarkararindam625@gmail.com",
+"",
+"Hello world",
+
+data.toString(),
+""
+      );
+ 
+  
+      const myJSON = JSON.stringify(output);
+      const obj = JSON.parse(myJSON);
+  
+      var outputFinal = obj["data"]["mailSend"];
+
+     
+        if(outputFinal[0].message=="Success")
+        {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+
+          })
+
+          this.Logins1.popupStatus
+          Toast.fire({
+            icon: 'success',
+            title: 'mail Send Successfully',
+
+
+          })
+
+        }else{
+
+          Swal.fire(
+            'Failed ',
+            '',
+            'error'
+          )
+
+        }
+
+
+    }catch(  error)
+    {
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+
+      })
+
+      Toast.fire({
+        icon: 'success',
+        title: 'mail fail',
+
+
+      })
+
+
+    }
+
+
+
+  }
+
+  async emailsSend(
+    tO: String,
+cc: String,
+subject: String,
+body: String,
+attachmentFilename: String
+
+  )
+  {
+
+
+
+
+
+    try{
+
+      let query = `mutation MyMutation($tO: String,
+        $cc: String,
+        $subject: String,
+        $body: String,
+        $attachmentFilename: String) {
+        __typename
+        mailSend(data: {attachmentFilename: $attachmentFilename 
+          body: $body, 
+          cc: $cc, 
+          subject: $subject,
+          tO: $tO
+        }) {
+          status
+          message
+          iD
+          code
+        }
+      }
+        
+         `
+  
+      var datas = JSON.stringify({
+        query, variables: {
+          tO,
+cc,
+subject,
+body,
+attachmentFilename,
+        }
+      });
+      var ss = await this.Logins1.GraphqlFetchdata("query", datas);
+  
+      return ss;
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+
+      })
+
+      Toast.fire({
+        icon: 'success',
+        title: 'Mail  Successfully Send',
+
+
+      })
+
+
+    }catch(  error)
+    {
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+
+      })
+
+      Toast.fire({
+        icon: 'success',
+        title: 'mail fail',
+
+
+      })
+
+
+    }
+
+
+
+  }
+
   async onSubmit() {
 
   

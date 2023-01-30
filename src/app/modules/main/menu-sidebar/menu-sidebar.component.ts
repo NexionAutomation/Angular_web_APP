@@ -149,70 +149,51 @@ export class MenuSidebarComponent implements OnInit {
         
         this.rightsModule2 =this.rightsModule2.where(x=>x.userCode==this.login.TMUserMaster.userCode).toList();
        
-var result = this.submodule
-.join(this.rightsModule2, a => a.rid, b => b.subModuleId)
-.where(s => s.left.rid == s.right.subModuleId  ) //&& s.right.userCode==this.login.TMUserMaster.userCode
-.toList();
+      var result = this.submodule
+      .join(this.rightsModule2, a => a.rid, b => b.subModuleId)
+      .where(s => s.left.rid == s.right.subModuleId  ) //&& s.right.userCode==this.login.TMUserMaster.userCode
+      .toList();
 
-    var da= result 
-     .join(this.CMAdminModuleMasterUser, a => a.right.moduleId, b => b.rid)
-.where(s => s.left.right.moduleId == s.right.rid   )
-.where(s => s.left.right.canSave != true  )// &&  s.left.right.userCode==this.login.TMUserMaster.userCode
-.toList();
+          var da= result 
+          .join(this.CMAdminModuleMasterUser, a => a.right.moduleId, b => b.rid)
+      .where(s => s.left.right.moduleId == s.right.rid   )
+      .where(s => s.left.right.canSave != true  )// &&  s.left.right.userCode==this.login.TMUserMaster.userCode
+      .toList();
       
-
-    
      var array2= new Array(); 
-
      var array = new Array();
      var array2 = new Array();
 
-  
+    var submodule1=da.toLookup(x=>x.right.moduleName).select(x=>x).toArray();
+    var submodule2=da.groupBy(x=>x.left.left.moduleId ).select(x=>x).toList();
 
-var submodule1=da.toLookup(x=>x.right.moduleName).select(x=>x).toArray();
-var submodule2=da.groupBy(x=>x.left.left.moduleId ).select(x=>x).toList();
-// var submodule2=da.groupBy(x=>x.left.left.cuserId).select(x=>x.first()).toArray();
+    const nams=new Array();
 
+      submodule1.forEach(element => {
+          
+          var Pat=new Array();
+          
+          element.toArray().forEach(ele=>{
 
-
-
-
-
-
-
-const nams=new Array();
-
-submodule1.forEach(element => {
-    
-    var Pat=new Array();
-    
-    element.toArray().forEach(ele=>{
-
-  
-        
-    
-    
-        Pat.push({
-      name:  ele.left.left.subModuleName,
-      path:  ele.left.left.navigationUrl
-  });
-
-
-        
-        }
-        );
-
-
-    array.push (
-        {
-            name:element.key,
-            path: ['/'],
-            children:Pat
+              Pat.push({
+            name:  ele.left.left.subModuleName,
+            path:  ele.left.left.navigationUrl
         });
 
-       
+              }
+              );
 
-})
+
+          array.push (
+              {
+                  name:element.key,
+                  path: ['/'],
+                  children:Pat
+              });
+
+            
+
+      })
 
 
 

@@ -249,20 +249,14 @@ rid: number,
     
     this.userMasterData = Enumerable.from( obj["data"]["userMasterData"]).cast<any>();
     
-    
-
-
-    
    var result = this.pOTmPurchaseHeads
-.join(this.userMasterData, a => a.createdBy, b => b.userCode)
-.where(s => s.left.userCode == s.right.createdBy  ) //&& s.right.userCode==this.login.TMUserMaster.userCode
-.toList();
+    .join(this.userMasterData, a => a.createdBy, b => b.userCode)
+    .where(s => s.left.userCode == s.right.createdBy  ) //&& s.right.userCode==this.login.TMUserMaster.userCode
+    .toList();
 
     
-    //createdBy
+    this.persons= result.take(200);
     
-this.persons= result.take(200);
-    //console.log(da.take(10));
     $('#example').DataTable().destroy();
     $(document).ready(function () {
 
@@ -378,13 +372,7 @@ this.persons= result.take(200);
 
 
      var output =null;
-     //= await this.INSERT(0,
-        //   this.loginForm.get('txtModuleName').value,
-        //   this.loginForm.get('txtModuleOrder').value,
-        //   this.Logins1.TMUserMaster.userCode
-        //   , 0, this.editData.rid,"UPDATE");
-
-
+     
           const myJSON = JSON.stringify(output);
           const obj = JSON.parse(myJSON);
       

@@ -5,112 +5,15 @@
     <!-- Main row -->
     <br>
 
-    <div class="row">
-        <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Create Number Of Po (Current Month)</span>
-                    <span class="info-box-number">
-                        10
-                        <!-- <small>%</small> -->
-                    </span>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Total Po Amount (Current Month)</span>
-                    <span class="info-box-number">41,410</span>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="clearfix hidden-md-up"></div>
-        <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text" >Upcomming Po (Delivery Data)</span>
-                    <span class="info-box-number">760</span>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Total Number Of Suppliers</span>
-                    <span class="info-box-number">2,000</span>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
+   
     <div class="row">
         <!-- Left col -->
 
 
 
+      
 
-
-
-
-        <div class="col-md-4" style="display: none;">
-
-            <div class="card card-outline card-info">
-
-                <div class="card-header">
-                    <div class="widget-user-image">
-                        <img class="img-circle elevation-2" src="assets/img/default-profile.png" style="height: 75px;"
-                            alt="User Avatar">
-                    </div>
-
-                    <h3 class="widget-user-username">Nadia Carmichael</h3>
-                    <h5 class="widget-user-desc">Lead Developer</h5>
-                </div>
-                <div class="card-body">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                Projects <span class="float-right badge bg-primary">31</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                Tasks <span class="float-right badge bg-info">5</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                Completed Projects <span class="float-right badge bg-success">12</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                Followers <span class="float-right badge bg-danger">842</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-
-        <section class="col-lg-12">
+        <section class="col-lg-6">
 
 
             <div class="card card-outline card-info">
@@ -129,9 +32,95 @@
                     </div>
                 </div>
 
-                <div class="card-body">
-                    <canvas id="myChart2" ></canvas>
+                <div class="card-body ">
+
+
+
+                    <div class="card-body">
+                        
+                            <form>
+                                <div class="row">
+                                <div class="col-sm-5">
+                                
+                                <div class="form-group">
+                                <label>From</label>
+                                <input type="date" class="form-control" placeholder="Enter ...">
+                                </div>
+                                </div>
+                                <div class="col-sm-5">
+                                <div class="form-group">
+                                <label>To</label>
+                                <input type="date" class="form-control" placeholder="Enter ..." >
+                                </div>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group ">
+                                  <br>
+                                    <input type="button" class=" btn btn-info form-control"  value="Search" >
+                                    </div>
+                                    </div>
+                                </div>
+                              
+                              
+                              
+                              
+                               
+                               
+                            
+                                </form>
+
+
+               
+
+
+
+                    </div>
+
                 </div>
+
+
+
+
+
+
+
+
+            </div>
+
+
+        </section>
+        
+        <section class="col-lg-6"></section>
+
+        
+        <section class="col-lg-6">
+
+
+            <div class="card card-outline card-info">
+                <div class="card-header">
+                    <h3 class="card-title">PURCHASE ORDER</h3>
+
+                    <div class="card-tools">
+                        <input type="date" id="birthday" class="form-control" name="birthday">
+                    </div>
+                </div>
+
+                <div class="card-body ">
+
+                    <div class="po-field text-center"><h3 class="db-po-label font-weight-light mt-0 bold " style="font-weight: bold">Total Purchase Order</h3> <h1 class="top-quantity over-flow text-blue">₹ {{ TotalAmount}} </h1></div>
+                    <hr>
+                    <div class="po-field text-center "><h3 class="db-po-label font-weight-light mt-0 " style="font-weight: bold">Total Order Value</h3> <h1 class="top-quantity over-flow text-blue "> ₹ {{Qty}}</h1></div>
+                    <hr>
+                    <div class="po-field text-center "><h3 class="db-po-label font-weight-light mt-0 " style="font-weight: bold">Total Item Of Quantity</h3> <h1 class="top-quantity over-flow text-blue "> ₹ 101,811.084 </h1></div>
+
+           
+
+                </div>
+
+
+
+
 
 
 
@@ -141,8 +130,43 @@
 
         </section>
 
-        
-        <section class="col-lg-4">
+        <section class="col-lg-6">
+
+
+            <div class="card card-outline card-info">
+                <div class="card-header">
+                    <h3 class="card-title">USER PO</h3>
+
+                    <div class="card-tools">
+                        <input type="date" id="birthday" class="form-control" name="birthday">
+                    </div>
+                </div>
+
+                <div class="card-body ">
+
+                    <div class="po-field text-center"><h3 class="db-po-label font-weight-light mt-0 bold " style="font-weight: bold">Total Purchase Order</h3> <h1 class="top-quantity over-flow text-blue">₹ 625.000 </h1></div>
+                    <hr>
+                    <div class="po-field text-center "><h3 class="db-po-label font-weight-light mt-0 " style="font-weight: bold">Total Order Value</h3> <h1 class="top-quantity over-flow text-blue "> ₹ 101,811.084 </h1></div>
+                    <hr>
+                    <div class="po-field text-center "><h3 class="db-po-label font-weight-light mt-0 " style="font-weight: bold">Total Item Of Quantity</h3> <h1 class="top-quantity over-flow text-blue "> ₹ 101,811.084 </h1></div>
+
+           
+
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+
+
+        </section>
+
+        <section class="col-lg-6">
 
 
             <div class="card card-outline card-info">
@@ -228,7 +252,7 @@
 
 
 
-        <section class="col-lg-12">
+        <section class="col-lg-12" style="display: none;">
             <div class="form2">
 
                 <div class="card card-outline card-primary">
@@ -302,6 +326,47 @@
         
             </div>
         </section>
+
+
+        <div class="card card-widget widget-user shadow" style="display:none;">
+
+            <div class="widget-user-header bg-info">
+            <h3 class="widget-user-username">Alexander Pierce</h3>
+            <h5 class="widget-user-desc">Founder &amp; CEO</h5>
+            </div>
+            <div class="widget-user-image">
+            <img class="img-circle elevation-2" src="../dist/img/user1-128x128.jpg" alt="User Avatar">
+            </div>
+            <div class="card-footer">
+            <div class="row">
+            <div class="col-sm-4 border-right">
+            <div class="description-block">
+            <h5 class="description-header">3,200</h5>
+            <span class="description-text">SALES</span>
+            </div>
+            
+            </div>
+            
+            <div class="col-sm-4 border-right">
+            <div class="description-block">
+            <h5 class="description-header">13,000</h5>
+            <span class="description-text">FOLLOWERS</span>
+            </div>
+            
+            </div>
+            
+            <div class="col-sm-4">
+            <div class="description-block">
+            <h5 class="description-header">35</h5>
+            <span class="description-text">PRODUCTS</span>
+            </div>
+            
+            </div>
+            
+            </div>
+            
+            </div>
+            </div>
         
       
 

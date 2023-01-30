@@ -631,14 +631,7 @@ openCityInNewWindow(string) {
 }
 //----------------------------------CURD OPERATIONS-------------------------------------------------------------
 
-
-
-
 async upload($event) {
-  alert("call");
-
-
-
  
   var operations = {
     query: `
@@ -718,11 +711,6 @@ fd.append('operations', JSON.stringify(operations))
 fd.append('map', JSON.stringify(_map))
 fd.append('file', file, file.name)
 
-
-//   var output = await this.INSERT(
-//     this.loginForm.get('file1').value,
-   
-//  );
 
  var ret= await this.Logins1.Graphqlfiledata("query1", fd, file);
 
@@ -810,8 +798,6 @@ variables: {
   });
 
   
-  //var ss = await this.Logins1.Graphqlfiledata("query", datas, files);
-
   return null;
 }
 }

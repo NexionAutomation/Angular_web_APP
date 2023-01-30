@@ -38,6 +38,13 @@
                                 <input #fileInput type="file" (change)="upload($event)">ssd
 
 
+<!-- 
+                                <input  type="button"  class="btn btn-info" (change)="emails()" value="Email send">
+                                 -->
+                                <button type="button"    
+                                class="btn-info" (click)="emails()"></button>
+
+
                               <input type="file" formControlName="file1" class="hidden-xs-up" name="file" multiple>
                               <button type="submit" class="btn btn-info" >Submit</button>
                             </div>

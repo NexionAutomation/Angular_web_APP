@@ -58,7 +58,7 @@
                             <td><button class="badge bg-success  btn btn-sm  " name='{{ person.poId}}'> <a
                                         class="fa fa-edit" (click)="onedit(person.poId) " [routerLink]="['/CreatePo', person.poId]"></a></button>
                                 <br>
-                                <button class="badge bg-danger  btn btn-sm" name='{{ person.poId}}'
+                                <button class="badge bg-danger  btn btn-sm " disabled name='{{ person.poId}}'
                                     (click)="onDel(person.poId)"  ><a class="fa fa-trash"></a></button>
                                     <br>
                                     <button class="badge bg-info  btn btn-sm"  name='{{ person.poId}}'

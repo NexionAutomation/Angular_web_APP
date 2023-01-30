@@ -248,38 +248,68 @@ rid,
   async GETData(User: string, Password: string): Promise<any> {
 
     let data = '{User="' + User + '",Password="' + Password + '" }';
-    let query = `query MyQuery {
-      __typename
-     cMPOFetchdata(first: 50, order: {orderDate: DESC, poId: DESC}) {
-          nodes {
-            id
-            workOrderNo
-            total
-            supplierName
-            supplierId
-            remarks
-            poId
-            paymentTerms
-            orderDate
-            muserId
-            modificationDate
-            indentNo
-            gst
-            freightTerms
-            enduser
-            deliveryMode
-            deliveryDate
-            cuserId
-            creationDate
-            companyName
-            companyId
-          }
-          pageInfo {
-            endCursor
-            hasNextPage
-          }
-        }
+  //   let query = `query MyQuery {
+  //     __typename
+  //     CMPOFetchdata2() {
+  //         nodes {
+  //           id
+  //           workOrderNo
+  //           total
+  //           supplierName
+  //           supplierId
+  //           remarks
+  //           poId
+  //           paymentTerms
+  //           orderDate
+  //           muserId
+  //           modificationDate
+  //           indentNo
+  //           gst
+  //           freightTerms
+  //           enduser
+  //           deliveryMode
+  //           deliveryDate
+  //           cuserId
+  //           creationDate
+  //           companyName
+  //           companyId
+  //         }
+  //         pageInfo {
+  //           endCursor
+  //           hasNextPage
+  //         }
+  //       }
+  //   }
+  // `
+
+
+
+
+  let query=`query MyQuery {
+    cMPOFetchdata2 {
+      companyId
+      companyName
+      creationDate
+      cuserId
+      deliveryDate
+      deliveryMode
+      enduser
+      freightTerms
+      gst
+      id
+      indentNo
+      modificationDate
+      muserId
+      orderDate
+      paymentTerms
+      poId
+      remarks
+      supplierId
+      supplierName
+      total
+      workOrderNo
     }
+  }
   `
     var datas = JSON.stringify({ query, variables: { User, Password } });
     var ss = await this.Logins1.GraphqlFetchQuery("query", query);
@@ -292,7 +322,7 @@ rid,
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-       this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["cMPOFetchdata"]["nodes"]).cast<any>();
+       this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["cMPOFetchdata2"]).cast<any>();
     
     
 this.persons= this.pOTmPurchaseHeads;

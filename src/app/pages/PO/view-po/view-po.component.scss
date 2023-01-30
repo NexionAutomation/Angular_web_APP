@@ -18,8 +18,9 @@
 //  }
 
 body, div, table, thead, tbody, tfoot, tr, th, td, p {
-   // font-family: "Calibri";
+    font-family: "Calibri";
    font-size: small;
+   text-transform: uppercase;
 }
 
 .table td, .table th {
@@ -70,3 +71,33 @@ table, th, td {
      
 
     }
+
+    @media print {
+        .pagebreak {margin: 10px; page-break-before: always;
+        
+        }/* page-break-after works, as well */
+    }
+
+    @media print {
+        table {
+            position: relative;
+            top: 10px;
+        }
+     }
+
+    
+
+//     @import url(https://fonts.googleapis.com/css?family=Denk+One);
+// @import url(https://fonts.googleapis.com/css?family=Arimo);
+// .rotingtxt{
+// 	-webkit-transform: rotate(331deg);
+// 	-moz-transform: rotate(331deg);
+// 	-o-transform: rotate(331deg);
+// 	transform: rotate(331deg);
+// 	font-size: 12em;
+// 	color: rgba(255, 5, 5, 0.17);
+// 	position: absolute;
+// 	font-family: 'Denk One', sans-serif;
+// 	text-transform:uppercase;
+// 	padding-left: 10%;
+// }

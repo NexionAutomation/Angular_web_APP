@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {  Router } from '@angular/router';
-import {  TM_CompanyMaster, TM_CountryMaster, TM_PurchaseHead, TM_PurchaseHeadscema, Tm_supplierMaster } from '@modules/Module/PoModules.js';
+import {  pOTmPurchaseBodies, TM_CompanyMaster, TM_CountryMaster, TM_PurchaseHead, TM_PurchaseHeadscema, Tm_supplierMaster } from '@modules/Module/PoModules.js';
 import { CM_AdminModuleMaster } from '@pages/user-module/create-modulemaster/create-modulemaster.component.js';
 
 
@@ -31,6 +31,8 @@ export class PoDashboardComponent implements OnInit {
   public MUser_Id: number;
   public RID: number;
   public status: any;
+   public TotalAmount: any;
+   public Qty: any;
   public deleverydate:any;
   public status2:TM_PurchaseHeadscema;
   public CM_AdminModuleMaster: CM_AdminModuleMaster
@@ -72,8 +74,17 @@ export class PoDashboardComponent implements OnInit {
     });
 
     this.LodeDataTable();
+    const date = new Date()
+const year = date.getFullYear()
 
+let month: number | string = date.getMonth() + 1
+let day: number | string = date.getDate()
 
+if (month < 10) month = '0' + month
+if (day < 10) day = '0' + day
+
+const today = `${year}-${month}-${day}`    
+document.getElementById("birthday").ariaValueText = today;
     
 
   }
@@ -252,36 +263,48 @@ rid,
 
     let data = '{User="' + User + '",Password="' + Password + '" }';
     let query = `query MyQuery {
-      __typename
-     cMPOFetchdata(first: 50, order: {deliveryDate: DESC, poId: DESC}) {
-          nodes {
-            id
-            workOrderNo
-            total
-            supplierName
-            supplierId
-            remarks
-            poId
-            paymentTerms
-            orderDate
-            muserId
-            modificationDate
-            indentNo
-            gst
-            freightTerms
-            enduser
-            deliveryMode
-            deliveryDate
-            cuserId
-            creationDate
-            companyName
-            companyId
-          }
-          pageInfo {
-            endCursor
-            hasNextPage
-          }
-        }
+      cMPOFetchdata2 {
+        companyId
+        companyName
+        creationDate
+        cuserId
+        deliveryDate
+        deliveryMode
+        enduser
+        freightTerms
+        gst
+        id
+        indentNo
+        modificationDate
+        muserId
+        orderDate
+        paymentTerms
+        poId
+        remarks
+        supplierId
+        supplierName
+        total
+        workOrderNo
+      }
+
+      pOTmPurchaseBodies {
+        id
+        catname
+        creationDate
+        cuserId
+        description
+        dis
+        listPrice
+        modificationDate
+        muserId
+        netPrice
+        poId
+        qty
+        unitPrice
+        uom
+      }
+    
+    
     }
   `
     var datas = JSON.stringify({ query, variables: { User, Password } });
@@ -295,68 +318,59 @@ rid,
     const myJSON = JSON.stringify(data);
     const obj = JSON.parse(myJSON);
 
-   this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["cMPOFetchdata"]["nodes"]).cast<TM_PurchaseHead>();
-      this.persons= this.pOTmPurchaseHeads;
+   this.pOTmPurchaseHeads = Enumerable.from( obj["data"]["cMPOFetchdata2"]).cast<TM_PurchaseHead>();
+      //this.persons= this.pOTmPurchaseHeads;
 
-      this.persons= Enumerable.from( obj["data"]["cMPOFetchdata"]["nodes"]).toList();
-        var status2= this.persons.toLookup(x=>x.supplierName).toArray();
+    this.persons= Enumerable.from( obj["data"]["pOTmPurchaseBodies"]).cast<pOTmPurchaseBodies>();
+        var status2= this.persons.toLookup(x=>x.catname).toArray();
+        //status2
 
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() - 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
+        status2.toArray().forEach(element => {
+         
+         var a= element.value.sum(a=>a.qty)
+          
+        });
+        // status2.forEach(a=>{
+        //   this.Qty=this.Qty +a.value.qty
+        // })
         
-        var today3 = yyyy  + '-' + mm  + '-' + dd;
-       
-        var fhgthis=this.persons;
-  this.deleverydate=fhgthis;
+      
+        this.TotalAmount=    Enumerable.from( this.pOTmPurchaseHeads).sum(a=>a.total);
         
 
 
- 
-   var  data1=new Array()
-   var  data2=new Array()
-   var  data3=new Array()
-   const colour=[];
-   
-colour.push(this.getRandomColor())
-   status2.forEach(element => {
 
-    const totalYears = parseInt( element.average(u => u.total));
-     var fay=this.getRandomColor();
+  //  status2.forEach(element => {
 
-
-     data1.push(element.key);
-     data2.push(totalYears);
-     data3.push(fay);
+  //    this.Qty += parseInt( element.sum(u => u.qty));
     
     
-  });
+  // });
 
 //'pie',
-          var gsf2=new Chart(document.getElementById("myChart2"), {
-      type: 'pie',
-      data:{
-        labels: data1,
-        datasets: [{
-          label: "Average Max Purchase Co",
-          backgroundColor: data3,
-          data: data2
-        }]
-      },
-      options: {
-        responsive: true,
-      plugins: {
-        legend: {
-          position: 'top',
-        }
-      },
-        title: {
-          display: true,
-          text: 'Total Number Of Average Max Purchase of Suppliers'
-        }
-      }
-    })
+    //       var gsf2=new Chart(document.getElementById("myChart2"), {
+    //   type: 'pie',
+    //   data:{
+    //     labels: data1,
+    //     datasets: [{
+    //       label: "Average Max Purchase Co",
+    //       backgroundColor: data3,
+    //       data: data2
+    //     }]
+    //   },
+    //   options: {
+    //     responsive: true,
+    //   plugins: {
+    //     legend: {
+    //       position: 'top',
+    //     }
+    //   },
+    //     title: {
+    //       display: true,
+    //       text: 'Total Number Of Average Max Purchase of Suppliers'
+    //     }
+    //   }
+    // })
 
 
     $('#example').DataTable().destroy();

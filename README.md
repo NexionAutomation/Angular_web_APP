@@ -79,3 +79,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 1)node build_installer.js
 2)ng build --prod --output-hashing none --watch
 3)npm run build-prod
+
+## wix-mix Installer
+1) npx cap init
+2) npx cap copy android
+3) npm i @capacitor/android @capacitor/ios
+4)
