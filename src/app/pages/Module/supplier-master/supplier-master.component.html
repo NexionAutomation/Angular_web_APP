@@ -1,0 +1,246 @@
+<section class="col-lg-12">
+
+
+    <div id="UpdateProgress1" style="display:none;" role="status" aria-hidden="true">
+
+        <div class="divWaiting" style="z-index: 15000;">
+            <img id="imgWait" src="images/loading3.gif" align="middle" style="height:150px;width:210px;">
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <div id="ContentPlaceHolder3_UpdatePanel1">
+
+
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+
+
+                <!--Start Form Heading -->
+                <div class="card-header with-border">
+                    <h3 class="card-title"><strong>Supplier Master</strong></h3>
+                </div>
+                <!--Start Form Heading -->
+
+                <!--Start Form Body -->
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="bder top-mrg20">
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-horizontal">
+                                            <div class="log_form_head1" style="margin-top: 7px;">Supplier Details </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label pull-left">Supplier
+                                                        Name</label>
+                                                    <input  formControlName="txtsuppliername" type="text"
+                                                        id="txtsuppliername" class="form-control inputtext">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label pull-left">Address
+                                                        1</label>&nbsp;<span id="ContentPlaceHolder3_lblloginIdError"
+                                                        class="col-sm-3"></span>
+                                                    <input  formControlName="txtCaddress1" type="text"
+                                                        id="txtCaddress1" class="form-control inputtext">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label">Address 2</label>
+                                                    <input  formControlName="txtCaddress2" type="text"
+                                                        id="txtCaddress2" class="form-control inputtext">
+                                                </div>
+                                            </div>
+
+                                            <div class="clearfix" style="margin-bottom: 5px;"></div>
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label pull-left">Address
+                                                        3</label>&nbsp;<span id="ContentPlaceHolder3_Label1"
+                                                        class="col-sm-3"></span>
+                                                    <input  formControlName="txtCaddress3" type="text"
+                                                        id="txtCaddress3" class="form-control inputtext">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label pull-left">Contact
+                                                        person</label>
+                                                    <input  formControlName="txtcontactperson" type="text"
+                                                        id="txtcontactperson" class="form-control inputtext">
+
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label pull-left">Mobile
+                                                        NO</label>
+                                                    <input  formControlName="MobileNo" type="text"
+                                                        maxlength="10" id="txtMobileNo" class="form-control inputtext">
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="clearfix" style="margin-bottom: 5px;"></div>
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label pull-left">GST
+                                                        No</label>&nbsp;<span id="ContentPlaceHolder3_Label2"
+                                                        class="col-sm-3"></span>
+                                                    <input  formControlName="gst" type="text"
+                                                        id="txtgst" class="form-control inputtext">
+                                                </div>
+
+
+
+                                            </div>
+
+
+                                          
+
+
+
+                                            <div class="clearfix"></div>
+                                            <div class="form-group">
+                                                <label for="inputEmail3" class="col-sm-3 control-label"></label>
+                                                <div class="col-sm-6">
+
+                                                    <span id="lblError"></span>
+
+
+
+
+
+
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+
+                                                    <input [type]="'submit'" name="btnSave" value="Save" 
+                                                    id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10" *ngIf="ActionFlag==0">&nbsp;
+                                                
+                                               
+                                                    <input [type]="'submit'" name="btnSave" value="Update" *ngIf="ActionFlag==1"
+                                                    id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10">&nbsp;
+                                                
+                                                
+                                                <input type="button" name="btnClear" value="Reset"
+                                                    id="ContentPlaceHolder3_btnClear" class="btn btn-primary mar_top10" (click)="onReset()">
+                
+                
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </form>
+                <!--End Form Body -->
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="form2">
+
+            <div class="card card-outline card-primary">
+                <div class="card-header "> Group Details ::</div>
+                <div class="card-body">
+
+
+
+                    <!-- <table id="example" class="display" width="100%"></table> -->
+
+                    <table id="example" class="row-border hover" class="table table-striped table-hover  ">
+
+                        <thead>
+                            <tr>
+                                <th scope="col">Action</th>
+                                <th scope="col">Sr No</th>
+                                <th scope="col">Supplier Name</th>
+                                <th scope="col">Address1</th>
+                                <th scope="col">Address2</th>
+                                <th scope="col">Address3</th>
+                                <th scope="col">Contact Person</th>
+                                <th scope="col">Mobile No</th>
+                                <th scope="col">GST</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let person of persons;let a=index">
+                                
+                                <td><button class="badge bg-success  btn btn-sm  " name='{{ person.id}}' > <a class="fa fa-edit" (click)="onedit(person.id)"></a></button>
+                                    &nbsp;
+                                    <button class="badge bg-danger  btn btn-sm"  name='{{ person.id}}' (click)="onDel(person.id)"><a class="fa fa-trash"></a></button>
+                                </td>
+    
+                                <td> {{a+1}}</td>
+                                <td> {{person.supplierName}}</td>
+                                <td>{{ person.address1 }}</td>
+                                <td> {{person.address2}}</td>
+                                <td>{{ person.address3 }}</td>
+                                <td>{{ person.contactPerson }}</td>
+                                <td> {{person.cmobileNo}}</td>
+                                <td>{{ person.gst }}</td>
+                               
+                              
+
+
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+</section>

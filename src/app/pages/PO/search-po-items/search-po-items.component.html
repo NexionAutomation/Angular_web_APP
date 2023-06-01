@@ -1,0 +1,131 @@
+<section class="col-lg-12">
+
+
+  
+
+
+
+
+    <div id="UpdatePanel1">
+        <div class="col-md-12">
+
+
+           
+
+
+
+        </div>
+
+
+        <div class="col-md-12">
+
+
+            <!-- general form elements -->
+            <div class="card ">
+
+
+             
+                <!--Start Form Heading -->
+                <div class="form2">
+
+                    <div class="card card-outline card-primary">
+                        <div class="card-header "> PO Items ::</div>
+                        <div class="card-body " style="overflow-x:auto;">
+            
+            
+            
+                            <!-- <table id="example" class="display" width="100%"></table> -->
+            
+                            <table id="example"  class="table table-striped ">
+            
+                                <thead>
+                                    <tr>
+                                       
+                                        <th scope="col">PO ID</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Cat No</th>
+                                        <th scope="col">UOM</th>
+                                        <th scope="col">Make</th>
+                                        <th scope="col">QTY</th>
+                                        <th scope="col">List Price</th>
+                                        <th scope="col">Discount</th>
+                                        <th scope="col">Unit Price</th>
+                                        <th scope="col">Net Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="background-color:0;" *ngFor="let person of pOTmPurchaseBodiess;let a=index" >
+                                        <!-- <td>
+                                            <button type="button"
+                                           
+                                                
+                                            class="badge bg-danger btn btn-sm" (click)="onDel(person.id)"><a class="fa fa-trash"></a></button>
+
+                                               
+                                                poId 
+
+                                        </td> -->
+
+                                        <!-- <td>
+                                        <button class="badge bg-info  btn btn-sm"  name='{{ person.poId}}'
+                                        ><a class="fa fa-file" target="_self" [routerLink]="['/viewPo',person.poId]" ></a></button>
+                                
+                                </td> -->
+                                        <td style="width:100px;">
+                                            <a
+                                                id="GridView1_lblRowNumber_0" [routerLink]="['/viewPo',person.poId]" routerLinkActive="active" target="_self">{{person.poId}}</a>
+                                        </td>
+                                        <td>{{person.description}}</td>
+                                        <td>{{person.catname}}</td>
+                                        <td>{{person.uom}}</td>
+                                        <td>{{person.uom}}</td>
+                                        <td>{{person.qty}}</td>
+                                        <td>{{person.listPrice}}</td>
+                                        <td>{{person.dis}}</td>
+                                        <td>{{person.unitPrice}}</td>
+                                        <td>{{person.netPrice}}</td>
+
+
+                                       
+                        </tr>
+                                </tbody>
+                            </table>
+            
+            
+                        </div>
+                    </div>
+            
+                </div>
+            
+                <!--Start Form Body -->
+
+
+                <!--End Form Body -->
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+      
+
+
+
+  
+    </div>
+
+
+
+
+
+
+</section>

@@ -1,0 +1,120 @@
+<section class="content  ">
+    <!-- Default box -->
+
+    <div class="card card-outline card-info">
+        <div class="card-header">
+            <h3 class="card-title">Title</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-widget="collapse" data-toggle="tooltip"
+                    title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body   ">
+
+
+
+
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+
+
+                <div class="form-horizontal">
+
+
+
+
+                    <div class="container m-3">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="input-group">        
+                             
+
+                                <input #fileInput type="file" (change)="upload($event)">ssd
+
+
+<!-- 
+                                <input  type="button"  class="btn btn-info" (change)="emails()" value="Email send">
+                                 -->
+                                <button type="button"    
+                                class="btn-info" (click)="emails()"></button>
+
+
+                              <input type="file" formControlName="file1" class="hidden-xs-up" name="file" multiple>
+                              <button type="submit" class="btn btn-info" >Submit</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+
+                </div>
+                <div class="clearfix"></div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="form2">
+
+        <div class="card card-outline card-primary">
+            <div class="card-header "> Group Details ::</div>
+            <div class="card-body">
+
+
+
+                <!-- <table id="example" class="display" width="100%"></table> -->
+
+                <table id="example" class="row-border hover" class="table table-striped table-hover  table-responsive">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Module Name</th>
+                            <th>Sub Module Name</th>
+                            <th>Sub Target</th>
+                            <th>Sub Module Order</th>
+                            <th>Module Url</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let person of persons">
+                            <td> {{person.index}}</td>
+                            <td> {{person.right.moduleName}}</td>
+                            <td>{{ person.left.subModuleName }}</td>
+                            <td> {{person.left.targetModule}}</td>
+                            <td>{{ person.left.subModuleOrder }}</td>
+                            <td>{{ person.left.navigationUrl }}</td>
+
+                            <td>
+                                <button class="btn btn-sm btn-info" (ngClick)="Edit($event)" >
+                                    Edit
+                                </button>
+                                <button class="btn btn-sm btn-danger">
+                                    Delete
+                                </button>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- /.card -->
+</section>

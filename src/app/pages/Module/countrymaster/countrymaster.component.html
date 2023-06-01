@@ -1,0 +1,342 @@
+<section class="col-lg-12">
+
+
+    <div id="UpdateProgress1" style="display:none;" role="status" aria-hidden="true">
+
+        <div class="divWaiting" style="z-index: 15000;">
+            <img id="imgWait" src="images/loading3.gif" align="middle" style="height:150px;width:210px;">
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <div id="UpdatePanel1">
+
+
+        <div class="col-md-12 col-md-offset-2">
+            <!-- general form elements -->
+            <div class="card card-primary">
+
+
+                <!--Start Form Heading -->
+                <div class="card-header with-border">
+                    <h3 class="card-title"><strong> Country Master </strong></h3>
+                </div>
+                <!--Start Form Heading -->
+               
+                <!--Start Form Body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="bder top-mrg20">
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+
+                                        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label for="inputEmail3" class="col-sm-3 control-label">Enter
+                                                        Country Name</label>
+                                                    <div class="col-sm-9">
+                                                        <input name="txtcountrymaster"
+                                                        formControlName="txtcountrymaster"
+                                                            type="text" id="txtcountrymaster"
+                                                            class="form-control"
+                                                          
+                                                            >
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="inputEmail3" class="col-sm-3 control-label">Enter
+                                                        Display Name</label>
+                                                    <div class="col-sm-9">
+                                                        <input name="txtdisplayname"
+                                                        formControlName="txtdisplayname"
+                                                            type="text" id="txtdisplayname"
+                                                            class="form-control"
+                                                            >
+
+                                                    </div>
+                                                </div>
+
+                                               
+
+                                                <div class="form-group">
+                                                    <label for="inputEmail3" class="col-sm-3 control-label"></label>
+                                                    <div class="col-sm-9">
+
+                                                        <span id="lblError"></span>
+                                                        <span id="RequiredFieldValidator1"
+                                                            class="errorlabels" style="display:none;">Enter Country
+                                                            Name</span>
+
+                                                        <span id="RequiredFieldValidator2"
+                                                            class="errorlabels" style="display:none;">Enter Display
+                                                            Name</span>
+
+
+
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-3">
+                                                        </div>
+                                                        <div class="col-sm-9">
+                                                            <input [type]="'submit'" name="btnSave" value="Save" 
+                                    id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10" *ngIf="ActionFlag==0">&nbsp;
+                                
+                               
+                                    <input [type]="'submit'" name="btnSave" value="Update" *ngIf="ActionFlag==1"
+                                    id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10">&nbsp;
+                                
+                                
+                                <input type="button" name="btnClear" value="Reset"
+                                    id="ContentPlaceHolder3_btnClear" class="btn btn-primary mar_top10" (click)="onReset()">
+
+
+
+
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+
+                                        </form>
+
+
+                                    </div>
+
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Form Body -->
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <input type="submit" name="btnSavingModelpopUp" value="Button"
+            id="btnSavingModelpopUp" style="display:none;">
+
+        <div id="pnlSavePopUp"
+            style="width: 350px; display: none; position: fixed; z-index: 10001;">
+
+
+            <div id="UpdateProgress1" style="display:none;" role="status" aria-hidden="true">
+
+                <div class="PopupWaiting">
+
+
+
+                </div>
+
+
+            </div>
+
+            <table style="width:100%;background-color:White;border:1px solid gray;">
+                <tbody>
+                    <tr>
+                        <td align="center" bgcolor="Silver">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center" bgcolor="Silver">
+                            <strong>Confirmation Dialog</strong>
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" bgcolor="Silver">
+                            &nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            &nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <span id="lblSavingDialogcard"></span>
+
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td align="center">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <span id="lblConfrmMsg"></span>
+
+
+                            &nbsp;
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td align="center">
+                            <span id="lblpendingaproval"></span>
+
+                            &nbsp;
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td align="center">
+
+
+                            <input type="submit" name="btnsaveOk" value="Yes"
+                                id="btnsaveOk" class="btn btn-primary" style="width:80px;">
+                            &nbsp;&nbsp;&nbsp;
+                            <input type="submit" name="BtnSaveCancel" value="No"
+                                id="BtnSaveCancel" class="btn btn-primary" style="width:80px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            &nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+
+        <input type="submit" name="modalPopupButton" value="Button"
+            id="modalPopupButton" style="display:none;">
+
+        <div id="DeletePopup" style="width: 350px; display: none; position: fixed; z-index: 10001;">
+
+
+            <table style="width:100%;background-color:White;border:1px solid gray;">
+                <tbody>
+                    <tr>
+                        <td align="center" bgcolor="Silver">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center" bgcolor="Silver">
+                            <strong>Confirmation Dialog</strong>
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" bgcolor="Silver">
+                            &nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            &nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <span id="lblDialogMsg"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            &nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <input type="submit" name="btnDeleteOk" value="OK"
+                                id="btnDeleteOk" class="btn btn-primary" style="width:80px;">
+                            &nbsp;&nbsp;&nbsp;
+                            <input type="submit" name="btnCancel" value="Cancel"
+                                id="btnCancel" class="btn btn-primary" style="width:80px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            &nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+
+
+
+
+
+        <div class="form2">
+
+            <div class="card card-outline card-primary">
+                <div class="card-header "> Group Details ::</div>
+                <div class="card-body">
+
+
+
+                    <!-- <table id="example" class="display" width="100%"></table> -->
+
+                    <table id="example" class="row-border hover" class="table table-striped table-hover  ">
+
+                        <thead>
+                            
+                            <tr>
+                                <th scope="col">Action</th>
+                                <th scope="col">SrNo</th>
+                                <th scope="col">Country Name</th>
+                                <th scope="col">Display As</th>
+                            </tr>
+
+                           
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let person of persons;let a=index">
+                                <td><button class="badge bg-success  btn btn-sm  " name='{{ person.countrycode}}' > <a class="fa fa-edit" (click)="onedit(person.countrycode)"></a></button>
+                                    &nbsp;
+                                    <button class="badge bg-danger  btn btn-sm"  name='{{ person.countrycode}}' (click)="onDel(person.countrycode)"><a class="fa fa-trash"></a></button>
+                                </td>
+    
+                                <td> {{a+1}}</td>
+                                <td> {{person.countryname}}</td>
+                                <td>{{ person.displayAs }}</td>
+                                
+                               
+
+                              
+
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+</section>

@@ -1,0 +1,104 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <!-- <h1>Blank Page</h1> -->
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    
+                    <a type="button" class="btn btn-info" [routerLink]="['/SearchPOItems']">Search PO Items</a>
+                    <!-- <li class="breadcrumb-item active">Blank Page</li> -->
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content  ">
+    <!-- Default box -->
+
+
+
+    <div class="form2">
+
+        <div class="card card-outline card-primary">
+            <div class="card-header "> PO Details ::</div>
+            <div class="card-body " style="overflow-x:auto;">
+
+
+
+                <!-- <table id="example" class="display" width="100%"></table> -->
+
+                <table id="example"  class="table table-striped border-style table-bordered ">
+
+                    <thead>
+                        <tr>
+                            <th  >Action</th>
+                            <th >Rid</th>
+                            <th >PO Number</th>
+                            <th >Company Name</th>
+                            <th>Supplier Name</th>
+                            <th >Order Date</th>
+                            <th >Payment Terms</th>
+                            <th >Indent No</th>
+                            <th >Freight Terms</th>
+                            <th >Work Order No</th>
+                            <th >Gst No</th>
+                            <th >Delivery Date</th>
+                            <th >Remarks</th>
+                            <th >Total</th>
+                            <th >Enduser</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let person of persons;let a=index">
+                            <td><button class="badge bg-success  btn btn-sm  " name='{{ person.poId}}'> <a
+                                        class="fa fa-edit" (click)="onedit(person.poId) " [routerLink]="['/CreatePo', person.poId]"></a></button>
+                                <br>
+                                <button class="badge bg-danger  btn btn-sm " disabled name='{{ person.poId}}'
+                                    (click)="onDel(person.poId)"  ><a class="fa fa-trash"></a></button>
+                                    <br>
+                                    <button class="badge bg-info  btn btn-sm"  name='{{ person.poId}}'
+                                    ><a class="fa fa-file" target="_self" [routerLink]="['/viewPo',person.poId]" ></a></button>
+                            
+                            </td>
+
+
+                            <td> {{person.poId}}</td>
+                            <td> {{person.id}}</td>
+                            <td>{{ person.companyName }}</td>
+                            <td> {{person.supplierName}}</td>
+                            <td>{{ person.orderDate | date:"yyyy-MM-dd" }}</td>
+                            <td>{{ person.paymentTerms }}</td>
+                            <td> {{person.indentNo}}</td>
+                            <td>{{ person.freightTerms }}</td>
+                            <td> {{person.workOrderNo }}</td>
+                            <td>{{ person.gst  }}</td>
+                            <td>{{ person.deliveryDate | date:"yyyy-MM-dd" }}</td>
+                            <td> {{person.remarks }}</td>
+                            <td>{{ person.total  }}</td>
+                            <td>{{ person.enduser  }}</td>
+                           
+
+
+
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+<script>
+    var $disabledResults = $(".js-example-disabled-results");
+    $disabledResults.select2();
+</script>

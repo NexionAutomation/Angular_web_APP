@@ -1,0 +1,714 @@
+<!-- Main content -->
+<br>
+<section class="content  "  *ngIf='shown2'>
+    <!-- Default box -->
+
+
+
+    <div class="form2">
+
+        <div class="card card-outline card-primary">
+            <div class="card-header "> Excel Details ::</div>
+            <div class="card-body " style="overflow-x:auto;">
+
+
+
+                <!-- <table id="example" class="display" width="100%"></table> -->
+
+                <table id="example2"  class="table table-striped table-bordered">
+
+                    <thead>
+                        <tr>
+                           
+                            <th scope="col">Action</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Cat No</th>
+                            <th scope="col">UOM</th>
+                            <th scope="col">Make</th>
+                            <th scope="col">QTY</th>
+                            <th scope="col">List Price</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">Unit Price</th>
+                            <th scope="col">Net Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let person of Attand;let a=index">
+                           
+
+                            <td>
+                                <button type="button"    
+                                class="badge bg-danger btn btn-sm" (click)="onDelExcel(a)"><a class="fa fa-trash"></a></button>
+
+                                   
+                                    <!-- poId -->
+
+                            </td>
+                            <td> {{person.t1}}</td>
+                            <td> {{person.t2}}</td>
+                            <td>{{ person.t3 }}</td>
+                            <td> {{person.t4}}</td>
+                            <td>{{ person.t5}}</td>
+                            <!-- <td>{{ person.orderDate | date:"yyyy-MM-dd" }}</td> -->
+                            <td>{{ person.t6 }}</td>
+                            <td> {{person.t7}}</td>
+                            <td>{{ person.t8 }}</td>
+                            <td> {{person.t9 }}</td>
+                            <!-- <td>{{ person.t10  }}</td> -->
+                            
+                           
+
+
+
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button type="button"    
+                                class="btn-info" (click)="Add_itemsUplodeExcel()">
+
+             Uplode Data</button>
+    
+            </div>
+        </div>
+
+    </div>
+
+                                                     
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+
+
+<section class="col-lg-12">
+
+
+    <div id="UpdateProgress1" style="display: none;" role="status" aria-hidden="true">
+
+        <div class="divWaiting" style="z-index: 15000;">
+            <img id="imgWait" src="images/loading3.gif" align="middle" style="height:150px;width:210px;">
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <div id="UpdatePanel1">
+        <div class="col-md-12">
+
+
+            <div class="panel panel-default col-md-12">
+                <div class="panel-body">
+
+                    <div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+
+        <br>
+        <div class="col-md-12">
+
+
+            <!-- general form elements -->
+            <div class="card card-outline card-primary">
+
+
+                <!--Start Form Heading -->
+                <div class="card-header with-border">
+                    <h3 class="card-title"><strong>Create Purchase Order</strong></h3>
+                </div>
+                <!--Start Form Heading -->
+                <!--Start Form Body -->
+
+
+                <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="card-body">
+                    <div class="row">
+
+
+                        <div class="col-md-12">
+                            <div class="bder top-mrg20">
+
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-horizontal">
+
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label pull-left">Company
+                                                        Name</label>
+                                                    <select formControlName="ddlcompanyname"
+                                                        id="ddlcompanyname" class="form-control">
+<!--                                                        
+                                                        <option  *ngFor="let player of POTmCompanyMasters" ></option>
+                                                         -->
+                                                        <option *ngFor="let player of POTmCompanyMasters" [value]="player.id">
+                                                            {{player.companyName}}
+                                                        </option>
+
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label pull-left">Supplier
+                                                        Name</label>&nbsp;<span id="lblloginIdError"
+                                                        class="col-sm-3"></span>
+                                                    <select formControlName="ddlsuppliername"
+                                                        id="ddlsuppliername" class="form-control">
+                                                        <option *ngFor="let player of POTmSupplierMasters" [value]="player.id">
+                                                            {{player.supplierName}}
+                                                        </option>
+                                                      
+                                                        <!-- <option  *ngFor="let player of POTmSupplierMasters" ></option>
+                                                         -->
+                                                        
+
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label">Order Date</label>
+                                                    <input formControlName="txtorderdate" type="date"
+                                                        id="txtorderdate"
+                                                        class="form-control inputtext" id="txtDate" >
+
+                                                </div>
+                                            </div>
+
+                                            <div class="clearfix" style="margin-bottom: 5px;"></div>
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label pull-left">Payment
+                                                        Terms</label>&nbsp;
+                                                    <input formControlName="txtpaymentterms" type="text"
+                                                        id="txtpaymentterms" class="form-control inputtext"
+                                                        >
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label pull-left">Indent
+                                                        No</label>
+                                                    <input formControlName="txtindentno" type="text"
+                                                        id="txtindentno" class="form-control inputtext"
+                                                        >
+
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label pull-left">Freight
+                                                        Terms</label>
+                                                    <input formControlName="txtfreightterms" type="text"
+                                                        id="txtfreightterms" class="form-control inputtext"
+                                                        >
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="clearfix" style="margin-bottom: 5px;"></div>
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3" class="control-label pull-left">Work Order
+                                                        No</label>
+                                                    <input formControlName="txtorderno" type="text"
+                                                        id="txtorderno" class="form-control inputtext"
+                                                        >
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3"
+                                                        class="control-label pull-left">GST</label>&nbsp;
+                                                    <input formControlName="txtgst" type="text"
+                                                        id="txtgst" class="form-control inputtext" >
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <label for="inputEmail3"
+                                                        class="control-label pull-left">Delivery</label>&nbsp;
+                                                    <input formControlName="txtdelivery" type="date"
+                                                        id="txtdelivery" class="form-control inputtext"
+                                                        >
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="clearfix" style="margin-bottom: 5px;">
+                                                <span id="RequiredFieldValidator4"
+                                                    class="errorlabels" style="font-size:8pt;display:none;">Select
+                                                    Company Name</span>
+
+                                                <span id="RequiredFieldValidator5"
+                                                    class="errorlabels" style="font-size:8pt;display:none;">Select
+                                                    Supplier Name</span>
+
+
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <input id="chkuplaod" type="checkbox"
+                                                        formControlName="chkuplaod"
+                                                        id= 'abc2' (change)="checked2('abc2')"><label
+                                                        for="chkuplaod" >Upload To Excel</label>
+                                                        <br>
+                                                        <br>
+                                                        <div id="divenduser" class="col-sm-4" *ngIf='shown2'>
+                                                            <input #fileInput type="file" (change)="upload($event)">
+                                                        </div>
+                                                        <br>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                  
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input id="chklot" type="checkbox"
+                                                        formControlName="chklot"><label
+                                                        for="chklot">Po Against Lot</label>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+
+                                            <div class="row gst" style="display:none">
+                                                <div class="col-sm-4">
+
+                                                </div>
+                                                <div class="col-sm-4">
+
+
+                                                    <label for="inputEmail3" class="control-label pull-left">GST
+                                                        Types</label>&nbsp;
+                                                    <select formControlName="Drop_gst"
+                                                       
+                                                        id="Drop_gst" class="form-control">
+                                                        <option selected="selected" value="--Select--">--Select--
+                                                        </option>
+                                                        <option value="Intra-State GST">Intra-State GST</option>
+                                                        <option value="Inter-State GST">Inter-State GST</option>
+
+                                                    </select>
+
+
+
+
+                                                </div>
+                                                <div class="col-sm-4">
+
+                                                    <label id="gst_lbl"
+                                                        class="control-label pull-left">GST (%) :-</label>
+                                                    <select formControlName="DropDownList1"
+                                                        id="DropDownList1" class="form-control">
+                                                        <option selected="selected" value="--Select--">--Select--
+                                                        </option>
+
+                                                    </select>
+                                                    <div class="hidden">
+                                                        <input id="gst_rdo" type="radio"
+                                                            formControlName="gst_rdo" value="gst_rdo"
+                                                            checked="checked"><label
+                                                            for="gst_rdo">18</label>
+                                                        <input id="gst_rdo1" type="radio"
+                                                            formControlName="gst_rdo"
+                                                            value="gst_rdo1"><label
+                                                            for="gst_rdo1">28</label>
+                                                        <input id="gst_rdo2" type="radio"
+                                                            formControlName="gst_rdo"
+                                                            value="gst_rdo2"><label
+                                                            for="gst_rdo2">0</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            <div class="card">
+                                                <div class="card-body " style="background-color: #f5faff;">
+                                                 
+                                            <div id="div_manual" class="row">
+                                                <div class="col-sm-4 inline">
+                                                    <label for="inputEmail3"
+                                                        class="control-label pull-left">Description</label>
+                                                    <!-- <button type="button" formControlName="btnsearch"
+                                                        value="Search" id="btnsearch" class=" "
+                                                        style="float:right">Search</button> -->
+                                                    <input formControlName="txtdescription" type="text"
+                                                        id="txtdescription" class="form-control inputtext ">
+
+                                                    
+
+                                                </div>
+
+                                                <div class="col-sm-2 inline">
+                                                    <label for="inputEmail3" class="control-label pull-left">Cat
+                                                        No</label>
+
+                                                    <input formControlName="txtcat" type="text"
+                                                        id="txtcat" class="form-control inputtext ">
+
+
+
+                                                </div>
+
+
+                                                <div class="col-sm-1">
+                                                    <label for="inputEmail3"
+                                                        class="control-label pull-left">UOM</label>&nbsp;
+                                                    <select formControlName="ddluom"
+                                                        id="ddluom" class="form-control">
+                                                        <option selected="selected" value="Nos">Nos</option>
+                                                        <option value="Pcs">Pcs</option>
+                                                        <option value="Lot">Lot</option>
+                                                        <option value="KG">KG</option>
+                                                        <option value="Roll">Roll</option>
+                                                        <option value="Mtr">Mtr</option>
+                                                        <option value="Bundle">Bundle</option>
+                                                        <option value="length">length</option>
+                                                        <option value="Dozen">Dozen</option>
+                                                        <option value="Pkt">Pkt</option>
+                                                        <option value="Box">Box</option>
+                                                        <option value="Set">Set</option>
+
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-sm-1">
+                                                    <label for="inputEmail3"
+                                                        class="control-label pull-left">Make</label>&nbsp;
+                                                        <input formControlName="ddlMake" id="ddlMake"  type="text"
+                                                        id="txtcat" class="form-control inputtext ">
+
+                                                    <!-- <select formControlName="ddlMake"
+                                                        id="ddluom" class="form-control">
+                                                        <option selected="selected" value=" ">--Select--</option>
+                                                        <option value="Schindler">Schindler</option>
+                                                        <option value="Rockwell">Rockwell</option>
+                                                        <option value="Other" style="display: none;">Other</option>
+                                                        
+
+                                                    </select> -->
+                                                </div>
+
+
+                                                <div class="col-sm-1">
+                                                    <label for="inputEmail3"
+                                                        class="control-label pull-left">Qty</label>&nbsp;
+                                                    <input formControlName="txtqty" type="number"
+                                                        id="txtqty" class="form-control inputtext">
+
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label for="inputEmail3" class="control-label pull-left">List
+                                                        price</label>&nbsp;
+                                                    <input formControlName="txtlistprice" type="number"
+                                                        id="txtlistprice" class="form-control inputtext">
+
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label for="inputEmail3"
+                                                        class="control-label pull-left">Discount</label>&nbsp;
+                                                    <input formControlName="txtdiscount" type="number"
+                                                        id="txtdiscount" class="form-control inputtext">
+
+                                                </div>
+                                                <div class="col-sm-2 " style="float:right">
+                                                    <div class="clearfix" style="margin-top: 10px;"></div>
+                                                    <button type="button" 
+                                                        value="ADD" id="btn_add"
+                                                        class="btn btn-primary pull-Right" (click)="Add_items()">ADD</button>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <span id="RequiredFieldValidator1"
+                                                    class="errorlabels" style="display:none;">Enter Description</span>
+
+
+                                                <span id="RequiredFieldValidator2"
+                                                    class="errorlabels" style="display:none;">Enter QTY</span>
+                                                <span id="RequiredFieldValidator3"
+                                                    class="errorlabels" style="display:none;">Enter Discount</span>
+                                                <span id="RequiredFieldValidator6"
+                                                    class="errorlabels" style="display:none;">Enter List Price</span>
+                                            </div>
+
+
+                                                </div>
+                                              </div>
+
+
+
+
+
+
+
+                                            <!--------------------------------------------------------customise--------------------------------------->
+
+                                            <br>
+                                            <div class="clearfix">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="table-responsive">
+                                                        <div class="table_wid">
+                                                            <div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix" style="margin-top :15px;">
+                                            </div>
+                                            <!-----------------------------------------------------end customise--------------------------------------------->
+                                            <div class="clearfix" style="margin-top :15px;">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12 ">
+                                                    <div class="table-responsive">
+                                                        <div class=" card card-body card-warning table_wid">
+                                                            <div>
+                                                                <table id="example"  class="table table-striped border-style table-bordered" 
+                                                                   
+                                                                   >
+                                                                   <thead>
+                                                                        <tr>
+                                                                            <th scope="col">Action</th>
+                                                                            <th scope="col">SrNo</th>
+                                                                            <th scope="col">Description</th>
+                                                                            <th scope="col">Cat No</th>
+                                                                            <th scope="col">UOM</th>
+                                                                            <th scope="col">Make</th>
+                                                                            <th scope="col">QTY</th>
+                                                                            <th scope="col">List Price</th>
+                                                                            <th scope="col">Discount</th>
+                                                                            <th scope="col">Unit Price</th>
+                                                                            <th scope="col">Net Price</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                        <tbody>
+                                                                        <tr style="background-color:0;" *ngFor="let person of pOExpenseItems;let a=index" >
+                                                                            <td>
+                                                                                <button type="button"    
+                                                                                class="badge bg-danger btn btn-sm" (click)="onDel(person.id)"><a class="fa fa-trash"></a></button>
+
+                                                                                   
+                                                                                    <!-- poId -->
+
+                                                                            </td>
+                                                                            <td style="width:100px;">
+                                                                                <span
+                                                                                    id="GridView1_lblRowNumber_0">{{a}}</span>
+                                                                            </td>
+                                                                            <td (mouseenter)="mouseEnter(true,person.id,'desc')" (mouseleave)="mouseLeave(false,person.id,'desc')">
+                                                                                <P id="label_desc{{person.id}}">  {{person.description}} </P>
+                                                                                <textarea calss="form-control" id="desc{{person.id}}"  (dblclick)="Tabledatachange(person.id,'desc')" style="display: none;" value="{{person.description}}" > </textarea>
+                                                                             
+                                                                            </td>
+                                                                            <td (mouseenter)="mouseEnter(true,person.id,'catname')" (mouseleave)="mouseLeave(false,person.id,'catname')">
+                                                                                <P id="label_catname{{person.id}}">  {{person.catname}} </P>
+                                                                                <input type="text" calss="form-control" id="catname{{person.id}}" (dblclick)="Tabledatachange(person.id,'catname')"  style="display: none;" value="{{person.catname}}" > 
+                                                                             
+                                                                            </td>
+                                                                            <td >
+                                                                                <P id="label_uom{{person.id}}"> {{person.uom}} </P>
+                                                                                <input type="text" calss="form-control" id="uom{{person.id}}"   style="display: none;" value="{{person.uom}}" > 
+                                                                             
+                                                                            </td>
+                                                                            <td (mouseenter)="mouseEnter(true,person.id,'make')" (mouseleave)="mouseLeave(false,person.id,'make')">
+                                                                                <P id="label_make{{person.id}}">  {{person.make}} </P>
+                                                                                <input type="text" calss="form-control" id="make{{person.id}}"  (dblclick)="Tabledatachange(person.id,'make')" style="display: none;" value="{{person.make}}" > 
+                                                                             
+                                                                            </td>
+                                                                            <td  (mouseenter)="mouseEnter(true,person.id,'qty')" (mouseleave)="mouseLeave(false,person.id,'qty')"> 
+                                                                              <P id="label_qty{{person.id}}"> {{person.qty}}  </P>
+                                                                             <input type="number" calss="form-control" id="qty{{person.id}}" (dblclick)="Tabledatachange(person.id,'qty')"  style="display: none;" value="{{person.qty}}" > 
+                                                                            </td>
+                                                                            <td (mouseenter)="mouseEnter(true,person.id,'listPrice')" (mouseleave)="mouseLeave(false,person.id,'listPrice')">
+                                                                                <P id="label_listPrice{{person.id}}">  {{person.listPrice}} </P>
+                                                                                <input type="number" calss="form-control" id="listPrice{{person.id}}"  (dblclick)="Tabledatachange(person.id,'listPrice')" style="display: none;" value="{{person.listPrice}}" > 
+                                                                             
+                                                                            </td>
+                                                                            <td (mouseenter)="mouseEnter(true,person.id,'dis')" (mouseleave)="mouseLeave(false,person.id,'dis')">
+                                                                                <P id="label_dis{{person.id}}">  {{person.dis}} </P>
+                                                                                <input type="number" calss="form-control" id="dis{{person.id}}"  (dblclick)="Tabledatachange(person.id,'dis')" style="display: none;" value="{{person.dis}}" > 
+                                                                             
+                                                                            </td>
+                                                                            <td >
+                                                                                <P id="label_unitPrice{{person.id}}">  {{person.unitPrice}} </P>
+                                                                                <input type="text" calss="form-control" id="unitPrice{{person.id}}"    style="display: none;" value="{{person.unitPrice}}" > 
+                                                                             
+                                                                            </td>
+                                                                            <td >
+                                                                                <P id="label_netPrice{{person.id}}"> {{person.netPrice}} </P>
+                                                                                <input type="text" calss="form-control" id="netPrice{{person.id}}"   style="display: none;" value="{{person.netPrice}}" > 
+                                                                             
+                                                                            </td>
+
+
+                                                                           
+                                                            </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix">
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-10">
+                                                    <label class="control-label pull-left" for="inputEmail3">
+                                                        Purchase Order Remarks</label>
+                                                    <textarea formControlName="txtremarks" rows="2"
+                                                        cols="20" id="txtremarks"
+                                                        class="form-control inputtext"></textarea>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label class="control-label pull-left" for="inputEmail3">
+                                                        Total</label>&nbsp;
+                                                    <input formControlName="txttotal" type="text"
+                                                        id="txttotal" disabled="disabled"
+                                                        class="aspNetDisabled form-control inputtext">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <label class="control-label pull-left" for="inputEmail3">
+                                                        Type Of Delivery</label>&nbsp;
+                                                    <select formControlName="ddldelivery"
+                                                        id="ddldelivery" class="form-control">
+                                                        <option selected="selected" value="Select One">Select One
+                                                        </option>
+                                                        <option value="Lot">Lot</option>
+                                                        <option value="Partial">Partial</option>
+
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input id="chkenduser" type="checkbox"
+                                                        formControlName="chkenduser" 
+                                                        id= 'abc' (change)="checked('abc')" ><label
+                                                        for="chkenduser">End User</label>
+                                                </div>
+                                            </div>
+                                            <div id="divenduser" class="col-sm-4" *ngIf='shown'>
+                                                <label class="control-label pull-left" for="inputEmail3">
+                                                    End User Name</label>&nbsp;
+                                                <input formControlName="txtenduser" type="text"
+                                                    id="txtenduser" class="form-control inputtext"  >
+                                            </div>
+                                            <span id="RequiredFieldValidator7" class="errorlabels"
+                                                style="font-size:8pt;display:none;">Select Type Of Delivery</span>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label" for="inputEmail3">
+                                                </label>
+                                                <div class="col-sm-6">
+
+                                                    <span id="lblError"></span>
+
+
+
+
+
+
+                                                </div>
+                                            </div>
+                                            <div class="clearfix">
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <div class="col-sm-7 col-sm-offset-5">
+                                                        <button type="submit" 
+                                                            value="Save" id="btnSave"
+                                                            class="btn btn-primary mar_top10" *ngIf="ActionFlag==0">Save</button>
+
+                                                            <button type="submit" 
+                                                            value="Update" id="btnSave"
+                                                            class="btn btn-primary mar_top10" *ngIf="ActionFlag==1">Update</button>
+                                                        &nbsp;
+                                                        <!-- <input type="submit"
+                                                           
+                                                            value="Save &amp; Print"
+                                                            id="btnsaveprint"
+                                                            class="btn btn-info mar_top10">
+                                                        &nbsp;<input type="submit"
+                                                            formControlName="btnClear" value="Reset"
+                                                            id="btnClear"
+                                                            class="btn btn-primary mar_top10"> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </form>
+                <!--End Form Body -->
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+      
+
+
+
+  
+    </div>
+
+
+
+
+
+
+</section>

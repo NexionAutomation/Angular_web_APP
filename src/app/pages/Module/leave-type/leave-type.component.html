@@ -1,0 +1,367 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+
+    <!-- /.row -->
+    <!-- Main row -->
+    <div class="row">
+        <!-- Left col -->
+
+        <section class="col-lg-12">
+
+
+            <div id="UpdateProgress1" style="display:none;" role="status" aria-hidden="true">
+
+                <div class="divWaiting" style="z-index: 15000;">
+                    <img id="imgWait" src="images/loading3.gif" align="middle" style="height:150px;width:210px;">
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card box-primary">
+
+
+                    <!--Start Form Heading -->
+                    <div class="card-header with-border">
+                        <h3 class="card-title"><strong>Leave Type Master </strong></h3>
+                    </div>
+                    <!--Start Form Heading -->
+
+                    <!--Start Form Body -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="bder top-mrg20">
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+
+                                            <div class="log_form1">
+
+
+
+                                                <div class="form-horizontal">
+
+
+                                                    <div class="clearfix" style="margin-bottom: 5px;"></div>
+
+
+
+
+                                                    <div class="form-group">
+
+
+                                                        <label for="inputEmail3" class="col-sm-4 control-label">Leave
+                                                            Type </label>
+                                                        <div class="col-sm-6">
+                                                            <input name="ctl00$ContentPlaceHolder3$txtLeavetype"
+                                                                type="text" id="ContentPlaceHolder3_txtLeavetype"
+                                                                class="form-control">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+
+
+                                                        <label for="inputEmail3" class="col-sm-4 control-label">Alloted
+                                                            Leave </label>
+                                                        <div class="col-sm-6">
+                                                            <input name="ctl00$ContentPlaceHolder3$txt_alloted"
+                                                                type="number" id="ContentPlaceHolder3_txt_alloted"
+                                                                class="form-control">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix" style="margin-bottom: 5px;"></div>
+
+
+
+
+                                                    <div class="form-group">
+                                                        <label for="inputEmail3" class="col-sm-3 control-label"></label>
+                                                        <div class="col-sm-9">
+
+
+
+
+
+                                                            <span id="ContentPlaceHolder3_RequiredFieldValidator1"
+                                                                class="errorlabels"
+                                                                style="font-size:8pt;display:none;">Enter State
+                                                                Name</span>
+
+
+
+
+
+                                                            <span id="ContentPlaceHolder3_lblError"></span>
+
+
+
+
+
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <div class="col-sm-4">
+                                                            </div>
+                                                            <div class="col-sm-8">
+                                                                <input [type]="'submit'" name="btnSave" value="Save" 
+                                                                id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10" *ngIf="ActionFlag==0">&nbsp;
+                                                            
+                                                           
+                                                                <input [type]="'submit'" name="btnSave" value="Update" *ngIf="ActionFlag==1"
+                                                                id="ContentPlaceHolder3_btnSave" class="btn btn-primary mar_top10">&nbsp;
+                                                            
+                                                            
+                                                            <input type="button" name="btnClear" value="Reset"
+                                                                id="ContentPlaceHolder3_btnClear" class="btn btn-primary mar_top10" (click)="onReset()">
+                            
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Form Body -->
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <input type="submit" name="ctl00$ContentPlaceHolder3$btnSavingModelpopUp" value="Button"
+                id="ContentPlaceHolder3_btnSavingModelpopUp" style="display: none;">
+
+            <div id="ContentPlaceHolder3_pnlSavePopUp"
+                style="width: 350px; display: none; position: fixed; z-index: 10001;">
+
+
+
+
+                <table style="width: 100%; background-color: White; border: 1px solid gray;">
+                    <tbody>
+                        <tr>
+                            <td align="center" bgcolor="Silver">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td align="center" bgcolor="Silver">
+                                <strong>Confirmation Dialog</strong>
+                                <br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" bgcolor="Silver">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td align="center">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <span id="ContentPlaceHolder3_lblSavingDialogBox"></span>
+
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="center">&nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <span id="ContentPlaceHolder3_lblConfrmMsg"></span>
+
+
+                                &nbsp;
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td align="center">
+                                <span id="ContentPlaceHolder3_lblpendingaproval"></span>
+
+                                &nbsp;
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="center">
+
+
+                                <input type="submit" name="ctl00$ContentPlaceHolder3$btnsaveOk" value="Yes"
+                                    id="ContentPlaceHolder3_btnsaveOk" class="btn btn-primary" style="width:80px;">
+                                &nbsp;&nbsp;&nbsp;
+                                <input type="submit" name="ctl00$ContentPlaceHolder3$BtnSaveCancel" value="No"
+                                    id="ContentPlaceHolder3_BtnSaveCancel" class="btn btn-primary" style="width:80px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            <input type="submit" name="ctl00$ContentPlaceHolder3$modalPopupButton" value="Button"
+                id="ContentPlaceHolder3_modalPopupButton" style="display: none;">
+
+            <div id="ContentPlaceHolder3_DeletePopup"
+                style="width: 350px; display: none; position: fixed; z-index: 10001;">
+
+                <table style="width: 100%; background-color: White; border: 1px solid gray;">
+                    <tbody>
+                        <tr>
+                            <td align="center" bgcolor="Silver">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td align="center" bgcolor="Silver">
+                                <strong>Confirmation Dialog</strong>
+                                <br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" bgcolor="Silver">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td align="center">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <span id="ContentPlaceHolder3_lblDialogMsg"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <input type="submit" name="ctl00$ContentPlaceHolder3$btnDeleteOk" value="OK"
+                                    id="ContentPlaceHolder3_btnDeleteOk" class="btn btn-primary" style="width:80px;">
+                                &nbsp;&nbsp;&nbsp;
+                                <input type="submit" name="ctl00$ContentPlaceHolder3$btnCancel" value="Cancel"
+                                    id="ContentPlaceHolder3_btnCancel" class="btn btn-primary" style="width:80px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+
+
+
+            <div class="form2">
+
+                <div class="card card-outline card-primary">
+                    <div class="card-header "> Group Details ::</div>
+                    <div class="card-body">
+
+
+
+                        <!-- <table id="example" class="display" width="100%"></table> -->
+
+                        <table id="example" class="row-border hover" class="table table-striped table-hover  ">
+
+                            <thead>
+                              
+                                <tr>
+                                    <th scope="col">Action</th>
+                                    <th scope="col">SrNo</th>
+                                    <th scope="col">Leave Type </th>
+                                    <th scope="col"> Alloted Leave </th>
+                                </tr>
+                               
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let person of persons;let a=index">
+
+                                    <td><button class="badge bg-success  btn btn-sm  " name='{{ person.rid}}' > <a class="fa fa-edit" (click)="onedit(person.rid)"></a></button>
+                                        &nbsp;
+                                        <button class="badge bg-danger  btn btn-sm"  name='{{ person.rid}}' (click)="onDel(person.rid)"><a class="fa fa-trash"></a></button>
+                                    </td>
+        
+                                    <td> {{a+1}}</td>
+                                    <td> {{person.leaveType}}</td>
+                                    <td>{{ person.alloted  }}</td>
+                                   
+
+
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+        <!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+        <!-- right col -->
+    </div>
+    <!-- /.row (main row) -->
+
+</section>
